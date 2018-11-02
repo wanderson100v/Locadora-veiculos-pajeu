@@ -1,7 +1,10 @@
 package app;
 
+import dao.Dao;
 import dao.DaoRes;
 import dao.IDaoRes;
+import entidade.Endereco;
+import entidade.Juridico;
 import enumeracoes.Tela;
 import excecoes.DaoException;
 import javafx.application.Application;
@@ -20,7 +23,26 @@ public class App extends Application{
 	private static IDaoRes daoRes = DaoRes.getInstance();
 	
 	public static void main(String[] args) {
-		launch(args);
+		//launch(args);
+		
+		Juridico juridico = new Juridico();
+		juridico.setCodigo("3123a");
+		juridico.setCnpj("31232141sda");
+		juridico.setInscricaoEstadual("fsdso4324");
+		juridico.setNome("Empresa tal");
+		Endereco e = new Endereco();
+		
+		e.setNumero(3213);
+		e.setBairro("bairro");
+		e.setCidade("cidade");
+		e.setEstado("estado");
+		e.setRua("rua");
+		juridico.setEndereco(e);
+		new Dao<Endereco>(Endereco.class).transacao(e);
+		
+		new Dao<Juridico>(Juridico.class).transacao(juridico);
+		
+		//new Dao<Fisico>(Fisico.class).transacao(new Fisico());
 	}
 	
 	@Override

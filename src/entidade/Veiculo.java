@@ -1,0 +1,138 @@
+package entidade;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import enumeracoes.TipoCombustivel;
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Veiculo extends Entidade {
+   
+	private Boolean locado;
+	private Boolean ativo;
+	@Temporal(TemporalType.DATE)
+	private Date data_registro;
+	@Column(length = 10)
+	private String cor,placa;
+	@Column(length = 30, name = "numero_chassi")
+	private String numeroChassi;
+	@Column(length = 30, name = "numero_motor")
+	private String numeroMotor;
+	@Column(name = "torque_motor")
+	private float torqueMotor;
+	private TipoCombustivel tipoCombustivel;  
+	private Integer quilometragem;
+	
+	@ManyToOne
+	private CategoriaVeiculo categoriaVeiculo;
+
+	@OneToMany(mappedBy = "veiculo", targetEntity = Manutencao.class)
+	private List<Manutencao> manutencao;
+	
+	public Date getData_registro() {
+		return data_registro;
+	}
+	
+	public void setData_registro(Date data_registro) {
+		this.data_registro = data_registro;
+	}
+	
+	public String getCor() {
+		return cor;
+	}
+	
+	public Boolean getLocado() {
+		return locado;
+	}
+
+	public void setLocado(Boolean locado) {
+		this.locado = locado;
+	}
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public CategoriaVeiculo getCategoriaVeiculo() {
+		return categoriaVeiculo;
+	}
+
+	public void setCategoriaVeiculo(CategoriaVeiculo categoriaVeiculo) {
+		this.categoriaVeiculo = categoriaVeiculo;
+	}
+
+	public List<Manutencao> getManutencao() {
+		return manutencao;
+	}
+
+	public void setManutencao(List<Manutencao> manutencao) {
+		this.manutencao = manutencao;
+	}
+
+	public void setCor(String cor) {
+		this.cor = cor;
+	}
+	
+	public String getPlaca() {
+		return placa;
+	}
+	
+	public void setPlaca(String placa) {
+		this.placa = placa;
+	}
+	
+	public String getNumeroChassi() {
+		return numeroChassi;
+	}
+	
+	public void setNumeroChassi(String numeroChassi) {
+		this.numeroChassi = numeroChassi;
+	}
+	
+	public String getNumeroMotor() {
+		return numeroMotor;
+	}
+	
+	public void setNumeroMotor(String numeroMotor) {
+		this.numeroMotor = numeroMotor;
+	}
+	
+	public float getTorqueMotor() {
+		return torqueMotor;
+	}
+	
+	public void setTorqueMotor(float torqueMotor) {
+		this.torqueMotor = torqueMotor;
+	}
+	
+	public TipoCombustivel getTipoCombustivel() {
+		return tipoCombustivel;
+	}
+	
+	public void setTipoCombustivel(TipoCombustivel tipoCombustivel) {
+		this.tipoCombustivel = tipoCombustivel;
+	}
+	
+	public Integer getQuilometragem() {
+		return quilometragem;
+	}
+	
+	public void setQuilometragem(Integer quilometragem) {
+		this.quilometragem = quilometragem;
+	}
+  
+}
