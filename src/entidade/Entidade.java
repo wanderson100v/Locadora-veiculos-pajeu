@@ -12,7 +12,7 @@ import javax.persistence.InheritanceType;
 public abstract class Entidade{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
 	public Long getId() {
