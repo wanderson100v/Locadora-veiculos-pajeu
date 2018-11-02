@@ -32,13 +32,31 @@ public class Veiculo extends Entidade {
 	private float torqueMotor;
 	private TipoCombustivel tipoCombustivel;  
 	private Integer quilometragem;
-	
 	@ManyToOne
 	private CategoriaVeiculo categoriaVeiculo;
-
+	@ManyToOne
+	private Filial filial;
 	@OneToMany(mappedBy = "veiculo", targetEntity = Manutencao.class)
 	private List<Manutencao> manutencao;
+	@OneToMany(mappedBy = "veiculo", targetEntity = Locacao.class)
+	private List<Manutencao> locacoes;
 	
+	public List<Manutencao> getLocacoes() {
+		return locacoes;
+	}
+
+	public void setLocacoes(List<Manutencao> locacoes) {
+		this.locacoes = locacoes;
+	}
+
+	public Filial getFilial() {
+		return filial;
+	}
+
+	public void setFilial(Filial filial) {
+		this.filial = filial;
+	}
+
 	public Date getData_registro() {
 		return data_registro;
 	}

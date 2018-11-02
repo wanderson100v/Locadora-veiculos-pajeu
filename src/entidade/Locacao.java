@@ -38,11 +38,11 @@ public class Locacao extends Entidade {
 	
 	@Column(name = "valor_pago")
 	private Float valorPago;
-
+	
 	private boolean finalizado;
 	
-	
-	
+	@ManyToOne
+	private Fisico motorista;
 	
 	public boolean isFinalizado() {
 		return finalizado;

@@ -1,8 +1,7 @@
 package enumeracoes;
 
 public enum TipoAirBag {
-	SIMPLES_DIANTEIRA("Simples Dianteira"),DUPLO_DIANTEIRA("Diplo Dianteira"),
-	TOTAL("Total");
+	SIMPLES_DIANTEIRA("Simples Dianteira"),DUPLO_DIANTEIRA("Diplo Dianteira"),TOTAL("Total");
 	private String value;
 	
 	private TipoAirBag(String value) {

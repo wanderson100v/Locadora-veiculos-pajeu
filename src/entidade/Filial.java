@@ -2,6 +2,7 @@ package entidade;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Filial extends Entidade {
@@ -9,7 +10,18 @@ public class Filial extends Entidade {
 	@Column(length =20)
 	private String nome;
 	private Boolean estado;
+	@OneToOne
+	private Endereco endereco;
 	
+	
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
 	public String getNome() {
 		return nome;
 	}

@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import enumeracoes.TipoAirBag;
 
 @Entity
-public class CaminhonetaPassageiro {
+public class CaminhonetaPassageiro extends Veiculo {
 	
 	@Column(name = "tipo_air_bag")
 	private TipoAirBag tipoAirBag;

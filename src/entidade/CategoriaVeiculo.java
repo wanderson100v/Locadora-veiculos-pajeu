@@ -1,7 +1,10 @@
 package entidade;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 @Entity(name = "categoria_veiculo" )
 public class CategoriaVeiculo extends Entidade {
@@ -16,6 +19,9 @@ public class CategoriaVeiculo extends Entidade {
 	private float horasLimpesa;
 	@Column(name = "valor_diaria")
 	private Float valorDiaria;
+	@Column(nullable = true)
+	@OneToMany(mappedBy = "categoriaVeiculo" , targetEntity = Veiculo.class)
+	private List<Veiculo> veiculos;
 	
 	public String getTipo() {
 		return tipo;
