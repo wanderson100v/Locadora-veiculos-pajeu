@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -14,13 +15,18 @@ import enumeracoes.TipoLocacao;
 public class Locacao extends Entidade {
 	
 	@ManyToOne
+	@JoinColumn(nullable = false)
 	private Cliente cliente;
 	@ManyToOne
+	@JoinColumn(nullable = false)
 	private Veiculo veiculo;
 	@ManyToOne
+	@JoinColumn(nullable = false)
 	private Filial fifialRetirada;
 	@ManyToOne
 	private Filial fifialEntrega;
+	@ManyToOne
+	private Fisico motorista;
 	
 	@Column(name = "tipo_locacao")
 	private TipoLocacao tipoLocacao;
@@ -40,9 +46,6 @@ public class Locacao extends Entidade {
 	private Float valorPago;
 	
 	private boolean finalizado;
-	
-	@ManyToOne
-	private Fisico motorista;
 	
 	public boolean isFinalizado() {
 		return finalizado;

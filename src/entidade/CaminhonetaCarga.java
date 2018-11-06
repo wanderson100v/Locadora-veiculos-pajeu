@@ -5,17 +5,14 @@ import javax.persistence.Entity;
 
 import enumeracoes.TipoAcionamentoEmbreagem;
 
-@Entity
+@Entity(name = "caminhoneta_carga")
 public class CaminhonetaCarga extends Veiculo {
 	
 	private Float desenpenho,potencia;
-	
 	@Column(name = "distancia_eichos")
 	private Float distanciaEichos;
-	
 	@Column(name = "tipo_acionamento_embreagem")
 	private TipoAcionamentoEmbreagem tipoAcionamentoEmbreagem;
-	
 	@Column(name = "capacidade_carga")
 	private Integer capacidadeCarga;
 

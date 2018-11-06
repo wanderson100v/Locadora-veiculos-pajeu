@@ -1,10 +1,8 @@
 package app;
 
-import dao.Dao;
+
 import dao.DaoRes;
 import dao.IDaoRes;
-import entidade.Endereco;
-import entidade.Juridico;
 import enumeracoes.Tela;
 import excecoes.DaoException;
 import javafx.application.Application;
@@ -14,6 +12,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import sql.ConnectionFactory;
 
 public class App extends Application{
 	
@@ -21,26 +20,39 @@ public class App extends Application{
 	private static Pane loginPane,homePane;
 	private static Scene loginScene,homeScene;
 	private static IDaoRes daoRes = DaoRes.getInstance();
+	// PropertyValueException - not null
+	// PSQLException - unique
+	// @MappedSuperClass // dado que não é um @Entity não tera tabela no banco...
+	// associar registros a usuarios de banco, hipotese 1 : referenciar tb_users
+	
 	
 	public static void main(String[] args) {
+		ConnectionFactory.getConnection().createEntityManager().close();
+		
 		//launch(args);
 		
-		Juridico juridico = new Juridico();
-		juridico.setCodigo("3123a");
-		juridico.setCnpj("31232141sda");
-		juridico.setInscricaoEstadual("fsdso4324");
-		juridico.setNome("Empresa tal");
-		Endereco e = new Endereco();
+		/*Juridico juridico = new Juridico();
+		juridico.setCodigo("3123123");
+		juridico.setCnpj("fdsfsf");
+		juridico.setInscricaoEstadual("5234324");
+		juridico.setNome("Empresa tal 6");
+		//Endereco e = new Endereco();
 		
-		e.setNumero(3213);
-		e.setBairro("bairro");
-		e.setCidade("cidade");
-		e.setEstado("estado");
-		e.setRua("rua");
+		/*e.setNumero(3213);
+		e.setBairro("bairro tal4");
+		e.setCidade("cidade tal4");
+		e.setEstado("estado tal4");
+		e.setRua("rua tal 2");
 		juridico.setEndereco(e);
-		new Dao<Endereco>(Endereco.class).transacao(e);
-		
-		new Dao<Juridico>(Juridico.class).transacao(juridico);
+		try {
+			//new Dao<Endereco>(Endereco.class).cadastrar(e);
+			//System.out.println(juridico.getEndereco().getId());
+			ClienteBo.getInstance().cadastrarEditar(juridico);
+		} catch (DaoException | BoException e1) {
+			// TODO Auto-generated catch block
+			System.out.println(e1.getMessage());
+			e1.printStackTrace();
+		}*/
 		
 		//new Dao<Fisico>(Fisico.class).transacao(new Fisico());
 	}

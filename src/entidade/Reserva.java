@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -12,33 +13,37 @@ import javax.persistence.TemporalType;
 public class Reserva extends Entidade {
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date date_retirada;
+	@Column(name = "data_retirada")
+	private Date dateRetirada;
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date data_devolucao;
+	@Column(name = "data_devolucao")
+	private Date dataDevolucao;
 	@Column(name = "valor_pago")
 	private Date valorPago;
 	@ManyToOne
+	@JoinColumn(nullable = false)
 	private CategoriaVeiculo categoriaVeiculo;
 	@ManyToOne
+	@JoinColumn(nullable = false)
 	private Cliente cliente;
 	
 	@ManyToOne
 	private Filial filial;
 
-	public Date getDate_retirada() {
-		return date_retirada;
+	public Date getDateRetirada() {
+		return dateRetirada;
 	}
 
-	public void setDate_retirada(Date date_retirada) {
-		this.date_retirada = date_retirada;
+	public void setDateRetirada(Date dateRetirada) {
+		this.dateRetirada = dateRetirada;
 	}
 
-	public Date getData_devolucao() {
-		return data_devolucao;
+	public Date getDataDevolucao() {
+		return dataDevolucao;
 	}
 
-	public void setData_devolucao(Date data_devolucao) {
-		this.data_devolucao = data_devolucao;
+	public void setDataDevolucao(Date dataDevolucao) {
+		this.dataDevolucao = dataDevolucao;
 	}
 
 	public Date getValorPago() {

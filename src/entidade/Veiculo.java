@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -21,7 +22,8 @@ public class Veiculo extends Entidade {
 	private Boolean locado;
 	private Boolean ativo;
 	@Temporal(TemporalType.DATE)
-	private Date data_registro;
+	@Column(name = "data_registro")
+	private Date dataRegistro;
 	@Column(length = 10)
 	private String cor,placa;
 	@Column(length = 30, name = "numero_chassi")
@@ -33,6 +35,7 @@ public class Veiculo extends Entidade {
 	private TipoCombustivel tipoCombustivel;  
 	private Integer quilometragem;
 	@ManyToOne
+	@JoinColumn(nullable = false)
 	private CategoriaVeiculo categoriaVeiculo;
 	@ManyToOne
 	private Filial filial;
@@ -56,15 +59,15 @@ public class Veiculo extends Entidade {
 	public void setFilial(Filial filial) {
 		this.filial = filial;
 	}
+	
+	public Date getDataRegistro() {
+		return dataRegistro;
+	}
 
-	public Date getData_registro() {
-		return data_registro;
+	public void setDataRegistro(Date dataRegistro) {
+		this.dataRegistro = dataRegistro;
 	}
-	
-	public void setData_registro(Date data_registro) {
-		this.data_registro = data_registro;
-	}
-	
+
 	public String getCor() {
 		return cor;
 	}

@@ -2,6 +2,7 @@ package entidade;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -11,6 +12,7 @@ public class Filial extends Entidade {
 	private String nome;
 	private Boolean estado;
 	@OneToOne
+	@JoinColumn(nullable = false)
 	private Endereco endereco;
 	
 	

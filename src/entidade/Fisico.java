@@ -10,6 +10,7 @@ import javax.persistence.TemporalType;
 import enumeracoes.Sexo;
 
 @Entity
+// @PrimaryKeyJoinColumn(name = "id_cliente") // utilizado afim de atribbuir um nome a chave estrangeira a cliente : default = nome da pk da genarização
 public class Fisico extends Cliente {
 	
 	@Temporal(TemporalType.DATE)

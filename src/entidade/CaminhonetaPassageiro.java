@@ -5,25 +5,20 @@ import javax.persistence.Entity;
 
 import enumeracoes.TipoAirBag;
 
-@Entity
+@Entity(name = "caminhoneta_passageiro")
 public class CaminhonetaPassageiro extends Veiculo {
 	
 	@Column(name = "tipo_air_bag")
 	private TipoAirBag tipoAirBag;
-	
 	@Column(name = "cintos_str")
 	private Boolean cintosSTR;
-	
 	@Column(name = "diracao_assistida")
 	private Boolean direcaoAssistida;
-	
 	@Column(name = "controle_pa")
 	private Boolean controlePA;
-	
 	@Column(name = "rodas_ll")
 	private Boolean rodasLL;
 
-	
 	public TipoAirBag getTipoAirBag() {
 		return tipoAirBag;
 	}
