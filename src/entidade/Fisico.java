@@ -63,11 +63,4 @@ public class Fisico extends Cliente {
 		this.sexo = sexo;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
 }

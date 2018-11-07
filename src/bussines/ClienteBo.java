@@ -5,13 +5,14 @@ import java.util.List;
 import dao.Dao;
 import entidade.Cliente;
 import entidade.Endereco;
+import entidade.Fisico;
+import entidade.Juridico;
 import excecoes.BoException;
 import excecoes.DaoException;
 
 public class ClienteBo implements IClienteBo {
 	public static IClienteBo instance;
 	private Dao<Cliente> clienteDao;
-	private Dao<Endereco> enderecoDao;
 	
 	public static IClienteBo getInstance() {
 		if(instance == null)
@@ -21,17 +22,15 @@ public class ClienteBo implements IClienteBo {
 	
 	public ClienteBo() {
 		clienteDao = new Dao<>(Cliente.class);
-		enderecoDao = new Dao<>(Endereco.class);
 	}
 
 	@Override
 	public void cadastrarEditar(Cliente entidade) throws BoException {
 		try {
 			if(entidade.getId() != null) {
-				enderecoDao.editar(entidade.getEndereco());
 				clienteDao.editar(entidade);
 			}else {
-				enderecoDao.cadastrar(entidade.getEndereco());
+				atribuirCodigo(entidade);
 				clienteDao.cadastrar(entidade);
 			}
 		}catch (DaoException e) {
@@ -69,5 +68,11 @@ public class ClienteBo implements IClienteBo {
 		}
 	}
 	
-
+	private void atribuirCodigo(Cliente cliente){
+		if(cliente instanceof Juridico) {
+			cliente.setCodigo("PJ"+((Juridico)(cliente)).getCnpj());
+		}else if(cliente instanceof Fisico){
+			cliente.setCodigo("PF"+((Fisico)(cliente)).getCpf());
+		}
+	}
 }

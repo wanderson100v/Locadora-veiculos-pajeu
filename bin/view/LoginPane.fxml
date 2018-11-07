@@ -51,7 +51,7 @@
             <TextField fx:id="senhaField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <Label layoutX="151.0" layoutY="37.0" text="FUNERARIA" AnchorPane.bottomAnchor="336.0" AnchorPane.leftAnchor="151.0" AnchorPane.rightAnchor="151.0" AnchorPane.topAnchor="37.0">
+      <Label layoutX="151.0" layoutY="37.0" text="LOCADORA VEÍCULOS" AnchorPane.bottomAnchor="336.0" AnchorPane.leftAnchor="151.0" AnchorPane.rightAnchor="151.0" AnchorPane.topAnchor="37.0">
          <font>
             <Font name="Alef Regular" size="18.0" />
          </font>

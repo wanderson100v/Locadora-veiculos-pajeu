@@ -1,9 +1,13 @@
 package app;
 
 
+import bussines.ClienteBo;
 import dao.DaoRes;
 import dao.IDaoRes;
+import entidade.Endereco;
+import entidade.Juridico;
 import enumeracoes.Tela;
+import excecoes.BoException;
 import excecoes.DaoException;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -20,35 +24,37 @@ public class App extends Application{
 	private static Pane loginPane,homePane;
 	private static Scene loginScene,homeScene;
 	private static IDaoRes daoRes = DaoRes.getInstance();
-	// PropertyValueException - not null
-	// PSQLException - unique
-	// @MappedSuperClass // dado que não é um @Entity não tera tabela no banco...
-	// associar registros a usuarios de banco, hipotese 1 : referenciar tb_users
+	// associar registros a usuarios de banco, hipotese 1 : referenciar tp_users
 	
 	
 	public static void main(String[] args) {
-		ConnectionFactory.getConnection().createEntityManager().close();
-		
 		//launch(args);
+		ConnectionFactory.setUser("postgres","admin");
+		ConnectionFactory.getConnection().createEntityManager();
 		
-		/*Juridico juridico = new Juridico();
-		juridico.setCodigo("3123123");
-		juridico.setCnpj("fdsfsf");
-		juridico.setInscricaoEstadual("5234324");
-		juridico.setNome("Empresa tal 6");
-		//Endereco e = new Endereco();
+		/*
 		
-		/*e.setNumero(3213);
-		e.setBairro("bairro tal4");
-		e.setCidade("cidade tal4");
-		e.setEstado("estado tal4");
-		e.setRua("rua tal 2");
+		
+		Juridico juridico = new Juridico();
+	//	juridico.setCodigo("3123123");
+		juridico.setCnpj("123-3123-412DA");
+		juridico.setInscricaoEstadual("30412312-11");
+		juridico.setNome("Funeraria leva e não traz");
+		Endereco e = new Endereco();
+		
+		
+		e.setNumero("3213A");
+		e.setBairro("Bairro das dores");
+		e.setCidade("Cidade dos infermos");
+		e.setEstado("Estado doente");
+		e.setCep("13213-543");
+		e.setRua("Rua fratura");
 		juridico.setEndereco(e);
 		try {
 			//new Dao<Endereco>(Endereco.class).cadastrar(e);
 			//System.out.println(juridico.getEndereco().getId());
 			ClienteBo.getInstance().cadastrarEditar(juridico);
-		} catch (DaoException | BoException e1) {
+		} catch ( BoException e1) {
 			// TODO Auto-generated catch block
 			System.out.println(e1.getMessage());
 			e1.printStackTrace();
@@ -62,7 +68,7 @@ public class App extends Application{
 		App.stage = stage;
 		try {
 			stage.setScene(new Scene(daoRes.carregarPaneFXML(Tela.CARREGAR)));
-			stage.setTitle("Funeraria");
+			stage.setTitle("Locadora veiculos");
 			stage.centerOnScreen();
 			stage.show();
 			

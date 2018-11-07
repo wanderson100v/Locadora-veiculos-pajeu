@@ -19,30 +19,45 @@ import enumeracoes.TipoCombustivel;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Veiculo extends Entidade {
    
-	private Boolean locado;
-	private Boolean ativo;
+	
+	@Column(nullable = false)
+	private Boolean locado, ativo;
+	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "data_registro")
+	@Column(name = "data_registro", nullable = false)
 	private Date dataRegistro;
-	@Column(length = 10)
+
+	@Column(length = 10, nullable = false)
 	private String cor,placa;
-	@Column(length = 30, name = "numero_chassi")
+	
+	@Column(length = 30, name = "numero_chassi", nullable = false)
 	private String numeroChassi;
-	@Column(length = 30, name = "numero_motor")
+	
+	@Column(length = 30, name = "numero_motor", nullable = false)
 	private String numeroMotor;
-	@Column(name = "torque_motor")
+	
+	@Column(name = "torque_motor", nullable = false)
 	private float torqueMotor;
+	
+	@Column(name = "tipo_combustivel", nullable = false)
 	private TipoCombustivel tipoCombustivel;  
+	
+	@Column(nullable = false)
 	private Integer quilometragem;
+	
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private CategoriaVeiculo categoriaVeiculo;
+	
 	@ManyToOne
 	private Filial filial;
+	
 	@OneToMany(mappedBy = "veiculo", targetEntity = Manutencao.class)
 	private List<Manutencao> manutencao;
+	
 	@OneToMany(mappedBy = "veiculo", targetEntity = Locacao.class)
 	private List<Manutencao> locacoes;
+	
 	
 	public List<Manutencao> getLocacoes() {
 		return locacoes;

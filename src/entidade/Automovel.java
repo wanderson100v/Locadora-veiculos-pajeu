@@ -1,27 +1,29 @@
 package entidade;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 
 import enumeracoes.TamanhoVeiculo;
 import enumeracoes.TipoCambio;
 
+@Entity
 public class Automovel extends Veiculo {
 	
-	private Boolean mp3,dvd,radio;
+	private boolean mp3,dvd,radio;
 	
 	@Column(name = "direcao_hidraulica")
-	private Boolean direcaoHidraulica;
+	private boolean direcaoHidraulica;
 	
 	@Column(name = "ar_condicionado")
-	private Boolean arCondicionado;
+	private boolean arCondicionado;
 	
-	@Column(name = "camera-re")
-	private Boolean cameraRe;
+	@Column(name = "camera_re")
+	private boolean cameraRe;
 	
-	@Column(name = "tipo_cambio")
+	@Column(name = "tipo_cambio", nullable = false)
 	private TipoCambio tipoCambio;
 	
-	@Column(name = "tipo_tamanho")
+	@Column(name = "tipo_tamanho" , nullable = false)
 	private TamanhoVeiculo tamanhoVeiculo;
 
 	public Boolean getMp3() {

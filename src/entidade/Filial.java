@@ -1,5 +1,6 @@
 package entidade;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -10,8 +11,8 @@ public class Filial extends Entidade {
 	
 	@Column(length =20)
 	private String nome;
-	private Boolean estado;
-	@OneToOne
+	private boolean ativo;
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false)
 	private Endereco endereco;
 	
@@ -31,16 +32,14 @@ public class Filial extends Entidade {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	public Boolean getEstado() {
-		return estado;
+
+	public boolean isAtivo() {
+		return ativo;
 	}
-	
-	public void setEstado(Boolean estado) {
-		this.estado = estado;
-	}
-	
-	
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}	
 	
 	
 	
