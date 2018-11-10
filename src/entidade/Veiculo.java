@@ -20,8 +20,7 @@ import enumeracoes.TipoCombustivel;
 public class Veiculo extends Entidade {
    
 	
-	@Column(nullable = false)
-	private Boolean locado, ativo;
+	private boolean locado, ativo;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_registro", nullable = false)

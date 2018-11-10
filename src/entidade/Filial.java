@@ -9,13 +9,12 @@ import javax.persistence.OneToOne;
 @Entity
 public class Filial extends Entidade {
 	
+	private boolean ativo;
 	@Column(length =20)
 	private String nome;
-	private boolean ativo;
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false)
 	private Endereco endereco;
-	
 	
 	public Endereco getEndereco() {
 		return endereco;

@@ -26,9 +26,20 @@ public class Reserva extends Entidade {
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Cliente cliente;
-	
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private Funcionario funcionario;
 	@ManyToOne
 	private Filial filial;
+
+	
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
 
 	public Date getDateRetirada() {
 		return dateRetirada;

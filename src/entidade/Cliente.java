@@ -15,11 +15,15 @@ import javax.persistence.OneToOne;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Cliente extends Entidade{
 	
+	private boolean ativo;
 	@Column(length = 100 , nullable = false)
 	private String nome;
 	@Column(length = 50, unique = true)
 	private String codigo;
-	private boolean ativo;
+	@Column(length = 100)
+	private String email;
+	@Column(length = 30)
+	private String telefone;
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false)
 	private Endereco endereco;
@@ -28,7 +32,26 @@ public class Cliente extends Entidade{
 	@OneToMany(mappedBy = "cliente", targetEntity = Reserva.class)
 	private List<Reserva> reservas;
 	
-	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
 	public List<Locacao> getLocacoes() {
 		return locacoes;
 	}

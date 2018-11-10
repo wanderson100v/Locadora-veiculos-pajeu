@@ -14,20 +14,6 @@ import enumeracoes.TipoLocacao;
 @Entity
 public class Locacao extends Entidade {
 	
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private Cliente cliente;
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private Veiculo veiculo;
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private Filial fifialRetirada;
-	@ManyToOne
-	private Filial fifialEntrega;
-	@ManyToOne
-	private Fisico motorista;
-	
 	@Column(name = "tipo_locacao")
 	private TipoLocacao tipoLocacao;
 	
@@ -47,10 +33,45 @@ public class Locacao extends Entidade {
 	
 	private boolean finalizado;
 	
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private Cliente cliente;
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private Veiculo veiculo;
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private Filial fifialRetirada;
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private Funcionario funcionario;
+	@ManyToOne
+	private Filial fifialEntrega;
+	@ManyToOne
+	private Fisico motorista;
+	
+	
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
+
+	public Fisico getMotorista() {
+		return motorista;
+	}
+
+	public void setMotorista(Fisico motorista) {
+		this.motorista = motorista;
+	}
+
 	public boolean isFinalizado() {
 		return finalizado;
 	}
-
+	
+	
 	public void setFinalizado(boolean finalizado) {
 		this.finalizado = finalizado;
 	}
