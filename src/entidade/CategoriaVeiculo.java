@@ -11,15 +11,14 @@ public class CategoriaVeiculo extends Entidade {
 	
 	@Column(length = 10)
 	private String tipo;
-	@Column(name = "quilometragem_revisao")
+	@Column(name = "quilometragem_revisao", nullable = false)
 	private float quilometragemRevisao;
-	@Column(name = "horas_revisao")
+	@Column(name = "horas_revisao", nullable = false)
 	private float horasRevisao;
-	@Column(name = "horas_limpesa")
+	@Column(name = "horas_limpesa", nullable = false)
 	private float horasLimpesa;
-	@Column(name = "valor_diaria")
+	@Column(name = "valor_diaria",nullable = false)
 	private Float valorDiaria;
-	@Column(nullable = true)
 	@OneToMany(mappedBy = "categoriaVeiculo" , targetEntity = Veiculo.class)
 	private List<Veiculo> veiculos;
 	

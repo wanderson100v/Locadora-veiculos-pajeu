@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -32,7 +33,8 @@ public class Locacao extends Entidade {
 	private Float valorPago;
 	
 	private boolean finalizado;
-	
+	@OneToOne
+	private Reserva reservaOrigem;
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Cliente cliente;
@@ -61,6 +63,14 @@ public class Locacao extends Entidade {
 
 	public Fisico getMotorista() {
 		return motorista;
+	}
+
+	public Reserva getReservaOrigem() {
+		return reservaOrigem;
+	}
+
+	public void setReservaOrigem(Reserva reservaOrigem) {
+		this.reservaOrigem = reservaOrigem;
 	}
 
 	public void setMotorista(Fisico motorista) {

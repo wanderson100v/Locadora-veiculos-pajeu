@@ -18,8 +18,8 @@ public class Reserva extends Entidade {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "data_devolucao")
 	private Date dataDevolucao;
-	@Column(name = "valor_pago")
-	private Date valorPago;
+	@Column(name = "valor")
+	private Date valor;
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private CategoriaVeiculo categoriaVeiculo;
@@ -57,12 +57,12 @@ public class Reserva extends Entidade {
 		this.dataDevolucao = dataDevolucao;
 	}
 
-	public Date getValorPago() {
-		return valorPago;
+	public Date getValor() {
+		return valor;
 	}
 
-	public void setValorPago(Date valorPago) {
-		this.valorPago = valorPago;
+	public void setValor(Date valor) {
+		this.valor = valor;
 	}
 
 	public CategoriaVeiculo getCategoriaVeiculo() {

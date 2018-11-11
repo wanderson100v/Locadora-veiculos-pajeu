@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import enumeracoes.Cargo;
 
 @Entity
-public class Funcionario {
+public class Funcionario extends Entidade{
 	
 	@Column(length = 100)
 	private String nome;

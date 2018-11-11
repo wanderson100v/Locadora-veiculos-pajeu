@@ -8,13 +8,19 @@ import enumeracoes.TipoAcionamentoEmbreagem;
 @Entity(name = "caminhoneta_carga")
 public class CaminhonetaCarga extends Veiculo {
 	
-	private Float desenpenho,potencia;
-	@Column(name = "distancia_eichos")
-	private Float distanciaEichos;
-	@Column(name = "tipo_acionamento_embreagem")
+	@Column(nullable = false)
+	private Float desenpenho;
+	@Column(name = "potencia_motor", nullable = false)
+	private Float potencia;
+	@Column(name = "distancia_eixos",  nullable = false)
+	private Float distanciaEixos;
+	@Column(name = "tipo_acionamento_e", nullable = false)
 	private TipoAcionamentoEmbreagem tipoAcionamentoEmbreagem;
-	@Column(name = "capacidade_carga")
+	@Column(name = "capacidade_carga", nullable = false)
 	private Integer capacidadeCarga;
+	@Column(name = "capacidade_combustivel", nullable = false)
+	private Integer capacidadeCombustivel;
+	
 
 	public Float getDesenpenho() {
 		return desenpenho;
@@ -28,16 +34,24 @@ public class CaminhonetaCarga extends Veiculo {
 		return potencia;
 	}
 
+	public Integer getCapacidadeCombustivel() {
+		return capacidadeCombustivel;
+	}
+
+	public void setCapacidadeCombustivel(Integer capacidadeCombustivel) {
+		this.capacidadeCombustivel = capacidadeCombustivel;
+	}
+
 	public void setPotencia(Float potencia) {
 		this.potencia = potencia;
 	}
 
-	public Float getDistanciaEichos() {
-		return distanciaEichos;
+	public Float getDistanciaEixos() {
+		return distanciaEixos;
 	}
 
-	public void setDistanciaEichos(Float distanciaEichos) {
-		this.distanciaEichos = distanciaEichos;
+	public void setDistanciaEixos(Float distanciaEixos) {
+		this.distanciaEixos = distanciaEixos;
 	}
 
 	public TipoAcionamentoEmbreagem getTipoAcionamentoEmbreagem() {

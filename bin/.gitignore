@@ -1,8 +1,5 @@
-/app/
-/bussines/
-/controller/
-/dao/
 /entidade/
 /enumeracoes/
 /excecoes/
 /sql/
+/META-INF/

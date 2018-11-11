@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import enumeracoes.EstadoManutencao;
 import enumeracoes.TipoManutencao;
 
 @Entity
@@ -17,19 +18,38 @@ public class Manutencao extends Entidade{
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "data_hora_inicio")
 	private Date dataHoraInicio;
-	@Column(name = "tipo_manutencao")
+	@Column(name = "tipo")
 	private TipoManutencao tipoManuntencao;
-	private boolean finalizado;
+	@Column(name = "estado")
+	private EstadoManutencao estadoManutencao;
+	private Float custo;
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Veiculo veiculo;
 	
-	public boolean isFinalizado() {
-		return finalizado;
+
+	public EstadoManutencao getEstadoManutencao() {
+		return estadoManutencao;
 	}
 
-	public void setFinalizado(boolean finalizado) {
-		this.finalizado = finalizado;
+	public void setEstadoManutencao(EstadoManutencao estadoManutencao) {
+		this.estadoManutencao = estadoManutencao;
+	}
+
+	public Float getCusto() {
+		return custo;
+	}
+
+	public void setCusto(Float custo) {
+		this.custo = custo;
+	}
+
+	public Veiculo getVeiculo() {
+		return veiculo;
+	}
+
+	public void setVeiculo(Veiculo veiculo) {
+		this.veiculo = veiculo;
 	}
 
 	public Date getDataHoraInicio() {

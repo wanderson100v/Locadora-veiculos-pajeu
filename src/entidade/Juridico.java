@@ -8,7 +8,7 @@ public class Juridico extends Cliente {
 	
 	@Column(unique = true, nullable = false, length = 20)
 	private String cnpj;
-	@Column(nullable = false, length = 20)
+	@Column(name = "inscricao_estadual",unique = true,nullable = false, length = 20)
 	private String inscricaoEstadual;
 	
 	public String getCnpj() {

@@ -1,7 +1,7 @@
 package enumeracoes;
 
 public enum EstadoRerserva {
-	CANCELADO("Cancelada"),PENDENTE("Pendente"),CONCLUIDO("Concluído");
+	CANCELADO("Cancelada"),PENDENTE("Pendente"),EFETIVADA("Efetivada");
 	
 	private String value;
 

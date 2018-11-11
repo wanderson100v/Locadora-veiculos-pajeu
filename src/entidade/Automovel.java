@@ -1,77 +1,44 @@
 package entidade;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import enumeracoes.TamanhoVeiculo;
+import enumeracoes.TipoAirBag;
+import enumeracoes.TipoAutomovel;
 import enumeracoes.TipoCambio;
 
 @Entity
 public class Automovel extends Veiculo {
-	
-	private boolean mp3,dvd,radio;
-	
-	@Column(name = "direcao_hidraulica")
-	private boolean direcaoHidraulica;
-	
-	@Column(name = "ar_condicionado")
-	private boolean arCondicionado;
-	
-	@Column(name = "camera_re")
-	private boolean cameraRe;
-	
+		
 	@Column(name = "tipo_cambio", nullable = false)
 	private TipoCambio tipoCambio;
-	
+	@Column(name = "tipo", nullable = false)
+	private TipoAutomovel tipoAutomovel;
+	@Column(name = "tipo_airbag", nullable = false)
+	private TipoAirBag tipoAirBag;
 	@Column(name = "tipo_tamanho" , nullable = false)
 	private TamanhoVeiculo tamanhoVeiculo;
-
-	public Boolean getMp3() {
-		return mp3;
+	
+	
+	public TipoAutomovel getTipoAutomovel() {
+		return tipoAutomovel;
 	}
 
-	public void setMp3(Boolean mp3) {
-		this.mp3 = mp3;
+	public void setTipoAutomovel(TipoAutomovel tipoAutomovel) {
+		this.tipoAutomovel = tipoAutomovel;
 	}
 
-	public Boolean getDvd() {
-		return dvd;
+	public TipoAirBag getTipoAirBag() {
+		return tipoAirBag;
 	}
 
-	public void setDvd(Boolean dvd) {
-		this.dvd = dvd;
-	}
-
-	public Boolean getRadio() {
-		return radio;
-	}
-
-	public void setRadio(Boolean radio) {
-		this.radio = radio;
-	}
-
-	public Boolean getDirecaoHidraulica() {
-		return direcaoHidraulica;
-	}
-
-	public void setDirecaoHidraulica(Boolean direcaoHidraulica) {
-		this.direcaoHidraulica = direcaoHidraulica;
-	}
-
-	public Boolean getArCondicionado() {
-		return arCondicionado;
-	}
-
-	public void setArCondicionado(Boolean arCondicionado) {
-		this.arCondicionado = arCondicionado;
-	}
-
-	public Boolean getCameraRe() {
-		return cameraRe;
-	}
-
-	public void setCameraRe(Boolean cameraRe) {
-		this.cameraRe = cameraRe;
+	public void setTipoAirBag(TipoAirBag tipoAirBag) {
+		this.tipoAirBag = tipoAirBag;
 	}
 
 	public TipoCambio getTipoCambio() {

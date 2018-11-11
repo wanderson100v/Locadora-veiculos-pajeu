@@ -1,6 +1,5 @@
 package entidade;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,54 +9,63 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import enumeracoes.TipoCombustivel;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Veiculo extends Entidade {
-   
-	
+  
 	private boolean locado, ativo;
-	
-	@Temporal(TemporalType.DATE)
-	@Column(name = "data_registro", nullable = false)
-	private Date dataRegistro;
-
-	@Column(length = 10, nullable = false)
-	private String cor,placa;
-	
-	@Column(length = 30, name = "numero_chassi", nullable = false)
+	@Column(length = 10, unique = true ,nullable = false)
+	private String placa;
+	@Column(length = 20, nullable = false)
+	private String cor,modelo, fabricante;
+	@Column(length = 30, name = "numero_chassi", nullable = false,unique = true)
 	private String numeroChassi;
-	
-	@Column(length = 30, name = "numero_motor", nullable = false)
+	@Column(length = 30, name = "numero_motor", nullable = false,unique = true)
 	private String numeroMotor;
-	
 	@Column(name = "torque_motor", nullable = false)
 	private float torqueMotor;
-	
 	@Column(name = "tipo_combustivel", nullable = false)
 	private TipoCombustivel tipoCombustivel;  
-	
 	@Column(nullable = false)
 	private Integer quilometragem;
-	
+	@Column(name = "ano_fabricante", nullable = false)
+	private Integer anoFabricante;
+	@Column(name = "ano_modelo", nullable = false)
+	private Integer anoModelo;
+	@Column(name = "qtd_passageiro", nullable = false)
+	private Integer quantidadePortas;
+	@Column(name = "qtd_porta", nullable = false)
+	private Integer quantidadePassageiro;
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private CategoriaVeiculo categoriaVeiculo;
-	
 	@ManyToOne
 	private Filial filial;
-	
 	@OneToMany(mappedBy = "veiculo", targetEntity = Manutencao.class)
 	private List<Manutencao> manutencao;
-	
 	@OneToMany(mappedBy = "veiculo", targetEntity = Locacao.class)
 	private List<Manutencao> locacoes;
 	
 	
+	public String getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+
+	public void setLocado(boolean locado) {
+		this.locado = locado;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
 	public List<Manutencao> getLocacoes() {
 		return locacoes;
 	}
@@ -72,14 +80,6 @@ public class Veiculo extends Entidade {
 
 	public void setFilial(Filial filial) {
 		this.filial = filial;
-	}
-	
-	public Date getDataRegistro() {
-		return dataRegistro;
-	}
-
-	public void setDataRegistro(Date dataRegistro) {
-		this.dataRegistro = dataRegistro;
 	}
 
 	public String getCor() {
@@ -122,6 +122,46 @@ public class Veiculo extends Entidade {
 		this.cor = cor;
 	}
 	
+	public String getFabricante() {
+		return fabricante;
+	}
+
+	public void setFabricante(String fabricante) {
+		this.fabricante = fabricante;
+	}
+
+	public Integer getAnoFabricante() {
+		return anoFabricante;
+	}
+
+	public void setAnoFabricante(Integer anoFabricante) {
+		this.anoFabricante = anoFabricante;
+	}
+
+	public Integer getAnoModelo() {
+		return anoModelo;
+	}
+
+	public void setAnoModelo(Integer anoModelo) {
+		this.anoModelo = anoModelo;
+	}
+
+	public Integer getQuantidadePortas() {
+		return quantidadePortas;
+	}
+
+	public void setQuantidadePortas(Integer quantidadePortas) {
+		this.quantidadePortas = quantidadePortas;
+	}
+
+	public Integer getQuantidadePassageiro() {
+		return quantidadePassageiro;
+	}
+
+	public void setQuantidadePassageiro(Integer quantidadePassageiro) {
+		this.quantidadePassageiro = quantidadePassageiro;
+	}
+
 	public String getPlaca() {
 		return placa;
 	}
