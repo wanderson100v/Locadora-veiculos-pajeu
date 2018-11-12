@@ -31,18 +31,14 @@ public class App extends Application{
 		//launch(args); 
 		
 		ConnectionFactory.setUser("postgres","admin");
-		ConnectionFactory.getConnection().createEntityManager();
-		
-		/*
-		
+	//	ConnectionFactory.getConnection().createEntityManager();
 		
 		Juridico juridico = new Juridico();
-	//	juridico.setCodigo("3123123");
+		juridico.setCodigo("3123123");
 		juridico.setCnpj("123-3123-412DA");
 		juridico.setInscricaoEstadual("30412312-11");
 		juridico.setNome("Funeraria leva e não traz");
 		Endereco e = new Endereco();
-		
 		
 		e.setNumero("3213A");
 		e.setBairro("Bairro das dores");
@@ -51,17 +47,13 @@ public class App extends Application{
 		e.setCep("13213-543");
 		e.setRua("Rua fratura");
 		juridico.setEndereco(e);
+		
 		try {
-			//new Dao<Endereco>(Endereco.class).cadastrar(e);
-			//System.out.println(juridico.getEndereco().getId());
 			ClienteBo.getInstance().cadastrarEditar(juridico);
 		} catch ( BoException e1) {
-			// TODO Auto-generated catch block
 			System.out.println(e1.getMessage());
 			e1.printStackTrace();
-		}*/
-		
-		//new Dao<Fisico>(Fisico.class).transacao(new Fisico());
+		}
 	}
 	
 	@Override

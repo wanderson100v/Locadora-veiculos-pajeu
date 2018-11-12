@@ -43,12 +43,12 @@ public class Locacao extends Entidade {
 	private Veiculo veiculo;
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private Filial fifialRetirada;
+	private Filial filialRetirada;
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Funcionario funcionario;
 	@ManyToOne
-	private Filial fifialEntrega;
+	private Filial filialEntrega;
 	@ManyToOne
 	private Fisico motorista;
 	
@@ -102,20 +102,20 @@ public class Locacao extends Entidade {
 		this.veiculo = veiculo;
 	}
 
-	public Filial getFifialRetirada() {
-		return fifialRetirada;
+	public Filial getFilialRetirada() {
+		return filialRetirada;
 	}
 
-	public void setFifialRetirada(Filial fifialRetirada) {
-		this.fifialRetirada = fifialRetirada;
+	public void setFilialRetirada(Filial filialRetirada) {
+		this.filialRetirada = filialRetirada;
 	}
 
-	public Filial getFifialEntrega() {
-		return fifialEntrega;
+	public Filial getFilialEntrega() {
+		return filialEntrega;
 	}
 
-	public void setFifialEntrega(Filial fifialEntrega) {
-		this.fifialEntrega = fifialEntrega;
+	public void setFilialEntrega(Filial filialEntrega) {
+		this.filialEntrega = filialEntrega;
 	}
 
 	public TipoLocacao getTipoLocacao() {

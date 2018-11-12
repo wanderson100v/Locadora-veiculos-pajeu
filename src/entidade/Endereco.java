@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 @Entity
 public class Endereco extends Entidade {
 	
-	@Column(length = 50 , nullable = false)
+	@Column(length = 50)
 	private String rua,bairro,cidade,estado,numero;
 	
 	@Column(length = 20, unique = true , nullable = false)

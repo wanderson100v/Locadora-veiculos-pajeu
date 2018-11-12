@@ -1,6 +1,6 @@
 package entidade;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,9 +28,9 @@ public class Cliente extends Entidade{
 	@JoinColumn(nullable = false)
 	private Endereco endereco;
 	@OneToMany(mappedBy = "cliente", targetEntity = Locacao.class)
-	private List<Locacao> locacoes;
+	private Set<Locacao> locacoes;
 	@OneToMany(mappedBy = "cliente", targetEntity = Reserva.class)
-	private List<Reserva> reservas;
+	private Set<Reserva> reservas;
 	
 	public String getEmail() {
 		return email;
@@ -51,20 +51,24 @@ public class Cliente extends Entidade{
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
+	
+	public boolean isAtivo() {
+		return ativo;
+	}
 
-	public List<Locacao> getLocacoes() {
+	public Set<Locacao> getLocacoes() {
 		return locacoes;
 	}
 
-	public void setLocacoes(List<Locacao> locacoes) {
+	public void setLocacoes(Set<Locacao> locacoes) {
 		this.locacoes = locacoes;
 	}
 
-	public List<Reserva> getReservas() {
+	public Set<Reserva> getReservas() {
 		return reservas;
 	}
 
-	public void setReservas(List<Reserva> reservas) {
+	public void setReservas(Set<Reserva> reservas) {
 		this.reservas = reservas;
 	}
 
@@ -79,15 +83,7 @@ public class Cliente extends Entidade{
 	public String getCodigo() {
 		return codigo;
 	}
-
-	public Boolean getAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
-	}
-
+	
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
 	}
