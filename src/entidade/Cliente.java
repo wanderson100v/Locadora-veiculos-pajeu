@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Cliente extends Entidade{
 	
+	private static final long serialVersionUID = 1L;
 	private boolean ativo;
 	@Column(length = 100 , nullable = false)
 	private String nome;
@@ -95,6 +96,77 @@ public class Cliente extends Entidade{
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (ativo ? 1231 : 1237);
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((endereco == null) ? 0 : endereco.hashCode());
+		result = prime * result + ((locacoes == null) ? 0 : locacoes.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((reservas == null) ? 0 : reservas.hashCode());
+		result = prime * result + ((telefone == null) ? 0 : telefone.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Cliente))
+			return false;
+		Cliente other = (Cliente) obj;
+		if (ativo != other.ativo)
+			return false;
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (endereco == null) {
+			if (other.endereco != null)
+				return false;
+		} else if (!endereco.equals(other.endereco))
+			return false;
+		if (locacoes == null) {
+			if (other.locacoes != null)
+				return false;
+		} else if (!locacoes.equals(other.locacoes))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (reservas == null) {
+			if (other.reservas != null)
+				return false;
+		} else if (!reservas.equals(other.reservas))
+			return false;
+		if (telefone == null) {
+			if (other.telefone != null)
+				return false;
+		} else if (!telefone.equals(other.telefone))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Cliente [ativo=" + ativo + ", nome=" + nome + ", codigo=" + codigo + ", email=" + email + ", telefone="
+				+ telefone + ", endereco=" + endereco + ", locacoes=" + locacoes + ", reservas=" + reservas + "]";
+	}
+	
 	
 	
 }

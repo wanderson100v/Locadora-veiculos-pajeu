@@ -1,7 +1,9 @@
 package app;
 
 
-import bussines.ClienteBo;
+
+import business.BoJuridico;
+import business.IBoJuridico;
 import dao.DaoRes;
 import dao.IDaoRes;
 import entidade.Endereco;
@@ -23,15 +25,14 @@ public class App extends Application{
 	private static Stage stage;
 	private static Pane loginPane,homePane;
 	private static Scene loginScene,homeScene;
-	private static IDaoRes daoRes = DaoRes.getInstance();
-	// associar registros a usuarios de banco, hipotese 1 : referenciar tp_users
-	
+	private static IDaoRes daoRes = DaoRes.getInstance();	
 	
 	public static void main(String[] args) {
 		//launch(args); 
 		
 		ConnectionFactory.setUser("postgres","admin");
-	//	ConnectionFactory.getConnection().createEntityManager();
+		ConnectionFactory.getConnection().createEntityManager();
+		
 		
 		Juridico juridico = new Juridico();
 		juridico.setCodigo("3123123");
@@ -49,11 +50,13 @@ public class App extends Application{
 		juridico.setEndereco(e);
 		
 		try {
-			ClienteBo.getInstance().cadastrarEditar(juridico);
+			IBoJuridico boJuridico = new BoJuridico();
+			boJuridico.cadastrarEditar(juridico);
 		} catch ( BoException e1) {
 			System.out.println(e1.getMessage());
 			e1.printStackTrace();
 		}
+		
 	}
 	
 	@Override
@@ -74,6 +77,12 @@ public class App extends Application{
 			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public void stop() throws Exception {
+		System.exit(0);
+		super.stop();
 	}
 	
 	

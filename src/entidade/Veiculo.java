@@ -16,6 +16,7 @@ import enumeracoes.TipoCombustivel;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Veiculo extends Entidade {
   
+	private static final long serialVersionUID = 1L;
 	private boolean locado, ativo;
 	@Column(length = 10, unique = true ,nullable = false)
 	private String placa;
@@ -209,5 +210,138 @@ public class Veiculo extends Entidade {
 	public void setQuilometragem(Integer quilometragem) {
 		this.quilometragem = quilometragem;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((anoFabricante == null) ? 0 : anoFabricante.hashCode());
+		result = prime * result + ((anoModelo == null) ? 0 : anoModelo.hashCode());
+		result = prime * result + (ativo ? 1231 : 1237);
+		result = prime * result + ((categoriaVeiculo == null) ? 0 : categoriaVeiculo.hashCode());
+		result = prime * result + ((cor == null) ? 0 : cor.hashCode());
+		result = prime * result + ((fabricante == null) ? 0 : fabricante.hashCode());
+		result = prime * result + ((filial == null) ? 0 : filial.hashCode());
+		result = prime * result + ((locacoes == null) ? 0 : locacoes.hashCode());
+		result = prime * result + (locado ? 1231 : 1237);
+		result = prime * result + ((manutencao == null) ? 0 : manutencao.hashCode());
+		result = prime * result + ((modelo == null) ? 0 : modelo.hashCode());
+		result = prime * result + ((numeroChassi == null) ? 0 : numeroChassi.hashCode());
+		result = prime * result + ((numeroMotor == null) ? 0 : numeroMotor.hashCode());
+		result = prime * result + ((placa == null) ? 0 : placa.hashCode());
+		result = prime * result + ((quantidadePassageiro == null) ? 0 : quantidadePassageiro.hashCode());
+		result = prime * result + ((quantidadePortas == null) ? 0 : quantidadePortas.hashCode());
+		result = prime * result + ((quilometragem == null) ? 0 : quilometragem.hashCode());
+		result = prime * result + ((tipoCombustivel == null) ? 0 : tipoCombustivel.hashCode());
+		result = prime * result + Float.floatToIntBits(torqueMotor);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof Veiculo))
+			return false;
+		Veiculo other = (Veiculo) obj;
+		if (anoFabricante == null) {
+			if (other.anoFabricante != null)
+				return false;
+		} else if (!anoFabricante.equals(other.anoFabricante))
+			return false;
+		if (anoModelo == null) {
+			if (other.anoModelo != null)
+				return false;
+		} else if (!anoModelo.equals(other.anoModelo))
+			return false;
+		if (ativo != other.ativo)
+			return false;
+		if (categoriaVeiculo == null) {
+			if (other.categoriaVeiculo != null)
+				return false;
+		} else if (!categoriaVeiculo.equals(other.categoriaVeiculo))
+			return false;
+		if (cor == null) {
+			if (other.cor != null)
+				return false;
+		} else if (!cor.equals(other.cor))
+			return false;
+		if (fabricante == null) {
+			if (other.fabricante != null)
+				return false;
+		} else if (!fabricante.equals(other.fabricante))
+			return false;
+		if (filial == null) {
+			if (other.filial != null)
+				return false;
+		} else if (!filial.equals(other.filial))
+			return false;
+		if (locacoes == null) {
+			if (other.locacoes != null)
+				return false;
+		} else if (!locacoes.equals(other.locacoes))
+			return false;
+		if (locado != other.locado)
+			return false;
+		if (manutencao == null) {
+			if (other.manutencao != null)
+				return false;
+		} else if (!manutencao.equals(other.manutencao))
+			return false;
+		if (modelo == null) {
+			if (other.modelo != null)
+				return false;
+		} else if (!modelo.equals(other.modelo))
+			return false;
+		if (numeroChassi == null) {
+			if (other.numeroChassi != null)
+				return false;
+		} else if (!numeroChassi.equals(other.numeroChassi))
+			return false;
+		if (numeroMotor == null) {
+			if (other.numeroMotor != null)
+				return false;
+		} else if (!numeroMotor.equals(other.numeroMotor))
+			return false;
+		if (placa == null) {
+			if (other.placa != null)
+				return false;
+		} else if (!placa.equals(other.placa))
+			return false;
+		if (quantidadePassageiro == null) {
+			if (other.quantidadePassageiro != null)
+				return false;
+		} else if (!quantidadePassageiro.equals(other.quantidadePassageiro))
+			return false;
+		if (quantidadePortas == null) {
+			if (other.quantidadePortas != null)
+				return false;
+		} else if (!quantidadePortas.equals(other.quantidadePortas))
+			return false;
+		if (quilometragem == null) {
+			if (other.quilometragem != null)
+				return false;
+		} else if (!quilometragem.equals(other.quilometragem))
+			return false;
+		if (tipoCombustivel != other.tipoCombustivel)
+			return false;
+		if (Float.floatToIntBits(torqueMotor) != Float.floatToIntBits(other.torqueMotor))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Veiculo [locado=" + locado + ", ativo=" + ativo + ", placa=" + placa + ", cor=" + cor + ", modelo="
+				+ modelo + ", fabricante=" + fabricante + ", numeroChassi=" + numeroChassi + ", numeroMotor="
+				+ numeroMotor + ", torqueMotor=" + torqueMotor + ", tipoCombustivel=" + tipoCombustivel
+				+ ", quilometragem=" + quilometragem + ", anoFabricante=" + anoFabricante + ", anoModelo=" + anoModelo
+				+ ", quantidadePortas=" + quantidadePortas + ", quantidadePassageiro=" + quantidadePassageiro
+				+ ", categoriaVeiculo=" + categoriaVeiculo + ", filial=" + filial + ", manutencao=" + manutencao
+				+ ", locacoes=" + locacoes + "]";
+	}
   
+	
 }

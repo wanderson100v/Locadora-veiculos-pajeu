@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Filial extends Entidade {
 	
+	private static final long serialVersionUID = 3891969678671342443L;
 	private boolean ativo;
 	@Column(length =20)
 	private String nome;
@@ -76,7 +77,80 @@ public class Filial extends Entidade {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (ativo ? 1231 : 1237);
+		result = prime * result + ((endereco == null) ? 0 : endereco.hashCode());
+		result = prime * result + ((funcionarios == null) ? 0 : funcionarios.hashCode());
+		result = prime * result + ((locacoesEntrega == null) ? 0 : locacoesEntrega.hashCode());
+		result = prime * result + ((locacoesRetirada == null) ? 0 : locacoesRetirada.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((reservas == null) ? 0 : reservas.hashCode());
+		result = prime * result + ((veiculos == null) ? 0 : veiculos.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof Filial))
+			return false;
+		Filial other = (Filial) obj;
+		if (ativo != other.ativo)
+			return false;
+		if (endereco == null) {
+			if (other.endereco != null)
+				return false;
+		} else if (!endereco.equals(other.endereco))
+			return false;
+		if (funcionarios == null) {
+			if (other.funcionarios != null)
+				return false;
+		} else if (!funcionarios.equals(other.funcionarios))
+			return false;
+		if (locacoesEntrega == null) {
+			if (other.locacoesEntrega != null)
+				return false;
+		} else if (!locacoesEntrega.equals(other.locacoesEntrega))
+			return false;
+		if (locacoesRetirada == null) {
+			if (other.locacoesRetirada != null)
+				return false;
+		} else if (!locacoesRetirada.equals(other.locacoesRetirada))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (reservas == null) {
+			if (other.reservas != null)
+				return false;
+		} else if (!reservas.equals(other.reservas))
+			return false;
+		if (veiculos == null) {
+			if (other.veiculos != null)
+				return false;
+		} else if (!veiculos.equals(other.veiculos))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Filial [ativo=" + ativo + ", nome=" + nome + ", endereco=" + endereco + ", locacoesEntrega="
+				+ locacoesEntrega + ", locacoesRetirada=" + locacoesRetirada + ", reservas=" + reservas
+				+ ", funcionarios=" + funcionarios + ", veiculos=" + veiculos + "]";
 	}	
+	
+	
 	
 	
 	

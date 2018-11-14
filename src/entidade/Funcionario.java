@@ -12,6 +12,7 @@ import enumeracoes.Cargo;
 @Entity
 public class Funcionario extends Entidade{
 	
+	private static final long serialVersionUID = 1L;
 	@Column(length = 100)
 	private String nome;
 	@Column(unique = true, nullable = false , length = 30)
@@ -90,6 +91,67 @@ public class Funcionario extends Entidade{
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (ativo ? 1231 : 1237);
+		result = prime * result + ((cargo == null) ? 0 : cargo.hashCode());
+		result = prime * result + ((filial == null) ? 0 : filial.hashCode());
+		result = prime * result + ((locacoes == null) ? 0 : locacoes.hashCode());
+		result = prime * result + ((login == null) ? 0 : login.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((reservas == null) ? 0 : reservas.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof Funcionario))
+			return false;
+		Funcionario other = (Funcionario) obj;
+		if (ativo != other.ativo)
+			return false;
+		if (cargo != other.cargo)
+			return false;
+		if (filial == null) {
+			if (other.filial != null)
+				return false;
+		} else if (!filial.equals(other.filial))
+			return false;
+		if (locacoes == null) {
+			if (other.locacoes != null)
+				return false;
+		} else if (!locacoes.equals(other.locacoes))
+			return false;
+		if (login == null) {
+			if (other.login != null)
+				return false;
+		} else if (!login.equals(other.login))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (reservas == null) {
+			if (other.reservas != null)
+				return false;
+		} else if (!reservas.equals(other.reservas))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Funcionario [nome=" + nome + ", login=" + login + ", cargo=" + cargo + ", ativo=" + ativo + ", filial="
+				+ filial + ", locacoes=" + locacoes + ", reservas=" + reservas + "]";
 	}
 	
 	

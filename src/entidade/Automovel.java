@@ -1,11 +1,8 @@
 package entidade;
 
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import enumeracoes.TamanhoVeiculo;
 import enumeracoes.TipoAirBag;
@@ -14,7 +11,8 @@ import enumeracoes.TipoCambio;
 
 @Entity
 public class Automovel extends Veiculo {
-		
+
+	private static final long serialVersionUID = 1L;
 	@Column(name = "tipo_cambio", nullable = false)
 	private TipoCambio tipoCambio;
 	@Column(name = "tipo", nullable = false)
@@ -56,6 +54,44 @@ public class Automovel extends Veiculo {
 	public void setTamanhoVeiculo(TamanhoVeiculo tamanhoVeiculo) {
 		this.tamanhoVeiculo = tamanhoVeiculo;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((tamanhoVeiculo == null) ? 0 : tamanhoVeiculo.hashCode());
+		result = prime * result + ((tipoAirBag == null) ? 0 : tipoAirBag.hashCode());
+		result = prime * result + ((tipoAutomovel == null) ? 0 : tipoAutomovel.hashCode());
+		result = prime * result + ((tipoCambio == null) ? 0 : tipoCambio.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Automovel))
+			return false;
+		Automovel other = (Automovel) obj;
+		if (tamanhoVeiculo != other.tamanhoVeiculo)
+			return false;
+		if (tipoAirBag != other.tipoAirBag)
+			return false;
+		if (tipoAutomovel != other.tipoAutomovel)
+			return false;
+		if (tipoCambio != other.tipoCambio)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Automovel [tipoCambio=" + tipoCambio + ", tipoAutomovel=" + tipoAutomovel + ", tipoAirBag=" + tipoAirBag
+				+ ", tamanhoVeiculo=" + tamanhoVeiculo + "]";
+	}
+	
 	
 	
 }

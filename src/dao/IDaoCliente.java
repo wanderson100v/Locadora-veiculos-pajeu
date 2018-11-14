@@ -1,5 +1,7 @@
 package dao;
 
-public interface IDaoCliente {
+import entidade.Cliente;
+
+public interface IDaoCliente extends IDao<Cliente>{
 
 }

@@ -15,23 +15,19 @@ import enumeracoes.TipoLocacao;
 @Entity
 public class Locacao extends Entidade {
 	
+	private static final long serialVersionUID = 1L;
 	@Column(name = "tipo_locacao")
 	private TipoLocacao tipoLocacao;
-	
 	@Column(name = "data_retirada")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataRetirada;
-	
 	@Column(name = "data_devolucao")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataDevolucacao;
-	
 	@Column(name = "valor_diaria")
 	private Float valorDiaria;
-	
 	@Column(name = "valor_pago")
 	private Float valorPago;
-	
 	private boolean finalizado;
 	@OneToOne
 	private Reserva reservaOrigem;
@@ -157,8 +153,106 @@ public class Locacao extends Entidade {
 	public void setValorPago(Float valorPago) {
 		this.valorPago = valorPago;
 	}
-	
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
+		result = prime * result + ((dataDevolucacao == null) ? 0 : dataDevolucacao.hashCode());
+		result = prime * result + ((dataRetirada == null) ? 0 : dataRetirada.hashCode());
+		result = prime * result + ((filialEntrega == null) ? 0 : filialEntrega.hashCode());
+		result = prime * result + ((filialRetirada == null) ? 0 : filialRetirada.hashCode());
+		result = prime * result + (finalizado ? 1231 : 1237);
+		result = prime * result + ((funcionario == null) ? 0 : funcionario.hashCode());
+		result = prime * result + ((motorista == null) ? 0 : motorista.hashCode());
+		result = prime * result + ((reservaOrigem == null) ? 0 : reservaOrigem.hashCode());
+		result = prime * result + ((tipoLocacao == null) ? 0 : tipoLocacao.hashCode());
+		result = prime * result + ((valorDiaria == null) ? 0 : valorDiaria.hashCode());
+		result = prime * result + ((valorPago == null) ? 0 : valorPago.hashCode());
+		result = prime * result + ((veiculo == null) ? 0 : veiculo.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof Locacao))
+			return false;
+		Locacao other = (Locacao) obj;
+		if (cliente == null) {
+			if (other.cliente != null)
+				return false;
+		} else if (!cliente.equals(other.cliente))
+			return false;
+		if (dataDevolucacao == null) {
+			if (other.dataDevolucacao != null)
+				return false;
+		} else if (!dataDevolucacao.equals(other.dataDevolucacao))
+			return false;
+		if (dataRetirada == null) {
+			if (other.dataRetirada != null)
+				return false;
+		} else if (!dataRetirada.equals(other.dataRetirada))
+			return false;
+		if (filialEntrega == null) {
+			if (other.filialEntrega != null)
+				return false;
+		} else if (!filialEntrega.equals(other.filialEntrega))
+			return false;
+		if (filialRetirada == null) {
+			if (other.filialRetirada != null)
+				return false;
+		} else if (!filialRetirada.equals(other.filialRetirada))
+			return false;
+		if (finalizado != other.finalizado)
+			return false;
+		if (funcionario == null) {
+			if (other.funcionario != null)
+				return false;
+		} else if (!funcionario.equals(other.funcionario))
+			return false;
+		if (motorista == null) {
+			if (other.motorista != null)
+				return false;
+		} else if (!motorista.equals(other.motorista))
+			return false;
+		if (reservaOrigem == null) {
+			if (other.reservaOrigem != null)
+				return false;
+		} else if (!reservaOrigem.equals(other.reservaOrigem))
+			return false;
+		if (tipoLocacao != other.tipoLocacao)
+			return false;
+		if (valorDiaria == null) {
+			if (other.valorDiaria != null)
+				return false;
+		} else if (!valorDiaria.equals(other.valorDiaria))
+			return false;
+		if (valorPago == null) {
+			if (other.valorPago != null)
+				return false;
+		} else if (!valorPago.equals(other.valorPago))
+			return false;
+		if (veiculo == null) {
+			if (other.veiculo != null)
+				return false;
+		} else if (!veiculo.equals(other.veiculo))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Locacao [tipoLocacao=" + tipoLocacao + ", dataRetirada=" + dataRetirada + ", dataDevolucacao="
+				+ dataDevolucacao + ", valorDiaria=" + valorDiaria + ", valorPago=" + valorPago + ", finalizado="
+				+ finalizado + ", reservaOrigem=" + reservaOrigem + ", cliente=" + cliente + ", veiculo=" + veiculo
+				+ ", filialRetirada=" + filialRetirada + ", funcionario=" + funcionario + ", filialEntrega="
+				+ filialEntrega + ", motorista=" + motorista + "]";
+	}
 	
 	
 	
