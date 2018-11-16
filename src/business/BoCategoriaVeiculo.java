@@ -36,7 +36,7 @@ public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 	@Override
 	public CategoriaVeiculo buscarID(Long id) throws BoException {
 		try {
-			return daoCategoriaVeiculo.buscarId(id);
+			return daoCategoriaVeiculo.buscarID(id);
 		} catch (DaoException e) {
 			throw new BoException(e.getMessage());		
 		}
@@ -46,6 +46,15 @@ public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 	public List<CategoriaVeiculo> buscarAll() throws BoException {
 		try {
 			return daoCategoriaVeiculo.buscarAll();
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<CategoriaVeiculo> buscarPorExemplo(CategoriaVeiculo exemploEntidade) throws BoException {
+		try {
+			return daoCategoriaVeiculo.buscarPorExemplo(exemploEntidade);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

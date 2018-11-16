@@ -11,10 +11,12 @@ public interface IDao <T extends Entidade>{
 	
 	public void editar(T t) throws DaoException;
 	
-	public T buscarId(Long id) throws DaoException;
+	public T buscarID(Long id) throws DaoException;
 	
 	public void excluir(T t) throws DaoException;
 	
 	public List<T> buscarAll() throws DaoException ;
+	
+	public List<T> buscarPorExemplo(T exemploEntidade)throws DaoException;
 	
 }

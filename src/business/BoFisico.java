@@ -28,7 +28,13 @@ public class BoFisico implements IBoFisico{
 	@Override
 	public void excluir(Fisico entidade) throws BoException {
 		try {
-			daoFisico.excluir(entidade);
+			try {
+				daoFisico.excluir(entidade);
+			} catch (DaoException e) {
+				entidade.setAtivo(false);
+				daoFisico.editar(entidade);
+				throw new BoException(e.getMessage());
+			}
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}
@@ -37,7 +43,7 @@ public class BoFisico implements IBoFisico{
 	@Override
 	public Fisico buscarID(Long id) throws BoException {
 		try {
-			return daoFisico.buscarId(id);
+			return daoFisico.buscarID(id);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}
@@ -47,6 +53,15 @@ public class BoFisico implements IBoFisico{
 	public List<Fisico> buscarAll() throws BoException {
 		try {
 			return daoFisico.buscarAll();
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+	
+	@Override
+	public List<Fisico> buscarPorExemplo(Fisico exemploEntidade) throws BoException {
+		try {
+			return daoFisico.buscarPorExemplo(exemploEntidade);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

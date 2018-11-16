@@ -42,7 +42,7 @@ public class BoFuncionario implements IBoFuncionario {
 	@Override
 	public Funcionario buscarID(Long id) throws BoException {
 		try {
-			return daoFuncionario.buscarId(id);
+			return daoFuncionario.buscarID(id);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}
@@ -56,5 +56,16 @@ public class BoFuncionario implements IBoFuncionario {
 			throw new BoException(e.getMessage());
 		}
 	}
+
+	@Override
+	public List<Funcionario> buscarPorExemplo(Funcionario exemploEntidade) throws BoException {
+		try {
+			return daoFuncionario.buscarPorExemplo(exemploEntidade);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+	
+	
 
 }

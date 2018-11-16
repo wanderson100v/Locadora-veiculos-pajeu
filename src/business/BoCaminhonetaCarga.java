@@ -27,8 +27,14 @@ public class BoCaminhonetaCarga implements IBoCaminhonetaCarga{
 	@Override
 	public void excluir(CaminhonetaCarga entidade) throws BoException {
 		try {
-			daoCaminhonetaCarga.excluir(entidade);
-		} catch (DaoException e) {
+			try {
+				daoCaminhonetaCarga.excluir(entidade);
+			} catch (DaoException e) {
+				entidade.setAtivo(false);
+				daoCaminhonetaCarga.editar(entidade);
+				throw new BoException(e.getMessage());
+			}
+		}catch (DaoException e) {
 			throw new BoException(e.getMessage());	
 		}
 	}
@@ -36,7 +42,7 @@ public class BoCaminhonetaCarga implements IBoCaminhonetaCarga{
 	@Override
 	public CaminhonetaCarga buscarID(Long id) throws BoException {
 		try {
-			return daoCaminhonetaCarga.buscarId(id);
+			return daoCaminhonetaCarga.buscarID(id);
 		} catch (DaoException e) {
 			throw new BoException(e.getMessage());		
 		}
@@ -46,6 +52,15 @@ public class BoCaminhonetaCarga implements IBoCaminhonetaCarga{
 	public List<CaminhonetaCarga> buscarAll() throws BoException {
 		try {
 			return daoCaminhonetaCarga.buscarAll();
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<CaminhonetaCarga> buscarPorExemplo(CaminhonetaCarga exemploEntidade) throws BoException {
+		try {
+			return daoCaminhonetaCarga.buscarPorExemplo(exemploEntidade);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

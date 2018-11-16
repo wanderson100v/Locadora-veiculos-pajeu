@@ -27,7 +27,13 @@ public class BoAcessorio implements IBoAcessorio{
 	@Override
 	public void excluir(Acessorio entidade) throws BoException {
 		try {
-			daoAcessorio.excluir(entidade);
+			try {
+				daoAcessorio.excluir(entidade);
+			} catch (DaoException e) {
+				entidade.setDepreciado(true);
+				daoAcessorio.editar(entidade);
+				throw new BoException(e.getMessage());
+			}
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		} 
@@ -36,7 +42,7 @@ public class BoAcessorio implements IBoAcessorio{
 	@Override
 	public Acessorio buscarID(Long id) throws BoException {
 		try {
-			return daoAcessorio.buscarId(id);
+			return daoAcessorio.buscarID(id);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}
@@ -46,6 +52,15 @@ public class BoAcessorio implements IBoAcessorio{
 	public List<Acessorio> buscarAll() throws BoException {
 		try {
 			return daoAcessorio.buscarAll();
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<Acessorio> buscarPorExemplo(Acessorio exemploEntidade) throws BoException {
+		try {
+			return daoAcessorio.buscarPorExemplo(exemploEntidade);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

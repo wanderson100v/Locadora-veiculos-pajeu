@@ -28,16 +28,22 @@ public class BoJuridico implements IBoJuridico {
 	@Override
 	public void excluir(Juridico entidade) throws BoException {
 		try {
-			daoJuridico.excluir(entidade);
+			try {
+				daoJuridico.excluir(entidade);
+			} catch (DaoException e) {
+				entidade.setAtivo(false);
+				daoJuridico.editar(entidade);
+				throw new BoException("OCORRENCIA DE DEPENDENTES: CLIENTE JURUDICO DESATIVADO");
+			}
 		}catch (DaoException e) {
-			throw new BoException(e.getMessage());
+			throw new BoException("ERRO AO DESABILITAR CLIENTE JURIDICO");
 		}
 	}
 
 	@Override
 	public Juridico buscarID(Long id) throws BoException {
 		try {
-			return daoJuridico.buscarId(id);
+			return daoJuridico.buscarID(id);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}
@@ -51,8 +57,18 @@ public class BoJuridico implements IBoJuridico {
 		}
 	}
 	
+	@Override
+	public List<Juridico> buscarPorExemplo(Juridico exemploEntidade) throws BoException {
+		try {
+			return daoJuridico.buscarPorExemplo(exemploEntidade);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+	
 	private void atribuirCodigo(Juridico entidade){
 		entidade.setCodigo("PJ"+entidade.getCnpj());
 	}
 
+	
 }

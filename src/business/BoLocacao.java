@@ -36,7 +36,7 @@ public class BoLocacao implements IBoLocacao {
 	@Override
 	public Locacao buscarID(Long id) throws BoException {
 		try {
-			return daoLocacao.buscarId(id);
+			return daoLocacao.buscarID(id);
 		} catch (DaoException e) {
 			throw new BoException(e.getMessage());		
 		}
@@ -46,6 +46,15 @@ public class BoLocacao implements IBoLocacao {
 	public List<Locacao> buscarAll() throws BoException {
 		try {
 			return daoLocacao.buscarAll();
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<Locacao> buscarPorExemplo(Locacao exemploEntidade) throws BoException {
+		try {
+			return daoLocacao.buscarPorExemplo(exemploEntidade);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

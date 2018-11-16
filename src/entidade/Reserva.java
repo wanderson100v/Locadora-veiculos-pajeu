@@ -20,7 +20,7 @@ public class Reserva extends Entidade {
 	@Column(name = "data_devolucao")
 	private Date dataDevolucao;
 	@Column(name = "valor")
-	private Date valor;
+	private float valor;
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private CategoriaVeiculo categoriaVeiculo;
@@ -58,11 +58,11 @@ public class Reserva extends Entidade {
 		this.dataDevolucao = dataDevolucao;
 	}
 
-	public Date getValor() {
+	public float getValor() {
 		return valor;
 	}
 
-	public void setValor(Date valor) {
+	public void setValor(float valor) {
 		this.valor = valor;
 	}
 
@@ -100,7 +100,7 @@ public class Reserva extends Entidade {
 		result = prime * result + ((dateRetirada == null) ? 0 : dateRetirada.hashCode());
 		result = prime * result + ((filial == null) ? 0 : filial.hashCode());
 		result = prime * result + ((funcionario == null) ? 0 : funcionario.hashCode());
-		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
+		result = prime * result + Float.floatToIntBits(valor);
 		return result;
 	}
 
@@ -110,7 +110,7 @@ public class Reserva extends Entidade {
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (!(obj instanceof Reserva))
+		if (getClass() != obj.getClass())
 			return false;
 		Reserva other = (Reserva) obj;
 		if (categoriaVeiculo == null) {
@@ -143,10 +143,7 @@ public class Reserva extends Entidade {
 				return false;
 		} else if (!funcionario.equals(other.funcionario))
 			return false;
-		if (valor == null) {
-			if (other.valor != null)
-				return false;
-		} else if (!valor.equals(other.valor))
+		if (Float.floatToIntBits(valor) != Float.floatToIntBits(other.valor))
 			return false;
 		return true;
 	}

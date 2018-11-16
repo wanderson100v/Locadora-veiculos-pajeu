@@ -36,7 +36,7 @@ public class BoManutencao implements IBoManutencao {
 	@Override
 	public Manutencao buscarID(Long id) throws BoException {
 		try {
-			return daoManutencao.buscarId(id);
+			return daoManutencao.buscarID(id);
 		} catch (DaoException e) {
 			throw new BoException(e.getMessage());		
 		}
@@ -46,6 +46,15 @@ public class BoManutencao implements IBoManutencao {
 	public List<Manutencao> buscarAll() throws BoException {
 		try {
 			return daoManutencao.buscarAll();
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<Manutencao> buscarPorExemplo(Manutencao exemploEntidade) throws BoException {
+		try {
+			return daoManutencao.buscarPorExemplo(exemploEntidade);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

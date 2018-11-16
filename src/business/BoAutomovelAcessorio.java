@@ -36,7 +36,7 @@ public class BoAutomovelAcessorio implements IBoAutomovelAcessorio{
 	@Override
 	public AutomovelAcessorio buscarID(Long id) throws BoException {
 		try {
-			return daoAutomovelAcessorio.buscarId(id);
+			return daoAutomovelAcessorio.buscarID(id);
 		} catch (DaoException e) {
 			throw new BoException(e.getMessage());		
 		}
@@ -46,6 +46,15 @@ public class BoAutomovelAcessorio implements IBoAutomovelAcessorio{
 	public List<AutomovelAcessorio> buscarAll() throws BoException {
 		try {
 			return daoAutomovelAcessorio.buscarAll();
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<AutomovelAcessorio> buscarPorExemplo(AutomovelAcessorio exemploEntidade) throws BoException {
+		try {
+			return daoAutomovelAcessorio.buscarPorExemplo(exemploEntidade);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

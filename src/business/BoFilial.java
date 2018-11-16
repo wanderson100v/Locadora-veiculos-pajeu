@@ -27,7 +27,13 @@ public class BoFilial implements IBoFilial{
 	@Override
 	public void excluir(Filial entidade) throws BoException {
 		try {
-			daoFilial.excluir(entidade);
+			try {
+				daoFilial.excluir(entidade);
+			} catch (DaoException e) {
+				entidade.setAtivo(false);
+				daoFilial.editar(entidade);
+				throw new BoException(e.getMessage());
+			}
 		} catch (DaoException e) {
 			throw new BoException(e.getMessage());	
 		}
@@ -36,7 +42,7 @@ public class BoFilial implements IBoFilial{
 	@Override
 	public Filial buscarID(Long id) throws BoException {
 		try {
-			return daoFilial.buscarId(id);
+			return daoFilial.buscarID(id);
 		} catch (DaoException e) {
 			throw new BoException(e.getMessage());		
 		}
@@ -46,6 +52,15 @@ public class BoFilial implements IBoFilial{
 	public List<Filial> buscarAll() throws BoException {
 		try {
 			return daoFilial.buscarAll();
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<Filial> buscarPorExemplo(Filial exemploEntidade) throws BoException {
+		try {
+			return daoFilial.buscarPorExemplo(exemploEntidade);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

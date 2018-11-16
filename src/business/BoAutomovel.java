@@ -27,7 +27,13 @@ public class BoAutomovel implements IBoAutomovel {
 	@Override
 	public void excluir(Automovel entidade) throws BoException {
 		try {
-			daoAutomovel.excluir(entidade);
+			try {
+				daoAutomovel.excluir(entidade);
+			} catch (DaoException e) {
+				entidade.setAtivo(false);
+				daoAutomovel.editar(entidade);
+				throw new BoException(e.getMessage());
+			}
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		} 
@@ -36,7 +42,7 @@ public class BoAutomovel implements IBoAutomovel {
 	@Override
 	public Automovel buscarID(Long id) throws BoException {
 		try {
-			return daoAutomovel.buscarId(id);
+			return daoAutomovel.buscarID(id);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}
@@ -46,6 +52,15 @@ public class BoAutomovel implements IBoAutomovel {
 	public List<Automovel> buscarAll() throws BoException {
 		try {
 			return daoAutomovel.buscarAll();
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<Automovel> buscarPorExemplo(Automovel exemploEntidade) throws BoException {
+		try {
+			return daoAutomovel.buscarPorExemplo(exemploEntidade);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

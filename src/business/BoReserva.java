@@ -36,7 +36,7 @@ public class BoReserva implements IBoReserva {
 	@Override
 	public Reserva buscarID(Long id) throws BoException {
 		try {
-			return daoReserva.buscarId(id);
+			return daoReserva.buscarID(id);
 		} catch (DaoException e) {
 			throw new BoException(e.getMessage());		
 		}
@@ -46,6 +46,15 @@ public class BoReserva implements IBoReserva {
 	public List<Reserva> buscarAll() throws BoException {
 		try {
 			return daoReserva.buscarAll();
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<Reserva> buscarPorExemplo(Reserva exemploEntidade) throws BoException {
+		try {
+			return daoReserva.buscarPorExemplo(exemploEntidade);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

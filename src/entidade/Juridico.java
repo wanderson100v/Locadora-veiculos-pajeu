@@ -2,10 +2,8 @@ package entidade;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQuery(name = "buscarPorTudo", query = " select * from Juridico j where j.nome = :juridico.nome")
 public class Juridico extends Cliente {
 	
 	private static final long serialVersionUID = 1L;
