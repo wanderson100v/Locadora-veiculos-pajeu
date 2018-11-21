@@ -7,18 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import enumeracoes.Cargo;
-
 @Entity
 public class Funcionario extends Entidade{
 	
 	private static final long serialVersionUID = 1L;
-	@Column(length = 100)
+	@Column(length = 100, nullable = false)
 	private String nome;
-	@Column(unique = true, nullable = false , length = 30)
-	private String login;
-	@Column(nullable = false)
-	private Cargo cargo;
+	@Column(unique = true, nullable = false, length = 30)
+	private String cpf;
 	private boolean ativo;
 	@ManyToOne
 	private Filial filial;
@@ -27,14 +23,14 @@ public class Funcionario extends Entidade{
 	@OneToMany(mappedBy = "funcionario", targetEntity = Reserva.class)
 	private Set<Reserva> reservas;
 
-	public Funcionario(String nome, String login, Cargo cargo) {
+	public Funcionario(String nome, String cpf, boolean ativo, Filial filial) {
 		super();
 		this.nome = nome;
-		this.login = login;
-		this.cargo = cargo;
-		this.ativo = true;
+		this.cpf = cpf;
+		this.ativo = ativo;
+		this.filial = filial;
 	}
-	
+
 	public Funcionario() {}
 
 	public String getNome() {
@@ -44,17 +40,13 @@ public class Funcionario extends Entidade{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public Cargo getCargo() {
-		return cargo;
-	}
 	
-	public String getLogin() {
-		return login;
+	public String getCpf() {
+		return cpf;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public Set<Locacao> getLocacoes() {
@@ -81,10 +73,6 @@ public class Funcionario extends Entidade{
 		this.filial = filial;
 	}
 
-	public void setCargo(Cargo cargo) {
-		this.cargo = cargo;
-	}
-
 	public boolean isAtivo() {
 		return ativo;
 	}
@@ -98,10 +86,9 @@ public class Funcionario extends Entidade{
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + (ativo ? 1231 : 1237);
-		result = prime * result + ((cargo == null) ? 0 : cargo.hashCode());
+		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
 		result = prime * result + ((filial == null) ? 0 : filial.hashCode());
 		result = prime * result + ((locacoes == null) ? 0 : locacoes.hashCode());
-		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		result = prime * result + ((reservas == null) ? 0 : reservas.hashCode());
 		return result;
@@ -113,12 +100,15 @@ public class Funcionario extends Entidade{
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (!(obj instanceof Funcionario))
+		if (getClass() != obj.getClass())
 			return false;
 		Funcionario other = (Funcionario) obj;
 		if (ativo != other.ativo)
 			return false;
-		if (cargo != other.cargo)
+		if (cpf == null) {
+			if (other.cpf != null)
+				return false;
+		} else if (!cpf.equals(other.cpf))
 			return false;
 		if (filial == null) {
 			if (other.filial != null)
@@ -129,11 +119,6 @@ public class Funcionario extends Entidade{
 			if (other.locacoes != null)
 				return false;
 		} else if (!locacoes.equals(other.locacoes))
-			return false;
-		if (login == null) {
-			if (other.login != null)
-				return false;
-		} else if (!login.equals(other.login))
 			return false;
 		if (nome == null) {
 			if (other.nome != null)
@@ -150,9 +135,8 @@ public class Funcionario extends Entidade{
 
 	@Override
 	public String toString() {
-		return "Funcionario [nome=" + nome + ", login=" + login + ", cargo=" + cargo + ", ativo=" + ativo + ", filial="
-				+ filial + ", locacoes=" + locacoes + ", reservas=" + reservas + "]";
+		return "Funcionario [nome=" + nome + ", cpf=" + cpf + ", ativo=" + ativo + ", filial=" + filial + ", locacoes="
+				+ locacoes + ", reservas=" + reservas + "]";
 	}
-	
-	
+
 }

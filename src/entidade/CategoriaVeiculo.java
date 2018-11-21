@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity(name = "categoria_veiculo" )
 public class CategoriaVeiculo extends Entidade {
@@ -20,6 +22,9 @@ public class CategoriaVeiculo extends Entidade {
 	private float horasLimpesa;
 	@Column(name = "valor_diaria",nullable = false)
 	private Float valorDiaria;
+	@OneToOne
+	@JoinColumn(nullable = false)
+	private Veiculo veiculoExemplo;
 	@OneToMany(mappedBy = "categoriaVeiculo" , targetEntity = Veiculo.class)
 	private List<Veiculo> veiculos;
 	
@@ -69,6 +74,14 @@ public class CategoriaVeiculo extends Entidade {
 	
 	public void setValorDiaria(Float valorDiaria) {
 		this.valorDiaria = valorDiaria;
+	}
+
+	public Veiculo getVeiculoExemplo() {
+		return veiculoExemplo;
+	}
+
+	public void setVeiculoExemplo(Veiculo veiculoExemplo) {
+		this.veiculoExemplo = veiculoExemplo;
 	}
 
 	@Override

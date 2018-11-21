@@ -11,13 +11,12 @@ import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
 
 import entidade.Entidade;
-import entidade.Juridico;
 import excecoes.DaoException;
 import sql.ConnectionFactory;
 
-public class Dao<T extends Entidade>{
+public abstract class Dao<T extends Entidade>{
 	private Class<T> tipoDaClasse;
-	private EntityManager em;
+	protected EntityManager em;
 	
 	public Dao(Class<T> tipoDaClasse) {
 		this.tipoDaClasse = tipoDaClasse;

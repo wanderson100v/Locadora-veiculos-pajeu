@@ -1,7 +1,7 @@
 package enumeracoes;
 
 public enum Cargo {
-	ADM("ADMINITRADOR"),SU("SUPER USUÁRIO"),AT("ATENDENTE");
+	ADM("administrador"),SU("gerente"),AT("atendente");
 	private String value;
 	
 	private Cargo(String value) {

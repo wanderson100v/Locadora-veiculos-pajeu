@@ -28,6 +28,12 @@ public class ConnectionFactory{
 		}
 		
 	}
+	public static String[] getUser() {
+		String[] loginSenha = new String[2];
+		loginSenha[0] = propriedades.get("javax.persistence.jdbc.user");
+		loginSenha[1] =propriedades.get("javax.persistence.jdbc.password");
+		return loginSenha;
+	}
 	public static void stop() {
 		entityManagerFactory.close();
 	}

@@ -3,6 +3,8 @@ package app;
 
 
 
+import java.util.Date;
+
 import business.BoCategoriaVeiculo;
 import business.BoFilial;
 import business.BoFuncionario;
@@ -41,11 +43,13 @@ public class App extends Application{
 	private static IDaoRes daoRes = DaoRes.getInstance();	
 	
 	public static void main(String[] args) {
-		//launch(args); 
 		ConnectionFactory.setUser("postgres","admin");
-	//	ConnectionFactory.getConnection();
-		try {
-			/*
+		ConnectionFactory.getConnection();
+		//String[] loginSenha = ConnectionFactory.getUser();
+		//System.out.println(loginSenha[0]+" "+loginSenha[1]);
+		//launch(args); 
+		/*try {
+			
 			
 			Endereco endereco = new Endereco();
 			endereco.setCep("31231-a");
@@ -86,8 +90,7 @@ public class App extends Application{
 			boJuridico.cadastrarEditar(juridico2);
 			boJuridico.cadastrarEditar(juridico3);
 
-			Funcionario funcionario = new Funcionario("wanderson", "wanderson100v", Cargo.ADM);
-		
+			Funcionario funcionario = new Funcionario("Wanderson Pereira da Silva Lira","wanderson200v", Cargo.AT, "biscoito", true, null);		
 			Endereco endereco4 = new Endereco();
 			endereco4.setCep("dasd-d");
 			
@@ -116,13 +119,12 @@ public class App extends Application{
 			new BoFuncionario().cadastrarEditar(funcionario);
 			new BoCategoriaVeiculo().cadastrarEditar(categoriaVeiculo);
 			new BoReserva().cadastrarEditar(reserva);
-			*/
+			
 			new BoJuridico().excluir(new BoJuridico().buscarID(new Long(3)));
 			
 		} catch (BoException e) {
 			//e.printStackTrace();
-		}
-		System.exit(0);
+		}*/
 	}
 	
 	@Override
