@@ -1,15 +1,27 @@
 package business;
 
+import java.util.Date;
 import java.util.List;
 
 import dao.DaoLocacao;
 import dao.IDaoLocacao;
+import entidade.CategoriaVeiculo;
+import entidade.Filial;
 import entidade.Locacao;
 import excecoes.BoException;
 import excecoes.DaoException;
 
 public class BoLocacao implements IBoLocacao {
 	private IDaoLocacao daoLocacao = new DaoLocacao();
+	private static IBoLocacao instance;
+	
+	private BoLocacao() {}
+	
+	public static IBoLocacao getInstance() {
+		if(instance == null)
+			instance = new BoLocacao();
+		return instance;
+	}
 	
 	@Override
 	public void cadastrarEditar(Locacao entidade) throws BoException {
@@ -55,6 +67,15 @@ public class BoLocacao implements IBoLocacao {
 	public List<Locacao> buscarPorExemplo(Locacao exemploEntidade) throws BoException {
 		try {
 			return daoLocacao.buscarPorExemplo(exemploEntidade);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
+	@Override
+	public int totalLocacoePrevisaoEntrega(Filial filialEntrega, CategoriaVeiculo categoriaVeiculo, Date dataLimite) throws BoException {
+		try {
+			return daoLocacao.totalLocacoePrevisaoEntrega(filialEntrega, categoriaVeiculo, dataLimite);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

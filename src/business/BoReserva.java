@@ -1,5 +1,6 @@
 package business;
 
+import java.util.Date;
 import java.util.List;
 
 import dao.DaoReserva;
@@ -10,6 +11,17 @@ import excecoes.DaoException;
 
 public class BoReserva implements IBoReserva {
 	private IDaoReserva daoReserva = new DaoReserva();
+	private IBoVeiculo boVeiculo = BoVeiculo.getInstance();
+	private IBoLocacao boLocacao = BoLocacao.getInstance();
+	private static IBoReserva instance;
+	
+	private BoReserva() {}
+	
+	public static IBoReserva getInstance() {
+		if(instance == null)
+			instance = new BoReserva();
+		return instance;
+	}
 	
 	@Override
 	public void cadastrarEditar(Reserva entidade) throws BoException {
@@ -17,6 +29,7 @@ public class BoReserva implements IBoReserva {
 			if(entidade.getId() != null) {
 				daoReserva.editar(entidade);
 			}else {
+				validarConcorrenciaReserva(entidade);
 				daoReserva.cadastrar(entidade);
 			}
 		}catch (DaoException e) {
@@ -55,6 +68,24 @@ public class BoReserva implements IBoReserva {
 	public List<Reserva> buscarPorExemplo(Reserva exemploEntidade) throws BoException {
 		try {
 			return daoReserva.buscarPorExemplo(exemploEntidade);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+	
+	private void validarConcorrenciaReserva(Reserva reserva)throws BoException {
+		int totalPrevistoLocacao = boLocacao.totalLocacoePrevisaoEntrega(reserva.getFilial(),reserva.getCategoriaVeiculo(),reserva.getDataRetirada());
+		int totalDisponivel = boVeiculo.totalVeiculoDisponivel(reserva.getFilial(),reserva.getCategoriaVeiculo());
+		int totalReservado = totalReservaDataRetirada(reserva.getDataRetirada());
+		
+		if(totalDisponivel+totalPrevistoLocacao < totalReservado)
+			throw new BoException("NÃO HÁ VEICULOS DISPONIVEIS PARA RESERVA NESSA CATEGORIA E FILIAL");
+	}
+
+	@Override
+	public int totalReservaDataRetirada(Date dataRetirada) throws BoException {
+		try {
+			return daoReserva.totalReservaDataRetirada(dataRetirada);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

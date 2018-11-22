@@ -10,6 +10,15 @@ import excecoes.DaoException;
 
 public class BoFilial implements IBoFilial{
 	private IDaoFilial daoFilial = new DaoFilial();
+	private static IBoFilial instance;
+	
+	private BoFilial() {}
+	
+	public static IBoFilial getInstance() {
+		if(instance == null)
+			instance = new BoFilial();
+		return instance;
+	}
 	
 	@Override
 	public void cadastrarEditar(Filial entidade) throws BoException {

@@ -6,16 +6,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
+@NamedQuery(name = "totalDataRetirada", query = "select count(*) from reserva r where r.dataRetirada = :dataRetirada")
 public class Reserva extends Entidade {
 	
 	private static final long serialVersionUID = 1L;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "data_retirada")
-	private Date dateRetirada;
+	private Date dataRetirada;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "data_devolucao")
 	private Date dataDevolucao;
@@ -42,12 +44,12 @@ public class Reserva extends Entidade {
 		this.funcionario = funcionario;
 	}
 
-	public Date getDateRetirada() {
-		return dateRetirada;
+	public Date getDataRetirada() {
+		return dataRetirada;
 	}
 
-	public void setDateRetirada(Date dateRetirada) {
-		this.dateRetirada = dateRetirada;
+	public void setDataRetirada(Date dataRetirada) {
+		this.dataRetirada = dataRetirada;
 	}
 
 	public Date getDataDevolucao() {
@@ -97,7 +99,7 @@ public class Reserva extends Entidade {
 		result = prime * result + ((categoriaVeiculo == null) ? 0 : categoriaVeiculo.hashCode());
 		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
 		result = prime * result + ((dataDevolucao == null) ? 0 : dataDevolucao.hashCode());
-		result = prime * result + ((dateRetirada == null) ? 0 : dateRetirada.hashCode());
+		result = prime * result + ((dataRetirada == null) ? 0 : dataRetirada.hashCode());
 		result = prime * result + ((filial == null) ? 0 : filial.hashCode());
 		result = prime * result + ((funcionario == null) ? 0 : funcionario.hashCode());
 		result = prime * result + Float.floatToIntBits(valor);
@@ -128,10 +130,10 @@ public class Reserva extends Entidade {
 				return false;
 		} else if (!dataDevolucao.equals(other.dataDevolucao))
 			return false;
-		if (dateRetirada == null) {
-			if (other.dateRetirada != null)
+		if (dataRetirada == null) {
+			if (other.dataRetirada != null)
 				return false;
-		} else if (!dateRetirada.equals(other.dateRetirada))
+		} else if (!dataRetirada.equals(other.dataRetirada))
 			return false;
 		if (filial == null) {
 			if (other.filial != null)
@@ -150,10 +152,10 @@ public class Reserva extends Entidade {
 
 	@Override
 	public String toString() {
-		return "Reserva [dateRetirada=" + dateRetirada + ", dataDevolucao=" + dataDevolucao + ", valor=" + valor
+		return "Reserva [dataRetirada=" + dataRetirada + ", dataDevolucao=" + dataDevolucao + ", valor=" + valor
 				+ ", categoriaVeiculo=" + categoriaVeiculo + ", cliente=" + cliente + ", funcionario=" + funcionario
 				+ ", filial=" + filial + "]";
 	}
-	
+
 	
 }

@@ -10,6 +10,15 @@ import excecoes.DaoException;
 
 public class BoFisico implements IBoFisico{
 	private IDaoFisico daoFisico = new DaoFisico();
+	private static IBoFisico instance;
+	
+	private BoFisico() {}
+	
+	public static IBoFisico getInstance() {
+		if(instance == null)
+			instance = new BoFisico();
+		return instance;
+	}
 	
 	@Override
 	public void cadastrarEditar(Fisico entidade) throws BoException {

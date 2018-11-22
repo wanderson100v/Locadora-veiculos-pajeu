@@ -10,6 +10,15 @@ import excecoes.DaoException;
 
 public class BoAutomovelAcessorio implements IBoAutomovelAcessorio{
 	private IDaoAutomovelAcessorio daoAutomovelAcessorio = new DaoAutomovelAcessorio();
+	private static IBoAutomovelAcessorio instance;
+	
+	private BoAutomovelAcessorio() {}
+	
+	public static IBoAutomovelAcessorio getInstance() {
+		if(instance == null)
+			instance = new BoAutomovelAcessorio();
+		return instance;
+	}
 	
 	@Override
 	public void cadastrarEditar(AutomovelAcessorio entidade) throws BoException {

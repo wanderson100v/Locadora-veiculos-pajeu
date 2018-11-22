@@ -8,12 +8,14 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 import enumeracoes.TipoCombustivel;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@NamedQuery(name = "totalDisponivel", query = "select count(*) from veiculos v where v.filial = :filial and v.categoria = :categoria and locado = false")
 public class Veiculo extends Entidade {
   
 	private static final long serialVersionUID = 1L;

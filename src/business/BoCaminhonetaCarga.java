@@ -10,6 +10,15 @@ import excecoes.DaoException;
 
 public class BoCaminhonetaCarga implements IBoCaminhonetaCarga{
 	private IDaoCaminhonetaCarga daoCaminhonetaCarga = new DaoCaminhonetaCarga();
+	private static IBoCaminhonetaCarga instance;
+	
+	private BoCaminhonetaCarga() {}
+	
+	public static IBoCaminhonetaCarga getInstance() {
+		if(instance == null)
+			instance = new BoCaminhonetaCarga();
+		return instance;
+	}
 	
 	@Override
 	public void cadastrarEditar(CaminhonetaCarga entidade) throws BoException {

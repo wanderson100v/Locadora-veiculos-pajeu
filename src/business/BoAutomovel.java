@@ -10,6 +10,15 @@ import excecoes.DaoException;
 
 public class BoAutomovel implements IBoAutomovel {
 	private IDaoAutomovel daoAutomovel = new DaoAutomovel();
+	private static IBoAutomovel instance;
+	
+	private BoAutomovel() {}
+	
+	public static IBoAutomovel getInstance() {
+		if(instance == null)
+			instance = new BoAutomovel();
+		return instance;
+	}
 	
 	@Override
 	public void cadastrarEditar(Automovel entidade) throws BoException {

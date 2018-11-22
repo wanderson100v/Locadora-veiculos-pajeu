@@ -10,6 +10,15 @@ import excecoes.DaoException;
 
 public class BoAcessorio implements IBoAcessorio{
 	private IDaoAcessorio daoAcessorio = new DaoAcessorio();
+	private static IBoAcessorio instance;
+	
+	private BoAcessorio() {}
+	
+	public static IBoAcessorio getInstance() {
+		if(instance == null)
+			instance = new BoAcessorio();
+		return instance;
+	}
 	
 	@Override
 	public void cadastrarEditar(Acessorio entidade) throws BoException {

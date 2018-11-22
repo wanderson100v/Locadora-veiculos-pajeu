@@ -10,6 +10,15 @@ import excecoes.DaoException;
 
 public class BoManutencao implements IBoManutencao {
 	private IDaoManutencao daoManutencao = new DaoManutencao();
+	private static IBoManutencao instance;
+	
+	private BoManutencao() {}
+	
+	public static IBoManutencao getInstance() {
+		if(instance == null)
+			instance = new BoManutencao();
+		return instance;
+	}
 	
 	@Override
 	public void cadastrarEditar(Manutencao entidade) throws BoException {

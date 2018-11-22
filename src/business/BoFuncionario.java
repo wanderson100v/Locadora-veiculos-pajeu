@@ -11,6 +11,15 @@ import excecoes.DaoException;
 
 public class BoFuncionario implements IBoFuncionario {
 	private IDaoFuncionario daoFuncionario = new DaoFuncionario();
+	private static IBoFuncionario instance;
+	
+	private BoFuncionario() {}
+	
+	public static IBoFuncionario getInstance() {
+		if(instance == null)
+			instance = new BoFuncionario();
+		return instance;
+	}
 	
 	@Override
 	public void cadastrarEditar(Funcionario entidade) throws BoException {

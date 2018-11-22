@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -13,6 +14,7 @@ import javax.persistence.TemporalType;
 import enumeracoes.TipoLocacao;
 
 @Entity
+@NamedQuery(name = "totalPrevisaoEntrega", query = "select count(*) from locacoes l where l.filialEntrega = :filialEntrega and l.veiculo.categoria = :categoria and l.dataDevolucao <= :dataLimite ")
 public class Locacao extends Entidade {
 	
 	private static final long serialVersionUID = 1L;
@@ -23,7 +25,7 @@ public class Locacao extends Entidade {
 	private Date dataRetirada;
 	@Column(name = "data_devolucao")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dataDevolucacao;
+	private Date dataDevolucao;
 	@Column(name = "valor_diaria")
 	private Float valorDiaria;
 	@Column(name = "valor_pago")
@@ -130,12 +132,12 @@ public class Locacao extends Entidade {
 		this.dataRetirada = dataRetirada;
 	}
 
-	public Date getDataDevolucacao() {
-		return dataDevolucacao;
+	public Date getDataDevolucao() {
+		return dataDevolucao;
 	}
 
-	public void setDataDevolucacao(Date dataDevolucacao) {
-		this.dataDevolucacao = dataDevolucacao;
+	public void setDataDevolucao(Date dataDevolucao) {
+		this.dataDevolucao = dataDevolucao;
 	}
 
 	public Float getValorDiaria() {
@@ -159,7 +161,7 @@ public class Locacao extends Entidade {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
-		result = prime * result + ((dataDevolucacao == null) ? 0 : dataDevolucacao.hashCode());
+		result = prime * result + ((dataDevolucao == null) ? 0 : dataDevolucao.hashCode());
 		result = prime * result + ((dataRetirada == null) ? 0 : dataRetirada.hashCode());
 		result = prime * result + ((filialEntrega == null) ? 0 : filialEntrega.hashCode());
 		result = prime * result + ((filialRetirada == null) ? 0 : filialRetirada.hashCode());
@@ -180,7 +182,7 @@ public class Locacao extends Entidade {
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (!(obj instanceof Locacao))
+		if (getClass() != obj.getClass())
 			return false;
 		Locacao other = (Locacao) obj;
 		if (cliente == null) {
@@ -188,10 +190,10 @@ public class Locacao extends Entidade {
 				return false;
 		} else if (!cliente.equals(other.cliente))
 			return false;
-		if (dataDevolucacao == null) {
-			if (other.dataDevolucacao != null)
+		if (dataDevolucao == null) {
+			if (other.dataDevolucao != null)
 				return false;
-		} else if (!dataDevolucacao.equals(other.dataDevolucacao))
+		} else if (!dataDevolucao.equals(other.dataDevolucao))
 			return false;
 		if (dataRetirada == null) {
 			if (other.dataRetirada != null)
@@ -247,13 +249,12 @@ public class Locacao extends Entidade {
 
 	@Override
 	public String toString() {
-		return "Locacao [tipoLocacao=" + tipoLocacao + ", dataRetirada=" + dataRetirada + ", dataDevolucacao="
-				+ dataDevolucacao + ", valorDiaria=" + valorDiaria + ", valorPago=" + valorPago + ", finalizado="
+		return "Locacao [tipoLocacao=" + tipoLocacao + ", dataRetirada=" + dataRetirada + ", dataDevolucao="
+				+ dataDevolucao + ", valorDiaria=" + valorDiaria + ", valorPago=" + valorPago + ", finalizado="
 				+ finalizado + ", reservaOrigem=" + reservaOrigem + ", cliente=" + cliente + ", veiculo=" + veiculo
 				+ ", filialRetirada=" + filialRetirada + ", funcionario=" + funcionario + ", filialEntrega="
 				+ filialEntrega + ", motorista=" + motorista + "]";
 	}
-	
-	
+
 	
 }

@@ -10,6 +10,15 @@ import excecoes.DaoException;
 
 public class BoJuridico implements IBoJuridico {
 	private IDaoJuridico daoJuridico = new DaoJuridico();
+	private static IBoJuridico instance;
+	
+	private BoJuridico() {}
+	
+	public static IBoJuridico getInstance() {
+		if(instance == null)
+			instance = new BoJuridico();
+		return instance;
+	}
 	
 	@Override
 	public void cadastrarEditar(Juridico entidade) throws BoException {
