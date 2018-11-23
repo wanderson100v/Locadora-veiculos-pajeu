@@ -1,6 +1,6 @@
 package dao;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Query;
 
@@ -17,7 +17,7 @@ public class DaoLocacao extends Dao<Locacao> implements  IDaoLocacao{
 	}
 	
 	@Override
-	public int totalLocacoePrevisaoEntrega(Filial filialEntrega, CategoriaVeiculo categoriaVeiculo, Date dataLimite) throws DaoException {
+	public int totalLocacoePrevisaoEntrega(Filial filialEntrega, CategoriaVeiculo categoriaVeiculo, LocalDateTime dataLimite) throws DaoException {
 		int total = 0;
 		try {
 			em = ConnectionFactory.getConnection();

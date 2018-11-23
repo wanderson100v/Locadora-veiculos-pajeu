@@ -1,12 +1,13 @@
 package business;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
+import entidade.CategoriaVeiculo;
 import entidade.Reserva;
 import excecoes.BoException;
 
 public interface IBoReserva extends IBussines<Reserva>{
 	
-	public int totalReservaDataRetirada(Date dataRetirada) throws BoException;
+	public int totalReservaDataRetirada(CategoriaVeiculo categoriaVeiculo, LocalDateTime dataRetirada) throws BoException;
 	
 }

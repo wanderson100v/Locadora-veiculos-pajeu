@@ -1,6 +1,6 @@
 package business;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import entidade.CategoriaVeiculo;
 import entidade.Filial;
@@ -9,6 +9,6 @@ import excecoes.BoException;
 
 public interface IBoLocacao extends IBussines<Locacao>{
 
-	public int totalLocacoePrevisaoEntrega(Filial filialEntrega ,CategoriaVeiculo categoriaVeiculo ,Date dataLimite)throws BoException;
+	public int totalLocacoePrevisaoEntrega(Filial filialEntrega ,CategoriaVeiculo categoriaVeiculo ,LocalDateTime dataLimite)throws BoException;
 	
 }

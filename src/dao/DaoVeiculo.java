@@ -30,4 +30,19 @@ public class DaoVeiculo extends Dao<Veiculo> implements IDaoVeiculo {
 		return total;
 	}
 
+	@Override
+	public int totalManutencaoPendente(Veiculo veiculo) throws DaoException {
+		int total = 0;
+		try {
+			em = ConnectionFactory.getConnection();
+			Query query = em.createNamedQuery(TOTAL_MANUTENCAO_PENDENTE);
+			query.setParameter("veiculo",veiculo);
+			total =(Integer) query.getSingleResult();
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new DaoException("ERRO AO BUSCAR TOTAL DE MANUTENCÕES DO VEICULO");
+		}
+		return total;
+	}
+
 }

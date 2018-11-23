@@ -1,13 +1,11 @@
 package entidade;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import enumeracoes.EstadoManutencao;
 import enumeracoes.TipoManutencao;
@@ -16,9 +14,8 @@ import enumeracoes.TipoManutencao;
 public class Manutencao extends Entidade{
 	
 	private static final long serialVersionUID = 1L;
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "data_hora_inicio")
-	private Date dataHoraInicio;
+	private LocalDate dataHoraInicio;
 	@Column(name = "tipo")
 	private TipoManutencao tipoManuntencao;
 	@Column(name = "estado")
@@ -53,11 +50,11 @@ public class Manutencao extends Entidade{
 		this.veiculo = veiculo;
 	}
 
-	public Date getDataHoraInicio() {
+	public LocalDate getDataHoraInicio() {
 		return dataHoraInicio;
 	}
 
-	public void setDataHoraInicio(Date dataHoraInicio) {
+	public void setDataHoraInicio(LocalDate dataHoraInicio) {
 		this.dataHoraInicio = dataHoraInicio;
 	}
 

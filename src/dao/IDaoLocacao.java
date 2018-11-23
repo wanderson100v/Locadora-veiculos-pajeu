@@ -1,6 +1,6 @@
 package dao;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import entidade.CategoriaVeiculo;
 import entidade.Filial;
@@ -10,6 +10,6 @@ import excecoes.DaoException;
 public interface IDaoLocacao extends IDao<Locacao>{
 	String TOTAL_PREVISAO_ENTREGA = "totalPrevisaoEntrega";
 	
-	public int totalLocacoePrevisaoEntrega(Filial filialEntrega ,CategoriaVeiculo categoriaVeiculo ,Date dataLimite)throws DaoException;
+	public int totalLocacoePrevisaoEntrega(Filial filialEntrega ,CategoriaVeiculo categoriaVeiculo ,LocalDateTime dataLimite)throws DaoException;
 	
 }

@@ -1,26 +1,24 @@
 package entidade;
 
-import java.util.Date;
+
+
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
-@NamedQuery(name = "totalDataRetirada", query = "select count(*) from reserva r where r.dataRetirada = :dataRetirada")
+@NamedQuery(name = "totalDataRetirada", query = "select count(*) from reserva r where r.categoriaVeiculo = :categoriaVeiculo and  r.dataRetirada = :dataRetirada")
 public class Reserva extends Entidade {
 	
 	private static final long serialVersionUID = 1L;
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "data_retirada")
-	private Date dataRetirada;
-	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime dataRetirada;
 	@Column(name = "data_devolucao")
-	private Date dataDevolucao;
+	private LocalDateTime dataDevolucao;
 	@Column(name = "valor")
 	private float valor;
 	@ManyToOne
@@ -44,19 +42,19 @@ public class Reserva extends Entidade {
 		this.funcionario = funcionario;
 	}
 
-	public Date getDataRetirada() {
+	public LocalDateTime getDataRetirada() {
 		return dataRetirada;
 	}
 
-	public void setDataRetirada(Date dataRetirada) {
+	public void setDataRetirada(LocalDateTime dataRetirada) {
 		this.dataRetirada = dataRetirada;
 	}
 
-	public Date getDataDevolucao() {
+	public LocalDateTime getDataDevolucao() {
 		return dataDevolucao;
 	}
 
-	public void setDataDevolucao(Date dataDevolucao) {
+	public void setDataDevolucao(LocalDateTime dataDevolucao) {
 		this.dataDevolucao = dataDevolucao;
 	}
 

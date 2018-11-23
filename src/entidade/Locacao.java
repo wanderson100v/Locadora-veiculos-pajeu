@@ -1,6 +1,6 @@
 package entidade;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import enumeracoes.TipoLocacao;
 
@@ -18,21 +16,27 @@ import enumeracoes.TipoLocacao;
 public class Locacao extends Entidade {
 	
 	private static final long serialVersionUID = 1L;
+	
 	@Column(name = "tipo_locacao")
 	private TipoLocacao tipoLocacao;
+	
 	@Column(name = "data_retirada")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dataRetirada;
+	private LocalDate dataRetirada;
+	
 	@Column(name = "data_devolucao")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dataDevolucao;
+	private LocalDate dataDevolucao;
+	
 	@Column(name = "valor_diaria")
 	private Float valorDiaria;
+	
 	@Column(name = "valor_pago")
 	private Float valorPago;
+	
 	private boolean finalizado;
+	
 	@OneToOne
 	private Reserva reservaOrigem;
+	
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Cliente cliente;
@@ -124,20 +128,20 @@ public class Locacao extends Entidade {
 		this.tipoLocacao = tipoLocacao;
 	}
 
-	public Date getDataRetirada() {
-		return dataRetirada;
-	}
-
-	public void setDataRetirada(Date dataRetirada) {
+	public void setDataRetirada(LocalDate dataRetirada) {
 		this.dataRetirada = dataRetirada;
 	}
 
-	public Date getDataDevolucao() {
-		return dataDevolucao;
+	public void setDataDevolucao(LocalDate dataDevolucao) {
+		this.dataDevolucao = dataDevolucao;
+	}
+	
+	public LocalDate getDataRetirada() {
+		return dataRetirada;
 	}
 
-	public void setDataDevolucao(Date dataDevolucao) {
-		this.dataDevolucao = dataDevolucao;
+	public LocalDate getDataDevolucao() {
+		return dataDevolucao;
 	}
 
 	public Float getValorDiaria() {

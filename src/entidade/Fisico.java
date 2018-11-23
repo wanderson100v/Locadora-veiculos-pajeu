@@ -1,11 +1,9 @@
 package entidade;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import enumeracoes.Sexo;
 
@@ -13,26 +11,28 @@ import enumeracoes.Sexo;
 public class Fisico extends Cliente {
 
 	private static final long serialVersionUID = 1L;
-	@Temporal(TemporalType.DATE)
 	@Column(name = "data_nascimento", nullable = false)
-	private Date dataNascimento;
+	private LocalDate dataNascimento;
 	@Column(unique = true, nullable = false, length = 20)
 	private String cpf;
-	@Column(name = "identificacao_motorista",unique = true, nullable = false, length = 20)
+	@Column(name = "data_validade_habilitacao")
+	private LocalDate dataValidadeHabilitacao;
+	@Column(name = "identificacao_motorista",unique = true, length = 20)
 	private String identificacaoMotorista;
-	@Column(name = "numero_habilitacao",unique = true, nullable = false, length = 20)
+	@Column(name = "numero_habilitacao",unique = true,length = 20)
 	private String numeroHabilitacao;
 	@Column(nullable = false)
 	private Sexo sexo;
 	
-	public Date getDataNascimento() {
+	
+	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
-	
-	public void setDataNascimento(Date dataNascimento) {
+
+	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-	
+
 	public String getCpf() {
 		return cpf;
 	}
@@ -63,12 +63,21 @@ public class Fisico extends Cliente {
 		this.sexo = sexo;
 	}
 
+	public LocalDate getDataValidadeHabilitacao() {
+		return dataValidadeHabilitacao;
+	}
+
+	public void setDataValidadeHabilitacao(LocalDate dataValidadeHabilitacao) {
+		this.dataValidadeHabilitacao = dataValidadeHabilitacao;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
 		result = prime * result + ((dataNascimento == null) ? 0 : dataNascimento.hashCode());
+		result = prime * result + ((dataValidadeHabilitacao == null) ? 0 : dataValidadeHabilitacao.hashCode());
 		result = prime * result + ((identificacaoMotorista == null) ? 0 : identificacaoMotorista.hashCode());
 		result = prime * result + ((numeroHabilitacao == null) ? 0 : numeroHabilitacao.hashCode());
 		result = prime * result + ((sexo == null) ? 0 : sexo.hashCode());
@@ -81,7 +90,7 @@ public class Fisico extends Cliente {
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (!(obj instanceof Fisico))
+		if (getClass() != obj.getClass())
 			return false;
 		Fisico other = (Fisico) obj;
 		if (cpf == null) {
@@ -93,6 +102,11 @@ public class Fisico extends Cliente {
 			if (other.dataNascimento != null)
 				return false;
 		} else if (!dataNascimento.equals(other.dataNascimento))
+			return false;
+		if (dataValidadeHabilitacao == null) {
+			if (other.dataValidadeHabilitacao != null)
+				return false;
+		} else if (!dataValidadeHabilitacao.equals(other.dataValidadeHabilitacao))
 			return false;
 		if (identificacaoMotorista == null) {
 			if (other.identificacaoMotorista != null)
@@ -111,10 +125,9 @@ public class Fisico extends Cliente {
 
 	@Override
 	public String toString() {
-		return "Fisico [dataNascimento=" + dataNascimento + ", cpf=" + cpf + ", identificacaoMotorista="
-				+ identificacaoMotorista + ", numeroHabilitacao=" + numeroHabilitacao + ", sexo=" + sexo + "]";
+		return "Fisico [dataNascimento=" + dataNascimento + ", cpf=" + cpf + ", dataValidadeHabilitacao="
+				+ dataValidadeHabilitacao + ", identificacaoMotorista=" + identificacaoMotorista
+				+ ", numeroHabilitacao=" + numeroHabilitacao + ", sexo=" + sexo + "]";
 	}
-	
-	
 	
 }

@@ -4,6 +4,7 @@ import dao.DaoVeiculo;
 import dao.IDaoVeiculo;
 import entidade.CategoriaVeiculo;
 import entidade.Filial;
+import entidade.Veiculo;
 import excecoes.BoException;
 import excecoes.DaoException;
 
@@ -23,6 +24,15 @@ public class BoVeiculo implements IBoVeiculo {
 	public int totalVeiculoDisponivel(Filial filial, CategoriaVeiculo categoria) throws BoException {
 		try {
 			return daoVeiculo.totalVeiculoDisponivel(filial, categoria);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
+	@Override
+	public int totalManutencoesPententes(Veiculo veiculo) throws BoException {
+		try {
+			return daoVeiculo.totalManutencaoPendente(veiculo);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}
