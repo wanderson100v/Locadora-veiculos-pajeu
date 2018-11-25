@@ -2,13 +2,49 @@ package entidade;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity(name = "categoria_veiculo" )
+@NamedQueries({
+	@NamedQuery(name = "categorizarCaminhonetaCarga" ,
+	query = "select categoriaVeiculo from entidade.CategoriaVeiculo as categoriaVeiculo "
+			+ "inner join categoriaVeiculo.veiculoExemplo as caminhonetaCarga "
+			+ "where caminhonetaCarga.potencia <= :potencia "
+			+ "and caminhonetaCarga.distanciaEixos <= :distanciaEixos "
+			+ "and caminhonetaCarga.desenpenho <= :desenpenho "
+			+ "and caminhonetaCarga.capacidadeCarga <= :capacidadeCarga "
+			+ "and caminhonetaCarga.capacidadeCombustivel <= :capacidadeCombustivel "
+			+ "order by(caminhonetaCarga.potencia, caminhonetaCarga.distanciaEixos, "
+			+ "caminhonetaCarga.desenpenho, caminhonetaCarga.capacidadeCarga, "
+			+ "caminhonetaCarga.capacidadeCombustivel) desc"),
+	@NamedQuery(name = "categorizarAutomovelPequeno" ,
+	query = "select categoriaVeiculo from entidade.CategoriaVeiculo as categoriaVeiculo "
+			+ "inner join categoriaVeiculo.veiculoExemplo as automovel "
+			+ "where automovel.tipoAutomovel = CONVENCIONAL  "
+			+ "and automovel.tipoCambio <= :tipoCambio "
+			+ "and automovel.quantidadePortas <= :quantidadePortas "
+			+ "and automovel.quantidadePassageiro <= :quantidadePassageiro "
+			+ "and automovel.tamanhoVeiculo <= :tamanhoVeiculo "
+			+ "order by(automovel.quantidadePortas ,automovel.quantidadePassageiro ,"
+			+ "automovel.tipoCambio, automovel.tamanhoVeiculo) desc"),
+	@NamedQuery(name = "categorizarCaminhonetaPassageiro" ,
+	query = "select categoriaVeiculo from entidade.CategoriaVeiculo as categoriaVeiculo "
+			+ "inner join categoriaVeiculo.veiculoExemplo as automovel "
+			+ "where automovel.tipoAutomovel = CAMINHONETA_PASSAGEIRO "
+			+ "and automovel.tipoAirBag <= :tipoAirBag "
+			+ "and automovel.tipoCambio <= :tipoCambio "
+			+ "and automovel.quantidadePortas <= :quantidadePortas "
+			+ "and automovel.quantidadePassageiro <= :quantidadePassageiro "
+			+ "and automovel.tamanhoVeiculo <= :tamanhoVeiculo "
+			+ "order by(automovel.quantidadePortas ,automovel.quantidadePassageiro ,"
+			+ "automovel.tipoAirBag, automovel.tipoCambio, automovel.tamanhoVeiculo) desc")
+})
 public class CategoriaVeiculo extends Entidade {
 	
 	private static final long serialVersionUID = 1L;
@@ -22,8 +58,9 @@ public class CategoriaVeiculo extends Entidade {
 	private float horasLimpesa;
 	@Column(name = "valor_diaria",nullable = false)
 	private Float valorDiaria;
-	@OneToOne
-	@JoinColumn(nullable = false)
+	@Column(nullable = false)
+	private String descricao;
+	@OneToOne(cascade = CascadeType.PERSIST, optional = false, targetEntity = Veiculo.class)
 	private Veiculo veiculoExemplo;
 	@OneToMany(mappedBy = "categoriaVeiculo" , targetEntity = Veiculo.class)
 	private List<Veiculo> veiculos;
@@ -36,6 +73,14 @@ public class CategoriaVeiculo extends Entidade {
 		this.tipo = tipo;
 	}
 	
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
 	public float getQuilometragemRevisao() {
 		return quilometragemRevisao;
 	}

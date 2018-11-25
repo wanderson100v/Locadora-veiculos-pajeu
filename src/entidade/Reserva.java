@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQuery(name = "totalDataRetirada", query = "select count(*) from reserva r where r.categoriaVeiculo = :categoriaVeiculo and  r.dataRetirada = :dataRetirada")
+@NamedQuery(name = "totalDataRetirada", query = "select count(*) from Reserva r where r.categoriaVeiculo = :categoriaVeiculo and  r.dataRetirada = :dataRetirada")
 public class Reserva extends Entidade {
 	
 	private static final long serialVersionUID = 1L;

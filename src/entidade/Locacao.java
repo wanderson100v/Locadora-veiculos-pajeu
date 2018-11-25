@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 import enumeracoes.TipoLocacao;
 
 @Entity
-@NamedQuery(name = "totalPrevisaoEntrega", query = "select count(*) from locacoes l where l.filialEntrega = :filialEntrega and l.veiculo.categoria = :categoria and l.dataDevolucao <= :dataLimite ")
+@NamedQuery(name = "totalPrevisaoEntrega", query = "select count(*) from Locacao l where l.filialEntrega = :filialEntrega and l.veiculo.categoriaVeiculo = :categoria and l.dataDevolucao <= :dataLimite ")
 public class Locacao extends Entidade {
 	
 	private static final long serialVersionUID = 1L;

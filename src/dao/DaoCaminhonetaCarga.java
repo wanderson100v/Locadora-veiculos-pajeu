@@ -1,5 +1,7 @@
 package dao;
 
+
+
 import entidade.CaminhonetaCarga;
 
 public class DaoCaminhonetaCarga extends Dao<CaminhonetaCarga> implements IDaoCaminhonetaCarga{
@@ -7,5 +9,6 @@ public class DaoCaminhonetaCarga extends Dao<CaminhonetaCarga> implements IDaoCa
 	public DaoCaminhonetaCarga() {
 		super(CaminhonetaCarga.class);
 	}
+
 
 }

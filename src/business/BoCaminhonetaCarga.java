@@ -5,12 +5,16 @@ import java.util.List;
 import dao.DaoCaminhonetaCarga;
 import dao.IDaoCaminhonetaCarga;
 import entidade.CaminhonetaCarga;
+import enumeracoes.TipoAcionamentoEmbreagem;
+import enumeracoes.TipoCombustivel;
 import excecoes.BoException;
 import excecoes.DaoException;
+import sql.ConnectionFactory;
 
 public class BoCaminhonetaCarga implements IBoCaminhonetaCarga{
-	private IDaoCaminhonetaCarga daoCaminhonetaCarga = new DaoCaminhonetaCarga();
 	private static IBoCaminhonetaCarga instance;
+	private IDaoCaminhonetaCarga daoCaminhonetaCarga = new DaoCaminhonetaCarga();
+	private IBoCategoriaVeiculo boCategoriaVeiculo = BoCategoriaVeiculo.getInstance();
 	
 	private BoCaminhonetaCarga() {}
 	
@@ -20,12 +24,24 @@ public class BoCaminhonetaCarga implements IBoCaminhonetaCarga{
 		return instance;
 	}
 	
+	public static void main(String[] args) {
+			ConnectionFactory.setUser("postgres","admin");
+			CaminhonetaCarga caminhonetaCarga = new CaminhonetaCarga(false, true, "kdas-a", "verde", "citroem", "mutilazer", "13123-dsad", "dasd-1321",31.f,TipoCombustivel.ETANOL_DIESEL,100,2012,2013,2,3, null,null,10.5f, 13.4f,14.f,TipoAcionamentoEmbreagem.MANUAL,20,30);
+			try {
+				getInstance().cadastrarEditar(caminhonetaCarga);
+			} catch (BoException e) {
+				e.printStackTrace();
+			}
+	}
+	
+	
 	@Override
 	public void cadastrarEditar(CaminhonetaCarga entidade) throws BoException {
 		try {
 			if(entidade.getId() != null) {
 				daoCaminhonetaCarga.editar(entidade);
 			}else {
+				entidade.setCategoriaVeiculo(boCategoriaVeiculo.categorizarCaminhonetaCarga(entidade));
 				daoCaminhonetaCarga.cadastrar(entidade);
 			}
 		}catch (DaoException e) {
@@ -47,7 +63,13 @@ public class BoCaminhonetaCarga implements IBoCaminhonetaCarga{
 			throw new BoException(e.getMessage());	
 		}
 	}
-
+	
+	public void categorizar(CaminhonetaCarga caminhonetaCarga) {
+		// buscar veiculos de exemplo que atendam as caracteristicas da caminhoneta em questão
+		// selecionar o qual há mais acessórios
+		// pegar sua categoria e atribuir a camihoneta em questão
+	}
+	
 	@Override
 	public CaminhonetaCarga buscarID(Long id) throws BoException {
 		try {

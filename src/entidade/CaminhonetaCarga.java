@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import enumeracoes.TipoAcionamentoEmbreagem;
+import enumeracoes.TipoCombustivel;
 
 @Entity(name = "caminhoneta_carga")
 public class CaminhonetaCarga extends Veiculo {
@@ -15,13 +16,42 @@ public class CaminhonetaCarga extends Veiculo {
 	private Float potencia;
 	@Column(name = "distancia_eixos",  nullable = false)
 	private Float distanciaEixos;
-	@Column(name = "tipo_acionamento_e", nullable = false)
+	@Column(name = "tipo_acionamento_e")
 	private TipoAcionamentoEmbreagem tipoAcionamentoEmbreagem;
 	@Column(name = "capacidade_carga", nullable = false)
 	private Integer capacidadeCarga;
 	@Column(name = "capacidade_combustivel", nullable = false)
 	private Integer capacidadeCombustivel;
 	
+	public CaminhonetaCarga() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public CaminhonetaCarga(Float desenpenho, Float potencia, Float distanciaEixos,
+			Integer capacidadeCarga, Integer capacidadeCombustivel) {
+		this.desenpenho = desenpenho;
+		this.potencia = potencia;
+		this.distanciaEixos = distanciaEixos;
+		this.capacidadeCarga = capacidadeCarga;
+		this.capacidadeCombustivel = capacidadeCombustivel;
+	}
+
+	public CaminhonetaCarga(boolean locado, boolean ativo, String placa, String cor, String modelo, String fabricante,
+		String numeroChassi, String numeroMotor, float torqueMotor, TipoCombustivel tipoCombustivel,
+		Integer quilometragem, Integer anoFabricante, Integer anoModelo, Integer quantidadePortas,
+		Integer quantidadePassageiro, CategoriaVeiculo categoriaVeiculo, Filial filial, Float desenpenho,
+		Float potencia, Float distanciaEixos, TipoAcionamentoEmbreagem tipoAcionamentoEmbreagem,
+		Integer capacidadeCarga, Integer capacidadeCombustivel) {
+		
+		super(locado, ativo, placa, cor, modelo, fabricante, numeroChassi, numeroMotor, torqueMotor, tipoCombustivel,
+				quilometragem, anoFabricante, anoModelo, quantidadePortas, quantidadePassageiro, categoriaVeiculo, filial);
+		this.desenpenho = desenpenho;
+		this.potencia = potencia;
+		this.distanciaEixos = distanciaEixos;
+		this.tipoAcionamentoEmbreagem = tipoAcionamentoEmbreagem;
+		this.capacidadeCarga = capacidadeCarga;
+		this.capacidadeCombustivel = capacidadeCombustivel;
+	}
 
 	public Float getDesenpenho() {
 		return desenpenho;

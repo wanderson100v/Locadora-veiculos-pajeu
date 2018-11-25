@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -17,37 +16,39 @@ import enumeracoes.TipoCombustivel;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @NamedQueries({
-	@NamedQuery(name = "totalDisponivel", query = "select count(*) from veiculos v where v.filial = :filial and v.categoria = :categoria and locado = false"),
-	@NamedQuery(name = "totalManutencaoPendente", query = "select count(*) from veiculos as v inner join manutencao as m on (v.manutencao = m) and  v = :veiculo and m.estado = EstadoManutencao.PENDENTE")
+	@NamedQuery(name = "totalDisponivel", query = "select count(*) from "
+			+ "Veiculo as veiculo inner join veiculo.filial as filial "
+			+ "left join veiculo.categoriaVeiculo as categoriaVeiculo"
+			+ " where veiculo.filial = :filial and veiculo.categoriaVeiculo = :categoria and locado = false"),
+	@NamedQuery(name = "totalManutencaoPendente", query = "select count(*) from "
+			+ "Manutencao as m inner join m.veiculo as v where v = :veiculo and m.estadoManutencao = PENDENTE")
 })
 public class Veiculo extends Entidade {
   
 	private static final long serialVersionUID = 1L;
 	private boolean locado, ativo;
-	@Column(length = 10, unique = true ,nullable = false)
+	@Column(length = 10, unique = true)
 	private String placa;
-	@Column(length = 20, nullable = false)
+	@Column(length = 20)
 	private String cor,modelo, fabricante;
-	@Column(length = 30, name = "numero_chassi", nullable = false,unique = true)
+	@Column(length = 30, name = "numero_chassi",unique = true)
 	private String numeroChassi;
-	@Column(length = 30, name = "numero_motor", nullable = false,unique = true)
+	@Column(length = 30, name = "numero_motor",unique = true)
 	private String numeroMotor;
-	@Column(name = "torque_motor", nullable = false)
+	@Column(name = "torque_motor")
 	private float torqueMotor;
-	@Column(name = "tipo_combustivel", nullable = false)
+	@Column(name = "tipo_combustivel")
 	private TipoCombustivel tipoCombustivel;  
-	@Column(nullable = false)
 	private Integer quilometragem;
-	@Column(name = "ano_fabricante", nullable = false)
+	@Column(name = "ano_fabricante")
 	private Integer anoFabricante;
-	@Column(name = "ano_modelo", nullable = false)
+	@Column(name = "ano_modelo")
 	private Integer anoModelo;
-	@Column(name = "qtd_passageiro", nullable = false)
+	@Column(name = "qtd_porta")
 	private Integer quantidadePortas;
-	@Column(name = "qtd_porta", nullable = false)
+	@Column(name = "qtd_passageiro")
 	private Integer quantidadePassageiro;
 	@ManyToOne
-	@JoinColumn(nullable = false)
 	private CategoriaVeiculo categoriaVeiculo;
 	@ManyToOne
 	private Filial filial;
@@ -57,6 +58,35 @@ public class Veiculo extends Entidade {
 	private List<Manutencao> locacoes;
 	
 	
+	public Veiculo() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Veiculo(boolean locado, boolean ativo, String placa, String cor, String modelo, String fabricante,
+			String numeroChassi, String numeroMotor, float torqueMotor, TipoCombustivel tipoCombustivel,
+			Integer quilometragem, Integer anoFabricante, Integer anoModelo, Integer quantidadePortas,
+			Integer quantidadePassageiro, CategoriaVeiculo categoriaVeiculo, Filial filial) {
+		super();
+		this.locado = locado;
+		this.ativo = ativo;
+		this.placa = placa;
+		this.cor = cor;
+		this.modelo = modelo;
+		this.fabricante = fabricante;
+		this.numeroChassi = numeroChassi;
+		this.numeroMotor = numeroMotor;
+		this.torqueMotor = torqueMotor;
+		this.tipoCombustivel = tipoCombustivel;
+		this.quilometragem = quilometragem;
+		this.anoFabricante = anoFabricante;
+		this.anoModelo = anoModelo;
+		this.quantidadePortas = quantidadePortas;
+		this.quantidadePassageiro = quantidadePassageiro;
+		this.categoriaVeiculo = categoriaVeiculo;
+		this.filial = filial;
+	}
+
+
 	public String getModelo() {
 		return modelo;
 	}

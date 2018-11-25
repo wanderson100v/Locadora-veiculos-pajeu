@@ -9,8 +9,9 @@ import excecoes.BoException;
 import excecoes.DaoException;
 
 public class BoAutomovel implements IBoAutomovel {
-	private IDaoAutomovel daoAutomovel = new DaoAutomovel();
 	private static IBoAutomovel instance;
+	private IDaoAutomovel daoAutomovel = new DaoAutomovel();
+	private IBoCategoriaVeiculo boCategoriaVeiculo = BoCategoriaVeiculo.getInstance();
 	
 	private BoAutomovel() {}
 	
@@ -26,6 +27,7 @@ public class BoAutomovel implements IBoAutomovel {
 			if(entidade.getId() != null) {
 				daoAutomovel.editar(entidade);
 			}else {
+				boCategoriaVeiculo.categorizarAutomovel(entidade);
 				daoAutomovel.cadastrar(entidade);
 			}
 		}catch (DaoException e) {
