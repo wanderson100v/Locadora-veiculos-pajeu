@@ -16,11 +16,11 @@ import enumeracoes.TipoCombustivel;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @NamedQueries({
-	@NamedQuery(name = "totalDisponivel", query = "select count(*) from "
+	@NamedQuery(name = "veiculo.totalDisponivel", query = "select count(*) from "
 			+ "Veiculo as veiculo inner join veiculo.filial as filial "
 			+ "left join veiculo.categoriaVeiculo as categoriaVeiculo"
-			+ " where veiculo.filial = :filial and veiculo.categoriaVeiculo = :categoria and locado = false"),
-	@NamedQuery(name = "totalManutencaoPendente", query = "select count(*) from "
+			+ " where veiculo.ativo = true and locado = false and veiculo.filial = :filial and veiculo.categoriaVeiculo = :categoria"),
+	@NamedQuery(name = "veiculo.totalManutencaoPendente", query = "select count(*) from "
 			+ "Manutencao as m inner join m.veiculo as v where v = :veiculo and m.estadoManutencao = PENDENTE")
 })
 public class Veiculo extends Entidade {

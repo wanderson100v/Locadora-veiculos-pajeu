@@ -6,10 +6,10 @@ import entidade.Veiculo;
 import excecoes.DaoException;
 
 public interface IDaoVeiculo extends IDao<Veiculo>{
-	String TOTAL_DISPONIVEL = "totalDiponivel";
-	String TOTAL_MANUTENCAO_PENDENTE = "totalManutencaoPendente";
+	String TOTAL_DISPONIVEL = "veiculo.totalDisponivel";
+	String TOTAL_MANUTENCAO_PENDENTE = "veiculo.totalManutencaoPendente";
 	
-	public int totalVeiculoDisponivel(Filial filial, CategoriaVeiculo categoria)throws DaoException;
+	public long totalVeiculoDisponivel(Filial filial, CategoriaVeiculo categoria)throws DaoException;
 	
-	public int totalManutencaoPendente(Veiculo veiculo)throws DaoException;
+	public long totalManutencaoPendente(Veiculo veiculo)throws DaoException;
 }

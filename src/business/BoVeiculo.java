@@ -21,7 +21,7 @@ public class BoVeiculo implements IBoVeiculo {
 	}
 	
 	@Override
-	public int totalVeiculoDisponivel(Filial filial, CategoriaVeiculo categoria) throws BoException {
+	public long totalVeiculoDisponivel(Filial filial, CategoriaVeiculo categoria) throws BoException {
 		try {
 			return daoVeiculo.totalVeiculoDisponivel(filial, categoria);
 		}catch (DaoException e) {
@@ -30,7 +30,7 @@ public class BoVeiculo implements IBoVeiculo {
 	}
 
 	@Override
-	public int totalManutencoesPententes(Veiculo veiculo) throws BoException {
+	public long totalManutencoesPententes(Veiculo veiculo) throws BoException {
 		try {
 			return daoVeiculo.totalManutencaoPendente(veiculo);
 		}catch (DaoException e) {

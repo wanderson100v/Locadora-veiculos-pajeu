@@ -17,15 +17,15 @@ public class DaoLocacao extends Dao<Locacao> implements  IDaoLocacao{
 	}
 	
 	@Override
-	public int totalLocacoePrevisaoEntrega(Filial filialEntrega, CategoriaVeiculo categoriaVeiculo, LocalDateTime dataLimite) throws DaoException {
-		int total = 0;
+	public long totalLocacoePrevisaoEntrega(Filial filialEntrega, CategoriaVeiculo categoriaVeiculo, LocalDateTime dataLimite) throws DaoException {
+		long total = 0;
 		try {
 			em = ConnectionFactory.getConnection();
 			Query query = em.createNamedQuery(TOTAL_PREVISAO_ENTREGA);
 			query.setParameter("filialEntrega", filialEntrega);
 			query.setParameter("categoria", categoriaVeiculo);
 			query.setParameter("dataLimite", dataLimite);
-			total =(Integer) query.getSingleResult();
+			total = (Long) query.getSingleResult();
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw new DaoException("ERRO AO BUSCAR TOTAL DE LOCAÇÕES POR FILIAL, CATEGORIA DE VEICULO E DATA DE ENTREGA LIMITE");

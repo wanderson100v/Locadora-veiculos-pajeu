@@ -10,8 +10,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 
+import enumeracoes.EstadoRerserva;
+
 @Entity
-@NamedQuery(name = "totalDataRetirada", query = "select count(*) from Reserva r where r.categoriaVeiculo = :categoriaVeiculo and  r.dataRetirada = :dataRetirada")
+@NamedQuery(name = "reserva.totalDataRetirada", 
+	query = "select count(*) from Reserva r "
+			+ "where r.estadoReserva = 1 "
+			+ "and r.categoriaVeiculo = :categoriaVeiculo ")
+			//+ "and r.dataRetirada = :dataRetirada")
 public class Reserva extends Entidade {
 	
 	private static final long serialVersionUID = 1L;
@@ -21,6 +27,8 @@ public class Reserva extends Entidade {
 	private LocalDateTime dataDevolucao;
 	@Column(name = "valor")
 	private float valor;
+	@Column(name = "estado_reserva" ,nullable = false)
+	private EstadoRerserva estadoReserva;
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private CategoriaVeiculo categoriaVeiculo;
@@ -33,7 +41,14 @@ public class Reserva extends Entidade {
 	@ManyToOne
 	private Filial filial;
 
-	
+	public EstadoRerserva getEstadoReserva() {
+		return estadoReserva;
+	}
+
+	public void setEstadoReserva(EstadoRerserva estadoRerserva) {
+		this.estadoReserva = estadoRerserva;
+	}
+
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}
@@ -90,6 +105,7 @@ public class Reserva extends Entidade {
 		this.filial = filial;
 	}
 
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -98,6 +114,7 @@ public class Reserva extends Entidade {
 		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
 		result = prime * result + ((dataDevolucao == null) ? 0 : dataDevolucao.hashCode());
 		result = prime * result + ((dataRetirada == null) ? 0 : dataRetirada.hashCode());
+		result = prime * result + ((estadoReserva == null) ? 0 : estadoReserva.hashCode());
 		result = prime * result + ((filial == null) ? 0 : filial.hashCode());
 		result = prime * result + ((funcionario == null) ? 0 : funcionario.hashCode());
 		result = prime * result + Float.floatToIntBits(valor);
@@ -133,6 +150,8 @@ public class Reserva extends Entidade {
 				return false;
 		} else if (!dataRetirada.equals(other.dataRetirada))
 			return false;
+		if (estadoReserva != other.estadoReserva)
+			return false;
 		if (filial == null) {
 			if (other.filial != null)
 				return false;
@@ -151,9 +170,8 @@ public class Reserva extends Entidade {
 	@Override
 	public String toString() {
 		return "Reserva [dataRetirada=" + dataRetirada + ", dataDevolucao=" + dataDevolucao + ", valor=" + valor
-				+ ", categoriaVeiculo=" + categoriaVeiculo + ", cliente=" + cliente + ", funcionario=" + funcionario
-				+ ", filial=" + filial + "]";
+				+ ", estadoRerserva=" + estadoReserva + ", categoriaVeiculo=" + categoriaVeiculo + ", cliente="
+				+ cliente + ", funcionario=" + funcionario + ", filial=" + filial + "]";
 	}
 
-	
 }

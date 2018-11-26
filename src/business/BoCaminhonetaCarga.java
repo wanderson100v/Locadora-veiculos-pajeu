@@ -14,7 +14,6 @@ import sql.ConnectionFactory;
 public class BoCaminhonetaCarga implements IBoCaminhonetaCarga{
 	private static IBoCaminhonetaCarga instance;
 	private IDaoCaminhonetaCarga daoCaminhonetaCarga = new DaoCaminhonetaCarga();
-	private IBoCategoriaVeiculo boCategoriaVeiculo = BoCategoriaVeiculo.getInstance();
 	
 	private BoCaminhonetaCarga() {}
 	
@@ -26,7 +25,8 @@ public class BoCaminhonetaCarga implements IBoCaminhonetaCarga{
 	
 	public static void main(String[] args) {
 			ConnectionFactory.setUser("postgres","admin");
-			CaminhonetaCarga caminhonetaCarga = new CaminhonetaCarga(false, true, "kdas-a", "verde", "citroem", "mutilazer", "13123-dsad", "dasd-1321",31.f,TipoCombustivel.ETANOL_DIESEL,100,2012,2013,2,3, null,null,10.5f, 13.4f,14.f,TipoAcionamentoEmbreagem.MANUAL,20,30);
+			
+			CaminhonetaCarga caminhonetaCarga = new CaminhonetaCarga(false, true, "dasd-b", "rosa", "tabu", "ffabuster", "dasd-13", "gdfsg-dsa",20.4f,TipoCombustivel.GASOLINA_ETANOL,3000,2009,2012,4,1, null,null,15.3f, 11.9f,12.f,TipoAcionamentoEmbreagem.HIDRAULICO,12,21);
 			try {
 				getInstance().cadastrarEditar(caminhonetaCarga);
 			} catch (BoException e) {
@@ -34,14 +34,13 @@ public class BoCaminhonetaCarga implements IBoCaminhonetaCarga{
 			}
 	}
 	
-	
 	@Override
 	public void cadastrarEditar(CaminhonetaCarga entidade) throws BoException {
 		try {
 			if(entidade.getId() != null) {
 				daoCaminhonetaCarga.editar(entidade);
 			}else {
-				entidade.setCategoriaVeiculo(boCategoriaVeiculo.categorizarCaminhonetaCarga(entidade));
+				entidade.setCategoriaVeiculo(BoCategoriaVeiculo.getInstance().categorizarCaminhonetaCarga(entidade));
 				daoCaminhonetaCarga.cadastrar(entidade);
 			}
 		}catch (DaoException e) {
@@ -62,12 +61,6 @@ public class BoCaminhonetaCarga implements IBoCaminhonetaCarga{
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());	
 		}
-	}
-	
-	public void categorizar(CaminhonetaCarga caminhonetaCarga) {
-		// buscar veiculos de exemplo que atendam as caracteristicas da caminhoneta em questão
-		// selecionar o qual há mais acessórios
-		// pegar sua categoria e atribuir a camihoneta em questão
 	}
 	
 	@Override

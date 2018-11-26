@@ -1,6 +1,6 @@
 package entidade;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +12,12 @@ import javax.persistence.OneToOne;
 import enumeracoes.TipoLocacao;
 
 @Entity
-@NamedQuery(name = "totalPrevisaoEntrega", query = "select count(*) from Locacao l where l.filialEntrega = :filialEntrega and l.veiculo.categoriaVeiculo = :categoria and l.dataDevolucao <= :dataLimite ")
+@NamedQuery(name = "locacao.totalPrevisaoEntrega", 
+	query = "select count(*) from Locacao l "
+			+ "where l.finalizado = false "
+			+ "and l.filialEntrega = :filialEntrega "
+			+ "and l.veiculo.categoriaVeiculo = :categoria "
+			+ "and l.dataDevolucao <= :dataLimite")
 public class Locacao extends Entidade {
 	
 	private static final long serialVersionUID = 1L;
@@ -21,10 +26,10 @@ public class Locacao extends Entidade {
 	private TipoLocacao tipoLocacao;
 	
 	@Column(name = "data_retirada")
-	private LocalDate dataRetirada;
+	private LocalDateTime dataRetirada;
 	
 	@Column(name = "data_devolucao")
-	private LocalDate dataDevolucao;
+	private LocalDateTime dataDevolucao;
 	
 	@Column(name = "valor_diaria")
 	private Float valorDiaria;
@@ -128,20 +133,20 @@ public class Locacao extends Entidade {
 		this.tipoLocacao = tipoLocacao;
 	}
 
-	public void setDataRetirada(LocalDate dataRetirada) {
-		this.dataRetirada = dataRetirada;
-	}
-
-	public void setDataDevolucao(LocalDate dataDevolucao) {
-		this.dataDevolucao = dataDevolucao;
-	}
-	
-	public LocalDate getDataRetirada() {
+	public LocalDateTime getDataRetirada() {
 		return dataRetirada;
 	}
 
-	public LocalDate getDataDevolucao() {
+	public void setDataRetirada(LocalDateTime dataRetirada) {
+		this.dataRetirada = dataRetirada;
+	}
+
+	public LocalDateTime getDataDevolucao() {
 		return dataDevolucao;
+	}
+
+	public void setDataDevolucao(LocalDateTime dataDevolucao) {
+		this.dataDevolucao = dataDevolucao;
 	}
 
 	public Float getValorDiaria() {

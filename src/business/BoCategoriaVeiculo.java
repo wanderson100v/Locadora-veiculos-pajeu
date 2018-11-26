@@ -15,7 +15,6 @@ import sql.ConnectionFactory;
 public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 	private static IBoCategoriaVeiculo instance;
 	private IDaoCategoriaVeiculo daoCategoriaVeiculo = new DaoCategoriaVeiculo();
-	private IBoCaminhonetaCarga boCaminhonetaCarga =BoCaminhonetaCarga.getInstance();
 	
 	private BoCategoriaVeiculo() {}
 	
@@ -129,7 +128,7 @@ public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 	}
 	
 	private void validarCategoria(CategoriaVeiculo categoriaVeiculo) throws BoException {
-		if(boCaminhonetaCarga.buscarPorExemplo((CaminhonetaCarga) categoriaVeiculo.getVeiculoExemplo()) != null){
+		if(BoCaminhonetaCarga.getInstance().buscarPorExemplo((CaminhonetaCarga) categoriaVeiculo.getVeiculoExemplo()) != null){
 			throw new BoException("O já existe uma categoria de veiculo semelhante");
 		}
 	}

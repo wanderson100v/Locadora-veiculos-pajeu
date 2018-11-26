@@ -9,6 +9,6 @@ import excecoes.BoException;
 
 public interface IBoLocacao extends IBussines<Locacao>{
 
-	public int totalLocacoePrevisaoEntrega(Filial filialEntrega ,CategoriaVeiculo categoriaVeiculo ,LocalDateTime dataLimite)throws BoException;
+	public long totalLocacoePrevisaoEntrega(Filial filialEntrega ,CategoriaVeiculo categoriaVeiculo ,LocalDateTime dataLimite)throws BoException;
 	
 }

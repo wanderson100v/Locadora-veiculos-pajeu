@@ -81,7 +81,7 @@ public class BoLocacao implements IBoLocacao {
 
 
 	@Override
-	public int totalLocacoePrevisaoEntrega(Filial filialEntrega, CategoriaVeiculo categoriaVeiculo, LocalDateTime dataLimite) throws BoException {
+	public long totalLocacoePrevisaoEntrega(Filial filialEntrega, CategoriaVeiculo categoriaVeiculo, LocalDateTime dataLimite) throws BoException {
 		try {
 			return daoLocacao.totalLocacoePrevisaoEntrega(filialEntrega, categoriaVeiculo, dataLimite);
 		}catch (DaoException e) {
@@ -90,14 +90,14 @@ public class BoLocacao implements IBoLocacao {
 	}
 	
 	private void calcularValorLocacao(Locacao locacao) {
-		Period period = Period.between(locacao.getDataRetirada(),locacao.getDataDevolucao());
+		Long dias = Duration.between(locacao.getDataRetirada(),locacao.getDataDevolucao()).toDays();
 		
 		Float valorDiaria;
 		if(locacao.getReservaOrigem() != null)
 			valorDiaria = locacao.getReservaOrigem().getValor();
 		else
 			valorDiaria = locacao.getVeiculo().getCategoriaVeiculo().getValorDiaria();
-		Float valorLocacao = valorDiaria * period.getDays();
+		Float valorLocacao = valorDiaria * dias;
 		Long horasAposTerminoPrevistoDiaria = Duration.between(locacao.getDataRetirada(),locacao.getDataDevolucao()).toHours() % 24;
 		
 		if(horasAposTerminoPrevistoDiaria <=4) {
@@ -111,13 +111,13 @@ public class BoLocacao implements IBoLocacao {
 		
 		StringBuilder stringBuilder = new StringBuilder();
 		
-		if(Period.between(locacao.getDataRetirada(),locacao.getDataDevolucao()).getDays()<1)
+		if(Duration.between(locacao.getDataRetirada(),locacao.getDataDevolucao()).toDays()<1)
 			stringBuilder.append("O período de locação é inferior a uma diaria./n");
 		
 		if(locacao.getMotorista() != null)
-			validarMotoristaLocacao(locacao.getMotorista(),locacao.getDataDevolucao(),stringBuilder);
+			validarMotoristaLocacao(locacao.getMotorista(),locacao.getDataDevolucao().toLocalDate(),stringBuilder);
 		else
-			validarMotoristaLocacao((Fisico)locacao.getMotorista(),locacao.getDataDevolucao(),stringBuilder);
+			validarMotoristaLocacao((Fisico)locacao.getMotorista(),locacao.getDataDevolucao().toLocalDate(),stringBuilder);
 		
 		if(boVeiculo.totalManutencoesPententes(locacao.getVeiculo()) != 0)
 			stringBuilder.append("Há pendências de manutenções no veiculo");
