@@ -14,7 +14,7 @@
    <center>
       <TabPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="200.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" tabMinHeight="120.0" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab>
+          <Tab fx:id="tab">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: cyan;" />
             </content>

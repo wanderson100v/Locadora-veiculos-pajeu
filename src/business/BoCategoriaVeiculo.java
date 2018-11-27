@@ -23,6 +23,7 @@ public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 			instance = new BoCategoriaVeiculo();
 		return instance;
 	}
+	
 	public static void main(String[] args) {
 		CategoriaVeiculo categoriaVeiculo = new CategoriaVeiculo();
 		categoriaVeiculo.setHorasLimpesa(3);

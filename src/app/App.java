@@ -3,6 +3,7 @@ package app;
 
 
 
+
 import dao.DaoRes;
 import dao.IDaoRes;
 import enumeracoes.Tela;
@@ -14,37 +15,30 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import sql.ConnectionFactory;
 
 public class App extends Application{
 	
-	private static Stage stage;
+	public static Stage stage;
 	private static Pane loginPane,homePane;
 	private static Scene loginScene,homeScene;
 	private static IDaoRes daoRes = DaoRes.getInstance();	
 	
 	public static void main(String[] args) {
-		ConnectionFactory.setUser("postgres","admin");
-		ConnectionFactory.getConnection();
+		//ConnectionFactory.setUser("postgres","admin");
+		//ConnectionFactory.getConnection();
 		//String[] loginSenha = ConnectionFactory.getUser();
-		//launch(args); 
-		
+		launch(args);
 	}
 	
 	@Override
 	public void start(Stage stage) throws Exception {
 		App.stage = stage;
 		try {
-			stage.setScene(new Scene(daoRes.carregarPaneFXML(Tela.CARREGAR)));
 			stage.setTitle("Locadora veiculos");
-			stage.centerOnScreen();
-			stage.show();
-			
-			//carregando todas as demais telas
 			loginPane = daoRes.carregarPaneFXML(Tela.LOGIN);
 			homePane =  daoRes.carregarPaneFXML(Tela.HOME);
 			iniTelaLogin();
-			
+			stage.show();
 		}catch (DaoException e) {
 			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 			e.printStackTrace();
@@ -72,6 +66,9 @@ public class App extends Application{
 		if(homeScene == null)
 			homeScene = new Scene(homePane);
 		stage.setScene(homeScene);
-		stage.setMaximized(true);
+		//stage.setMaximized(true);
+		stage.setWidth(800);
+		stage.setHeight(600);
+		stage.centerOnScreen();
 	}
 }

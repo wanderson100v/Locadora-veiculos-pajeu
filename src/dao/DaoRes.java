@@ -3,6 +3,7 @@ package dao;
 
 import java.awt.image.BufferedImage;
 
+
 import enumeracoes.Tela;
 import excecoes.DaoException;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +26,26 @@ public class DaoRes implements IDaoRes{
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DaoException("Erro ao carregar tela "+tela);
+		}
+	}
+	public Pane carregarPaneFXML(String tela)throws DaoException {
+		try {
+			return FXMLLoader.load(getClass().getClassLoader().getResource("view/"+tela+".fxml"));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DaoException("Erro ao carregar tela "+tela);
+		}
+	}
+	
+	public Object carregarControllerFXML(String tela)throws DaoException {
+		try {
+			 FXMLLoader loader  = new FXMLLoader(getClass().getClassLoader().getResource("view/"+tela+".fxml"));
+			 loader.load();
+			 return loader.getController();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DaoException("Erro ao carregar controlador "+tela);
 		}
 	}
 
