@@ -30,9 +30,8 @@ public class DaoJuridico extends Dao<Juridico> implements IDaoJuridico{
 			e.printStackTrace();
 			throw new DaoException("ERRO AO BUSCAR CLIENTES JURIICOS POR BUSCA - CONTATE ADM");
 		}finally {
-			
+			em.close();
 		}
-		
 	}
 	
 

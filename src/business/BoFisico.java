@@ -78,8 +78,17 @@ public class BoFisico implements IBoFisico{
 		}
 	}
 
+	@Override
+	public List<Fisico> buscaPorBusca(Fisico fisico) throws BoException {
+		try {
+			return daoFisico.buscaPorBusca(fisico);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+	
 	private void atribuirCodigo(Fisico entidade){
 		entidade.setCodigo("PJ"+entidade.getCpf());
 	}
-	
+
 }

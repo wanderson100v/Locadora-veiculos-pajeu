@@ -75,9 +75,9 @@ public abstract class CRUDController<T extends Entidade> {
     
     abstract void crudHandle(Button btn);
 
-    abstract void limparCampos();
-    
     abstract void popularTabela(Entidade entidade);
+    
+    abstract void limparCampos();
     
     public ButtonBar getAcoesBar() {
 		return acoesBar;

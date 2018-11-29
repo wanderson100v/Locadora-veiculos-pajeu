@@ -1,16 +1,19 @@
 package controller;
 
+import java.util.HashMap;
 import java.util.List;
 
+import business.BoFisico;
 import business.BoJuridico;
 import dao.DaoRes;
+import entidade.Entidade;
+import entidade.Fisico;
 import entidade.Juridico;
 import excecoes.BoException;
 import excecoes.DaoException;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -19,7 +22,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import view.Alerta;
 
@@ -55,32 +57,67 @@ public class PesquisaController {
     
     private boolean detalhesAtivo = false;
     
-    private ClienteJuridicoController clienteJuridicoController;
+    private CRUDController<Juridico> clienteJuridicoController;
+    
+    private CRUDController<Fisico> clienteFisicoController;
     
     private Alerta alerta = Alerta.getInstance();
     
+    private HashMap<String,CRUDController<?>> mapa = new HashMap<>();
+    
     @FXML
+    void initialize() {
+    	try {
+    		clienteJuridicoController = (ClienteJuridicoController) DaoRes.getInstance().carregarControllerFXML("ClienteJuridicoPane");
+    		clienteFisicoController = (ClienteFisicoController) DaoRes.getInstance().carregarControllerFXML("ClienteFisicoPane");
+    		mapa.put("Juridico", clienteJuridicoController);
+			mapa.put("Fisico", clienteFisicoController);
+			filtroBox.getItems().addAll(mapa.keySet());
+    		
+    		transition = new TranslateTransition();
+			transition.setNode(detalhesPane);
+			transition.setDuration(new Duration(1000));
+			
+    	} catch (DaoException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	@FXML
     void actionHandle(ActionEvent e) {
     	if (e.getSource() == pesquisaFld) {
     		String busca = pesquisaFld.getText().trim();
     		if(!busca.isEmpty()) {
     			if(filtroBox.getValue() != null) {
-	    			if(filtroBox.getValue().equals("Juridico")) {
-		    			Juridico juridico = new Juridico();
-			    		juridico.setNome(busca);
-			    		juridico.setCnpj(busca);
-			    		juridico.setInscricaoEstadual(busca);
-			    		juridico.setEmail(busca);
-			    		juridico.setTelefone(busca);
-		    			try {
-		    				List<Juridico> juridicos = BoJuridico.getInstance().buscaPorBusca(juridico);
-		    				clienteJuridicoController.getEntidadeTabela().getItems().setAll(juridicos);
-							clienteJuridicoController.getEntidadeTabela().refresh();
-							alerta.imprimirMsg("Busca concluída","Foram econtrados "+juridicos.size()+" resultado(s)",AlertType.INFORMATION);
-		    			} catch (BoException e1) {
-							e1.printStackTrace();
-						}
-		    		}	
+    				List entidades = null;
+    				try {
+	    				if(filtroBox.getValue().equals("Juridico")) {
+			    			Juridico juridico = new Juridico();
+				    		juridico.setNome(busca);
+				    		juridico.setCodigo(busca);
+				    		juridico.setCnpj(busca);
+				    		juridico.setInscricaoEstadual(busca);
+				    		juridico.setEmail(busca);
+				    		juridico.setTelefone(busca);
+				    		entidades  = BoJuridico.getInstance().buscaPorBusca(juridico);
+			    		}else if(filtroBox.getValue().equals("Fisico")) {
+			    			Fisico fisico = new Fisico();
+			    			fisico.setNome(busca);
+			    			fisico.setCpf(busca);
+			    			fisico.setCodigo(busca);
+			    			fisico.setEmail(busca);
+			    			fisico.setTelefone(busca);
+			    			fisico.setIdentificacaoMotorista(busca);
+			    			fisico.setNumeroHabilitacao(busca);
+			    			entidades  = BoFisico.getInstance().buscaPorBusca(fisico);
+			    		}
+	    				mapa.get(filtroBox.getValue()).getEntidadeTabela().getItems().setAll(entidades);
+	    				mapa.get(filtroBox.getValue()).getEntidadeTabela().refresh();
+						alerta.imprimirMsg("Busca concluída","Foram econtrados "+entidades.size()+" resultado(s)",AlertType.INFORMATION);
+	    			} catch (BoException e1) {
+						e1.printStackTrace();
+					}
     			}else
     				alerta.imprimirMsg("Busca invalida","Nenhum filtro selecionado",AlertType.WARNING);
     		}else 
@@ -88,9 +125,11 @@ public class PesquisaController {
     		
 		}
     	else if(e.getSource() == filtroBox ) {
-    			tabelaPane.getChildren().setAll(clienteJuridicoController.getEntidadeTabela());
-				detalhesScroll.setContent(clienteJuridicoController.getEntidadePane());
-				acoesBar.getButtons().setAll(clienteJuridicoController.getAcoesBar().getButtons());
+    			
+			tabelaPane.getChildren().setAll(mapa.get(filtroBox.getValue()).getEntidadeTabela());
+			detalhesScroll.setContent(mapa.get(filtroBox.getValue()).getEntidadePane());
+			acoesBar.getButtons().setAll(mapa.get(filtroBox.getValue()).getAcoesBar().getButtons());
+			
     	}
     	else if(e.getSource() == detalhesBtn) {
     		if(!detalhesAtivo) {
@@ -109,17 +148,4 @@ public class PesquisaController {
     	}
     }
     
-    @FXML
-    void initialize() {
-    	try {
-    		clienteJuridicoController = (ClienteJuridicoController) DaoRes.getInstance().carregarControllerFXML("ClienteJuridicoPane");
-    		transition = new TranslateTransition();
-			transition.setNode(detalhesPane);
-			transition.setDuration(new Duration(1000));
-			filtroBox.getItems().add("Juridico");
-    	} catch (DaoException e) {
-			e.printStackTrace();
-		}
-    }
-
 }

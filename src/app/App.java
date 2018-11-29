@@ -1,9 +1,5 @@
 package app;
 
-
-
-
-
 import dao.DaoRes;
 import dao.IDaoRes;
 import enumeracoes.Tela;

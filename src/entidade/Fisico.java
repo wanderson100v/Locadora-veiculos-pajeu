@@ -4,10 +4,20 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
 
 import enumeracoes.Sexo;
 
 @Entity
+@NamedQuery(name = "fisico.buscaPorBusca" , 
+query = "select f from Fisico as f "
+		+ "where upper(f.codigo) like upper(:codigo)"
+		+ " or upper(f.nome) like upper(:nome)"
+		+ " or upper(f.identificacaoMotorista) like upper(:identificacaoMotorista)"
+		+ " or upper(f.numeroHabilitacao) like upper(:numeroHabilitacao)"
+		+ " or upper(f.email) like upper(:email)"
+		+ " or upper(f.telefone) like upper(:telefone)"
+		+ " or upper(f.cpf) like upper(:cpf)")
 public class Fisico extends Cliente {
 
 	private static final long serialVersionUID = 1L;
