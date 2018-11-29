@@ -75,9 +75,17 @@ public class BoJuridico implements IBoJuridico {
 		}
 	}
 	
+	@Override
+	public List<Juridico> buscaPorBusca(Juridico juridico) throws BoException {
+		try {
+			return daoJuridico.buscaPorBusca(juridico);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+	
 	private void atribuirCodigo(Juridico entidade){
 		entidade.setCodigo("PJ"+entidade.getCnpj());
 	}
-
 	
 }

@@ -103,7 +103,7 @@ public abstract class Dao<T extends Entidade>{
 			em.close();
 		}
 			
-	} 
+	}
 	
 	public List<T> buscarAll() throws DaoException {
 		EntityManager em = ConnectionFactory.getConnection();

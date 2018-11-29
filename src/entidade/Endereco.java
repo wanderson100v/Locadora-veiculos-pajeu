@@ -3,12 +3,15 @@ package entidade;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+import enumeracoes.Estado;
+
 @Entity
 public class Endereco extends Entidade {
 	
 	private static final long serialVersionUID = 1L;
 	@Column(length = 50)
-	private String rua,bairro,cidade,estado,numero;
+	private String rua,bairro,cidade,numero;
+	private Estado estado;
 	@Column(length = 20, unique = true , nullable = false)
 	private String cep;
 	
@@ -36,11 +39,11 @@ public class Endereco extends Entidade {
 		this.cidade = cidade;
 	}
 
-	public String getEstado() {
+	public Estado getEstado() {
 		return estado;
 	}
 
-	public void setEstado(String estado) {
+	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
 

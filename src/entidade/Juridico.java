@@ -2,8 +2,17 @@ package entidade;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQuery(name = "juridico.buscaPorBusca" , 
+	query = "select j from Juridico as j "
+			+ "where upper(j.codigo) like upper(:codigo)"
+			+ " or upper(j.nome) like upper(:nome)"
+			+ " or upper(j.email) like upper(:email)"
+			+ " or upper(j.telefone) like upper(:telefone)"
+			+ " or upper(j.inscricaoEstadual) like upper(:inscricaoEstadual)"
+			+ " or upper(j.cnpj) like upper(:cnpj)")
 public class Juridico extends Cliente {
 	
 	private static final long serialVersionUID = 1L;

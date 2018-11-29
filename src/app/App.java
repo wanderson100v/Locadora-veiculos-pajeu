@@ -15,6 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import sql.ConnectionFactory;
 
 public class App extends Application{
 	
@@ -24,7 +25,7 @@ public class App extends Application{
 	private static IDaoRes daoRes = DaoRes.getInstance();	
 	
 	public static void main(String[] args) {
-		//ConnectionFactory.setUser("postgres","admin");
+		ConnectionFactory.setUser("postgres","admin");
 		//ConnectionFactory.getConnection();
 		//String[] loginSenha = ConnectionFactory.getUser();
 		launch(args);
