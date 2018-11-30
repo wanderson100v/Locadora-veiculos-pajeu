@@ -1,28 +1,23 @@
 package controller;
 
+import java.util.List;
+
 import business.BoJuridico;
 import business.IBoJuridico;
-import business.IBussines;
 import entidade.Endereco;
 import entidade.Entidade;
 import entidade.Juridico;
 import enumeracoes.Estado;
 import excecoes.BoException;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
-import view.Alerta;
 
 public class ClienteJuridicoController extends CRUDController<Juridico> {
 
@@ -163,7 +158,26 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
 		}
     }
     
-    void popularTabela(Entidade entidade) {
+    @Override
+    void popularTabela(String busca) {
+    	Juridico juridico = new Juridico();
+		juridico.setNome(busca);
+		juridico.setCodigo(busca);
+		juridico.setCnpj(busca);
+		juridico.setInscricaoEstadual(busca);
+		juridico.setEmail(busca);
+		juridico.setTelefone(busca);
+		try {
+			List<Juridico> juridicos = boJuridico.buscaPorBusca(juridico);
+			entidadeTabela.getItems().setAll(juridicos);
+			entidadeTabela.refresh();
+			alerta.imprimirMsg("Busca concluída","Foram econtrados "+juridicos.size()+" resultado(s)",AlertType.INFORMATION);
+		} catch (BoException e) {
+			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
+		}
+    }
+    
+    void popularDescricao(Entidade entidade) {
 		this.juridico = (Juridico) entidade;
 		
 		nomeFld.setText(juridico.getNome());

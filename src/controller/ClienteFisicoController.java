@@ -2,15 +2,13 @@ package controller;
 
 
 import java.time.LocalDate;
+import java.util.List;
 
 import business.BoFisico;
-import business.BoJuridico;
 import business.IBoFisico;
-import business.IBoJuridico;
 import entidade.Endereco;
 import entidade.Entidade;
 import entidade.Fisico;
-import entidade.Juridico;
 import enumeracoes.Estado;
 import enumeracoes.Sexo;
 import excecoes.BoException;
@@ -108,7 +106,7 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
     	naoAtivoRb.setToggleGroup(toggleGroup);
     	
     	nomeCln.setCellValueFactory( new PropertyValueFactory<>("nome"));
-    	cpfCln.setCellValueFactory( new PropertyValueFactory<>("cnpj"));
+    	cpfCln.setCellValueFactory( new PropertyValueFactory<>("cpf"));
     	sexoCln.setCellValueFactory(new PropertyValueFactory<>("sexo"));
     	nascimentoCln.setCellValueFactory(new PropertyValueFactory<>("dataNascimento"));
     	
@@ -192,9 +190,28 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
 		}
 		
 	}
-
 	@Override
-	void popularTabela(Entidade entidade) {
+	void popularTabela(String busca) {
+		Fisico fisico = new Fisico();
+		fisico.setNome(busca);
+		fisico.setCpf(busca);
+		fisico.setCodigo(busca);
+		fisico.setEmail(busca);
+		fisico.setTelefone(busca);
+		fisico.setIdentificacaoMotorista(busca);
+		fisico.setNumeroHabilitacao(busca);
+		try {
+			List<Fisico> fisicos = BoFisico.getInstance().buscaPorBusca(fisico);
+			entidadeTabela.getItems().setAll(fisicos);
+			entidadeTabela.refresh();
+			alerta.imprimirMsg("Busca concluída","Foram econtrados "+fisicos.size()+" resultado(s)",AlertType.INFORMATION);
+		} catch (BoException e) {
+			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
+		}
+	}
+	
+	@Override
+	void popularDescricao(Entidade entidade) {
 		this.fisico = (Fisico) entidade;
 		
 		nomeFld.setText(fisico.getNome());

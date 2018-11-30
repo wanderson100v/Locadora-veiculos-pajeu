@@ -1,19 +1,12 @@
 package controller;
 
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import app.App;
-import dao.DaoRes;
-import excecoes.DaoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
 
 public class LoginController {
@@ -37,7 +30,12 @@ public class LoginController {
     private Button loginBtn;
     
     //private DialogPane dialogPane;
+   
+    @FXML
+    void initialize() {
 
+    }
+    
     @FXML
     void eventHandler(ActionEvent event) {
     	if(event.getSource() == loginBtn) {
@@ -61,8 +59,4 @@ public class LoginController {
     	}
     }
 
-    @FXML
-    void initialize() {
-
-    }
 }

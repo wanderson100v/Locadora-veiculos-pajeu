@@ -14,7 +14,7 @@ public class Filial extends Entidade {
 	
 	private static final long serialVersionUID = 3891969678671342443L;
 	private boolean ativo;
-	@Column(length =20)
+	@Column(length =20, nullable = false)
 	private String nome;
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false)

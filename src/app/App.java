@@ -22,8 +22,6 @@ public class App extends Application{
 	
 	public static void main(String[] args) {
 		ConnectionFactory.setUser("postgres","admin");
-		//ConnectionFactory.getConnection();
-		//String[] loginSenha = ConnectionFactory.getUser();
 		launch(args);
 	}
 	
@@ -31,9 +29,11 @@ public class App extends Application{
 	public void start(Stage stage) throws Exception {
 		App.stage = stage;
 		try {
-			stage.setTitle("Locadora veiculos");
+			stage.setTitle("Locadora Veiculos Pajeú");
 			loginPane = daoRes.carregarPaneFXML(Tela.LOGIN);
 			homePane =  daoRes.carregarPaneFXML(Tela.HOME);
+			loginScene = new Scene(loginPane);
+			homeScene = new Scene(homePane);
 			iniTelaLogin();
 			stage.show();
 		}catch (DaoException e) {
@@ -48,10 +48,7 @@ public class App extends Application{
 		super.stop();
 	}
 	
-	
 	public static void iniTelaLogin() {
-		if(loginScene == null) 
-			loginScene = new Scene(loginPane);
 		stage.setScene(loginScene);
 		stage.setMaximized(false);
 		stage.setWidth(450);
@@ -60,8 +57,6 @@ public class App extends Application{
 	}
 	
 	public static void iniTelaMenu() {
-		if(homeScene == null)
-			homeScene = new Scene(homePane);
 		stage.setScene(homeScene);
 		//stage.setMaximized(true);
 		stage.setWidth(800);

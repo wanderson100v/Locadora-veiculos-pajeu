@@ -31,7 +31,7 @@ public abstract class CRUDController<T extends Entidade> {
     private VBox entidadePane;
     
     @FXML
-    private TableView<T> entidadeTabela;
+    protected TableView<T> entidadeTabela;
 
     
     protected Alerta alerta = Alerta.getInstance();
@@ -69,13 +69,15 @@ public abstract class CRUDController<T extends Entidade> {
     		cadastrarBtn.setDisable(true);
     		editarBtn.setDisable(false);
     		excluirBtn.setDisable(false);
-    		popularTabela(entidade);
+    		popularDescricao(entidade);
     	}
     }
     
     abstract void crudHandle(Button btn);
 
-    abstract void popularTabela(Entidade entidade);
+    abstract void popularTabela(String busca);
+    
+    abstract void popularDescricao(Entidade entidade);
     
     abstract void limparCampos();
     
