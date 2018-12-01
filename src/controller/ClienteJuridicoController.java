@@ -93,34 +93,15 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
     void crudHandle(Button btn) {
     	
     	try {	
-    		if(btn == cadastrarBtn) {
-	    		
-    			Juridico juridico = new Juridico();
-	    		juridico.setNome(nomeFld.getText());
-	    		juridico.setCnpj(cnpjFld.getText());
-	    		juridico.setInscricaoEstadual(inscicaoEstadualFld.getText());
-	    		juridico.setEmail(emailFld.getText());
-	    		juridico.setTelefone(telNumFld.getText());
-	    		if(simAtivoRb.isSelected())
-	    			juridico.setAtivo(true);
-	    		else
-	    			juridico.setAtivo(false);
-	    		
-	    		Endereco endereco = new Endereco();
-	    		endereco.setNumero(numFld.getText());
-	    		endereco.setCep(cepFld.getText());
-	    		endereco.setRua(ruaFld.getText());
-	    		endereco.setBairro(bairroFld.getText());
-	    		endereco.setCidade(cidadeFld.getText());
-	    		endereco.setEstado(estadoBox.getValue());
-	    		
-	    		juridico.setEndereco(endereco);
-	    		
-				boJuridico.cadastrarEditar(juridico);
-				alerta.imprimirMsg("Sucesso ao cadastrar","Cliente Jurídico cadastrado com sucesso", AlertType.INFORMATION);
-				
-	    	}else if(btn == editarBtn){
-	    		
+    		if(btn == cadastrarBtn || btn == editarBtn) {
+    			Juridico juridico = null;
+    			if(btn == cadastrarBtn) {
+    				juridico = new Juridico();
+    				juridico.setEndereco(new Endereco());
+    			}
+    			else
+    				juridico = this.juridico;
+    			
 	    		juridico.setNome(nomeFld.getText());
 	    		juridico.setCnpj(cnpjFld.getText());
 	    		juridico.setInscricaoEstadual(inscicaoEstadualFld.getText());
@@ -139,9 +120,9 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
 	    		endereco.setCidade(cidadeFld.getText());
 	    		endereco.setEstado(estadoBox.getValue());
 	    		
-	    		boJuridico.cadastrarEditar(juridico);
-	    		alerta.imprimirMsg("Sucesso ao editar","Cliente Jurídico editado com sucesso", AlertType.INFORMATION);
-	    		
+				boJuridico.cadastrarEditar(juridico);
+				alerta.imprimirMsg("Sucesso ao cadastrar","Cliente Jurídico "+((juridico.equals(this.juridico))? "editado": "cadastrado") +" com sucesso", AlertType.INFORMATION);
+				
 	    	}else if(btn == excluirBtn){
 	    		
 	    		boJuridico.excluir(juridico);
@@ -169,8 +150,8 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
 		juridico.setTelefone(busca);
 		try {
 			List<Juridico> juridicos = boJuridico.buscaPorBusca(juridico);
+			entidadeTabela.getItems().clear();
 			entidadeTabela.getItems().setAll(juridicos);
-			entidadeTabela.refresh();
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+juridicos.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
@@ -186,11 +167,7 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
 		emailFld.setText(juridico.getEmail());
 		telNumFld.setText(juridico.getTelefone());
 		codigoFld.setText(juridico.getCodigo());
-		if(juridico.isAtivo())
-			simAtivoRb.setSelected(true);
-		else
-			naoAtivoRb.setSelected(true);
-		
+		simAtivoRb.setSelected(juridico.isAtivo());
 		numFld.setText(juridico.getEndereco().getNumero());
 		cepFld.setText(juridico.getEndereco().getCep());
 		ruaFld.setText(juridico.getEndereco().getRua());
@@ -217,6 +194,5 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
    		cidadeFld.setText("");
    		estadoBox.setValue(null);
    		System.gc();
-   	
    	}
 }

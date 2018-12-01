@@ -56,12 +56,14 @@ public class PesquisaController {
     	try {
     		DaoRes daoRes = DaoRes.getInstance();
     		ClienteJuridicoController clienteJuridicoController = (ClienteJuridicoController) daoRes.carregarControllerFXML("ClienteJuridicoPane");
-    		ClienteFisicoController clienteFisicoController = (ClienteFisicoController) DaoRes.getInstance().carregarControllerFXML("ClienteFisicoPane");
+    		ClienteFisicoController clienteFisicoController = (ClienteFisicoController) daoRes.carregarControllerFXML("ClienteFisicoPane");
     		FilialController filialController = (FilialController) daoRes.carregarControllerFXML("FilialPane");
+    		CaminhonetaCargaController caminhonetaCargaController = (CaminhonetaCargaController) daoRes.carregarControllerFXML("CaminhonetaCargaPane");
     		
     		controladores.put("Juridico",clienteJuridicoController);
 			controladores.put("Fisico", clienteFisicoController);
 			controladores.put("Filial", filialController);
+			controladores.put("Caminhoneta Carga", caminhonetaCargaController);
 			
 			filtroBox.getItems().addAll(controladores.keySet());
     		

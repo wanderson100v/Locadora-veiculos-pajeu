@@ -36,7 +36,7 @@ public class Veiculo extends Entidade {
 	@Column(length = 30, name = "numero_motor",unique = true)
 	private String numeroMotor;
 	@Column(name = "torque_motor")
-	private float torqueMotor;
+	private Float torqueMotor;
 	@Column(name = "tipo_combustivel")
 	private TipoCombustivel tipoCombustivel;  
 	private Integer quilometragem;
@@ -85,7 +85,7 @@ public class Veiculo extends Entidade {
 		this.categoriaVeiculo = categoriaVeiculo;
 		this.filial = filial;
 	}
-
+	
 
 	public String getModelo() {
 		return modelo;
@@ -101,6 +101,14 @@ public class Veiculo extends Entidade {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+	
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setTorqueMotor(Float torqueMotor) {
+		this.torqueMotor = torqueMotor;
 	}
 
 	public List<Manutencao> getLocacoes() {
@@ -129,14 +137,6 @@ public class Veiculo extends Entidade {
 
 	public void setLocado(Boolean locado) {
 		this.locado = locado;
-	}
-
-	public Boolean getAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
 	}
 
 	public CategoriaVeiculo getCategoriaVeiculo() {
@@ -223,12 +223,8 @@ public class Veiculo extends Entidade {
 		this.numeroMotor = numeroMotor;
 	}
 	
-	public float getTorqueMotor() {
+	public Float getTorqueMotor() {
 		return torqueMotor;
-	}
-	
-	public void setTorqueMotor(float torqueMotor) {
-		this.torqueMotor = torqueMotor;
 	}
 	
 	public TipoCombustivel getTipoCombustivel() {

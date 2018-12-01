@@ -22,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import view.Mascara;
 
 public class ClienteFisicoController extends CRUDController<Fisico> {
 
@@ -112,6 +113,9 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
     	
     	sexoBox.getItems().setAll(Sexo.values());
     	estadoBox.getItems().setAll(Estado.values());
+    	
+    	telPreFld.setTextFormatter(Mascara.getMascaraNumericoFlutuante());
+    	telNumFld.setTextFormatter(Mascara.getMascaraNumericoInteiro());
     }
     
 	@Override

@@ -45,11 +45,13 @@ public abstract class CRUDController<T extends Entidade> {
     @FXML
     void crudHandle(ActionEvent e) {
     	Button button = (Button)e.getSource();
+    	crudHandle(button);
     	if(button == editarBtn) {
     		cadastrarBtn.setDisable(true);
     	}else if(button == excluirBtn) {
     		cadastrarBtn.setDisable(false);
     		editarBtn.setDisable(true);
+    		excluirBtn.setDisable(true);
     	}else if(button == limparBtn) {
     		cadastrarBtn.setDisable(false);
     		excluirBtn.setDisable(true);
@@ -59,7 +61,7 @@ public abstract class CRUDController<T extends Entidade> {
 			excluirBtn.setDisable(true);
 			editarBtn.setDisable(true);
 		}
-    	crudHandle(button);
+    	
     }
 
     @FXML
@@ -67,9 +69,9 @@ public abstract class CRUDController<T extends Entidade> {
     	Entidade entidade = entidadeTabela.getSelectionModel().getSelectedItem();
     	if(entidade != null) {
     		cadastrarBtn.setDisable(true);
+    		popularDescricao(entidade);
     		editarBtn.setDisable(false);
     		excluirBtn.setDisable(false);
-    		popularDescricao(entidade);
     	}
     }
     
