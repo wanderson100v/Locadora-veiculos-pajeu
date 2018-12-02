@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 public class Acessorio extends Entidade {
 	
 	private static final long serialVersionUID = 1L;
-	@Column(length = 100)
+	@Column(length = 100, unique = true)
 	private String nome;
 	private float valor;
 	private boolean depreciado;
@@ -70,7 +70,7 @@ public class Acessorio extends Entidade {
 
 	@Override
 	public String toString() {
-		return "Acessorio [nome=" + nome + ", valor=" + valor + ", depreciado=" + depreciado + "]";
+		return "Nome = " + nome + "/t, Valor = " + valor + "/t, Depreciado = " + depreciado;
 	}
 	
 	

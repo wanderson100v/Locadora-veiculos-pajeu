@@ -1,8 +1,11 @@
 package entidade;
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 
 import enumeracoes.TamanhoVeiculo;
 import enumeracoes.TipoAirBag;
@@ -21,6 +24,8 @@ public class Automovel extends Veiculo {
 	private TipoAirBag tipoAirBag;
 	@Column(name = "tipo_tamanho" , nullable = false)
 	private TamanhoVeiculo tamanhoVeiculo;
+	//@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, mappedBy = "AutomovelAcessorio")
+	
 	
 	
 	public TipoAutomovel getTipoAutomovel() {

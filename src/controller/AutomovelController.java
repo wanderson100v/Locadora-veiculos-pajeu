@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import business.BoAutomovel;
 import business.IBoAutomovel;
+import dao.DaoRes;
 import entidade.Acessorio;
 import entidade.Automovel;
 import entidade.Entidade;
@@ -15,6 +16,7 @@ import enumeracoes.TipoAutomovel;
 import enumeracoes.TipoCambio;
 import enumeracoes.TipoCombustivel;
 import excecoes.BoException;
+import excecoes.DaoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -55,9 +57,6 @@ public class AutomovelController extends CRUDController<Automovel> {
 
     @FXML
     private TableColumn<Acessorio, Boolean> aceDepreciadoCln;
-
-    @FXML
-    private Button removerSelectBtn;
 
     @FXML
     private Button escolherAcessorioBtn;
@@ -300,17 +299,20 @@ public class AutomovelController extends CRUDController<Automovel> {
     void actionHandle(ActionEvent event) {
 		if(event.getSource() == selectFilialBtn) {
 			
-		}else if(event.getSource() == removerSelectBtn) {
-			Acessorio acessorio = aceTabela.getSelectionModel().getSelectedItem();
-			if(acessorio != null) {
-				Alert alerta = new Alert(AlertType.CONFIRMATION);
-				alerta.setTitle("Confirmação");
-				alerta.setContentText("Realmente deseja remover o acessorio "+acessorio.getNome()+" ?");
-				Optional<ButtonType> result = alerta.showAndWait();
-				if(result.isPresent() && result.get() == ButtonType.OK)
-					aceTabela.getItems().remove(acessorio);
-			}
 		}else if(event.getSource() == escolherAcessorioBtn) {
+			try {
+				Alert alerta = new Alert(AlertType.NONE);
+				SelecionarAcessoriosController selecionarAcessoriosController = (SelecionarAcessoriosController) DaoRes.getInstance().carregarControllerFXML("SelecionarAcessoriosDialog");
+				selecionarAcessoriosController.getMeusListView().getItems().addAll(aceTabela.getItems());
+				alerta.setDialogPane(selecionarAcessoriosController.getSelecionarAcessoriosDialog());
+				Optional<ButtonType> result = alerta.showAndWait();
+				if(result.isPresent() && result.get() == ButtonType.FINISH) {
+					aceTabela.getItems().clear();
+					aceTabela.getItems().addAll(selecionarAcessoriosController.getMeusListView().getItems());
+				}
+			} catch (DaoException e) {
+				alerta.imprimirMsg("Erro", e.getMessage(), AlertType.ERROR);
+			}
 			
 		}
     }
