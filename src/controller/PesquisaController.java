@@ -59,11 +59,14 @@ public class PesquisaController {
     		ClienteFisicoController clienteFisicoController = (ClienteFisicoController) daoRes.carregarControllerFXML("ClienteFisicoPane");
     		FilialController filialController = (FilialController) daoRes.carregarControllerFXML("FilialPane");
     		CaminhonetaCargaController caminhonetaCargaController = (CaminhonetaCargaController) daoRes.carregarControllerFXML("CaminhonetaCargaPane");
+    		AutomovelController automovelController = (AutomovelController) daoRes.carregarControllerFXML("AutomovelPane");
+    		
     		
     		controladores.put("Juridico",clienteJuridicoController);
 			controladores.put("Fisico", clienteFisicoController);
 			controladores.put("Filial", filialController);
 			controladores.put("Caminhoneta Carga", caminhonetaCargaController);
+			controladores.put("Automóvel", automovelController);
 			
 			filtroBox.getItems().addAll(controladores.keySet());
     		
