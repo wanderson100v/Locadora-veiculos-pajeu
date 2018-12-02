@@ -55,18 +55,22 @@ public class PesquisaController {
     void initialize() {
     	try {
     		DaoRes daoRes = DaoRes.getInstance();
+    		
     		ClienteJuridicoController clienteJuridicoController = (ClienteJuridicoController) daoRes.carregarControllerFXML("ClienteJuridicoPane");
     		ClienteFisicoController clienteFisicoController = (ClienteFisicoController) daoRes.carregarControllerFXML("ClienteFisicoPane");
     		FilialController filialController = (FilialController) daoRes.carregarControllerFXML("FilialPane");
     		CaminhonetaCargaController caminhonetaCargaController = (CaminhonetaCargaController) daoRes.carregarControllerFXML("CaminhonetaCargaPane");
     		AutomovelController automovelController = (AutomovelController) daoRes.carregarControllerFXML("AutomovelPane");
-    		
+    		AcessorioController acessorioController = (AcessorioController) daoRes.carregarControllerFXML("AcessorioPane");
+    		CategoriaVeiculoController categoriaVeiculoController = (CategoriaVeiculoController) daoRes.carregarControllerFXML("CategoriaVeiculoPane");
     		
     		controladores.put("Juridico",clienteJuridicoController);
 			controladores.put("Fisico", clienteFisicoController);
 			controladores.put("Filial", filialController);
 			controladores.put("Caminhoneta Carga", caminhonetaCargaController);
 			controladores.put("Automóvel", automovelController);
+			controladores.put("Acessório", acessorioController);
+			controladores.put("Categoria Veículo", categoriaVeiculoController);
 			
 			filtroBox.getItems().addAll(controladores.keySet());
     		

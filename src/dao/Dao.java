@@ -109,7 +109,7 @@ public abstract class Dao<T extends Entidade>{
 		EntityManager em = ConnectionFactory.getConnection();
 		List<T> t = new ArrayList<>();
 		try{
-			t =  em.createQuery("from "+tipoDaClasse.getSimpleName()+" elemento",tipoDaClasse).getResultList();
+			t =  em.createQuery("from entidade."+tipoDaClasse.getSimpleName()+" elemento",tipoDaClasse).getResultList();
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw new DaoException("OCORREU UM ERRO AO BUSCAR TODOS "+tipoDaClasse.getSimpleName().toUpperCase()+", CONTATE O ADM.");

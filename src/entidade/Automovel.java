@@ -1,11 +1,13 @@
 package entidade;
 
 
-import javax.persistence.CascadeType;
+
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 import enumeracoes.TamanhoVeiculo;
 import enumeracoes.TipoAirBag;
@@ -20,14 +22,53 @@ public class Automovel extends Veiculo {
 	private TipoCambio tipoCambio;
 	@Column(name = "tipo", nullable = false)
 	private TipoAutomovel tipoAutomovel;
-	@Column(name = "tipo_airbag", nullable = false)
+	@Column(name = "tipo_airbag")
 	private TipoAirBag tipoAirBag;
 	@Column(name = "tipo_tamanho" , nullable = false)
 	private TamanhoVeiculo tamanhoVeiculo;
-	//@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, mappedBy = "AutomovelAcessorio")
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<Acessorio> acessorios; 
 	
+	public Automovel() {}
 	
-	
+	/**
+	 * Construtor para Automovel de exemplo para automoveis comums
+	 * @param tipoCambio
+	 * @param tipoAutomovel
+	 * @param tamanhoVeiculo
+	 */
+	public Automovel(TipoCambio tipoCambio, TipoAutomovel tipoAutomovel, TamanhoVeiculo tamanhoVeiculo) {
+		super();
+		this.tipoCambio = tipoCambio;
+		this.tipoAutomovel = tipoAutomovel;
+		this.tamanhoVeiculo = tamanhoVeiculo;
+	}
+
+	/**
+	 * Construtor para Automovel de exemplo para Caminhonetas de passageiros
+	 * @param tipoCambio
+	 * @param tipoAutomovel
+	 * @param tipoAirBag
+	 * @param tamanhoVeiculo
+	 */
+	public Automovel(TipoCambio tipoCambio, TipoAutomovel tipoAutomovel, TipoAirBag tipoAirBag,
+			TamanhoVeiculo tamanhoVeiculo) {
+		super();
+		this.tipoCambio = tipoCambio;
+		this.tipoAutomovel = tipoAutomovel;
+		this.tipoAirBag = tipoAirBag;
+		this.tamanhoVeiculo = tamanhoVeiculo;
+	}
+
+
+	public List<Acessorio> getAcessorios() {
+		return acessorios;
+	}
+
+	public void setAcessorios(List<Acessorio> acessorios) {
+		this.acessorios = acessorios;
+	}
+
 	public TipoAutomovel getTipoAutomovel() {
 		return tipoAutomovel;
 	}

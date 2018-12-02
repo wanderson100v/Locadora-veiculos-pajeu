@@ -58,15 +58,12 @@ public class Veiculo extends Entidade {
 	private List<Manutencao> locacoes;
 	
 	
-	public Veiculo() {
-		// TODO Auto-generated constructor stub
-	}
+	public Veiculo() {}
 
 	public Veiculo(boolean locado, boolean ativo, String placa, String cor, String modelo, String fabricante,
 			String numeroChassi, String numeroMotor, float torqueMotor, TipoCombustivel tipoCombustivel,
 			Integer quilometragem, Integer anoFabricante, Integer anoModelo, Integer quantidadePortas,
 			Integer quantidadePassageiro, CategoriaVeiculo categoriaVeiculo, Filial filial) {
-		super();
 		this.locado = locado;
 		this.ativo = ativo;
 		this.placa = placa;
@@ -84,6 +81,28 @@ public class Veiculo extends Entidade {
 		this.quantidadePassageiro = quantidadePassageiro;
 		this.categoriaVeiculo = categoriaVeiculo;
 		this.filial = filial;
+	}
+	
+	
+	/**
+	 * Construtor para veiculo de exemplo do tipo Caminhoneta de carga
+	 * @param torqueMotor
+	 */
+	public Veiculo(Float torqueMotor) {
+		this.torqueMotor = torqueMotor;
+	}
+	
+	/**
+	 * Costrutor para veiculo de exemplo do tipo Automovel
+	 * @param tipoCombustivel
+	 * @param quantidadePortas
+	 * @param quantidadePassageiro
+	 */
+	public Veiculo(TipoCombustivel tipoCombustivel, Integer quantidadePortas, Integer quantidadePassageiro) {
+		super();
+		this.tipoCombustivel = tipoCombustivel;
+		this.quantidadePortas = quantidadePortas;
+		this.quantidadePassageiro = quantidadePassageiro;
 	}
 	
 

@@ -16,34 +16,39 @@ import javax.persistence.OneToOne;
 	query = "select categoriaVeiculo from entidade.CategoriaVeiculo as categoriaVeiculo "
 			+ "inner join categoriaVeiculo.veiculoExemplo as caminhonetaCarga "
 			+ "where caminhonetaCarga.potencia <= :potencia "
-			+ "and caminhonetaCarga.distanciaEixos <= :distanciaEixos "
 			+ "and caminhonetaCarga.desenpenho <= :desenpenho "
 			+ "and caminhonetaCarga.capacidadeCarga <= :capacidadeCarga "
+			+ "and caminhonetaCarga.tipoAcionamentoEmbreagem <= :tipoAcionamentoEmbreagem "
+			+ "and caminhonetaCarga.distanciaEixos <= :distanciaEixos "
 			+ "and caminhonetaCarga.capacidadeCombustivel <= :capacidadeCombustivel "
-			+ "order by(caminhonetaCarga.potencia, caminhonetaCarga.distanciaEixos, "
-			+ "caminhonetaCarga.desenpenho, caminhonetaCarga.capacidadeCarga, "
-			+ "caminhonetaCarga.capacidadeCombustivel) desc"),
+			+ "and caminhonetaCarga.torqueMotor <= :torqueMotor "
+			+ "order by(caminhonetaCarga.capacidadeCarga, caminhonetaCarga.potencia, caminhonetaCarga.torqueMotor,"
+			+ "caminhonetaCarga.desenpenho, caminhonetaCarga.distanciaEixos, caminhonetaCarga.tipoAcionamentoEmbreagem, "
+			+ "caminhonetaCarga.tipoCombustivel, caminhonetaCarga.capacidadeCombustivel) desc"),
 	@NamedQuery(name = "categorizarAutomovelPequeno" ,
 	query = "select categoriaVeiculo from entidade.CategoriaVeiculo as categoriaVeiculo "
 			+ "inner join categoriaVeiculo.veiculoExemplo as automovel "
-			+ "where automovel.tipoAutomovel = CONVENCIONAL  "
+			+ "where automovel.tipoAutomovel = 0  "
 			+ "and automovel.tipoCambio <= :tipoCambio "
+			+ "and automovel.tamanhoVeiculo <= :tamanhoVeiculo "
 			+ "and automovel.quantidadePortas <= :quantidadePortas "
 			+ "and automovel.quantidadePassageiro <= :quantidadePassageiro "
-			+ "and automovel.tamanhoVeiculo <= :tamanhoVeiculo "
-			+ "order by(automovel.quantidadePortas ,automovel.quantidadePassageiro ,"
-			+ "automovel.tipoCambio, automovel.tamanhoVeiculo) desc"),
+			+ "and automovel.tipoCombustivel <= :tipoCombustivel "
+			+ "order by(automovel.tipoCambio ,automovel.tamanhoVeiculo, "
+			+ "automovel.quantidadePortas, automovel.quantidadePassageiro, "
+			+ "automovel.tipoCombustivel) desc"),
 	@NamedQuery(name = "categorizarCaminhonetaPassageiro" ,
 	query = "select categoriaVeiculo from entidade.CategoriaVeiculo as categoriaVeiculo "
 			+ "inner join categoriaVeiculo.veiculoExemplo as automovel "
-			+ "where automovel.tipoAutomovel = CAMINHONETA_PASSAGEIRO "
+			+ "where automovel.tipoAutomovel = 1 "
 			+ "and automovel.tipoAirBag <= :tipoAirBag "
 			+ "and automovel.tipoCambio <= :tipoCambio "
+			+ "and automovel.tamanhoVeiculo <= :tamanhoVeiculo "
 			+ "and automovel.quantidadePortas <= :quantidadePortas "
 			+ "and automovel.quantidadePassageiro <= :quantidadePassageiro "
-			+ "and automovel.tamanhoVeiculo <= :tamanhoVeiculo "
-			+ "order by(automovel.quantidadePortas ,automovel.quantidadePassageiro ,"
-			+ "automovel.tipoAirBag, automovel.tipoCambio, automovel.tamanhoVeiculo) desc")
+			+ "and automovel.tipoCombustivel <= :tipoCombustivel "
+			+ "order by(automovel.tipoAirBag, automovel.tipoCambio ,automovel.tamanhoVeiculo, "
+			+ "automovel.quantidadePortas, automovel.quantidadePassageiro, automovel.tipoCombustivel) desc")
 })
 public class CategoriaVeiculo extends Entidade {
 	

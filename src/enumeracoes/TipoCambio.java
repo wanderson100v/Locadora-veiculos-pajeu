@@ -1,7 +1,7 @@
 package enumeracoes;
 
 public enum TipoCambio {
-	AUTOMATICO("Automático"), MANUAL("Manual");
+	 MANUAL("Manual"), AUTOMATICO("Automï¿½tico");
 	private String value;
 	
 	private TipoCambio(String value) {

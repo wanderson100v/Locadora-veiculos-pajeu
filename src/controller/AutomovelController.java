@@ -161,11 +161,11 @@ public class AutomovelController extends CRUDController<Automovel> {
     	
     	combustivelBox.getItems().addAll(TipoCombustivel.values());
     	Integer anoVeiculosModernos = 1886;
-    	Integer proximosDezAnos = LocalDate.now().getYear() + 10;
+    	Integer proximosDezAnos = LocalDate.now().getYear() + 3;
     	for(int i = proximosDezAnos ; i >= anoVeiculosModernos ; i --)
     		anoFabricacaoBox.getItems().add(i);
     	anoModeloBox.getItems().addAll(anoFabricacaoBox.getItems());
-    	for(int i = 50 ; i > 0 ; i --)
+    	for(int i = 1 ; i <50 ; i ++)
     		passageirosBox.getItems().add(i);
     	portasBox.getItems().addAll(passageirosBox.getItems());
     	
@@ -200,7 +200,7 @@ public class AutomovelController extends CRUDController<Automovel> {
     			automovel.setTipoAutomovel(automovelBox.getValue());
     			automovel.setTamanhoVeiculo(tamanhoBox.getValue());
     			automovel.setTipoAirBag(airbagBox.getValue());
-    			
+    			automovel.setAcessorios(aceTabela.getItems());
     			
 				boAutomovel.cadastrarEditar(automovel);
 				alerta.imprimirMsg("Sucesso ao cadastrar","Automóvel"
@@ -226,12 +226,9 @@ public class AutomovelController extends CRUDController<Automovel> {
 
 	@Override
 	void popularTabela(String busca) {
-		Automovel automovel = new Automovel();
-		automovel.setPlaca(busca);
-		automovel.setAtivo(true);
-		automovel.setLocado(false);
+		//Automovel automovel = new Automovel();
 		try {
-			List<Automovel> automoveis = boAutomovel.buscarPorExemplo(automovel);
+			List<Automovel> automoveis = boAutomovel.buscarAll();
 			entidadeTabela.getItems().clear();
 			entidadeTabela.getItems().setAll(automoveis);
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+automoveis.size()+" resultado(s)",AlertType.INFORMATION);
@@ -264,6 +261,7 @@ public class AutomovelController extends CRUDController<Automovel> {
 		automovelBox.setValue(automovel.getTipoAutomovel());
 		tamanhoBox.setValue(automovel.getTamanhoVeiculo());
 		airbagBox.setValue(automovel.getTipoAirBag());
+		aceTabela.getItems().addAll(automovel.getAcessorios());
 		
 	}
 

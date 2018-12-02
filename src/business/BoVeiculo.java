@@ -1,5 +1,7 @@
 package business;
 
+import java.util.List;
+
 import dao.DaoVeiculo;
 import dao.IDaoVeiculo;
 import entidade.CategoriaVeiculo;
@@ -33,6 +35,15 @@ public class BoVeiculo implements IBoVeiculo {
 	public long totalManutencoesPententes(Veiculo veiculo) throws BoException {
 		try {
 			return daoVeiculo.totalManutencaoPendente(veiculo);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<Veiculo> buscarPorExemplo(Veiculo veiculo) throws BoException {
+		try {
+			return daoVeiculo.buscarPorExemplo(veiculo);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}
