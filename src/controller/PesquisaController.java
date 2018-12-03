@@ -63,6 +63,8 @@ public class PesquisaController {
     		AutomovelController automovelController = (AutomovelController) daoRes.carregarControllerFXML("AutomovelPane");
     		AcessorioController acessorioController = (AcessorioController) daoRes.carregarControllerFXML("AcessorioPane");
     		CategoriaVeiculoController categoriaVeiculoController = (CategoriaVeiculoController) daoRes.carregarControllerFXML("CategoriaVeiculoPane");
+    		FuncionrarioController funcionrarioController = (FuncionrarioController) daoRes.carregarControllerFXML("FuncionarioPane");
+    		
     		
     		controladores.put("Juridico",clienteJuridicoController);
 			controladores.put("Fisico", clienteFisicoController);
@@ -71,6 +73,7 @@ public class PesquisaController {
 			controladores.put("Automóvel", automovelController);
 			controladores.put("Acessório", acessorioController);
 			controladores.put("Categoria Veículo", categoriaVeiculoController);
+			controladores.put("Funcionario", funcionrarioController);
 			
 			filtroBox.getItems().addAll(controladores.keySet());
     		

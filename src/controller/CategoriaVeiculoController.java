@@ -137,7 +137,7 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
     		passageirosBox.getItems().add(i);
     	portasBox.getItems().addAll(passageirosBox.getItems());
     	combustivelBox.getItems().addAll(TipoCombustivel.values());
-    	
+    	/*
     	desempenhoFld.setTextFormatter(Mascara.getMascaraNumericoFlutuante());
     	potenciaFld.setTextFormatter(Mascara.getMascaraNumericoFlutuante());
     	capCargaFld.setTextFormatter(Mascara.getMascaraNumericoInteiro());
@@ -149,6 +149,7 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
     	valorDiariaFld.setTextFormatter(Mascara.getMascaraNumericoFlutuante());
     	horaLimpezaFld.setTextFormatter(Mascara.getMascaraNumericoInteiro());
     	horaRevisaoFld.setTextFormatter(Mascara.getMascaraNumericoInteiro());
+    	*/
     }
 
 	@Override

@@ -7,16 +7,19 @@ import enumeracoes.Cargo;
 import excecoes.DaoException;
 import sql.ConnectionFactory;
 
-public class DaoFuncionario extends Dao<Funcionario> implements IDaoFuncionario{
+public class DaoFuncionario  extends Dao<Funcionario> implements IDaoFuncionario{
 	
 	public DaoFuncionario() {
 		super(Funcionario.class);
 	}
-	
-	public void cadastrar(Funcionario funcionario ,String senha, Cargo cargo) throws DaoException {
+
+	/**
+	 * utilizado por terceiros
+	 */
+	public void cadastrar(Funcionario funcionario ,String login,String senha, Cargo cargo) throws DaoException {
 		try{
 			em = ConnectionFactory.getConnection();
-			Query query =em.createNativeQuery("CREATE ROLE "+funcionario.getCpf()+" LOGIN PASSWORD '"+senha+"' IN ROLE "+cargo);
+			Query query =em.createNativeQuery("CREATE ROLE "+login+" LOGIN PASSWORD '"+senha+"' IN ROLE "+cargo);
 			em.getTransaction().begin();
 			em.persist(funcionario);
 			query.executeUpdate();
@@ -29,12 +32,29 @@ public class DaoFuncionario extends Dao<Funcionario> implements IDaoFuncionario{
 			em.close();
 		}
 	}
-
-	@Override
-	public void excluir(Funcionario funcionario) throws DaoException {
+	
+	public void editar(Funcionario funcionario, String oldLogin, String newLogin) throws DaoException {
 		try{
 			em = ConnectionFactory.getConnection();
-			Query query = em.createNativeQuery("DROP ROLE "+funcionario.getCpf());
+			Query query =em.createNativeQuery("ALTER ROLE "+oldLogin+" RENAME TO "+newLogin);
+			em.getTransaction().begin();
+			em.merge(funcionario);
+			query.executeUpdate();
+			em.getTransaction().commit();
+		}catch (Exception e) {
+			em.getTransaction().rollback();
+			e.printStackTrace();
+			throw new DaoException("OCORREU UM ERRO AO EDITAR FUNCIONARIO, CONTATE O ADM.");
+		}finally {
+			em.close();
+		}
+	}
+	
+	@Override
+	public void excluir(Funcionario funcionario, String login) throws DaoException {
+		try{
+			em = ConnectionFactory.getConnection();
+			Query query = em.createNativeQuery("DROP ROLE "+login);
 			em.getTransaction().begin();
 			query.executeUpdate();
 			Funcionario funcionarioMarge = em.merge(funcionario);
@@ -49,10 +69,13 @@ public class DaoFuncionario extends Dao<Funcionario> implements IDaoFuncionario{
 		}
 	}
 	
-	public void editaSenha(Funcionario funcionario, String novaSenha) throws DaoException{
+	/**
+	 * utlizado pelo dono da conta
+	 */
+	public void editaSenha(Funcionario funcionario,String login ,String novaSenha) throws DaoException{
 		try{
 			em = ConnectionFactory.getConnection();
-			Query query = em.createNativeQuery("ALTER ROLE "+funcionario.getCpf()+" WITH PASSWORD '"+novaSenha+"'");
+			Query query = em.createNativeQuery("ALTER ROLE "+login+" WITH PASSWORD '"+novaSenha+"'");
 			em.getTransaction().begin();
 			query.executeUpdate();
 			em.getTransaction().commit();
@@ -64,6 +87,5 @@ public class DaoFuncionario extends Dao<Funcionario> implements IDaoFuncionario{
 			em.close();
 		}
 	}
-	
-	
+
 }

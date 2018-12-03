@@ -21,43 +21,50 @@ public class BoFuncionario implements IBoFuncionario {
 		return instance;
 	}
 	
-	@Override
-	public void cadastrarEditar(Funcionario entidade) throws BoException {
-		try {
-			if(entidade.getId() != null) {
-				daoFuncionario.editar(entidade);
-			}else {
-				daoFuncionario.cadastrar(entidade);
-			}
-		}catch (DaoException e) {
-			throw new BoException(e.getMessage());
-		}
-	}
 
 	@Override
 	public void excluir(Funcionario entidade) throws BoException {
 		try {
-			if(entidade.getLocacoes() != null || entidade.getReservas()!= null) {
+			try {
+				daoFuncionario.excluir(entidade,gerarLogin(entidade));
+			}catch (DaoException e) {
 				entidade.setAtivo(false);
 				daoFuncionario.editar(entidade);
-			}else {
-				daoFuncionario.excluir(entidade);
+				throw new BoException(e.getMessage());
 			}
 		}catch (DaoException e) {
 			System.out.println();
 			throw new BoException(e.getMessage());
 		}
 	}
-
+	
 	@Override
-	public Funcionario buscarID(Long id) throws BoException {
+	public void cadastrar(Funcionario funcionario, String senha, Cargo cargo) throws BoException {
 		try {
-			return daoFuncionario.buscarID(id);
+			validarAcesso(senha,cargo);
+			daoFuncionario.cadastrar(funcionario,gerarLogin(funcionario), senha, cargo);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}
 	}
-
+	
+	public void editar(Funcionario funcionario, String oldLogin)throws BoException{
+		try {
+			daoFuncionario.editar(funcionario, oldLogin, gerarLogin(funcionario));
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+	
+	@Override
+	public void editaSenha(Funcionario funcionario, String novaSenha) throws BoException {
+		try {
+			daoFuncionario.editaSenha(funcionario,gerarLogin(funcionario), novaSenha);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+	
 	@Override
 	public List<Funcionario> buscarAll() throws BoException {
 		try {
@@ -68,47 +75,29 @@ public class BoFuncionario implements IBoFuncionario {
 	}
 
 	@Override
-	public List<Funcionario> buscarPorExemplo(Funcionario exemploEntidade) throws BoException {
-		try {
-			return daoFuncionario.buscarPorExemplo(exemploEntidade);
-		}catch (DaoException e) {
-			throw new BoException(e.getMessage());
-		}
-	}
-
-	@Override
-	public void cadastrar(Funcionario funcionario, String senha, Cargo cargo) throws BoException {
-		try {
-			validarSenha(senha);
-			daoFuncionario.cadastrar(funcionario, senha, cargo);
-		}catch (DaoException e) {
-			throw new BoException(e.getMessage());
-		}
-	}
-	
-	private void validarSenha(String senha) throws BoException {
-		senha = senha.trim();
-		if(senha.length() <6 || senha.length() >11)
-			throw new BoException("A SENHA INFORMADA DEVE TER TAMANHO ENTRE O INTERVALO DE 6 A 11 CARACTERES");
-		
-	}
-
-	@Override
-	public void editaSenha(Funcionario funcionario, String novaSenha) throws BoException {
-		try {
-			daoFuncionario.editaSenha(funcionario, novaSenha);
-		}catch (DaoException e) {
-			throw new BoException(e.getMessage());
-		}
-	}
-
-	@Override
 	public void resetarSenha(Funcionario funcionario) throws BoException {
 		try {
-			daoFuncionario.editaSenha(funcionario,funcionario.getCpf());
+			daoFuncionario.editaSenha(funcionario,gerarLogin(funcionario),funcionario.getCpf());
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}
+	}
+
+	private void validarAcesso(String senha, Cargo cargo) throws BoException {
+		StringBuilder erro = new StringBuilder();
+		if(senha.length() <6 || senha.length() >11)
+			erro.append("A senha informada deve ter tamanho maior que 5 e menor que 12\n");
+		if(cargo == null)
+			erro.append("Deve ser informado um cargo para funcionarios com senha de acesso\n");
+		if(erro.length()>0)
+			throw new BoException("Erro(s) ao validar dados de acesso para Funcionario:\n"+erro.toString());
+	}
+	
+	public String gerarLogin(Funcionario funcionario) {
+		String primeiroNome = (funcionario.getNome().contains(" "))?  
+				funcionario.getNome().substring(0,funcionario.getNome().indexOf(" ")) :
+				funcionario.getNome();
+		return primeiroNome.toLowerCase()+funcionario.getCpf();
 	}
 
 }

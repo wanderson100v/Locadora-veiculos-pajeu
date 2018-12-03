@@ -27,9 +27,11 @@ public class BoReserva implements IBoReserva {
 			instance = new BoReserva();
 		return instance;
 	}
+	
+	/*
 	public static void main(String[] args) {
 		ConnectionFactory.setUser("postgres","admin");
-		/*Endereco endereco = new Endereco();
+		Endereco endereco = new Endereco();
 		endereco.setCep("3213-a");
 		
 		Endereco endereco2 = new Endereco();
@@ -49,7 +51,7 @@ public class BoReserva implements IBoReserva {
 		fisico.setEmail("wanderson@Exemplo.com");
 		fisico.setTelefone("(32)d3213");
 		fisico.setSexo(Sexo.MASCULINO);
-		*/
+		
 		try {
 			Filial filial = BoFilial.getInstance().buscarID(new Long(15));
 			Funcionario funcionario = BoFuncionario.getInstance().buscarID(new Long(22));
@@ -70,7 +72,7 @@ public class BoReserva implements IBoReserva {
 			e.printStackTrace();
 		}
 		
-	}
+	}*/
 	
 	@Override
 	public void cadastrarEditar(Reserva entidade) throws BoException {
