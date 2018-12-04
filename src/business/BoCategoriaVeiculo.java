@@ -28,55 +28,6 @@ public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 		return instance;
 	}
 	
-	
-	
-	public static void main(String[] args) {
-		/*CategoriaVeiculo categoriaVeiculo = new CategoriaVeiculo();
-		categoriaVeiculo.setHorasLimpesa(3);
-		categoriaVeiculo.setHorasRevisao(48);
-		categoriaVeiculo.setQuilometragemRevisao(6000);
-		categoriaVeiculo.setTipo("CCS");
-		categoriaVeiculo.setDescricao("Caminhonetas de carga simples ");
-		categoriaVeiculo.setValorDiaria(100f);
-		CaminhonetaCarga caminhonetaCarga = new CaminhonetaCarga(0f, 0f, 0f, 0, 0);
-		categoriaVeiculo.setVeiculoExemplo(caminhonetaCarga);
-		
-		CategoriaVeiculo categoriaVeiculo2 = new CategoriaVeiculo();
-		categoriaVeiculo2.setHorasLimpesa(3);
-		categoriaVeiculo2.setHorasRevisao(48);
-		categoriaVeiculo2.setQuilometragemRevisao(6000);
-		categoriaVeiculo2.setTipo("CCM");
-		categoriaVeiculo2.setDescricao("Caminhonetas de carga marrumeno ");
-		categoriaVeiculo2.setValorDiaria(100f);
-		CaminhonetaCarga caminhonetaCarga2 = new CaminhonetaCarga(10f, 10f, 10f, 10, 10);
-		categoriaVeiculo2.setVeiculoExemplo(caminhonetaCarga2);
-		*/
-		
-		CategoriaVeiculo categoriaVeiculo2 = new CategoriaVeiculo();
-		categoriaVeiculo2.setHorasLimpesa(3);
-		categoriaVeiculo2.setHorasRevisao(48);
-		categoriaVeiculo2.setQuilometragemRevisao(6000);
-		categoriaVeiculo2.setTipo("CCM");
-		categoriaVeiculo2.setDescricao("Caminhonetas de carga marrumeno ");
-		categoriaVeiculo2.setValorDiaria(100f);
-		Automovel automovel = new Automovel();
-		automovel.setQuantidadePassageiro(0);
-		automovel.setQuantidadePortas(0);
-		automovel.setTipoAutomovel(TipoAutomovel.CAMINHONETA_PASSAGEIRO);
-		automovel.setTamanhoVeiculo(TamanhoVeiculo.PEQUENO);
-		automovel.setTipoAirBag(TipoAirBag.SIMPLES_DIANTEIRA);
-		automovel.setTipoCambio(TipoCambio.MANUAL);
-		categoriaVeiculo2.setVeiculoExemplo(automovel);
-		
-		try {
-			ConnectionFactory.setUser("postgres","admin");
-			ConnectionFactory.getConnection().close();;
-			getInstance().cadastrarEditar(categoriaVeiculo2);
-		} catch (BoException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	@Override
 	public void cadastrarEditar(CategoriaVeiculo entidade) throws BoException {
 		try {
@@ -130,7 +81,10 @@ public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 	@Override
 	public CategoriaVeiculo categorizarCaminhonetaCarga(CaminhonetaCarga caminhonetaCarga) throws BoException {
 		try {
-			return daoCategoriaVeiculo.categorizarCaminhonetaCarga(caminhonetaCarga);
+			List<CategoriaVeiculo> categoriasCandidatas = daoCategoriaVeiculo.categorizarCaminhonetaCarga(caminhonetaCarga); 
+			if(categoriasCandidatas.isEmpty())
+				throw new BoException("Não há categorias cadastradas que satisfação as \nespecificações da camihoneta de carga");
+			return categoriasCandidatas.get(0);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}
@@ -139,12 +93,19 @@ public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 	@Override
 	public CategoriaVeiculo categorizarAutomovel(Automovel automovel) throws BoException {
 		try {
-			if(automovel.getTipoAutomovel() == null){
-				throw new BoException("Veiculo sem tipo: impossibilidade de categorização!");
-			}
+			if(automovel.getTipoAutomovel() == null)
+				throw new BoException("Veiculo sem tipo(convencional ou caminhoneta de carga):\n impossibilidade de categorização");
+			
+			List<CategoriaVeiculo> categoriasCandidatas;
 			if(automovel.getTipoAutomovel() == TipoAutomovel.CONVENCIONAL)
-				return daoCategoriaVeiculo.categorizarAutomovelPequeno(automovel);
-			return daoCategoriaVeiculo.categorizarCaminhonetaPassageiro(automovel);
+				categoriasCandidatas = daoCategoriaVeiculo.categorizarAutomovelPequeno(automovel); 
+			else
+				categoriasCandidatas = daoCategoriaVeiculo.categorizarCaminhonetaPassageiro(automovel);
+			
+			if(categoriasCandidatas.isEmpty())
+				throw new BoException("Não há categorias cadastradas que satisfação as \nespecificações do automovel");
+			
+			return categoriasCandidatas.get(0);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

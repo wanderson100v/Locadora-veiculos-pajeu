@@ -1,18 +1,13 @@
 package business;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import dao.DaoReserva;
 import dao.IDaoReserva;
 import entidade.CategoriaVeiculo;
-import entidade.Filial;
-import entidade.Funcionario;
 import entidade.Reserva;
-import enumeracoes.EstadoRerserva;
 import excecoes.BoException;
 import excecoes.DaoException;
-import sql.ConnectionFactory;
 
 public class BoReserva implements IBoReserva {
 	private IDaoReserva daoReserva = new DaoReserva();
@@ -77,10 +72,11 @@ public class BoReserva implements IBoReserva {
 	@Override
 	public void cadastrarEditar(Reserva entidade) throws BoException {
 		try {
-			if(entidade.getId() != null) {
+			if(entidade.getId() != null)
 				daoReserva.editar(entidade);
-			}else {
+			else {
 				validarConcorrenciaReserva(entidade);
+				garantirReserva(entidade);
 				daoReserva.cadastrar(entidade);
 			}
 		}catch (DaoException e) {
@@ -139,6 +135,10 @@ public class BoReserva implements IBoReserva {
 			throw new BoException("Não Há veiculos disponiveis para essa categoria na filial");
 		if(reservavel <= totalReservado)
 			throw new BoException("NÃO HÁ VEICULOS SUFICIENTES DISPONIVEIS PARA RESERVA ESSA DATA NESTA CATEGORIA E FILIAL");
+	}
+	
+	private void garantirReserva(Reserva reserva) throws BoException {
+	
 	}
 
 	@Override

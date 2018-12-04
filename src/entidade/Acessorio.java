@@ -70,7 +70,7 @@ public class Acessorio extends Entidade {
 
 	@Override
 	public String toString() {
-		return "Nome = " + nome + "/t, Valor = " + valor + "/t, Depreciado = " + depreciado;
+		return "Nome = " + nome + ", Valor = " + valor + ", Depreciado = " + depreciado;
 	}
 	
 	

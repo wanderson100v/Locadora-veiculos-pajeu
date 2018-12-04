@@ -17,8 +17,7 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 	}
 	
 	@Override
-	public CategoriaVeiculo categorizarCaminhonetaCarga(CaminhonetaCarga caminhonetaCarga) throws DaoException {
-		CategoriaVeiculo categoriaVeiculo = null;
+	public List<CategoriaVeiculo> categorizarCaminhonetaCarga(CaminhonetaCarga caminhonetaCarga) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
 			TypedQuery<CategoriaVeiculo> query= em.createNamedQuery(CATEGORIZAR_CAMINHONETA_CARGA,CategoriaVeiculo.class);
@@ -30,20 +29,17 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 			query.setParameter("capacidadeCombustivel",caminhonetaCarga.getCapacidadeCombustivel());
 			query.setParameter("torqueMotor",caminhonetaCarga.getTorqueMotor());
 
-			List<CategoriaVeiculo> categoriasCandidata = query.getResultList();
-			categoriaVeiculo = categoriasCandidata.get(0);
+			return query.getResultList();
 		}catch (Exception e) {
 			e.printStackTrace();
-			throw new DaoException("ERRO AO CATEGORIZAR CAMINHONETA DE CARGA");
+			throw new DaoException("ERRO AO SELECIONAR CATEGORIAS DE CAMINHONETA DE CARGA");
 		}finally {
 			em.close();
 		}
-		return categoriaVeiculo;
 	}
 
 	@Override
-	public CategoriaVeiculo categorizarCaminhonetaPassageiro(Automovel automovel) throws DaoException {
-		CategoriaVeiculo categoriaVeiculo = null;
+	public List<CategoriaVeiculo> categorizarCaminhonetaPassageiro(Automovel automovel) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
 			TypedQuery<CategoriaVeiculo> query= em.createNamedQuery(CATEGORIZAR_CAMINHONETA_PASSAGEIRO,CategoriaVeiculo.class);
@@ -54,22 +50,17 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 			query.setParameter("quantidadePassageiro",automovel.getQuantidadePassageiro());
 			query.setParameter("tipoCombustivel",automovel.getTipoCombustivel());
 			
-			List<CategoriaVeiculo> categoriasCandidata = query.getResultList();
-			if(categoriasCandidata.size() == 0 )
-				throw new DaoException("POSSIVELMENTE NÃO HÁ CATEGORIAS PARA O VEICULO");
-			categoriaVeiculo = categoriasCandidata.get(0);
+			return query.getResultList();
 		}catch (Exception e) {
 			e.printStackTrace();
-			throw new DaoException("ERRO AO CATEGORIZAR CAMINHONETA DE PASSAGEIROS");
+			throw new DaoException("ERRO AO SELECIONAR CATEGORIAS DE CAMINHONETA DE PASSAGEIROS");
 		}finally {
 			em.close();
 		}
-		return categoriaVeiculo;
 	}
 
 	@Override
-	public CategoriaVeiculo categorizarAutomovelPequeno(Automovel automovel) throws DaoException {
-		CategoriaVeiculo categoriaVeiculo = null;
+	public List<CategoriaVeiculo> categorizarAutomovelPequeno(Automovel automovel) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
 			TypedQuery<CategoriaVeiculo> query= em.createNamedQuery(CATEGORIZAR_AUTOMOVEL_PEQUENO,CategoriaVeiculo.class);
@@ -79,14 +70,12 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 			query.setParameter("quantidadePassageiro",automovel.getQuantidadePassageiro());
 			query.setParameter("tipoCombustivel",automovel.getTipoCombustivel());
 			
-			List<CategoriaVeiculo> categoriasCandidata = query.getResultList();
-			categoriaVeiculo = categoriasCandidata.get(0);
+			return query.getResultList();
 		}catch (Exception e) {
 			e.printStackTrace();
-			throw new DaoException("ERRO AO CATEGORIZAR AUTOMOVEL PEQUENO");
+			throw new DaoException("ERRO AO SELECIONAR CATEGORIAS DE AUTOMOVEL PEQUENO");
 		}finally {
 			em.close();
 		}
-		return categoriaVeiculo;
 	}
 }

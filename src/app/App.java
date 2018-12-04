@@ -1,5 +1,8 @@
 package app;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import dao.DaoRes;
 import dao.IDaoRes;
 import enumeracoes.Tela;
@@ -22,6 +25,7 @@ public class App extends Application{
 	
 	public static void main(String[] args) {
 		ConnectionFactory.setUser("postgres","admin");
+
 		launch(args);
 	}
 	

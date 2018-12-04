@@ -175,6 +175,9 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
 								else
 									categoriaVeiculo.setVeiculoExemplo(new Automovel(cambioBox.getValue(),TipoAutomovel.CONVENCIONAL,
 											tamanhoBox.getValue()));
+								categoriaVeiculo.getVeiculoExemplo().setQuantidadePortas(portasBox.getValue());
+								categoriaVeiculo.getVeiculoExemplo().setTipoCombustivel(combustivelBox.getValue());
+								categoriaVeiculo.getVeiculoExemplo().setQuantidadePassageiro(passageirosBox.getValue());
 							}
 						 }else
 							 alerta.imprimirMsg("Alerta","É preciso adicionar um veiculo de exemplo", AlertType.WARNING);
@@ -190,6 +193,7 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
 					categoriaVeiculo.setValorDiaria(Float.parseFloat(valorDiariaFld.getText()));
 					
 					boCategoriaVeiculo.cadastrarEditar(categoriaVeiculo);
+					
 					alerta.imprimirMsg("Sucesso ao cadastrar","Categoria De Veículo"
 							+((categoriaVeiculo.equals(this.categoriaVeiculo))? "editada": "cadastrada") 
 							+" com sucesso", AlertType.INFORMATION);
@@ -221,7 +225,7 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
 
 	@Override
 	void popularDescricao(Entidade entidade) {
-		CategoriaVeiculo categoriaVeiculo = (CategoriaVeiculo) entidade;
+		this.categoriaVeiculo = (CategoriaVeiculo) entidade;
 		
 		if(categoriaVeiculo.getVeiculoExemplo() instanceof CaminhonetaCarga) {
 			CaminhonetaCarga caminhonetaCarga =(CaminhonetaCarga) categoriaVeiculo.getVeiculoExemplo();
