@@ -48,7 +48,7 @@ public class Veiculo extends Entidade {
 	private Integer quantidadePortas;
 	@Column(name = "qtd_passageiro")
 	private Integer quantidadePassageiro;
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private CategoriaVeiculo categoriaVeiculo;
 	@ManyToOne
 	private Filial filial;

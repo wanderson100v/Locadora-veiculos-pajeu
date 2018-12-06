@@ -27,7 +27,7 @@ public class BoAutomovel implements IBoAutomovel {
 			if(entidade.getId() != null) {
 				daoAutomovel.editar(entidade);
 			}else {
-				boCategoriaVeiculo.categorizarAutomovel(entidade);
+				entidade.setCategoriaVeiculo(boCategoriaVeiculo.categorizarAutomovel(entidade));
 				daoAutomovel.cadastrar(entidade);
 			}
 		}catch (DaoException e) {

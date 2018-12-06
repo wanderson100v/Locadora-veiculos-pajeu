@@ -1,8 +1,9 @@
-/controller/
-/view/
-/entidade/
-/business/
-/dao/
-/enumeracoes/
-/META-INF/
 /app/
+/business/
+/controller/
+/dao/
+/entidade/
+/enumeracoes/
+/excecoes/
+/sql/
+/view/

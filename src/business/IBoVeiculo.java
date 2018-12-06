@@ -7,9 +7,13 @@ import entidade.Filial;
 import entidade.Veiculo;
 import excecoes.BoException;
 
-public interface IBoVeiculo {
+public interface IBoVeiculo  {
 	
 	public long totalVeiculoDisponivel(Filial filial, CategoriaVeiculo categoria)throws BoException ;
+	
+	public void cadastrarEditar(Veiculo entidade) throws BoException;
+	
+	public void exluir(Veiculo entidade) throws BoException;
 	
 	public long totalManutencoesPententes(Veiculo veiculo) throws BoException;
 	

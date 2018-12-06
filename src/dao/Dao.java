@@ -67,7 +67,6 @@ public abstract class Dao<T extends Entidade>{
 		return t;
 	}
 	
-	
 	public void excluir(T t) throws DaoException {
 		try{
 			em = ConnectionFactory.getConnection();

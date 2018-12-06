@@ -1,18 +1,15 @@
 package entidade;
 
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity(name = "categoria_veiculo" )
 @NamedQueries({
-	@NamedQuery(name = "categorizarCaminhonetaCarga" ,
+	@NamedQuery(name = "categoriaVeiculo.categorizarCaminhonetaCarga" ,
 			query = "select categoriaVeiculo from entidade.CategoriaVeiculo as categoriaVeiculo "
 					+ "inner join categoriaVeiculo.veiculoExemplo as caminhonetaCarga "
 					+ "where caminhonetaCarga.potencia <= :potencia "
@@ -25,7 +22,7 @@ import javax.persistence.OneToOne;
 					+ "order by(caminhonetaCarga.capacidadeCarga, caminhonetaCarga.potencia, caminhonetaCarga.torqueMotor,"
 					+ "caminhonetaCarga.desenpenho, caminhonetaCarga.distanciaEixos, caminhonetaCarga.tipoAcionamentoEmbreagem, "
 					+ "caminhonetaCarga.tipoCombustivel, caminhonetaCarga.capacidadeCombustivel) desc"),
-	@NamedQuery(name = "categorizarAutomovelPequeno" ,
+	@NamedQuery(name = "categoriaVeiculo.categorizarAutomovelPequeno" ,
 			query = "select categoriaVeiculo from entidade.CategoriaVeiculo as categoriaVeiculo "
 					+ "inner join categoriaVeiculo.veiculoExemplo as automovel "
 					+ "where automovel.tipoAutomovel = 0  "
@@ -37,7 +34,7 @@ import javax.persistence.OneToOne;
 					+ "order by(automovel.tipoCambio ,automovel.tamanhoVeiculo, "
 					+ "automovel.quantidadePortas, automovel.quantidadePassageiro, "
 					+ "automovel.tipoCombustivel) desc"),
-	@NamedQuery(name = "categorizarCaminhonetaPassageiro" ,
+	@NamedQuery(name = "categoriaVeiculo.categorizarCaminhonetaPassageiro" ,
 			query = "select categoriaVeiculo from entidade.CategoriaVeiculo as categoriaVeiculo "
 					+ "inner join categoriaVeiculo.veiculoExemplo as automovel "
 					+ "where automovel.tipoAutomovel = 1 "
@@ -65,10 +62,8 @@ public class CategoriaVeiculo extends Entidade {
 	private Float valorDiaria;
 	@Column(nullable = false)
 	private String descricao;
-	@OneToOne(cascade = CascadeType.ALL, optional = false, targetEntity = Veiculo.class)
+	@OneToOne(cascade = CascadeType.REMOVE,targetEntity = Veiculo.class)
 	private Veiculo veiculoExemplo;
-	@OneToMany(mappedBy = "categoriaVeiculo" , targetEntity = Veiculo.class)
-	private List<Veiculo> veiculos;
 	
 	public String getTipo() {
 		return tipo;
@@ -94,14 +89,6 @@ public class CategoriaVeiculo extends Entidade {
 		this.quilometragemRevisao = quilometragemRevisao;
 	}
 	
-	public List<Veiculo> getVeiculos() {
-		return veiculos;
-	}
-
-	public void setVeiculos(List<Veiculo> veiculos) {
-		this.veiculos = veiculos;
-	}
-
 	public float getHorasRevisao() {
 		return horasRevisao;
 	}
@@ -143,7 +130,6 @@ public class CategoriaVeiculo extends Entidade {
 		result = prime * result + Float.floatToIntBits(quilometragemRevisao);
 		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
 		result = prime * result + ((valorDiaria == null) ? 0 : valorDiaria.hashCode());
-		result = prime * result + ((veiculos == null) ? 0 : veiculos.hashCode());
 		return result;
 	}
 
@@ -172,11 +158,6 @@ public class CategoriaVeiculo extends Entidade {
 				return false;
 		} else if (!valorDiaria.equals(other.valorDiaria))
 			return false;
-		if (veiculos == null) {
-			if (other.veiculos != null)
-				return false;
-		} else if (!veiculos.equals(other.veiculos))
-			return false;
 		return true;
 	}
 
@@ -184,7 +165,7 @@ public class CategoriaVeiculo extends Entidade {
 	public String toString() {
 		return "CategoriaVeiculo [tipo=" + tipo + ", quilometragemRevisao=" + quilometragemRevisao + ", horasRevisao="
 				+ horasRevisao + ", horasLimpesa=" + horasLimpesa + ", valorDiaria=" + valorDiaria + ", veiculos="
-				+ veiculos + "]";
+				+"]";
 	}
 	
 }

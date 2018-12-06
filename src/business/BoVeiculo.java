@@ -23,6 +23,27 @@ public class BoVeiculo implements IBoVeiculo {
 	}
 	
 	@Override
+	public void cadastrarEditar(Veiculo entidade) throws BoException {
+		try {
+			if(entidade.getId() != null) {
+				daoVeiculo.editar(entidade);
+			}else {
+				daoVeiculo.cadastrar(entidade);
+			}
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+	
+	public void exluir(Veiculo entidade) throws BoException{
+		try {
+			daoVeiculo.excluir(entidade);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+	
+	@Override
 	public long totalVeiculoDisponivel(Filial filial, CategoriaVeiculo categoria) throws BoException {
 		try {
 			return daoVeiculo.totalVeiculoDisponivel(filial, categoria);

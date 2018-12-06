@@ -1,8 +1,5 @@
 package app;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-
 import dao.DaoRes;
 import dao.IDaoRes;
 import enumeracoes.Tela;

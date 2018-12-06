@@ -8,13 +8,10 @@ import entidade.Automovel;
 import entidade.CaminhonetaCarga;
 import entidade.CategoriaVeiculo;
 import entidade.Veiculo;
-import enumeracoes.TamanhoVeiculo;
-import enumeracoes.TipoAirBag;
 import enumeracoes.TipoAutomovel;
-import enumeracoes.TipoCambio;
 import excecoes.BoException;
 import excecoes.DaoException;
-import sql.ConnectionFactory;
+import excecoes.DaoExclusaoException;
 
 public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 	private static IBoCategoriaVeiculo instance;
@@ -35,7 +32,13 @@ public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 				daoCategoriaVeiculo.editar(entidade);
 			}else {
 				validarCategoria(entidade);
+				Veiculo veiculoExemplo = entidade.getVeiculoExemplo();
+				entidade.setVeiculoExemplo(null);
 				daoCategoriaVeiculo.cadastrar(entidade);
+				veiculoExemplo.setCategoriaVeiculo(entidade);
+				BoVeiculo.getInstance().cadastrarEditar(veiculoExemplo);
+				entidade.setVeiculoExemplo(veiculoExemplo);
+				daoCategoriaVeiculo.editar(entidade);
 			}
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
@@ -45,7 +48,25 @@ public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 	@Override
 	public void excluir(CategoriaVeiculo entidade) throws BoException {
 		try {
-			daoCategoriaVeiculo.excluir(entidade);
+			
+			Veiculo veiculo = entidade.getVeiculoExemplo();
+			entidade.setVeiculoExemplo(null);
+			if(veiculo!=null) {
+				daoCategoriaVeiculo.editar(entidade);
+				BoVeiculo.getInstance().exluir(veiculo);
+			}
+			try {
+				daoCategoriaVeiculo.excluir(entidade);
+			} catch (DaoExclusaoException e) {
+				if(veiculo!=null) {
+					entidade.setVeiculoExemplo(veiculo);
+					veiculo.setId(null);
+					BoVeiculo.getInstance().cadastrarEditar(veiculo);
+					entidade.setVeiculoExemplo(veiculo);
+					daoCategoriaVeiculo.editar(entidade);
+				}
+				throw new BoException(e.getMessage());
+			}
 		} catch (DaoException e) {
 			throw new BoException(e.getMessage());	
 		}
