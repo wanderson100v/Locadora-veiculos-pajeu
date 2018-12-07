@@ -15,10 +15,8 @@ public class HomeController {
     private Button voltarBtn;
     
     @FXML
-    private Tab tab;
+    private Tab dadosTab;
 
-    private Pane pesquisaPane;
-    
     @FXML
     void eventHandler(ActionEvent event) {
     	App.iniTelaLogin();
@@ -27,9 +25,24 @@ public class HomeController {
     @FXML
     void initialize() {
     	try {
-			pesquisaPane = DaoRes.getInstance().carregarPaneFXML("PesquisaPane");
-			tab.setContent(pesquisaPane);
-		} catch (DaoException e) {
+			PesquisaController pesquisaController = (PesquisaController) DaoRes.getInstance().carregarControllerFXML("PesquisaPane");
+			DaoRes daoRes = DaoRes.getInstance();
+    		
+    		ClienteJuridicoController clienteJuridicoController = (ClienteJuridicoController) daoRes.carregarControllerFXML("ClienteJuridicoPane");
+    		ClienteFisicoController clienteFisicoController = (ClienteFisicoController) daoRes.carregarControllerFXML("ClienteFisicoPane");
+    		CaminhonetaCargaController caminhonetaCargaController = (CaminhonetaCargaController) daoRes.carregarControllerFXML("CaminhonetaCargaPane");
+    		AutomovelController automovelController = (AutomovelController) daoRes.carregarControllerFXML("AutomovelPane");
+    		
+    		pesquisaController.getControladores().put("Juridico",clienteJuridicoController);
+    		pesquisaController.getControladores().put("Fisico", clienteFisicoController);
+    		pesquisaController.getControladores().put("Caminhoneta Carga", caminhonetaCargaController);
+    		pesquisaController.getControladores().put("Automóvel", automovelController);
+			
+			pesquisaController.getFiltroBox().getItems().addAll(pesquisaController.getControladores().keySet());
+			
+			dadosTab.setContent(pesquisaController.getPesquisaPane());
+			
+    	} catch (DaoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

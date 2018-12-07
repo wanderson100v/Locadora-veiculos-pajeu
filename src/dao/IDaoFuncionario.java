@@ -12,6 +12,8 @@ public interface IDaoFuncionario extends IDao<Funcionario>{
 	
 	public void editaSenha(Funcionario funcionario, String login,String novaSenha) throws DaoException;
 	
+	public String requisitarGralDeAcesso() throws DaoException;
+	
 	public void excluir(Funcionario funcionario, String login) throws DaoException;
 	
 }

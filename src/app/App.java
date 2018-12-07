@@ -1,5 +1,6 @@
 package app;
 
+
 import dao.DaoRes;
 import dao.IDaoRes;
 import enumeracoes.Tela;
@@ -18,11 +19,11 @@ public class App extends Application{
 	public static Stage stage;
 	private static Pane loginPane,homePane;
 	private static Scene loginScene,homeScene;
-	private static IDaoRes daoRes = DaoRes.getInstance();	
+	private static IDaoRes daoRes = DaoRes.getInstance();
+	
 	
 	public static void main(String[] args) {
 		ConnectionFactory.setUser("postgres","admin");
-
 		launch(args);
 	}
 	
@@ -31,12 +32,36 @@ public class App extends Application{
 		App.stage = stage;
 		try {
 			stage.setTitle("Locadora Veiculos Pajeú");
+			
 			loginPane = daoRes.carregarPaneFXML(Tela.LOGIN);
 			homePane =  daoRes.carregarPaneFXML(Tela.HOME);
 			loginScene = new Scene(loginPane);
 			homeScene = new Scene(homePane);
 			iniTelaLogin();
 			stage.show();
+			/*new Thread(new Runnable() {
+					@Override
+					public void run() {
+						while(true) {
+							Platform.runLater(new Runnable() {
+								@Override
+								public void run() {
+									Alert a = new Alert(AlertType.INFORMATION);
+									a.setTitle("testo");
+									a.setContentText("texto");
+									a.showAndWait();
+								}
+							});
+							try {
+								Thread.sleep(5000);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+					}				
+				}
+			).start();*/
+
 		}catch (DaoException e) {
 			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 			e.printStackTrace();
@@ -59,9 +84,7 @@ public class App extends Application{
 	
 	public static void iniTelaMenu() {
 		stage.setScene(homeScene);
-		//stage.setMaximized(true);
-		stage.setWidth(800);
-		stage.setHeight(600);
+		stage.setMaximized(true);
 		stage.centerOnScreen();
 	}
 }

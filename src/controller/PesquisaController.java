@@ -53,37 +53,11 @@ public class PesquisaController {
     
     @FXML
     void initialize() {
-    	try {
-    		DaoRes daoRes = DaoRes.getInstance();
     		
-    		ClienteJuridicoController clienteJuridicoController = (ClienteJuridicoController) daoRes.carregarControllerFXML("ClienteJuridicoPane");
-    		ClienteFisicoController clienteFisicoController = (ClienteFisicoController) daoRes.carregarControllerFXML("ClienteFisicoPane");
-    		FilialController filialController = (FilialController) daoRes.carregarControllerFXML("FilialPane");
-    		CaminhonetaCargaController caminhonetaCargaController = (CaminhonetaCargaController) daoRes.carregarControllerFXML("CaminhonetaCargaPane");
-    		AutomovelController automovelController = (AutomovelController) daoRes.carregarControllerFXML("AutomovelPane");
-    		AcessorioController acessorioController = (AcessorioController) daoRes.carregarControllerFXML("AcessorioPane");
-    		CategoriaVeiculoController categoriaVeiculoController = (CategoriaVeiculoController) daoRes.carregarControllerFXML("CategoriaVeiculoPane");
-    		FuncionrarioController funcionrarioController = (FuncionrarioController) daoRes.carregarControllerFXML("FuncionarioPane");
-    		
-    		
-    		controladores.put("Juridico",clienteJuridicoController);
-			controladores.put("Fisico", clienteFisicoController);
-			controladores.put("Filial", filialController);
-			controladores.put("Caminhoneta Carga", caminhonetaCargaController);
-			controladores.put("Automóvel", automovelController);
-			controladores.put("Acessório", acessorioController);
-			controladores.put("Categoria Veículo", categoriaVeiculoController);
-			controladores.put("Funcionario", funcionrarioController);
+		transition = new TranslateTransition();
+		transition.setNode(detalhesPane);
+		transition.setDuration(new Duration(1000));
 			
-			filtroBox.getItems().addAll(controladores.keySet());
-    		
-    		transition = new TranslateTransition();
-			transition.setNode(detalhesPane);
-			transition.setDuration(new Duration(1000));
-			
-    	} catch (DaoException e) {
-			e.printStackTrace();
-		}
     }
     
 	@FXML
@@ -125,5 +99,18 @@ public class PesquisaController {
     		}
     	}
     }
+	
+	
+	public AnchorPane getPesquisaPane() {
+		return pesquisaPane;
+	}
+	
+	public HashMap<String, CRUDController<?>> getControladores() {
+		return controladores;
+	}
+	
+	public ComboBox<String> getFiltroBox() {
+		return filtroBox;
+	}
     
 }
