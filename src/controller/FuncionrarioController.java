@@ -1,10 +1,6 @@
 package controller;
 
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
-
-import com.sun.nio.file.SensitivityWatchEventModifier;
 
 import business.BoFuncionario;
 import business.IBoFuncionario;
@@ -24,8 +20,9 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import sql.ConnectionFactory;
 
-public class FuncionrarioController  extends CRUDController<Funcionario> implements Observer{
+public class FuncionrarioController  extends CRUDController<Funcionario> implements IFuncionarioObservadores{
 
     @FXML
     private TableColumn<Funcionario, String> nomeCln;
@@ -62,7 +59,7 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
 
     @FXML
     private PasswordField conSenhaFld;
-
+    
     @FXML
     private Button resertarSenhaBtn;
     
@@ -77,12 +74,12 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
     
     private IBoFuncionario boFuncionario = BoFuncionario.getInstance();
     
-    private Cargo cargo;
+    
     
     @FXML
     void initialize() {
     	super.initialize();
-    	LoginController.loginController.addObserver(this);
+    	FuncionarioObservavel.getIntance().getFuncionarioObservadores().add(this);
     	
     	ToggleGroup toggleGroup = new ToggleGroup();
     	simAtivoRb.setToggleGroup(toggleGroup);
@@ -123,11 +120,11 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
     			funcionario.setNome(nomeFld.getText());
     			funcionario.setCpf(cpfFld.getText());
     			boFuncionario.editar(funcionario, oldLogin);
-				alerta.imprimirMsg("Sucesso ao editado","Funcionario editado com sucesso", AlertType.INFORMATION);
+				alerta.imprimirMsg("Sucesso ao editado","Funcionário editado com sucesso", AlertType.INFORMATION);
 	    	}else if(btn == excluirBtn){
 	    		
 	    		boFuncionario.excluir(this.funcionario);
-	    		alerta.imprimirMsg("Sucesso ao exluir","Automóvel exlcuido com sucesso", 
+	    		alerta.imprimirMsg("Sucesso ao exluir","Funcionário exlcuido com sucesso", 
 	    				AlertType.INFORMATION);
 	    		limparCampos();
 	    	
@@ -142,7 +139,10 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
 	@Override
 	void popularTabela(String busca) {
 		try {
-			List<Funcionario> funcionarios = boFuncionario.buscarAll();
+			List<Funcionario> funcionarios = boFuncionario.buscaPorBusca(busca);
+			for(Funcionario f : funcionarios)
+				if(boFuncionario.gerarLogin(f).equals(ConnectionFactory.getUser()[0]))
+					funcionarios.remove(f);
 			entidadeTabela.getItems().clear();
 			entidadeTabela.getItems().setAll(funcionarios);
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+funcionarios.size()+" resultado(s)",AlertType.INFORMATION);
@@ -205,14 +205,12 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
-		if(arg instanceof Cargo) {
-			Cargo cargo = (Cargo) arg;
-			this.cargo = cargo;
-			if(cargo == Cargo.SU)
-				cargoBox.getItems().addAll(Cargo.values());
-			else if(cargo == Cargo.ADM) 
-				cargoBox.getItems().addAll(Cargo.ADM,Cargo.AT);
+	public void atualizar(Cargo cargo) {
+		cargoBox.getItems().clear();
+		if(cargo == Cargo.SU) {
+			cargoBox.getItems().addAll(Cargo.values());
+		}else if(cargo == Cargo.ADM) { 
+			cargoBox.getItems().addAll(Cargo.ADM,Cargo.AT);
 		}
 	}
 }

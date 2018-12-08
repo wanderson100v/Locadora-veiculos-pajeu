@@ -16,6 +16,8 @@ public interface IBoFuncionario {
 	
 	public void editar(Funcionario funcionario, String oldLogin)throws BoException;
 	
+	public List<Funcionario> buscaPorBusca(String busca) throws BoException;
+	
 	public void resetarSenha(Funcionario funcionario) throws BoException;
 	
 	public Cargo requisitarGralDeAcesso(Funcionario funcionario) throws BoException;

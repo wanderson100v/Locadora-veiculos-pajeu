@@ -24,7 +24,7 @@ public class DaoJuridico extends Dao<Juridico> implements IDaoJuridico{
 			typedQuery.setParameter("email","%"+juridico.getEmail()+"%");
 			typedQuery.setParameter("telefone","%"+juridico.getTelefone()+"%");
 			typedQuery.setParameter("inscricaoEstadual","%"+juridico.getInscricaoEstadual()+"%");
-			typedQuery.setParameter("cnpj","%"+juridico.getInscricaoEstadual()+"%");
+			typedQuery.setParameter("cnpj","%"+juridico.getCnpj()+"%");
 			return typedQuery.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();

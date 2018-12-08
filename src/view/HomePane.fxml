@@ -15,17 +15,17 @@
    <center>
       <TabPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="200.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" tabMinHeight="120.0" BorderPane.alignment="CENTER">
         <tabs>
+          <Tab>
+            <content>
+              <fx:include fx:id="perfilPane" source="PerfilPane.fxml"/>
+            </content>
+               <graphic>
+                  <Label text="Perfil" />
+               </graphic>
+          </Tab>
           <Tab fx:id="dadosTab">
                <graphic>
                   <Label text="Dados" />
-               </graphic>
-          </Tab>
-          <Tab>
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-               <graphic>
-                  <Label text="Pane2" />
                </graphic>
           </Tab>
         </tabs>

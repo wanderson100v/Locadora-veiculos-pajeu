@@ -15,14 +15,6 @@
    <center>
       <TabPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="200.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" tabMinHeight="120.0" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab>
-            <content>
-             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-               <graphic>
-                  <Label text="Perfil" />
-               </graphic>
-          </Tab>
           <Tab fx:id="dadosTab">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />

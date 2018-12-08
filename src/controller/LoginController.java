@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.Observable;
-
 import app.App;
 import business.BoFuncionario;
 import business.IBoFuncionario;
@@ -16,11 +14,9 @@ import javafx.scene.control.TextField;
 import sql.ConnectionFactory;
 import view.Alerta;
 
-public class LoginController extends Observable{
+public class LoginController{
 
 	
-	public static LoginController loginController;
-    
 	@FXML
 	private TextField loginField;
 
@@ -37,7 +33,6 @@ public class LoginController extends Observable{
     
     @FXML
     void initialize() {
-    	loginController = this;
     }
     
     @FXML
@@ -48,9 +43,8 @@ public class LoginController extends Observable{
     			String senha = senhaField.getText();
 	    		ConnectionFactory.setUser(login,senha);
 	    		Cargo cargo = boFuncionario.requisitarGralDeAcesso(login);
+	    		FuncionarioObservavel.getIntance().avisarOuvintes(cargo);
 	    		boFuncionario.utilizarGralAcesso(cargo);
-	    		setChanged();
-	    		notifyObservers(cargo);
 				App.iniTelaMenu();
     		} catch (BoException e) {
     			alerta.imprimirMsg("Alerta", "Usuario não autorizado",AlertType.WARNING);

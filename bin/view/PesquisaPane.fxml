@@ -44,7 +44,7 @@
                         <Font name="Verdana" size="12.0" />
                      </font></TextField>
                   <ComboBox fx:id="filtroBox" layoutX="407.0" layoutY="73.0" onAction="#actionHandle" prefWidth="150.0" promptText="Filtro" />
-                  <Label layoutX="313.0" layoutY="32.0" text="Pesquisas">
+                  <Label layoutX="226.0" layoutY="35.0" text="Manipulação dedados">
                      <font>
                         <Font name="Verdana" size="18.0" />
                      </font>
