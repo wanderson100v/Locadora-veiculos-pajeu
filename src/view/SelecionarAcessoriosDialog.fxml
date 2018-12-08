@@ -12,7 +12,7 @@
 
 <DialogPane fx:id="selecionarAcessoriosDialog" expanded="true" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SelecionarAcessoriosController">
    <content>
-      <SplitPane dividerPositions="0.5" prefHeight="300.0" prefWidth="600.0">
+      <SplitPane dividerPositions="0.5" prefHeight="350.0" prefWidth="700.0">
          <items>
             <BorderPane>
                <center>
@@ -53,7 +53,7 @@
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" text="Selecione os Acessórios para o Automóvel">
                <font>
-                  <Font name="Verdana" size="14.0" />
+                  <Font name="Verdana" size="18.0" />
                </font>
             </Label>
          </children>

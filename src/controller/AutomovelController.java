@@ -10,6 +10,7 @@ import dao.DaoRes;
 import entidade.Acessorio;
 import entidade.Automovel;
 import entidade.Entidade;
+import entidade.Filial;
 import enumeracoes.TamanhoVeiculo;
 import enumeracoes.TipoAirBag;
 import enumeracoes.TipoAutomovel;
@@ -295,23 +296,31 @@ public class AutomovelController extends CRUDController<Automovel> {
 	
 	@FXML
     void actionHandle(ActionEvent event) {
-		if(event.getSource() == selectFilialBtn) {
-			
-		}else if(event.getSource() == escolherAcessorioBtn) {
-			try {
+		try {
+			if(event.getSource() == selectFilialBtn) {
 				Alert alerta = new Alert(AlertType.NONE);
-				SelecionarAcessoriosController selecionarAcessoriosController = (SelecionarAcessoriosController) DaoRes.getInstance().carregarControllerFXML("SelecionarAcessoriosDialog");
-				selecionarAcessoriosController.getMeusListView().getItems().addAll(aceTabela.getItems());
-				alerta.setDialogPane(selecionarAcessoriosController.getSelecionarAcessoriosDialog());
+				SelecionarFilialController selecionarFilialController= (SelecionarFilialController) DaoRes.getInstance().carregarControllerFXML("SelecionarFilialDialog");
+				alerta.setDialogPane(selecionarFilialController.getSelecionarFilialDialog());
 				Optional<ButtonType> result = alerta.showAndWait();
 				if(result.isPresent() && result.get() == ButtonType.FINISH) {
-					aceTabela.getItems().clear();
-					aceTabela.getItems().addAll(selecionarAcessoriosController.getMeusListView().getItems());
+					Filial filial = selecionarFilialController.getFilialTbl().getSelectionModel().getSelectedItem();
+					if(filial!= null)
+						filialFld.setText(filial.toString());
 				}
-			} catch (DaoException e) {
-				alerta.imprimirMsg("Erro", e.getMessage(), AlertType.ERROR);
+				
+			}else if(event.getSource() == escolherAcessorioBtn) {
+					Alert alerta = new Alert(AlertType.NONE);
+					SelecionarAcessoriosController selecionarAcessoriosController = (SelecionarAcessoriosController) DaoRes.getInstance().carregarControllerFXML("SelecionarAcessoriosDialog");
+					selecionarAcessoriosController.getMeusListView().getItems().addAll(aceTabela.getItems());
+					alerta.setDialogPane(selecionarAcessoriosController.getSelecionarAcessoriosDialog());
+					Optional<ButtonType> result = alerta.showAndWait();
+					if(result.isPresent() && result.get() == ButtonType.FINISH) {
+						aceTabela.getItems().clear();
+						aceTabela.getItems().addAll(selecionarAcessoriosController.getMeusListView().getItems());
+					}
 			}
-			
+		} catch (DaoException e) {
+			alerta.imprimirMsg("Erro", e.getMessage(), AlertType.ERROR);
 		}
     }
 }
