@@ -1,62 +1,61 @@
 package controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.Observable;
 
 import app.App;
+import business.BoFuncionario;
+import business.IBoFuncionario;
+import excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import sql.ConnectionFactory;
+import view.Alerta;
 
-public class LoginController {
+public class LoginController extends Observable{
 
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private TextField loginField;
-
-    @FXML
-    private TextField senhaField;
+	
+	public static LoginController loginController;
+    
+	@FXML
+	private TextField loginField;
 
     @FXML
-    private Button cadastroBtn;
+    private PasswordField senhaField;
 
     @FXML
     private Button loginBtn;
     
-    //private DialogPane dialogPane;
-   
+    IBoFuncionario boFuncionario = BoFuncionario.getInstance();
+    
+    private Alerta alerta = Alerta.getInstance();
+    
+    
     @FXML
     void initialize() {
-
+    	loginController = this;
     }
     
     @FXML
     void eventHandler(ActionEvent event) {
     	if(event.getSource() == loginBtn) {
-    		/*try {
-				/*dialogPane = (DialogPane) DaoRes.getInstance().carregarPaneFXML("Dialogo");
-				Alert alerta = new Alert(AlertType.NONE);
-				alerta.setDialogPane(dialogPane);
-				Optional<ButtonType> button =alerta.showAndWait();
-				if(button.isPresent())
-					if(button.get() == ButtonType.FINISH)
-						System.out.println("Ok");
-					else if( button.get() == ButtonType.CANCEL){
-						System.out.println("cancelou");
-					}
-    		} catch (DaoException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/	
-    		App.iniTelaMenu();
+    		try {
+    			String login = loginField.getText();
+    			String senha = senhaField.getText();
+	    		ConnectionFactory.setUser(login,senha);
+	    		setChanged();
+				notifyObservers(boFuncionario.requisitarGralDeAcesso());
+				App.iniTelaMenu();
+    		} catch (BoException e) {
+    			alerta.imprimirMsg("Alerta", "Usuario não autorizado",AlertType.WARNING);
+    		}
     		
     	}
     }
+    
+    
 
 }

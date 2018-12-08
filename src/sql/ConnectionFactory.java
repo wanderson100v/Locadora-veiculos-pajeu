@@ -12,8 +12,6 @@ public class ConnectionFactory{
 	private static EntityManagerFactory entityManagerFactory;
 	
 	public static EntityManager getConnection() {
-		if(entityManagerFactory == null)
-			entityManagerFactory = Persistence.createEntityManagerFactory("banco",propriedades);
 		return entityManagerFactory.createEntityManager();
 	}
 	
@@ -26,16 +24,13 @@ public class ConnectionFactory{
 			propriedades.replace("javax.persistence.jdbc.user",login);
 			propriedades.replace("javax.persistence.jdbc.password",senha);
 		}
-		
+		entityManagerFactory = Persistence.createEntityManagerFactory("banco",propriedades);
 	}
 	public static String[] getUser() {
 		String[] loginSenha = new String[2];
 		loginSenha[0] = propriedades.get("javax.persistence.jdbc.user");
 		loginSenha[1] =propriedades.get("javax.persistence.jdbc.password");
 		return loginSenha;
-	}
-	public static void stop() {
-		entityManagerFactory.close();
 	}
 	
 }

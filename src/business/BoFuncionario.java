@@ -82,7 +82,24 @@ public class BoFuncionario implements IBoFuncionario {
 			throw new BoException(e.getMessage());
 		}
 	}
-
+	
+	@Override
+	public Cargo requisitarGralDeAcesso() throws BoException {
+		try {
+			return Cargo.getCargo( daoFuncionario.requisitarGralDeAcesso());
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+	
+	
+	public String gerarLogin(Funcionario funcionario) {
+		String primeiroNome = (funcionario.getNome().contains(" "))?  
+				funcionario.getNome().substring(0,funcionario.getNome().indexOf(" ")) :
+				funcionario.getNome();
+		return primeiroNome.toLowerCase()+funcionario.getCpf();
+	}
+	
 	private void validarAcesso(String senha, Cargo cargo) throws BoException {
 		StringBuilder erro = new StringBuilder();
 		if(senha.length() <6 || senha.length() >11)
@@ -91,13 +108,6 @@ public class BoFuncionario implements IBoFuncionario {
 			erro.append("Deve ser informado um cargo para funcionarios com senha de acesso\n");
 		if(erro.length()>0)
 			throw new BoException("Erro(s) ao validar dados de acesso para Funcionario:\n"+erro.toString());
-	}
-	
-	public String gerarLogin(Funcionario funcionario) {
-		String primeiroNome = (funcionario.getNome().contains(" "))?  
-				funcionario.getNome().substring(0,funcionario.getNome().indexOf(" ")) :
-				funcionario.getNome();
-		return primeiroNome.toLowerCase()+funcionario.getCpf();
 	}
 
 }

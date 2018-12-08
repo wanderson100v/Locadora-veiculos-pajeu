@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import javax.persistence.Query;
 
 import entidade.Funcionario;
@@ -73,18 +75,34 @@ public class DaoFuncionario  extends Dao<Funcionario> implements IDaoFuncionario
 	public String requisitarGralDeAcesso() throws DaoException {
 		try{
 			em = ConnectionFactory.getConnection();
+			String username =(String) em.createNativeQuery("select user").getSingleResult(); 
+			if(username.equals("postgres"))
+				return "gerente";
+		
 			Query query = em.createNativeQuery("select rolname from pg_user " + 
 					"join pg_auth_members on (pg_user.usesysid=pg_auth_members.member) " + 
 					"join pg_roles on (pg_roles.oid=pg_auth_members.roleid) " + 
 					"where " + 
 					"pg_user.usename = (select user)");
-			return  (String )query.getResultList().get(0);
+			@SuppressWarnings("unchecked")
+			List<String> cargos =  query.getResultList();
+			if(!cargos.isEmpty()) {
+				String cargo =  cargos.get(0);
+				em.getTransaction().begin();
+				em.createNativeQuery("SET ROLE "+cargo).executeUpdate();
+				em.getTransaction().commit();
+				return cargo;
+				
+			}
+			return null;
 		}catch (Exception e) {
-			em.getTransaction().rollback();
+			if(em != null )
+				em.getTransaction().rollback();
 			e.printStackTrace();
 			throw new DaoException("ERRO AO REQUISITAR PRIVILEGIOS DE USUARIO");
 		}finally {
-			em.close();
+			if(em != null )
+				em.close();
 		}
 	}
 	

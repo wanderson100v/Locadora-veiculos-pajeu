@@ -7,7 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
-import javafx.scene.layout.Pane;
+import sql.ConnectionFactory;
 
 public class HomeController {
 
@@ -18,9 +18,7 @@ public class HomeController {
     private Tab dadosTab;
 
     @FXML
-    void eventHandler(ActionEvent event) {
-    	App.iniTelaLogin();
-    }
+    private Button configBtn;
 
     @FXML
     void initialize() {
@@ -46,5 +44,14 @@ public class HomeController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    }
+    
+    @FXML
+    void actionHandle(ActionEvent event) {
+    	if(event.getSource() == configBtn)
+    		App.iniTelaConfig();
+    	else if(event.getSource() == voltarBtn) {
+    		App.iniTelaLogin();
+    	}
     }
 }

@@ -1,7 +1,7 @@
 package enumeracoes;
 
 public enum Tela {
-	LOGIN("LoginPane"),HOME("HomePane"),CARREGAR("CarregarPane");
+	LOGIN("LoginPane"),HOME("HomePane"),CONFIG("ConfiguracaoPane");
 	
 	private String value;
 	

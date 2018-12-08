@@ -1,6 +1,5 @@
 package app;
 
-
 import dao.DaoRes;
 import dao.IDaoRes;
 import enumeracoes.Tela;
@@ -12,18 +11,15 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import sql.ConnectionFactory;
 
 public class App extends Application{
 	
 	public static Stage stage;
-	private static Pane loginPane,homePane;
-	private static Scene loginScene,homeScene;
+	private static Scene loginScene,homeScene,configScene;
 	private static IDaoRes daoRes = DaoRes.getInstance();
 	
 	
 	public static void main(String[] args) {
-		ConnectionFactory.setUser("postgres","admin");
 		launch(args);
 	}
 	
@@ -33,10 +29,14 @@ public class App extends Application{
 		try {
 			stage.setTitle("Locadora Veiculos Pajeú");
 			
-			loginPane = daoRes.carregarPaneFXML(Tela.LOGIN);
-			homePane =  daoRes.carregarPaneFXML(Tela.HOME);
+			Pane loginPane = daoRes.carregarPaneFXML(Tela.LOGIN);
+			Pane homePane =  daoRes.carregarPaneFXML(Tela.HOME);
+			Pane configPane = daoRes.carregarPaneFXML(Tela.CONFIG);
+			
 			loginScene = new Scene(loginPane);
 			homeScene = new Scene(homePane);
+			configScene = new Scene(configPane);
+			
 			iniTelaLogin();
 			stage.show();
 			/*new Thread(new Runnable() {
@@ -68,12 +68,6 @@ public class App extends Application{
 		}
 	}
 	
-	@Override
-	public void stop() throws Exception {
-		System.exit(0);
-		super.stop();
-	}
-	
 	public static void iniTelaLogin() {
 		stage.setScene(loginScene);
 		stage.setMaximized(false);
@@ -85,6 +79,16 @@ public class App extends Application{
 	public static void iniTelaMenu() {
 		stage.setScene(homeScene);
 		stage.setMaximized(true);
-		stage.centerOnScreen();
+	}
+	
+	public static void iniTelaConfig() {
+		stage.setScene(configScene);
+		stage.setMaximized(true);
+	}
+	
+	@Override
+	public void stop() throws Exception {
+		System.exit(0);
+		super.stop();
 	}
 }

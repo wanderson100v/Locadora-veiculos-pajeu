@@ -1,9 +1,7 @@
 package controller;
 
-import java.net.URL;
 import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.Observer;
 
 import business.BoFuncionario;
 import business.IBoFuncionario;
@@ -11,6 +9,7 @@ import entidade.Entidade;
 import entidade.Funcionario;
 import enumeracoes.Cargo;
 import excecoes.BoException;
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -24,7 +23,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 
-public class FuncionrarioController  extends CRUDController<Funcionario>{
+public class FuncionrarioController  extends CRUDController<Funcionario> implements Observer{
 
     @FXML
     private TableColumn<Funcionario, String> nomeCln;
@@ -73,6 +72,7 @@ public class FuncionrarioController  extends CRUDController<Funcionario>{
     @FXML
     void initialize() {
     	super.initialize();
+    	LoginController.loginController.addObserver(this);
     	
     	ToggleGroup toggleGroup = new ToggleGroup();
     	simAtivoRb.setToggleGroup(toggleGroup);
@@ -80,6 +80,7 @@ public class FuncionrarioController  extends CRUDController<Funcionario>{
     	
     	nomeCln.setCellValueFactory( new PropertyValueFactory<>("nome"));
     	cpfCln.setCellValueFactory( new PropertyValueFactory<>("cpf"));
+    	
     	
     	cargoBox.getItems().addAll(Cargo.values());
     	
@@ -175,6 +176,18 @@ public class FuncionrarioController  extends CRUDController<Funcionario>{
 			}
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+		}
+	}
+
+	@Override
+	public void update(java.util.Observable o, Object arg) {
+		if(arg instanceof Cargo) {
+			Cargo cargo = (Cargo) arg;
+			if(cargo == Cargo.SU) {
+				cargoBox.getItems().addAll(Cargo.values());
+			}else if(cargo == Cargo.ADM) {
+				cargoBox.getItems().addAll(Cargo.ADM,Cargo.AT);
+			}
 		}
 	}
 }
