@@ -1,7 +1,10 @@
 package controller;
 
 import java.util.List;
+import java.util.Observable;
 import java.util.Observer;
+
+import com.sun.nio.file.SensitivityWatchEventModifier;
 
 import business.BoFuncionario;
 import business.IBoFuncionario;
@@ -9,7 +12,6 @@ import entidade.Entidade;
 import entidade.Funcionario;
 import enumeracoes.Cargo;
 import excecoes.BoException;
-import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -51,6 +53,9 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
 
     @FXML
     private ComboBox<Cargo> cargoBox;
+    
+    @FXML
+    private ComboBox<Cargo> nivelAcessoBox;
 
     @FXML
     private PasswordField senhaFld;
@@ -60,6 +65,9 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
 
     @FXML
     private Button resertarSenhaBtn;
+    
+    @FXML
+    private Button alterarNivelAcessoBtn;
 
     @FXML
     private GridPane dadosAcessoPane;
@@ -68,6 +76,8 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
     private Funcionario funcionario;
     
     private IBoFuncionario boFuncionario = BoFuncionario.getInstance();
+    
+    private Cargo cargo;
     
     @FXML
     void initialize() {
@@ -82,9 +92,11 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
     	cpfCln.setCellValueFactory( new PropertyValueFactory<>("cpf"));
     	
     	
-    	cargoBox.getItems().addAll(Cargo.values());
+    	nivelAcessoBox.getItems().addAll(Cargo.values());
     	
     	resertarSenhaBtn.setVisible(false);
+		nivelAcessoBox.setVisible(false);
+		alterarNivelAcessoBtn.setVisible(false);
     }
 
 	@Override
@@ -110,7 +122,7 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
 ;				funcionario.setAtivo(simAtivoRb.isSelected());
     			funcionario.setNome(nomeFld.getText());
     			funcionario.setCpf(cpfFld.getText());
-				boFuncionario.editar(funcionario, oldLogin);
+    			boFuncionario.editar(funcionario, oldLogin);
 				alerta.imprimirMsg("Sucesso ao editado","Funcionario editado com sucesso", AlertType.INFORMATION);
 	    	}else if(btn == excluirBtn){
 	    		
@@ -149,6 +161,13 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
 		nomeFld.setText(funcionario.getNome());
 		senhaFld.clear();
 		conSenhaFld.clear();
+		nivelAcessoBox.setVisible(true);
+		alterarNivelAcessoBtn.setVisible(true);
+		try {
+			nivelAcessoBox.setValue(boFuncionario.requisitarGralDeAcesso(funcionario));
+		}catch (Exception e) {
+			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+		}
 	}
 
 	@Override
@@ -161,8 +180,11 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
 		nomeFld.clear();
 		senhaFld.clear();
 		conSenhaFld.clear();
+		cargoBox.setValue(null);
 		
-		System.gc();
+		nivelAcessoBox.setValue(null);
+		nivelAcessoBox.setVisible(false);
+		alterarNivelAcessoBtn.setVisible(false);
 	}
 	
 	@FXML
@@ -173,6 +195,9 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
 			}else if(event.getSource() == resertarSenhaBtn) {
 				boFuncionario.resetarSenha(funcionario);
 				alerta.imprimirMsg("Sucesso ao editar", "Senha editada com sucesso",AlertType.INFORMATION);
+			}else if(event.getSource() == alterarNivelAcessoBtn) {
+				boFuncionario.alterarGralAcesso(funcionario, boFuncionario.requisitarGralDeAcesso(funcionario),nivelAcessoBox.getValue());
+				alerta.imprimirMsg("Sucesso ao editar", "Privilegios de acaesso alterados com sucesso",AlertType.INFORMATION);
 			}
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
@@ -180,14 +205,14 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
 	}
 
 	@Override
-	public void update(java.util.Observable o, Object arg) {
+	public void update(Observable o, Object arg) {
 		if(arg instanceof Cargo) {
 			Cargo cargo = (Cargo) arg;
-			if(cargo == Cargo.SU) {
+			this.cargo = cargo;
+			if(cargo == Cargo.SU)
 				cargoBox.getItems().addAll(Cargo.values());
-			}else if(cargo == Cargo.ADM) {
+			else if(cargo == Cargo.ADM) 
 				cargoBox.getItems().addAll(Cargo.ADM,Cargo.AT);
-			}
 		}
 	}
 }

@@ -1,11 +1,4 @@
-/app/
 /business/
-/controller/
 /dao/
-/entidade/
-/enumeracoes/
-/excecoes/
-/sql/
+/controller/
 /view/
-/res/
-/META-INF/

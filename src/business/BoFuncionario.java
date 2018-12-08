@@ -84,14 +84,39 @@ public class BoFuncionario implements IBoFuncionario {
 	}
 	
 	@Override
-	public Cargo requisitarGralDeAcesso() throws BoException {
+	public Cargo requisitarGralDeAcesso(Funcionario funcionario) throws BoException {
+		return requisitarGralDeAcesso(gerarLogin(funcionario));
+	}
+	
+	@Override
+	public Cargo requisitarGralDeAcesso(String login) throws BoException {
 		try {
-			return Cargo.getCargo( daoFuncionario.requisitarGralDeAcesso());
+			List<String> cargos = daoFuncionario.requisitarGralDeAcesso(login);
+			if(cargos.isEmpty())
+				throw new BoException("ÚSUARIO INVALIDO");
+			return Cargo.getCargo(cargos.get(0));
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}
 	}
 	
+	public void utilizarGralAcesso(Cargo cargo) throws BoException{
+		try {
+			daoFuncionario.utilizarGralAcesso(cargo);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+	
+	@Override
+	public void alterarGralAcesso(Funcionario funcionario,Cargo oldCargo, Cargo newCargo) throws BoException {
+		try {
+			daoFuncionario.alterarGralAcesso(gerarLogin(funcionario), oldCargo, newCargo);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+		
+	}
 	
 	public String gerarLogin(Funcionario funcionario) {
 		String primeiroNome = (funcionario.getNome().contains(" "))?  

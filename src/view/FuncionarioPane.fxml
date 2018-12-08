@@ -43,6 +43,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
                   <Label text="CPF" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -108,11 +109,17 @@
                         </FlowPane>
                      </children>
                   </GridPane>
-                  <Button fx:id="resertarSenhaBtn" mnemonicParsing="false" onAction="#actionHandle" text="Resetar Senha" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+                  <Button fx:id="resertarSenhaBtn" mnemonicParsing="false" onAction="#actionHandle" text="Resetar Senha" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
                   </Button>
+                  <FlowPane alignment="CENTER" GridPane.rowIndex="6">
+                     <children>
+                        <ComboBox fx:id="nivelAcessoBox" prefWidth="150.0" promptText="Nivel de acesso" />
+                        <Button fx:id="alterarNivelAcessoBtn" mnemonicParsing="false" onAction="#actionHandle" text="Alterar" />
+                     </children>
+                  </FlowPane>
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" />
@@ -156,6 +163,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" />
                </padding>
             </GridPane>
+            <Button mnemonicParsing="false" text="Button" />
          </children>
       </VBox>
       <ButtonBar fx:id="acoesBar" prefHeight="40.0" prefWidth="200.0">

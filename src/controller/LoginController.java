@@ -5,6 +5,7 @@ import java.util.Observable;
 import app.App;
 import business.BoFuncionario;
 import business.IBoFuncionario;
+import enumeracoes.Cargo;
 import excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -46,8 +47,10 @@ public class LoginController extends Observable{
     			String login = loginField.getText();
     			String senha = senhaField.getText();
 	    		ConnectionFactory.setUser(login,senha);
+	    		Cargo cargo = boFuncionario.requisitarGralDeAcesso(login);
+	    		boFuncionario.utilizarGralAcesso(cargo);
 	    		setChanged();
-				notifyObservers(boFuncionario.requisitarGralDeAcesso());
+	    		notifyObservers(cargo);
 				App.iniTelaMenu();
     		} catch (BoException e) {
     			alerta.imprimirMsg("Alerta", "Usuario não autorizado",AlertType.WARNING);

@@ -5,7 +5,6 @@ import java.util.List;
 import entidade.Funcionario;
 import enumeracoes.Cargo;
 import excecoes.BoException;
-import excecoes.DaoException;
 
 public interface IBoFuncionario {
 	
@@ -19,7 +18,13 @@ public interface IBoFuncionario {
 	
 	public void resetarSenha(Funcionario funcionario) throws BoException;
 	
-	public Cargo requisitarGralDeAcesso() throws BoException;
+	public Cargo requisitarGralDeAcesso(Funcionario funcionario) throws BoException;
+	
+	public Cargo requisitarGralDeAcesso(String login) throws BoException;
+	
+	public void utilizarGralAcesso(Cargo cargo) throws BoException;
+	
+	public void alterarGralAcesso(Funcionario funcionario,Cargo oldCargo, Cargo newCargo) throws BoException;
 	
 	public String gerarLogin(Funcionario funcionario);
 	

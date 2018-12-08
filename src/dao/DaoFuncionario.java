@@ -72,38 +72,55 @@ public class DaoFuncionario  extends Dao<Funcionario> implements IDaoFuncionario
 	}
 	
 	
-	public String requisitarGralDeAcesso() throws DaoException {
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<String> requisitarGralDeAcesso(String login) throws DaoException {
 		try{
 			em = ConnectionFactory.getConnection();
-			String username =(String) em.createNativeQuery("select user").getSingleResult(); 
-			if(username.equals("postgres"))
-				return "gerente";
-		
 			Query query = em.createNativeQuery("select rolname from pg_user " + 
 					"join pg_auth_members on (pg_user.usesysid=pg_auth_members.member) " + 
 					"join pg_roles on (pg_roles.oid=pg_auth_members.roleid) " + 
-					"where " + 
-					"pg_user.usename = (select user)");
-			@SuppressWarnings("unchecked")
-			List<String> cargos =  query.getResultList();
-			if(!cargos.isEmpty()) {
-				String cargo =  cargos.get(0);
-				em.getTransaction().begin();
-				em.createNativeQuery("SET ROLE "+cargo).executeUpdate();
-				em.getTransaction().commit();
-				return cargo;
-				
-			}
-			return null;
+					"where pg_user.usename = '"+login+"'");
+			return (List<String>) query.getResultList();
 		}catch (Exception e) {
-			if(em != null )
-				em.getTransaction().rollback();
 			e.printStackTrace();
 			throw new DaoException("ERRO AO REQUISITAR PRIVILEGIOS DE USUARIO");
 		}finally {
 			if(em != null )
 				em.close();
 		}
+	}
+	
+	
+	public void utilizarGralAcesso(Cargo cargo) throws DaoException{
+		try{
+			em = ConnectionFactory.getConnection();
+			em.getTransaction().begin();
+			em.createNativeQuery("SET ROLE "+cargo).executeUpdate();
+			em.getTransaction().commit();
+		}catch (Exception e) {
+			e.printStackTrace();
+			em.getTransaction().rollback();
+			throw new DaoException("ERRO AO TENTAR UTILIZAR PRIVILEGIOS DE "+cargo);
+		}finally {
+			em.close();
+		}
+	}
+	
+	public void alterarGralAcesso(String login,Cargo oldCargo,Cargo newCargo)throws DaoException{
+		try {
+			em = ConnectionFactory.getConnection();
+			em.getTransaction().begin();
+			em.createNativeQuery("alter group "+newCargo+" add user "+login).executeUpdate();
+			em.createNativeQuery("alter group "+oldCargo+" drop user "+login).executeUpdate();
+			em.getTransaction().commit();
+		}catch (Exception e) {
+			e.printStackTrace();
+			em.getTransaction().rollback();
+			throw new DaoException("ERRO AO ALTERAR PRIVILEGIOS DE USUÁRIO");
+		}finally {
+			em.close();
+		}		
 	}
 	
 	/**
