@@ -45,7 +45,15 @@ import javax.persistence.OneToOne;
 					+ "and automovel.quantidadePassageiro <= :quantidadePassageiro "
 					+ "and automovel.tipoCombustivel <= :tipoCombustivel "
 					+ "order by(automovel.tipoAirBag, automovel.tipoCambio ,automovel.tamanhoVeiculo, "
-					+ "automovel.quantidadePortas, automovel.quantidadePassageiro, automovel.tipoCombustivel) desc")
+					+ "automovel.quantidadePortas, automovel.quantidadePassageiro, automovel.tipoCombustivel) desc"),
+	@NamedQuery(name = "categoriaVeiculo.buscaPorBusca" , 
+			query = "select c from entidade.CategoriaVeiculo as c"
+					+ " where upper(c.tipo) like upper(:tipo)"
+					+ " or upper(c.descricao) like upper(:descricao)"
+					+ " or c.quilometragemRevisao = :quilometragemRevisao"
+					+ " or c.horasRevisao = :horasRevisao"
+					+ " or c.horasLimpesa = :horasLimpesa"
+					+ " or c.valorDiaria = :valorDiaria")
 })
 public class CategoriaVeiculo extends Entidade {
 	

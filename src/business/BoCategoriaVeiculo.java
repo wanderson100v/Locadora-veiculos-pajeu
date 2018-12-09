@@ -131,6 +131,29 @@ public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 			throw new BoException(e.getMessage());
 		}
 	}
+
+	@Override
+	public List<CategoriaVeiculo> buscaPorBusca(String busca) throws BoException {
+		try {
+			CategoriaVeiculo categoriaVeiculo = new CategoriaVeiculo();
+			categoriaVeiculo.setTipo(busca);
+			categoriaVeiculo.setDescricao(busca);
+			try {
+				categoriaVeiculo.setHorasLimpesa(Integer.parseInt(busca));
+				categoriaVeiculo.setHorasRevisao(Integer.parseInt(busca));
+				categoriaVeiculo.setValorDiaria(Float.parseFloat(busca));
+				categoriaVeiculo.setQuilometragemRevisao(Integer.parseInt(busca));
+			}catch (NumberFormatException e) {
+				categoriaVeiculo.setHorasLimpesa(0);
+				categoriaVeiculo.setHorasRevisao(0);
+				categoriaVeiculo.setValorDiaria(0f);
+				categoriaVeiculo.setQuilometragemRevisao(0);
+			}
+			return daoCategoriaVeiculo.buscaPorBusca(categoriaVeiculo);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
 	
 	private void validarCategoria(CategoriaVeiculo categoriaVeiculo) throws BoException {
 		Veiculo veiculo = categoriaVeiculo.getVeiculoExemplo();
@@ -148,5 +171,4 @@ public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 				
 		
 	}
-
 }

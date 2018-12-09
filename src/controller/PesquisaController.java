@@ -1,8 +1,6 @@
 package controller;
 
 import java.util.HashMap;
-import dao.DaoRes;
-import excecoes.DaoException;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +12,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import view.Alerta;
 
@@ -23,7 +22,7 @@ public class PesquisaController {
     private AnchorPane pesquisaPane;
     
     @FXML
-    private AnchorPane tabelaPane;
+    private GridPane tabelaPane;
 
     @FXML
     private BorderPane detalhesPane;

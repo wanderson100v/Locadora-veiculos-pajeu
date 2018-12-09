@@ -8,6 +8,7 @@ import entidade.Automovel;
 import entidade.CaminhonetaCarga;
 import entidade.CategoriaVeiculo;
 import entidade.Entidade;
+import entidade.Filial;
 import excecoes.DaoException;
 import excecoes.DaoExclusaoException;
 import sql.ConnectionFactory;
@@ -108,6 +109,27 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw new DaoException("ERRO AO SELECIONAR CATEGORIAS DE AUTOMOVEL PEQUENO");
+		}finally {
+			em.close();
+		}
+	}
+
+
+	@Override
+	public List<CategoriaVeiculo> buscaPorBusca(CategoriaVeiculo categoriaVeiculo) throws DaoException {
+		try {
+			em = ConnectionFactory.getConnection();
+			TypedQuery<CategoriaVeiculo> typedQuery = em.createNamedQuery(BUSCA_POR_BUSCA, CategoriaVeiculo.class);
+			typedQuery.setParameter("tipo","%"+categoriaVeiculo.getTipo()+"%");
+			typedQuery.setParameter("descricao","%"+categoriaVeiculo.getDescricao()+"%");
+			typedQuery.setParameter("quilometragemRevisao",categoriaVeiculo.getQuilometragemRevisao());
+			typedQuery.setParameter("horasRevisao",categoriaVeiculo.getHorasRevisao());
+			typedQuery.setParameter("horasLimpesa",categoriaVeiculo.getHorasLimpesa());
+			typedQuery.setParameter("valorDiaria",categoriaVeiculo.getValorDiaria());
+			return typedQuery.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DaoException("ERRO AO BUSCAR CATEGORIAS DE VEÍCULO POR BUSCA - CONTATE ADM");
 		}finally {
 			em.close();
 		}

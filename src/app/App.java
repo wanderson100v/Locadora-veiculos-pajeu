@@ -37,7 +37,9 @@ public class App extends Application{
 			homeScene = new Scene(homePane);
 			configScene = new Scene(configPane);
 			
-			iniTelaLogin();
+			homeScene.getStylesheets().add(getClass().getResource("folhaEstilo.css").toExternalForm());
+			configScene.getStylesheets().add(getClass().getResource("folhaEstilo.css").toExternalForm());
+			iniTelaConfig();
 			stage.show();
 			/*new Thread(new Runnable() {
 					@Override

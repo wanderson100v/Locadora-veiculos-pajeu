@@ -1,64 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ConfiguracaoController">
-   <center>
-      <TabPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="200.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" tabMinHeight="120.0" BorderPane.alignment="CENTER">
-        <tabs>
-          <Tab fx:id="dadosTab">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-               <graphic>
-                  <Label text="Dados" />
-               </graphic>
-          </Tab>
-            <Tab>
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-               </content>
-               <graphic>
-                  <Label text="Backup" />
-               </graphic>
-            </Tab>
-        </tabs>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-      </TabPane>
-   </center>
    <top>
-      <BorderPane style="-fx-background-color: #ff8e33;">
+      <BorderPane style="-fx-background-color: black;">
          <center>
             <FlowPane alignment="CENTER" prefHeight="50.0">
                <children>
-                  <Label text="Consigurações">
+                  <Label text="Condigurações" textFill="#7dff8a">
                      <font>
-                        <Font name="Verdana" size="18.0" />
+                        <Font name="Verdana Italic" size="18.0" />
                      </font>
                   </Label>
                </children>
             </FlowPane>
          </center>
          <left>
-            <Button fx:id="voltarBtn" mnemonicParsing="false" onAction="#actionEvent" prefWidth="90.0" text="VOLTAR" BorderPane.alignment="CENTER" />
+            <Button fx:id="voltarBtn" mnemonicParsing="false" onAction="#actionEvent" stylesheets="@../app/botaoEstilo.css" BorderPane.alignment="CENTER">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/icones/voltar-ico.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
          </left>
          <padding>
             <Insets left="10.0" />
          </padding>
       </BorderPane>
    </top>
+   <center>
+      <TabPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #c9c9c9;" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="40.0" tabMaxWidth="100.0" tabMinHeight="40.0" tabMinWidth="100.0" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab fx:id="dadosTab" text="Dados">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+          <Tab text="Backup">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/icones/backup-ico.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+          </Tab>
+        </tabs>
+         <effect>
+            <InnerShadow blurType="GAUSSIAN" choke="0.36" height="13.59" radius="9.629999999999999" width="26.93" />
+         </effect>
+      </TabPane>
+   </center>
 </BorderPane>
