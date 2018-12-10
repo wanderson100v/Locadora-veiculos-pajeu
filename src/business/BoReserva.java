@@ -2,6 +2,7 @@ package business;
 
 import java.util.List;
 
+import banco.ReservaHoje;
 import dao.DaoReserva;
 import dao.IDaoReserva;
 import entidade.CategoriaVeiculo;
@@ -76,7 +77,6 @@ public class BoReserva implements IBoReserva {
 				daoReserva.editar(entidade);
 			else {
 				validarConcorrenciaReserva(entidade);
-				garantirReserva(entidade);
 				daoReserva.cadastrar(entidade);
 			}
 		}catch (DaoException e) {
@@ -137,9 +137,15 @@ public class BoReserva implements IBoReserva {
 			throw new BoException("NÃO HÁ VEICULOS SUFICIENTES DISPONIVEIS PARA RESERVA ESSA DATA NESTA CATEGORIA E FILIAL");
 	}
 	
-	private void garantirReserva(Reserva reserva) throws BoException {
-	
+	@Override
+	public List<ReservaHoje> buscarReservaHoje() throws BoException {
+		try {
+			return daoReserva.buscarReservaHoje();
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
 	}
+	
 
 	@Override
 	public long totalReservaDataRetirada(CategoriaVeiculo categoriaVeiculo) throws BoException {
@@ -149,5 +155,6 @@ public class BoReserva implements IBoReserva {
 			throw new BoException(e.getMessage());
 		}
 	}
+
 
 }

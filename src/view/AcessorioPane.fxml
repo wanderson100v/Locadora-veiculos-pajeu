@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<FlowPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AcessorioController">
+<FlowPane stylesheets="@folhaEstilo.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AcessorioController">
    <children>
       <TableView fx:id="entidadeTabela" onMouseClicked="#mouseClikHandle" prefHeight="330.0" prefWidth="600.0">
          <columns>

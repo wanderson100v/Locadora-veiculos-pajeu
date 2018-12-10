@@ -1,6 +1,6 @@
 package entidade;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,10 +15,10 @@ public class Manutencao extends Entidade{
 	
 	private static final long serialVersionUID = 1L;
 	@Column(name = "data_hora_inicio")
-	private LocalDate dataHoraInicio;
-	@Column(name = "tipo")
+	private LocalDateTime dataHoraInicio;
+	@Column(name = "tipo",nullable = false)
 	private TipoManutencao tipoManuntencao;
-	@Column(name = "estado")
+	@Column(name = "estado", nullable = false)
 	private EstadoManutencao estadoManutencao;
 	private Float custo;
 	@ManyToOne
@@ -50,11 +50,11 @@ public class Manutencao extends Entidade{
 		this.veiculo = veiculo;
 	}
 
-	public LocalDate getDataHoraInicio() {
+	public LocalDateTime getDataHoraInicio() {
 		return dataHoraInicio;
 	}
 
-	public void setDataHoraInicio(LocalDate dataHoraInicio) {
+	public void setDataHoraInicio(LocalDateTime dataHoraInicio) {
 		this.dataHoraInicio = dataHoraInicio;
 	}
 

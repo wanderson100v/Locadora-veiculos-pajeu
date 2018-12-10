@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<DialogPane fx:id="selecionarAcessoriosDialog" expanded="true" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SelecionarAcessoriosController">
+<DialogPane stylesheets="@folhaEstilo.css" fx:id="selecionarAcessoriosDialog" expanded="true" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SelecionarAcessoriosController">
    <content>
       <SplitPane dividerPositions="0.5" prefHeight="350.0" prefWidth="700.0">
          <items>

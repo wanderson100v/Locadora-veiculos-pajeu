@@ -12,7 +12,7 @@ public class Endereco extends Entidade {
 	@Column(length = 50)
 	private String rua,bairro,cidade,numero;
 	private Estado estado;
-	@Column(length = 20, unique = true , nullable = false)
+	@Column(length = 20, nullable = false)
 	private String cep;
 	
 	public String getRua() {

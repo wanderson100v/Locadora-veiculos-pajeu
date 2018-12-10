@@ -1,7 +1,5 @@
 package entidade;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -9,7 +7,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 
 import enumeracoes.TipoCombustivel;
 
@@ -51,12 +48,7 @@ public class Veiculo extends Entidade {
 	@ManyToOne(optional = false)
 	private CategoriaVeiculo categoriaVeiculo;
 	@ManyToOne
-	private Filial filial;
-	@OneToMany(mappedBy = "veiculo", targetEntity = Manutencao.class)
-	private List<Manutencao> manutencao;
-	@OneToMany(mappedBy = "veiculo", targetEntity = Locacao.class)
-	private List<Manutencao> locacoes;
-	
+	private Filial filial;	
 	
 	public Veiculo() {}
 
@@ -130,14 +122,6 @@ public class Veiculo extends Entidade {
 		this.torqueMotor = torqueMotor;
 	}
 
-	public List<Manutencao> getLocacoes() {
-		return locacoes;
-	}
-
-	public void setLocacoes(List<Manutencao> locacoes) {
-		this.locacoes = locacoes;
-	}
-
 	public Filial getFilial() {
 		return filial;
 	}
@@ -164,14 +148,6 @@ public class Veiculo extends Entidade {
 
 	public void setCategoriaVeiculo(CategoriaVeiculo categoriaVeiculo) {
 		this.categoriaVeiculo = categoriaVeiculo;
-	}
-
-	public List<Manutencao> getManutencao() {
-		return manutencao;
-	}
-
-	public void setManutencao(List<Manutencao> manutencao) {
-		this.manutencao = manutencao;
 	}
 
 	public void setCor(String cor) {
@@ -273,9 +249,7 @@ public class Veiculo extends Entidade {
 		result = prime * result + ((cor == null) ? 0 : cor.hashCode());
 		result = prime * result + ((fabricante == null) ? 0 : fabricante.hashCode());
 		result = prime * result + ((filial == null) ? 0 : filial.hashCode());
-		result = prime * result + ((locacoes == null) ? 0 : locacoes.hashCode());
 		result = prime * result + (locado ? 1231 : 1237);
-		result = prime * result + ((manutencao == null) ? 0 : manutencao.hashCode());
 		result = prime * result + ((modelo == null) ? 0 : modelo.hashCode());
 		result = prime * result + ((numeroChassi == null) ? 0 : numeroChassi.hashCode());
 		result = prime * result + ((numeroMotor == null) ? 0 : numeroMotor.hashCode());
@@ -329,18 +303,6 @@ public class Veiculo extends Entidade {
 				return false;
 		} else if (!filial.equals(other.filial))
 			return false;
-		if (locacoes == null) {
-			if (other.locacoes != null)
-				return false;
-		} else if (!locacoes.equals(other.locacoes))
-			return false;
-		if (locado != other.locado)
-			return false;
-		if (manutencao == null) {
-			if (other.manutencao != null)
-				return false;
-		} else if (!manutencao.equals(other.manutencao))
-			return false;
 		if (modelo == null) {
 			if (other.modelo != null)
 				return false;
@@ -390,8 +352,7 @@ public class Veiculo extends Entidade {
 				+ numeroMotor + ", torqueMotor=" + torqueMotor + ", tipoCombustivel=" + tipoCombustivel
 				+ ", quilometragem=" + quilometragem + ", anoFabricante=" + anoFabricante + ", anoModelo=" + anoModelo
 				+ ", quantidadePortas=" + quantidadePortas + ", quantidadePassageiro=" + quantidadePassageiro
-				+ ", categoriaVeiculo=" + categoriaVeiculo + ", filial=" + filial + ", manutencao=" + manutencao
-				+ ", locacoes=" + locacoes + "]";
+				+ ", categoriaVeiculo=" + categoriaVeiculo + ", filial=" + filial + "]";
 	}
   
 	

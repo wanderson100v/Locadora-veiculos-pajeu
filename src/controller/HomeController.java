@@ -51,6 +51,7 @@ public class HomeController {
     	if(event.getSource() == configBtn)
     		App.iniTelaConfig();
     	else if(event.getSource() == voltarBtn) {
+    		FuncionarioObservavel.getIntance().avisarOuvintes(null);
     		App.iniTelaLogin();
     	}
     }

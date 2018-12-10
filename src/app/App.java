@@ -17,6 +17,7 @@ public class App extends Application{
 	public static Stage stage;
 	private static Scene loginScene,homeScene,configScene;
 	private static IDaoRes daoRes = DaoRes.getInstance();
+	public static Boolean rodando;
 	
 	
 	public static void main(String[] args) {
@@ -37,33 +38,8 @@ public class App extends Application{
 			homeScene = new Scene(homePane);
 			configScene = new Scene(configPane);
 			
-			homeScene.getStylesheets().add(getClass().getResource("folhaEstilo.css").toExternalForm());
-			configScene.getStylesheets().add(getClass().getResource("folhaEstilo.css").toExternalForm());
-			iniTelaConfig();
+			iniTelaLogin();
 			stage.show();
-			/*new Thread(new Runnable() {
-					@Override
-					public void run() {
-						while(true) {
-							Platform.runLater(new Runnable() {
-								@Override
-								public void run() {
-									Alert a = new Alert(AlertType.INFORMATION);
-									a.setTitle("testo");
-									a.setContentText("texto");
-									a.showAndWait();
-								}
-							});
-							try {
-								Thread.sleep(5000);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						}
-					}				
-				}
-			).start();*/
-
 		}catch (DaoException e) {
 			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 			e.printStackTrace();

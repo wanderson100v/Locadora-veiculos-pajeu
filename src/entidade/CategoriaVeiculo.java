@@ -58,7 +58,7 @@ import javax.persistence.OneToOne;
 public class CategoriaVeiculo extends Entidade {
 	
 	private static final long serialVersionUID = 1L;
-	@Column(length = 10)
+	@Column(length = 10, unique = true)
 	private String tipo;
 	@Column(name = "quilometragem_revisao", nullable = false)
 	private float quilometragemRevisao;

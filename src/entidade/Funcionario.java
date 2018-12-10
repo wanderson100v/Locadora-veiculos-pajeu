@@ -1,17 +1,11 @@
 package entidade;
 
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 
-/**
- * @author ragnar
- *
- */
 @Entity
 @NamedQuery(name = "funcionario.buscaPorBusca" , 
 query = "select f from Funcionario as f "
@@ -28,11 +22,7 @@ public class Funcionario extends Entidade{
 	private boolean ativo;
 	@ManyToOne
 	private Filial filial;
-	@OneToMany(mappedBy = "funcionario", targetEntity = Locacao.class)
-	private Set<Locacao> locacoes;
-	@OneToMany(mappedBy = "funcionario", targetEntity = Reserva.class)
-	private Set<Reserva> reservas;
-
+	
 	public Funcionario(String nome, String cpf, boolean ativo, Filial filial) {
 		super();
 		this.nome = nome;
@@ -57,22 +47,6 @@ public class Funcionario extends Entidade{
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
-	}
-
-	public Set<Locacao> getLocacoes() {
-		return locacoes;
-	}
-
-	public void setLocacoes(Set<Locacao> locacoes) {
-		this.locacoes = locacoes;
-	}
-
-	public Set<Reserva> getReservas() {
-		return reservas;
-	}
-
-	public void setReservas(Set<Reserva> reservas) {
-		this.reservas = reservas;
 	}
 
 	public Filial getFilial() {

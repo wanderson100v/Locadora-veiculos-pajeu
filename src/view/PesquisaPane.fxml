@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -15,9 +16,10 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pesquisaPane" minHeight="550.0" minWidth="660.0" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PesquisaController">
+<AnchorPane fx:id="pesquisaPane" minHeight="550.0" minWidth="660.0" prefHeight="550.0" prefWidth="800.0" stylesheets="@folhaEstilo.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PesquisaController">
    <children>
       <GridPane>
          <columnConstraints>
@@ -52,18 +54,23 @@
                         <Font name="Verdana" size="12.0" />
                      </font></TextField>
                   <ComboBox fx:id="filtroBox" layoutX="407.0" layoutY="104.0" onAction="#actionHandle" prefWidth="150.0" promptText="Filtro" />
-                  <Label layoutX="226.0" layoutY="66.0" text="Manipulação dedados">
+                  <Label layoutX="226.0" layoutY="66.0" text="Manipulação de Dados">
                      <font>
                         <Font name="Verdana" size="18.0" />
                      </font>
                   </Label>
                   <BorderPane fx:id="detalhesPane" layoutX="620.0" layoutY="39.0" prefHeight="490.0" prefWidth="600.0">
                      <top>
-                        <Label text="Detalhes" BorderPane.alignment="CENTER">
-                           <font>
-                              <Font name="Verdana" size="18.0" />
-                           </font>
-                        </Label>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label text="Detalhes">
+                                 <font>
+                                    <Font name="Verdana" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Separator prefWidth="200.0" />
+                           </children>
+                        </VBox>
                      </top>
                      <center>
                         <ScrollPane fx:id="detalhesScroll" cache="true" BorderPane.alignment="CENTER" />
@@ -71,7 +78,7 @@
                      <left>
                         <FlowPane alignment="CENTER" prefHeight="510.0" prefWidth="41.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Button fx:id="detalhesBtn" mnemonicParsing="false" onAction="#actionHandle" stylesheets="@../app/botaoEstilo.css">
+                              <Button fx:id="detalhesBtn" mnemonicParsing="false" onAction="#actionHandle" styleClass="button-com-ico">
                                  <graphic>
                                     <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -83,7 +90,12 @@
                         </FlowPane>
                      </left>
                      <bottom>
-                        <ButtonBar fx:id="acoesBar" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                        <VBox BorderPane.alignment="CENTER">
+                           <children>
+                              <Separator prefWidth="200.0" />
+                              <ButtonBar fx:id="acoesBar" prefHeight="40.0" prefWidth="200.0" />
+                           </children>
+                        </VBox>
                      </bottom>
                   </BorderPane>
                </children>

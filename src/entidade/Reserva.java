@@ -21,12 +21,10 @@ import enumeracoes.EstadoRerserva;
 public class Reserva extends Entidade {
 	
 	private static final long serialVersionUID = 1L;
-	@Column(name = "data_retirada")
+	@Column(name = "data_retirada",nullable = false)
 	private LocalDateTime dataRetirada;
-	@Column(name = "data_devolucao")
+	@Column(name = "data_devolucao",nullable = false)
 	private LocalDateTime dataDevolucao;
-	@Column(name = "valor")
-	private float valor;
 	@Column(name = "estado_reserva" ,nullable = false)
 	private EstadoRerserva estadoReserva;
 	@ManyToOne
@@ -39,6 +37,7 @@ public class Reserva extends Entidade {
 	@JoinColumn(nullable = false)
 	private Funcionario funcionario;
 	@ManyToOne
+	@JoinColumn(nullable = false)
 	private Filial filial;
 
 	public EstadoRerserva getEstadoReserva() {
@@ -72,15 +71,7 @@ public class Reserva extends Entidade {
 	public void setDataDevolucao(LocalDateTime dataDevolucao) {
 		this.dataDevolucao = dataDevolucao;
 	}
-
-	public float getValor() {
-		return valor;
-	}
-
-	public void setValor(float valor) {
-		this.valor = valor;
-	}
-
+	
 	public CategoriaVeiculo getCategoriaVeiculo() {
 		return categoriaVeiculo;
 	}
@@ -117,7 +108,6 @@ public class Reserva extends Entidade {
 		result = prime * result + ((estadoReserva == null) ? 0 : estadoReserva.hashCode());
 		result = prime * result + ((filial == null) ? 0 : filial.hashCode());
 		result = prime * result + ((funcionario == null) ? 0 : funcionario.hashCode());
-		result = prime * result + Float.floatToIntBits(valor);
 		return result;
 	}
 
@@ -162,14 +152,12 @@ public class Reserva extends Entidade {
 				return false;
 		} else if (!funcionario.equals(other.funcionario))
 			return false;
-		if (Float.floatToIntBits(valor) != Float.floatToIntBits(other.valor))
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Reserva [dataRetirada=" + dataRetirada + ", dataDevolucao=" + dataDevolucao + ", valor=" + valor
+		return "Reserva [dataRetirada=" + dataRetirada + ", dataDevolucao=" + dataDevolucao 
 				+ ", estadoRerserva=" + estadoReserva + ", categoriaVeiculo=" + categoriaVeiculo + ", cliente="
 				+ cliente + ", funcionario=" + funcionario + ", filial=" + filial + "]";
 	}

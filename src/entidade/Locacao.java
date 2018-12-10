@@ -22,26 +22,19 @@ public class Locacao extends Entidade {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@Column(name = "tipo_locacao")
+	@Column(name = "tipo_locacao", nullable = false)
 	private TipoLocacao tipoLocacao;
-	
-	@Column(name = "data_retirada")
+	@Column(name = "data_retirada",nullable = false)
 	private LocalDateTime dataRetirada;
-	
-	@Column(name = "data_devolucao")
+	@Column(name = "data_devolucao",nullable = false)
 	private LocalDateTime dataDevolucao;
-	
-	@Column(name = "valor_diaria")
+	@Column(name = "valor_diaria",nullable = false)
 	private Float valorDiaria;
-	
-	@Column(name = "valor_pago")
+	@Column(name = "valor_pago",nullable = false)
 	private Float valorPago;
-	
 	private boolean finalizado;
-	
 	@OneToOne
 	private Reserva reservaOrigem;
-	
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Cliente cliente;
@@ -52,10 +45,10 @@ public class Locacao extends Entidade {
 	@JoinColumn(nullable = false)
 	private Filial filialRetirada;
 	@ManyToOne
+	private Filial filialEntrega;
+	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Funcionario funcionario;
-	@ManyToOne
-	private Filial filialEntrega;
 	@ManyToOne
 	private Fisico motorista;
 	

@@ -6,25 +6,59 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@folhaEstilo.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeController">
    <center>
-      <TabPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="200.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" tabMinHeight="120.0" BorderPane.alignment="CENTER">
+      <TabPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="40.0" tabMaxWidth="100.0" tabMinHeight="40.0" tabMinWidth="100.0" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab>
+            <Tab text="Inicio">
+              <content>
+                <fx:include fx:id="inicioPane" source="InicioPane.fxml" />
+              </content>
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/icones/inicio-ico.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Tab>
+            <Tab text="Reservas">
+              <content>
+                  <fx:include fx:id="iniciarReservasPane" source="IniciarReservaPane.fxml" />
+              </content>
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/icones/reserva-ico.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Tab>
+          <Tab fx:id="dadosTab" text="Dados">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/icones/dados-ico.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+          </Tab>
+          <Tab text="Perfil">
             <content>
               <fx:include fx:id="perfilPane" source="PerfilPane.fxml" />
             </content>
                <graphic>
-                  <Label text="Perfil" />
-               </graphic>
-          </Tab>
-          <Tab fx:id="dadosTab">
-               <graphic>
-                  <Label text="Dados" />
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/icones/user-ico.png" />
+                     </image>
+                  </ImageView>
                </graphic>
           </Tab>
         </tabs>
@@ -39,12 +73,19 @@
    <top>
       <BorderPane prefHeight="50.0" style="-fx-background-color: black;">
          <left>
-            <Button fx:id="voltarBtn" mnemonicParsing="false" onAction="#actionHandle" prefWidth="90.0" text="VOLTAR" BorderPane.alignment="CENTER" />
+            <Button fx:id="voltarBtn" mnemonicParsing="false" onAction="#actionHandle" styleClass="button-com-ico" BorderPane.alignment="CENTER">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/icones/logout-ico.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
          </left>
          <center>
             <FlowPane alignment="CENTER" prefHeight="40.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Locadora de Veículos Pajeú" textFill="WHITE">
+                  <Label styleClass="titulo" text="Locadora de Veículos Pajeú" textFill="WHITE">
                      <font>
                         <Font name="Verdana Italic" size="18.0" />
                      </font>
@@ -56,10 +97,17 @@
             <Insets />
          </BorderPane.margin>
          <right>
-            <Button fx:id="configBtn" mnemonicParsing="false" onAction="#actionHandle" text="Configurações" BorderPane.alignment="CENTER">
+            <Button fx:id="configBtn" mnemonicParsing="false" onAction="#actionHandle" styleClass="button-com-ico" BorderPane.alignment="CENTER">
                <font>
                   <Font name="Verdana" size="12.0" />
                </font>
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/icones/config-ico.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
          </right>
          <padding>

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<DialogPane fx:id="selecionarFuncionarioDialog" expanded="true" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SelecionarFuncionarioController">
+<DialogPane stylesheets="@folhaEstilo.css" fx:id="selecionarFuncionarioDialog" expanded="true" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SelecionarFuncionarioController">
    <buttonTypes>
       <ButtonType fx:constant="FINISH" />
    </buttonTypes>

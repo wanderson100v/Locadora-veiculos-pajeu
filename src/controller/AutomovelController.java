@@ -133,6 +133,8 @@ public class AutomovelController extends CRUDController<Automovel> {
     
     private Automovel automovel;
     
+    private Filial filial;
+    
     private IBoAutomovel boAutomovel = BoAutomovel.getInstance();
     
     @FXML
@@ -181,6 +183,7 @@ public class AutomovelController extends CRUDController<Automovel> {
     			Automovel automovel = (btn == cadastrarBtn)? 
     					new Automovel() :this.automovel;
     			
+    			
     			automovel.setAtivo(simAtivoRb.isSelected());
     			automovel.setLocado(simLocadoRb.isSelected());
     			automovel.setPlaca(placaFld.getText().trim());
@@ -196,12 +199,15 @@ public class AutomovelController extends CRUDController<Automovel> {
     			automovel.setAnoModelo(anoModeloBox.getValue());
     			automovel.setQuantidadePortas(portasBox.getValue());
     			automovel.setQuantidadePassageiro(passageirosBox.getValue());
+    			automovel.setFilial(filial);
     			
     			automovel.setTipoCambio(cambioBox.getValue());
     			automovel.setTipoAutomovel(automovelBox.getValue());
     			automovel.setTamanhoVeiculo(tamanhoBox.getValue());
     			automovel.setTipoAirBag(airbagBox.getValue());
     			automovel.setAcessorios(aceTabela.getItems());
+    			
+    			System.out.println(automovel.getFilial());
     			
 				boAutomovel.cadastrarEditar(automovel);
 				alerta.imprimirMsg("Sucesso ao cadastrar","Automóvel"
@@ -263,12 +269,14 @@ public class AutomovelController extends CRUDController<Automovel> {
 		tamanhoBox.setValue(automovel.getTamanhoVeiculo());
 		airbagBox.setValue(automovel.getTipoAirBag());
 		aceTabela.getItems().addAll(automovel.getAcessorios());
-		
+		if(automovel.getFilial() != null)
+			filialFld.setText(automovel.getFilial().toString());
 	}
 
 	@Override
 	void limparCampos() {
 		this.automovel = null;
+		this.filial = null;
 		
 		simAtivoRb.setSelected(true);
 		simLocadoRb.setSelected(false);
@@ -285,6 +293,7 @@ public class AutomovelController extends CRUDController<Automovel> {
 		anoModeloBox.setValue(null);
 		portasBox.setValue(null);
 		passageirosBox.setValue(null);
+		filialFld.clear();
 		
 		cambioBox.setValue(null);
 		automovelBox.setValue(null);
@@ -304,8 +313,10 @@ public class AutomovelController extends CRUDController<Automovel> {
 				Optional<ButtonType> result = alerta.showAndWait();
 				if(result.isPresent() && result.get() == ButtonType.FINISH) {
 					Filial filial = selecionarFilialController.getFilialTbl().getSelectionModel().getSelectedItem();
-					if(filial!= null)
+					if(filial!= null) {
 						filialFld.setText(filial.toString());
+						this.filial = filial;
+					}
 				}
 				
 			}else if(event.getSource() == escolherAcessorioBtn) {

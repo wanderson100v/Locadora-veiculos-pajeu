@@ -93,10 +93,7 @@ public class BoLocacao implements IBoLocacao {
 		Long dias = Duration.between(locacao.getDataRetirada(),locacao.getDataDevolucao()).toDays();
 		
 		Float valorDiaria;
-		if(locacao.getReservaOrigem() != null)
-			valorDiaria = locacao.getReservaOrigem().getValor();
-		else
-			valorDiaria = locacao.getVeiculo().getCategoriaVeiculo().getValorDiaria();
+		valorDiaria = locacao.getVeiculo().getCategoriaVeiculo().getValorDiaria();
 		Float valorLocacao = valorDiaria * dias;
 		Long horasAposTerminoPrevistoDiaria = Duration.between(locacao.getDataRetirada(),locacao.getDataDevolucao()).toHours() % 24;
 		

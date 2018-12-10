@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 public class Acessorio extends Entidade {
 	
 	private static final long serialVersionUID = 1L;
-	@Column(length = 100, unique = true)
+	@Column(length = 100, unique = true, nullable = false)
 	private String nome;
 	private float valor;
 	private boolean depreciado;

@@ -8,7 +8,6 @@ import entidade.Automovel;
 import entidade.CaminhonetaCarga;
 import entidade.CategoriaVeiculo;
 import entidade.Entidade;
-import entidade.Filial;
 import excecoes.DaoException;
 import excecoes.DaoExclusaoException;
 import sql.ConnectionFactory;
