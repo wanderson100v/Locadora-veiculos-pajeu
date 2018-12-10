@@ -268,9 +268,10 @@ public class AutomovelController extends CRUDController<Automovel> {
 		automovelBox.setValue(automovel.getTipoAutomovel());
 		tamanhoBox.setValue(automovel.getTamanhoVeiculo());
 		airbagBox.setValue(automovel.getTipoAirBag());
-		aceTabela.getItems().addAll(automovel.getAcessorios());
+		aceTabela.getItems().setAll(automovel.getAcessorios());
 		if(automovel.getFilial() != null)
 			filialFld.setText(automovel.getFilial().toString());
+		alerta.imprimirMsg("Categoria do Véiculo",automovel.getCategoriaVeiculo().toString(), AlertType.INFORMATION);
 	}
 
 	@Override
@@ -293,6 +294,7 @@ public class AutomovelController extends CRUDController<Automovel> {
 		anoModeloBox.setValue(null);
 		portasBox.setValue(null);
 		passageirosBox.setValue(null);
+		aceTabela.getItems().clear();
 		filialFld.clear();
 		
 		cambioBox.setValue(null);

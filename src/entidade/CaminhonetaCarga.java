@@ -2,11 +2,13 @@ package entidade;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.SequenceGenerator;
 
 import enumeracoes.TipoAcionamentoEmbreagem;
 import enumeracoes.TipoCombustivel;
 
 @Entity(name = "caminhoneta_carga")
+//@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "caminhoneta_carga_seq")
 public class CaminhonetaCarga extends Veiculo {
 	
 	private static final long serialVersionUID = 1L;

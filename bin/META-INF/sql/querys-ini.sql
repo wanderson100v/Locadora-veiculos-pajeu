@@ -1,23 +1,24 @@
-﻿CREATE ROLE gerente SUPERUSER;
+﻿CREATE ROLE gerente SUPERUSER CREATEUSER;
 GRANT SELECT,UPDATE , DELETE, INSERT ON ALL TABLES IN SCHEMA public TO gerente;
 
 
 CREATE ROLE admin LOGIN PASSWORD 'admin' in group gerente;
 
-CREATE ROLE administrador;
-GRANT SELECT, UPDATE , DELETE INSERT ON ALL TABLES IN SCHEMA public TO administrador;
+CREATE ROLE administrador CREATEUSER;
+GRANT SELECT, UPDATE , DELETE, INSERT ON ALL TABLES IN SCHEMA public TO administrador;
 
 
-CREATE ROLE atendente;
-GRANT SELECT, UPDATE , DELETE ,INSERT ON locacao,reserva,endereco, cliente,fisico,juridico,
-veiculo,automovel,caminhoneta_carga,manutencao,automovel_acessorio
-TO atendente;
-GRANT SELECT ON categoria_veiculo TO atendente;
+CREATE ROLE atendente CREATEUSER;
+GRANT SELECT ON ALL TABLES IN SCHEMA public  TO atendente;
+GRANT UPDATE , DELETE ,INSERT ON locacao,reserva,endereco, cliente,fisico,juridico,
+	veiculo,automovel,caminhoneta_carga,manutencao,automovel_acessorio TO atendente;
 GRANT UPDATE ON funcionario TO atendente;
 
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO atendente;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO gerente;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO administrador;
+
+drop table reserva_hoje;
 
 create or replace view reserva_hoje 
 as select r.id, extract('hour'From r.data_retirada) as hora ,cat.tipo , r.estado_reserva, cli.nome as nome_cliente, f.nome as nome_filial
@@ -29,3 +30,4 @@ where DATE(r.data_retirada) = current_date order by hora ;
 GRANT SELECT ON reserva_hoje TO gerente;
 GRANT SELECT ON reserva_hoje TO administrador;
 GRANT SELECT ON reserva_hoje TO atendente;
+

@@ -15,6 +15,7 @@ import enumeracoes.TipoAutomovel;
 import enumeracoes.TipoCambio;
 
 @Entity
+//@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "automovel_seq")
 public class Automovel extends Veiculo {
 
 	private static final long serialVersionUID = 1L;

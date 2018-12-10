@@ -2,6 +2,7 @@ package banco;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.Immutable;
 
@@ -9,6 +10,7 @@ import entidade.Entidade;
 import enumeracoes.EstadoRerserva;
 
 @Entity(name = "reserva_hoje")
+@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "reserva_hoje_seq")
 @Immutable
 @NamedQuery(name = "reservaHoje.buscarTudo" , query = "select r from banco.ReservaHoje as r")
 public class ReservaHoje extends Entidade{

@@ -148,12 +148,21 @@ public class IniciarReservaController {
 	    		boReserva.cadastrarEditar(reserva);
 	    		Alerta.getInstance().imprimirMsg("Sucesso ao cadastrar","Reserva iniciada com sucesso",AlertType.INFORMATION);
 	    		this.reserva = new Reserva();
+	    		limparCampos();
 	    	}
     	} catch (BoException | DaoException e) {
     		Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+    		limparCampos();
 		}
     	
     }
-
+    
+    private void limparCampos() {
+    	clienteFld.clear();
+    	funcionarioFld.clear();
+    	filialFld.clear();
+    	categoriaFld.clear();
+    
+    }
    
 }

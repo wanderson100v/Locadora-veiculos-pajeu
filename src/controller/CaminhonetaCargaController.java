@@ -2,17 +2,23 @@ package controller;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import business.BoCaminhonetaCarga;
 import business.IBoCaminhonetaCarga;
+import dao.DaoRes;
 import entidade.CaminhonetaCarga;
 import entidade.Entidade;
+import entidade.Filial;
 import enumeracoes.TipoAcionamentoEmbreagem;
 import enumeracoes.TipoCombustivel;
 import excecoes.BoException;
+import excecoes.DaoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -114,6 +120,8 @@ public class CaminhonetaCargaController extends CRUDController<CaminhonetaCarga>
 
     private CaminhonetaCarga caminhonetaCarga;
     
+    private Filial filial;
+    
     private IBoCaminhonetaCarga boCaminhonetaCarga = BoCaminhonetaCarga.getInstance();
     @FXML
     void initialize() {
@@ -175,6 +183,7 @@ public class CaminhonetaCargaController extends CRUDController<CaminhonetaCarga>
     			caminhonetaCarga.setAnoModelo(anoModeloBox.getValue());
     			caminhonetaCarga.setQuantidadePortas(portasBox.getValue());
     			caminhonetaCarga.setQuantidadePassageiro(passageirosBox.getValue());
+    			caminhonetaCarga.setFilial(filial);
     			
     			caminhonetaCarga.setDesenpenho(Float.parseFloat(desempenhoFld.getText()));
     			caminhonetaCarga.setPotencia(Float.parseFloat(potenciaFld.getText()));
@@ -208,12 +217,12 @@ public class CaminhonetaCargaController extends CRUDController<CaminhonetaCarga>
 
 	@Override
 	void popularTabela(String busca) {
-		CaminhonetaCarga caminhonetaCarga = new CaminhonetaCarga();
+		/*CaminhonetaCarga caminhonetaCarga = new CaminhonetaCarga();
 		caminhonetaCarga.setPlaca(busca);
 		caminhonetaCarga.setAtivo(true);
-		caminhonetaCarga.setLocado(false);
+		caminhonetaCarga.setLocado(false);*/
 		try {
-			List<CaminhonetaCarga> caminhonetaCargas = boCaminhonetaCarga.buscarPorExemplo(caminhonetaCarga);
+			List<CaminhonetaCarga> caminhonetaCargas = boCaminhonetaCarga.buscarAll();
 			entidadeTabela.getItems().clear();
 			entidadeTabela.getItems().setAll(caminhonetaCargas);
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+caminhonetaCargas.size()+" resultado(s)",AlertType.INFORMATION);
@@ -249,11 +258,16 @@ public class CaminhonetaCargaController extends CRUDController<CaminhonetaCarga>
 		capCargaFld.setText(""+caminhonetaCarga.getCapacidadeCarga());
 		capCombustivelFld.setText(""+caminhonetaCarga.getCapacidadeCombustivel());
 		
+		if(caminhonetaCarga.getFilial() != null)
+			filialFld.setText(caminhonetaCarga.getFilial().toString());
+		alerta.imprimirMsg("Categoria do Véiculo",caminhonetaCarga.getCategoriaVeiculo().toString(), AlertType.INFORMATION);
+		
 	}
 
 	@Override
 	void limparCampos() {
 		this.caminhonetaCarga = null;
+		this.filial = null;
 		
 		simAtivoRb.setSelected(true);
 		simLocadoRb.setSelected(false);
@@ -270,6 +284,8 @@ public class CaminhonetaCargaController extends CRUDController<CaminhonetaCarga>
 		anoModeloBox.setValue(null);
 		portasBox.setValue(null);
 		passageirosBox.setValue(null);
+		filialFld.clear();
+		
 		
 		desempenhoFld.clear();
 		potenciaFld.clear();
@@ -283,9 +299,24 @@ public class CaminhonetaCargaController extends CRUDController<CaminhonetaCarga>
 	
 	@FXML
     void actionHandle(ActionEvent event) {
-		if(event.getSource() == selectFilialBtn) {
-			
+		try {
+			if(event.getSource() == selectFilialBtn) {
+				Alert alerta = new Alert(AlertType.NONE);
+				SelecionarFilialController selecionarFilialController= (SelecionarFilialController) DaoRes.getInstance().carregarControllerFXML("SelecionarFilialDialog");
+				alerta.setDialogPane(selecionarFilialController.getSelecionarFilialDialog());
+				Optional<ButtonType> result = alerta.showAndWait();
+				if(result.isPresent() && result.get() == ButtonType.FINISH) {
+					Filial filial = selecionarFilialController.getFilialTbl().getSelectionModel().getSelectedItem();
+					if(filial!= null) {
+						filialFld.setText(filial.toString());
+						this.filial = filial;
+					}
+				}
+			}
+		} catch (DaoException e) {
+			alerta.imprimirMsg("Erro", e.getMessage(), AlertType.ERROR);
 		}
     }
+		
 
 }

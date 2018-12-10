@@ -7,11 +7,13 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 
 import enumeracoes.TipoCombustivel;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "veiculo_seq")
 @NamedQueries({
 	@NamedQuery(name = "veiculo.totalDisponivel", query = "select count(*) from "
 			+ "Veiculo as veiculo inner join veiculo.filial as filial "

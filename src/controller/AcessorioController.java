@@ -5,7 +5,6 @@ import java.util.List;
 import business.BoAcessorio;
 import business.IBoAcessorio;
 import entidade.Acessorio;
-import entidade.CaminhonetaCarga;
 import entidade.Entidade;
 import excecoes.BoException;
 import javafx.fxml.FXML;
@@ -91,11 +90,11 @@ public class AcessorioController extends CRUDController<Acessorio>{
 
 	@Override
 	void popularTabela(String busca) {
-		Acessorio acessorio = new Acessorio();
+		/*Acessorio acessorio = new Acessorio();
 		acessorio.setNome(busca);
-		acessorio.setDepreciado(false);
+		acessorio.setDepreciado(false);*/
 		try {
-			List<Acessorio> acessorios = boAcessorio.buscarPorExemplo(acessorio);
+			List<Acessorio> acessorios = boAcessorio.buscarAll();
 			entidadeTabela.getItems().clear();
 			entidadeTabela.getItems().setAll(acessorios);
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+acessorios.size()+" resultado(s)",AlertType.INFORMATION);

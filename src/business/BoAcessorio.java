@@ -2,8 +2,6 @@ package business;
 
 import java.util.List;
 
-import org.postgresql.core.ConnectionFactory;
-
 import dao.DaoAcessorio;
 import dao.IDaoAcessorio;
 import entidade.Acessorio;

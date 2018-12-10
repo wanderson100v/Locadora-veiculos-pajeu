@@ -3,8 +3,10 @@ package entidade;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.SequenceGenerator;
 
 @Entity
+@SequenceGenerator(initialValue = 1,name = "idgen", sequenceName = "acessorio_seq")
 public class Acessorio extends Entidade {
 	
 	private static final long serialVersionUID = 1L;

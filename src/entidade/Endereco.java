@@ -2,10 +2,12 @@ package entidade;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.SequenceGenerator;
 
 import enumeracoes.Estado;
 
 @Entity
+@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "endereco_seq")
 public class Endereco extends Entidade {
 	
 	private static final long serialVersionUID = 1L;

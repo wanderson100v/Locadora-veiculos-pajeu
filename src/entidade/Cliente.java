@@ -8,9 +8,11 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "cliente_seq")
 @NamedQuery(name = "cliente.buscaPorBusca" , 
 		query = "select c from Cliente as c"
 				+ " where c.ativo = true and ("

@@ -6,8 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
 @Entity
+@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "filial_seq")
 @NamedQuery(name = "filial.buscaPorBusca" , 
 		query = "select f from Filial as f"
 				+ " inner join f.endereco as e"

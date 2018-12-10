@@ -5,8 +5,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 
 @Entity
+@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "funcionario_seq")
 @NamedQuery(name = "funcionario.buscaPorBusca" , 
 query = "select f from Funcionario as f "
 		+ "where f.ativo = true and ("

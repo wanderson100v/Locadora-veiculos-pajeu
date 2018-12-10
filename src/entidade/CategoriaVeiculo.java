@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
 @Entity(name = "categoria_veiculo" )
 @NamedQueries({
@@ -55,6 +56,7 @@ import javax.persistence.OneToOne;
 					+ " or c.horasLimpesa = :horasLimpesa"
 					+ " or c.valorDiaria = :valorDiaria")
 })
+@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "categoria_veiculo_seq")
 public class CategoriaVeiculo extends Entidade {
 	
 	private static final long serialVersionUID = 1L;

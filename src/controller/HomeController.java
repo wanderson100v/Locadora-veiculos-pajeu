@@ -2,14 +2,14 @@ package controller;
 
 import app.App;
 import dao.DaoRes;
+import enumeracoes.Cargo;
 import excecoes.DaoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
-import sql.ConnectionFactory;
 
-public class HomeController {
+public class HomeController implements IFuncionarioObservadores{
 
     @FXML
     private Button voltarBtn;
@@ -23,6 +23,8 @@ public class HomeController {
     @FXML
     void initialize() {
     	try {
+    		FuncionarioObservavel.getIntance().getFuncionarioObservadores().add(this);
+    		
 			PesquisaController pesquisaController = (PesquisaController) DaoRes.getInstance().carregarControllerFXML("PesquisaPane");
 			DaoRes daoRes = DaoRes.getInstance();
     		
@@ -55,4 +57,14 @@ public class HomeController {
     		App.iniTelaLogin();
     	}
     }
+
+	@Override
+	public void atualizar(Cargo cargo) {
+		if(cargo != null)
+			if(cargo == Cargo.AT) 
+				configBtn.setVisible(false);
+			else 
+				configBtn.setVisible(true);
+			
+	}
 }

@@ -9,10 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 
 import enumeracoes.EstadoRerserva;
 
 @Entity
+@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "reserva_seq")
 @NamedQuery(name = "reserva.totalDataRetirada", 
 	query = "select count(*) from Reserva r "
 			+ "where r.estadoReserva = 1 "

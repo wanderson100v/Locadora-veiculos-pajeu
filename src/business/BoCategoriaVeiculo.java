@@ -158,14 +158,14 @@ public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 	private void validarCategoria(CategoriaVeiculo categoriaVeiculo) throws BoException {
 		Veiculo veiculo = categoriaVeiculo.getVeiculoExemplo();
 		if(veiculo != null){
-			if(veiculo instanceof CaminhonetaCarga)
+			/*if(veiculo instanceof CaminhonetaCarga)
 				if(BoCaminhonetaCarga.getInstance().buscarPorExemplo((CaminhonetaCarga) veiculo) !=null)
 					throw new BoException("Já existe uma categoria de Caminhonetas de Carga semelhante");
 			else if(veiculo instanceof Automovel) {
 				if(BoAutomovel.getInstance().buscarPorExemplo((Automovel) veiculo) !=null)
 					throw new BoException("Já existe uma categoria de Automoveis semelhante");
 			}else
-				throw new BoException("Veiculo de exemplo invalido");
+				throw new BoException("Veiculo de exemplo invalido");*/
 		}else
 			throw new BoException("Nenhum veiculo de exemplo adicionado");
 				

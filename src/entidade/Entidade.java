@@ -12,7 +12,7 @@ public abstract class Entidade implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idgen")
 	private Long id;
 
 	public Long getId() {
