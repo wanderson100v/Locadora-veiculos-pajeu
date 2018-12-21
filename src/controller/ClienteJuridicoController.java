@@ -2,13 +2,16 @@ package controller;
 
 import java.util.List;
 
+import business.BoEndereco;
 import business.BoJuridico;
+import business.IBoEndereco;
 import business.IBoJuridico;
 import entidade.Endereco;
 import entidade.Entidade;
 import entidade.Juridico;
 import enumeracoes.Estado;
 import excecoes.BoException;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -71,6 +74,11 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
 
     @FXML
     private TextField codigoFld;
+    
+    @FXML
+    private Button gerarBtn;
+    
+    private IBoEndereco boEndereco = BoEndereco.getInstance();
     
     
     private Juridico juridico;
@@ -195,4 +203,19 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
    		estadoBox.setValue(null);
    		System.gc();
    	}
+    
+    @FXML
+    void actionHandle(ActionEvent event) {
+		try {
+			if(event.getSource() == gerarBtn) {
+				Endereco e  = boEndereco.gerarEndereco(cepFld.getText().trim());
+				ruaFld.setText(e.getRua());
+				bairroFld.setText(e.getBairro());
+				cidadeFld.setText(e.getCidade());
+				estadoBox.setValue(e.getEstado());
+			}
+		}catch(BoException e) {
+			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+		}
+    }
 }

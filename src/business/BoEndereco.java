@@ -13,13 +13,15 @@ import java.util.regex.Pattern;
 import entidade.Endereco;
 import enumeracoes.Estado;
 import excecoes.BoException;
+import javafx.scene.control.Alert.AlertType;
+import view.Alerta;
 
 public class BoEndereco implements IBoEndereco{
 	private static IBoEndereco boEndereco;
 	
 	private BoEndereco() {}
 	
-	public IBoEndereco getInstance() {
+	public static IBoEndereco getInstance() {
 		if(boEndereco == null)
 			boEndereco = new BoEndereco();
 		return boEndereco;
@@ -57,7 +59,7 @@ public class BoEndereco implements IBoEndereco{
             br.lines().forEach(l -> jsonSb.append(l.trim()));
             return  jsonSb.toString();
         } catch (Exception e) {
-        	throw new BoException("Erro ao gerar endereço : Sem conexão com o servidor ");
+        	throw new BoException("Erro ao gerar endereço, sem conexão com o web service ");
         }
     }
 }

@@ -2,13 +2,16 @@ package controller;
 
 import java.util.List;
 
+import business.BoEndereco;
 import business.BoFilial;
+import business.IBoEndereco;
 import business.IBoFilial;
 import entidade.Endereco;
 import entidade.Entidade;
 import entidade.Filial;
 import enumeracoes.Estado;
 import excecoes.BoException;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -23,7 +26,7 @@ public class FilialController extends CRUDController<Filial> {
 
 
     @FXML
-    private TableColumn<?, ?> nomeCln;
+    private TableColumn<Filial, String> nomeCln;
 
     @FXML
     private TextField nomeFld;
@@ -51,6 +54,11 @@ public class FilialController extends CRUDController<Filial> {
 
     @FXML
     private TextField cepFld;
+    
+    @FXML
+    private Button gerarBtn;
+    
+    private IBoEndereco boEndereco = BoEndereco.getInstance();
 
     private Filial filial;
     
@@ -176,5 +184,20 @@ public class FilialController extends CRUDController<Filial> {
    		estadoBox.setValue(null);
    		System.gc();
 	}
+	
+	@FXML
+    void actionHandle(ActionEvent event) {
+		try {
+			if(event.getSource() == gerarBtn) {
+				Endereco e  = boEndereco.gerarEndereco(cepFld.getText().trim());
+				ruaFld.setText(e.getRua());
+				bairroFld.setText(e.getBairro());
+				cidadeFld.setText(e.getCidade());
+				estadoBox.setValue(e.getEstado());
+			}
+		}catch(BoException e) {
+			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+		}
+    }
 
 }

@@ -3,17 +3,26 @@ package controller;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
+import business.BoEndereco;
 import business.BoFisico;
+import business.IBoEndereco;
 import business.IBoFisico;
+import dao.DaoRes;
 import entidade.Endereco;
 import entidade.Entidade;
+import entidade.Filial;
 import entidade.Fisico;
 import enumeracoes.Estado;
 import enumeracoes.Sexo;
 import excecoes.BoException;
+import excecoes.DaoException;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
@@ -94,10 +103,17 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
 
     @FXML
     private TextField cepFld;
+    
+    @FXML
+    private Button gerarBtn;
+    
+    private IBoEndereco boEndereco = BoEndereco.getInstance();
 
     private Fisico fisico;
     
     private IBoFisico boFisico = BoFisico.getInstance();
+    
+   
     
     @FXML
     void initialize() {
@@ -266,5 +282,20 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
    		System.gc();
 		
 	}
+	
+	@FXML
+    void actionHandle(ActionEvent event) {
+		try {
+			if(event.getSource() == gerarBtn) {
+				Endereco e  = boEndereco.gerarEndereco(cepFld.getText().trim());
+				ruaFld.setText(e.getRua());
+				bairroFld.setText(e.getBairro());
+				cidadeFld.setText(e.getCidade());
+				estadoBox.setValue(e.getEstado());
+			}
+		}catch(BoException e) {
+			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+		}
+    }
 
 }
