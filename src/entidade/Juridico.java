@@ -3,7 +3,6 @@ package entidade;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 
 @Entity
 //@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "juridico_seq")

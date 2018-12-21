@@ -21,7 +21,7 @@ public enum Estado {
 	public static Estado getEstado(String estado)
 	{
 		for(Estado e : values())
-			if(e.toString().equalsIgnoreCase(estado))
+			if(e.toString().equalsIgnoreCase(estado) || e.toString().substring(e.toString().indexOf("-")).toUpperCase().contains(estado.toUpperCase()))
 				return e;
 		return null;
 	}

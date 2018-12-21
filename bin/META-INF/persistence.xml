@@ -5,6 +5,22 @@
              version="2.1">
 
     <persistence-unit name="banco" transaction-type="RESOURCE_LOCAL">
+    	<class>banco.ReservaHoje</class>
+    	<class>entidade.Acessorio</class>
+    	<class>entidade.Automovel</class>
+    	<class>entidade.CaminhonetaCarga</class>
+    	<class>entidade.CategoriaVeiculo</class>
+    	<class>entidade.Cliente</class>
+    	<class>entidade.Endereco</class>
+    	<class>entidade.Entidade</class>
+    	<class>entidade.Filial</class>
+    	<class>entidade.Fisico</class>
+    	<class>entidade.Funcionario</class>
+    	<class>entidade.Juridico</class>
+    	<class>entidade.Locacao</class>
+    	<class>entidade.Manutencao</class>
+    	<class>entidade.Reserva</class>
+    	<class>entidade.Veiculo</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> <!-- DB Driver -->
