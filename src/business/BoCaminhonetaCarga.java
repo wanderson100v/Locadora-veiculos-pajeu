@@ -5,11 +5,8 @@ import java.util.List;
 import dao.DaoCaminhonetaCarga;
 import dao.IDaoCaminhonetaCarga;
 import entidade.CaminhonetaCarga;
-import enumeracoes.TipoAcionamentoEmbreagem;
-import enumeracoes.TipoCombustivel;
 import excecoes.BoException;
 import excecoes.DaoException;
-import sql.ConnectionFactory;
 
 public class BoCaminhonetaCarga implements IBoCaminhonetaCarga{
 	private static IBoCaminhonetaCarga instance;
@@ -21,17 +18,6 @@ public class BoCaminhonetaCarga implements IBoCaminhonetaCarga{
 		if(instance == null)
 			instance = new BoCaminhonetaCarga();
 		return instance;
-	}
-	
-	public static void main(String[] args) {
-			ConnectionFactory.setUser("postgres","admin");
-			
-			CaminhonetaCarga caminhonetaCarga = new CaminhonetaCarga(false, true, "dasd-b", "rosa", "tabu", "ffabuster", "dasd-13", "gdfsg-dsa",20.4f,TipoCombustivel.GASOLINA_ETANOL,3000,2009,2012,4,1, null,null,15.3f, 11.9f,12.f,TipoAcionamentoEmbreagem.HIDRAULICO,12,21);
-			try {
-				getInstance().cadastrarEditar(caminhonetaCarga);
-			} catch (BoException e) {
-				e.printStackTrace();
-			}
 	}
 	
 	@Override

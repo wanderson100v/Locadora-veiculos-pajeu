@@ -98,8 +98,8 @@ public class DaoFuncionario  extends Dao<Funcionario> implements IDaoFuncionario
 					"join pg_roles on (pg_roles.oid=pg_auth_members.roleid) " + 
 					"where pg_user.usename = '"+login+"'");
 			return (List<String>) query.getResultList();
-		}catch (Exception e) {
-			e.printStackTrace();
+		}
+		catch (Exception e) {
 			throw new DaoException("ERRO AO REQUISITAR PRIVILEGIOS DE USUARIO");
 		}finally {
 			if(em != null )

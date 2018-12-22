@@ -13,8 +13,6 @@ import java.util.regex.Pattern;
 import entidade.Endereco;
 import enumeracoes.Estado;
 import excecoes.BoException;
-import javafx.scene.control.Alert.AlertType;
-import view.Alerta;
 
 public class BoEndereco implements IBoEndereco{
 	private static IBoEndereco boEndereco;

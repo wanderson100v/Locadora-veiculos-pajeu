@@ -47,7 +47,7 @@ public class LoginController{
 	    		boFuncionario.utilizarGralAcesso(cargo);
 				App.iniTelaMenu();
     		} catch (BoException e) {
-    			alerta.imprimirMsg("Alerta", "Usuario não autorizado",AlertType.WARNING);
+    			alerta.imprimirMsg("Alerta", e.getMessage(),AlertType.WARNING);
     		}
     		
     	}

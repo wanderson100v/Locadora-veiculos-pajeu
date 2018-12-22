@@ -29,7 +29,6 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 			em.getTransaction().commit();
 		}catch (Exception e) {
 			e.printStackTrace();
-			
 			Throwable causaBase = e.getCause();
 			while(causaBase.getCause() != null)
 				causaBase = causaBase.getCause();
@@ -38,15 +37,6 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 			throw new DaoException("ERRO AO EXLUIR CATEGORIA DE VEICULO, CONTATE ADM");
 		}finally {
 			em.close();
-		}
-	}
-	
-	public static void main(String[] args) {
-		ConnectionFactory.setUser("postgres", "admin");
-		DaoCategoriaVeiculo d = new DaoCategoriaVeiculo();
-		try {
-			d.excluir(d.buscarID(new Long(5)));
-		} catch (DaoException e) {
 		}
 	}
 	
