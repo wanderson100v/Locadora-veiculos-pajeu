@@ -7,6 +7,7 @@ import dao.IDaoAutomovel;
 import entidade.Automovel;
 import excecoes.BoException;
 import excecoes.DaoException;
+import excecoes.ValidarException;
 
 public class BoAutomovel implements IBoAutomovel {
 	private static IBoAutomovel instance;
@@ -38,15 +39,16 @@ public class BoAutomovel implements IBoAutomovel {
 	@Override
 	public void excluir(Automovel entidade) throws BoException {
 		try {
-			try {
-				daoAutomovel.excluir(entidade);
-			} catch (DaoException e) {
-				entidade.setAtivo(false);
-				daoAutomovel.editar(entidade);
-				throw new BoException(e.getMessage());
-			}
+			daoAutomovel.excluir(entidade);
 		}catch (DaoException e) {
-			throw new BoException(e.getMessage());
+			try {
+				Util.validarCausaInicial(e,"","not-null","violates foreign key");
+				throw new BoException(e.getMessage());
+			}catch (ValidarException ValidarException) {
+				entidade.setAtivo(false);
+				cadastrarEditar(entidade);
+				throw new BoException("IMPOSSIBILIDADE DE EXLUSÃO : HÁ REGISTROS DEPENDENTES,/n VEICULO PASSOU A SER INATIVO");
+			}
 		} 
 	}
 

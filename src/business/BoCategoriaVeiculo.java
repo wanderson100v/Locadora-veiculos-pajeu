@@ -11,7 +11,7 @@ import entidade.Veiculo;
 import enumeracoes.TipoAutomovel;
 import excecoes.BoException;
 import excecoes.DaoException;
-import excecoes.DaoExclusaoException;
+import excecoes.ValidarException;
 
 public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 	private static IBoCategoriaVeiculo instance;
@@ -47,28 +47,27 @@ public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 
 	@Override
 	public void excluir(CategoriaVeiculo entidade) throws BoException {
+		Veiculo veiculo = entidade.getVeiculoExemplo();
 		try {
-			
-			Veiculo veiculo = entidade.getVeiculoExemplo();
 			entidade.setVeiculoExemplo(null);
 			if(veiculo!=null) {
 				daoCategoriaVeiculo.editar(entidade);
 				BoVeiculo.getInstance().exluir(veiculo);
 			}
+			daoCategoriaVeiculo.excluir(entidade);
+		} catch (DaoException e) {
 			try {
-				daoCategoriaVeiculo.excluir(entidade);
-			} catch (DaoExclusaoException e) {
+				Util.validarCausaInicial(e,"","not-null","violates foreign key");
+				throw new BoException(e.getMessage());
+			}catch (ValidarException ValidarException) {
 				if(veiculo!=null) {
-					entidade.setVeiculoExemplo(veiculo);
 					veiculo.setId(null);
 					BoVeiculo.getInstance().cadastrarEditar(veiculo);
 					entidade.setVeiculoExemplo(veiculo);
-					daoCategoriaVeiculo.editar(entidade);
+					cadastrarEditar(entidade);
 				}
-				throw new BoException(e.getMessage());
+				throw new BoException("IMPOSSIBILIDADE DE EXLUSÃO : HÁ VEICULOS NA CATEGORIA");
 			}
-		} catch (DaoException e) {
-			throw new BoException(e.getMessage());	
 		}
 	}
 

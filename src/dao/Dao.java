@@ -77,7 +77,7 @@ public abstract class Dao<T extends Entidade>{
 		}catch (Exception e) {
 			em.getTransaction().rollback();
 			e.printStackTrace();
-			throw new DaoException("OCORREU UM ERRO AO EXCLUIR "+tipoDaClasse.getSimpleName().toUpperCase()+", CONTATE O ADM");
+			throw new DaoException("OCORREU UM ERRO AO EXCLUIR "+tipoDaClasse.getSimpleName().toUpperCase()+", CONTATE O ADM",e);
 		}finally {
 			em.close();
 		}

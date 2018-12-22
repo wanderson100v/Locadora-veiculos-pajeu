@@ -66,7 +66,7 @@ public class DaoFuncionario  extends Dao<Funcionario> implements IDaoFuncionario
 		}catch (Exception e) {
 			em.getTransaction().rollback();
 			e.printStackTrace();
-			throw new DaoException("OCORREU UM ERRO AO EXCLUIR FUNCIONARIO, CONTATE O ADM");
+			throw new DaoException("OCORREU UM ERRO AO EXCLUIR FUNCIONARIO, CONTATE O ADM",e);
 		}finally {
 			em.close();
 		}

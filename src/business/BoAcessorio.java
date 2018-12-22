@@ -7,6 +7,7 @@ import dao.IDaoAcessorio;
 import entidade.Acessorio;
 import excecoes.BoException;
 import excecoes.DaoException;
+import excecoes.ValidarException;
 
 public class BoAcessorio implements IBoAcessorio{
 	private IDaoAcessorio daoAcessorio = new DaoAcessorio();
@@ -33,7 +34,7 @@ public class BoAcessorio implements IBoAcessorio{
 		}
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		Acessorio entidade = new Acessorio();
 		entidade.setValor(10f);
 		entidade.setDepreciado(false);
@@ -69,20 +70,21 @@ public class BoAcessorio implements IBoAcessorio{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	@Override
 	public void excluir(Acessorio entidade) throws BoException {
 		try {
-			try {
-				daoAcessorio.excluir(entidade);
-			} catch (DaoException e) {
-				entidade.setDepreciado(true);
-				daoAcessorio.editar(entidade);
-				throw new BoException(e.getMessage());
-			}
+			daoAcessorio.excluir(entidade);
 		}catch (DaoException e) {
-			throw new BoException(e.getMessage());
+			try {
+				Util.validarCausaInicial(e,"","not-null","violates foreign key");
+				throw new BoException(e.getMessage());
+			}catch (ValidarException ValidarException) {
+				entidade.setDepreciado(true);
+				cadastrarEditar(entidade);
+				throw new BoException("IMPOSSIBILIDADE DE EXLUSÃO : HÁ REGISTROS DEPENDENTES,/n ACESSÓRIO PASSOU A SER INATIVO");
+			}
 		} 
 	}
 

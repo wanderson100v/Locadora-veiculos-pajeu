@@ -7,6 +7,7 @@ import dao.IDaoJuridico;
 import entidade.Juridico;
 import excecoes.BoException;
 import excecoes.DaoException;
+import excecoes.ValidarException;
 
 public class BoJuridico implements IBoJuridico {
 	private IDaoJuridico daoJuridico = new DaoJuridico();
@@ -37,15 +38,16 @@ public class BoJuridico implements IBoJuridico {
 	@Override
 	public void excluir(Juridico entidade) throws BoException {
 		try {
-			try {
-				daoJuridico.excluir(entidade);
-			} catch (DaoException e) {
-				entidade.setAtivo(false);
-				daoJuridico.editar(entidade);
-				throw new BoException("OCORRENCIA DE DEPENDENTES: CLIENTE JURUDICO DESATIVADO");
-			}
+			daoJuridico.excluir(entidade);
 		}catch (DaoException e) {
-			throw new BoException("ERRO AO DESABILITAR CLIENTE JURIDICO");
+			try {
+				Util.validarCausaInicial(e,"","not-null","violates foreign key");
+				throw new BoException(e.getMessage());
+			}catch (ValidarException ValidarException) {
+				entidade.setAtivo(false);
+				cadastrarEditar(entidade);
+				throw new BoException("IMPOSSIBILIDADE DE EXLUSÃO : HÁ REGISTROS DEPENDENTES,/n CLIENTE INATIVADO");
+			}
 		}
 	}
 

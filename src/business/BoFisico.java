@@ -7,6 +7,7 @@ import dao.IDaoFisico;
 import entidade.Fisico;
 import excecoes.BoException;
 import excecoes.DaoException;
+import excecoes.ValidarException;
 
 public class BoFisico implements IBoFisico{
 	private IDaoFisico daoFisico = new DaoFisico();
@@ -39,15 +40,16 @@ public class BoFisico implements IBoFisico{
 	@Override
 	public void excluir(Fisico entidade) throws BoException {
 		try {
-			try {
-				daoFisico.excluir(entidade);
-			} catch (DaoException e) {
-				entidade.setAtivo(false);
-				daoFisico.editar(entidade);
-				throw new BoException(e.getMessage());
-			}
+			daoFisico.excluir(entidade);
 		}catch (DaoException e) {
-			throw new BoException(e.getMessage());
+			try {
+				Util.validarCausaInicial(e,"","not-null","violates foreign key");
+				throw new BoException(e.getMessage());
+			}catch (ValidarException ValidarException) {
+				entidade.setAtivo(false);
+				cadastrarEditar(entidade);
+				throw new BoException("IMPOSSIBILIDADE DE EXLUSÃO : HÁ REGISTROS DEPENDENTES,/n CLIENTE INATIVADO");
+			}
 		}
 	}
 

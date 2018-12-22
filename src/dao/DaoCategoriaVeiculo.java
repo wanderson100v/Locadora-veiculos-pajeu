@@ -9,35 +9,13 @@ import entidade.CaminhonetaCarga;
 import entidade.CategoriaVeiculo;
 import entidade.Entidade;
 import excecoes.DaoException;
-import excecoes.DaoExclusaoException;
+import excecoes.ValidarException;
 import sql.ConnectionFactory;
 
 public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCategoriaVeiculo  {
 
 	public DaoCategoriaVeiculo() {
 		super(CategoriaVeiculo.class);
-	}
-	
-	
-	@Override
-	public void excluir(CategoriaVeiculo t) throws DaoException{
-		try{
-			em = ConnectionFactory.getConnection();
-			em.getTransaction().begin();
-			Entidade entidade = em.merge(t);
-			em.remove(entidade);
-			em.getTransaction().commit();
-		}catch (Exception e) {
-			e.printStackTrace();
-			Throwable causaBase = e.getCause();
-			while(causaBase.getCause() != null)
-				causaBase = causaBase.getCause();
-			if(causaBase.getMessage().contains("not-null") || causaBase.getMessage().contains("violates foreign key"))
-				throw new DaoExclusaoException("IMPOSSIBILIDADE DE EXLUSÃO : HÁ VEICULOS NA CATEGORIA");
-			throw new DaoException("ERRO AO EXLUIR CATEGORIA DE VEICULO, CONTATE ADM");
-		}finally {
-			em.close();
-		}
 	}
 	
 	@Override
