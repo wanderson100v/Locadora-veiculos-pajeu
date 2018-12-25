@@ -5,13 +5,11 @@ import excecoes.ValidarException;
 public class Util {
 	
 	public static void validarCausaInicial(Throwable e, String msg, String... restricoes) throws ValidarException {
-			if(e.getCause() != null) {
-				while(e.getCause() != null)
-					e = e.getCause();
-			for(String restricao : restricoes) 
-				if(e.getMessage().contains(restricao.toLowerCase())){
-					throw new ValidarException(msg);
-			}
+		while(e.getCause() != null)
+			e = e.getCause();
+		for(String restricao : restricoes) 
+			if(e.getMessage().contains(restricao.toLowerCase())){
+				throw new ValidarException(msg);
 		}
 	}
 	

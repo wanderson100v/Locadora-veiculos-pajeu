@@ -67,7 +67,6 @@ public class IniciarReservaController {
     @FXML
     private TextField funcionarioFld;
     
-    
     private Reserva reserva = new Reserva();
     
     private IBoReserva boReserva = BoReserva.getInstance();

@@ -46,7 +46,7 @@ public class BoCaminhonetaCarga implements IBoCaminhonetaCarga{
 			}catch (ValidarException ValidarException) {
 				entidade.setAtivo(false);
 				cadastrarEditar(entidade);
-				throw new BoException("IMPOSSIBILIDADE DE EXLUSÃO : HÁ REGISTROS DEPENDENTES,/n VEICULO PASSOU A SER INATIVO");
+				throw new BoException("IMPOSSIBILIDADE DE EXLUSÃO : HÁ REGISTROS DEPENDENTES, VEÍCULO PASSOU A SER INATIVO");
 			}
 		}
 	}

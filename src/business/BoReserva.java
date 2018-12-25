@@ -3,9 +3,11 @@ package business;
 import java.util.List;
 
 import banco.ReservaHoje;
+import banco.ReservaPendente;
 import dao.DaoReserva;
 import dao.IDaoReserva;
 import entidade.CategoriaVeiculo;
+import entidade.Cliente;
 import entidade.Reserva;
 import excecoes.BoException;
 import excecoes.DaoException;
@@ -148,6 +150,21 @@ public class BoReserva implements IBoReserva {
 	
 
 	@Override
+	public List<ReservaPendente> buscarReservaPendente(String dadoCliente) throws BoException {
+		try {
+			Cliente cliente = new Cliente();
+			cliente.setNome(dadoCliente);
+			cliente.setCodigo(dadoCliente);
+			cliente.setEmail(dadoCliente);
+			cliente.setTelefone(dadoCliente);
+			return daoReserva.buscarReservaPendente(cliente);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
+
+	@Override
 	public long totalReservaDataRetirada(CategoriaVeiculo categoriaVeiculo) throws BoException {
 		try {
 			return daoReserva.totalReservaDataRetirada(categoriaVeiculo);
@@ -155,6 +172,5 @@ public class BoReserva implements IBoReserva {
 			throw new BoException(e.getMessage());
 		}
 	}
-
 
 }

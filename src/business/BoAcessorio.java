@@ -83,7 +83,7 @@ public class BoAcessorio implements IBoAcessorio{
 			}catch (ValidarException ValidarException) {
 				entidade.setDepreciado(true);
 				cadastrarEditar(entidade);
-				throw new BoException("IMPOSSIBILIDADE DE EXLUSÃO : HÁ REGISTROS DEPENDENTES,/n ACESSÓRIO PASSOU A SER INATIVO");
+				throw new BoException("IMPOSSIBILIDADE DE EXLUSÃO : HÁ REGISTROS DEPENDENTES, ACESSÓRIO PASSOU A SER INATIVO");
 			}
 		} 
 	}

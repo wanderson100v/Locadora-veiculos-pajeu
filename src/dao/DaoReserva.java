@@ -6,7 +6,9 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import banco.ReservaHoje;
+import banco.ReservaPendente;
 import entidade.CategoriaVeiculo;
+import entidade.Cliente;
 import entidade.Reserva;
 import excecoes.DaoException;
 import sql.ConnectionFactory;
@@ -47,7 +49,26 @@ public class DaoReserva extends Dao<Reserva> implements IDaoReserva{
 		}catch (Exception e) {
 			em.getTransaction().rollback();
 			e.printStackTrace();
-			throw new DaoException("ERRO AO BUSCAR TOTAL DE RESERVAS POR CATEGORIA E DATA DE RETIRADA ");
+			throw new DaoException("ERRO AO BUSCAR RESERVAS PARA HOJE ");
+		}finally {
+			em.close();
+		}
+	
+	}
+	
+	public List<ReservaPendente> buscarReservaPendente(Cliente cliente) throws DaoException {
+		try {
+			em = ConnectionFactory.getConnection();
+			TypedQuery<ReservaPendente> query = em.createNamedQuery(RESERVA_PENDENTE_POR_CLIENTE,ReservaPendente.class);
+			query.setParameter("nome","%"+cliente.getNome()+"%");
+			query.setParameter("codigo","%"+cliente.getCodigo()+"%");
+			query.setParameter("telefone","%"+cliente.getTelefone()+"%");
+			query.setParameter("email","%"+cliente.getEmail()+"%");
+			return query.getResultList();
+		}catch (Exception e) {
+			em.getTransaction().rollback();
+			e.printStackTrace();
+			throw new DaoException("ERRO AO BUSCAR RESERVAS PENDENTES POR CLIENTE ");
 		}finally {
 			em.close();
 		}

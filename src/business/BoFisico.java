@@ -48,7 +48,7 @@ public class BoFisico implements IBoFisico{
 			}catch (ValidarException ValidarException) {
 				entidade.setAtivo(false);
 				cadastrarEditar(entidade);
-				throw new BoException("IMPOSSIBILIDADE DE EXLUSÃO : HÁ REGISTROS DEPENDENTES,/n CLIENTE INATIVADO");
+				throw new BoException("IMPOSSIBILIDADE DE EXLUSÃO : HÁ REGISTROS DEPENDENTES, CLIENTE INATIVADO");
 			}
 		}
 	}

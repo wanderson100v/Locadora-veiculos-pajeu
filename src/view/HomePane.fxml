@@ -28,10 +28,7 @@
                   </ImageView>
                </graphic>
             </Tab>
-            <Tab text="Reservas">
-              <content>
-                  <fx:include fx:id="iniciarReservasPane" source="IniciarReservaPane.fxml" />
-              </content>
+            <Tab fx:id="reservaTab" text="Reservas">
                <graphic>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>

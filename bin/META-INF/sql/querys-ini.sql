@@ -27,7 +27,21 @@ inner join filial as f on(f.id = r.filial_id)
 inner join categoria_veiculo as cat on(r.categoriaveiculo_id = cat.id)
 where DATE(r.data_retirada) = current_date order by hora ;
 
+create or replace view reserva_pendente as 
+select r.id ,c.tipo as tipo , fun.nome as nome_funcionario , cli.nome as nome_cliente, cli.codigo as codigo_cliente, cli.email , cli.telefone , r.data_retirada as retirada, r.data_devolucao as devolucao, fil.nome as nome_filial 
+from reserva as r 
+inner join funcionario as fun on (fun.id = r.funcionario_id)
+inner join cliente as cli on (cli.id = r.cliente_id)
+inner join categoria_veiculo as c on (c.id = r.categoriaveiculo_id)
+inner join filial as fil on (fil.id = r.filial_id)
+where r.estado_reserva = 1;
+
 GRANT SELECT ON reserva_hoje TO gerente;
 GRANT SELECT ON reserva_hoje TO administrador;
 GRANT SELECT ON reserva_hoje TO atendente;
+
+GRANT SELECT ON reserva_pendente TO gerente;
+GRANT SELECT ON reserva_pendente TO administrador;
+GRANT SELECT ON reserva_pendente TO atendente;
+
 

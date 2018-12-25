@@ -16,6 +16,9 @@ public class HomeController implements IFuncionarioObservadores{
     
     @FXML
     private Tab dadosTab;
+    
+    @FXML
+    private Tab reservaTab;
 
     @FXML
     private Button configBtn;
@@ -41,6 +44,7 @@ public class HomeController implements IFuncionarioObservadores{
 			pesquisaController.getFiltroBox().getItems().addAll(pesquisaController.getControladores().keySet());
 			
 			dadosTab.setContent(pesquisaController.getPesquisaPane());
+			reservaTab.setContent(daoRes.carregarPaneFXML("ReservaTabPane"));
 			
     	} catch (DaoException e) {
 			// TODO Auto-generated catch block

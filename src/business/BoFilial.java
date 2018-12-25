@@ -46,7 +46,7 @@ public class BoFilial implements IBoFilial{
 			}catch (ValidarException ValidarException) {
 				entidade.setAtivo(false);
 				cadastrarEditar(entidade);
-				throw new BoException("IMPOSSIBILIDADE DE EXLUSÃO : HÁ REGISTROS DEPENDENTES,/n FILIAL FOI INATIVADA");
+				throw new BoException("IMPOSSIBILIDADE DE EXLUSÃO : HÁ REGISTROS DEPENDENTES, FILIAL FOI INATIVADA");
 			}
 		}
 	}
