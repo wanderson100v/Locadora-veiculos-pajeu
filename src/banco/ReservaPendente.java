@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 
@@ -14,19 +15,30 @@ import entidade.Entidade;
 @Entity(name = "reserva_pendente")
 @SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "reserva_pendente_seq")
 @Immutable
-@NamedQuery(name = "reservaPendente.buscarPorCliente" , 
+@NamedQueries({
+		@NamedQuery(name = "reservaPendente.buscarPorCliente" , 
 			query = "select r from banco.ReservaPendente as r "
 					+ " where upper(r.nomeCliente) like upper(:nome) "
 					+ " or upper(r.codigoCliente) like upper(:codigo)"
 					+ " or upper(r.telefone) like upper(:telefone) "
 					+ " or upper(r.email) like upper(:email)"
-					+ " order by retirada")
+					+ " order by retirada"),
+		@NamedQuery(name = "reservaPendente.buscarPorCliente_Filial" , 
+			query = "select r from banco.ReservaPendente as r "
+					+ " where r.filial_id = :filial_id"
+					+ " and (upper(r.nomeCliente) like upper(:nome) "
+					+ " or upper(r.codigoCliente) like upper(:codigo)"
+					+ " or upper(r.telefone) like upper(:telefone) "
+					+ " or upper(r.email) like upper(:email))"
+					+ " order by retirada ")
+		})
 public class ReservaPendente extends Entidade{
 	
 	private static final long serialVersionUID = 1L;
 	private String tipo,telefone,email;
 	@Column(name = "nome_filial")
 	private String nomeFilial;
+	private Long filial_id;
 	@Column(name = "nome_cliente")
 	private String nomeCliente;
 	@Column(name = "codigo_cliente")
@@ -41,6 +53,16 @@ public class ReservaPendente extends Entidade{
 	
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+	
+
+
+	public Long getFilial_id() {
+		return filial_id;
+	}
+
+	public void setFilial_id(Long filial_id) {
+		this.filial_id = filial_id;
 	}
 
 	public String getTelefone() {

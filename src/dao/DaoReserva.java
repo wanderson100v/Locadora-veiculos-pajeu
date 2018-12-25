@@ -9,6 +9,7 @@ import banco.ReservaHoje;
 import banco.ReservaPendente;
 import entidade.CategoriaVeiculo;
 import entidade.Cliente;
+import entidade.Filial;
 import entidade.Reserva;
 import excecoes.DaoException;
 import sql.ConnectionFactory;
@@ -69,6 +70,26 @@ public class DaoReserva extends Dao<Reserva> implements IDaoReserva{
 			em.getTransaction().rollback();
 			e.printStackTrace();
 			throw new DaoException("ERRO AO BUSCAR RESERVAS PENDENTES POR CLIENTE ");
+		}finally {
+			em.close();
+		}
+	
+	}
+	
+	public List<ReservaPendente> buscarReservaPendente(Cliente cliente, Filial filial) throws DaoException {
+		try {
+			em = ConnectionFactory.getConnection();
+			TypedQuery<ReservaPendente> query = em.createNamedQuery(RESERVA_PENDENTE_POR_CLIENTE_FILIAL,ReservaPendente.class);
+			query.setParameter("filial_id",filial.getId());
+			query.setParameter("nome","%"+cliente.getNome()+"%");
+			query.setParameter("codigo","%"+cliente.getCodigo()+"%");
+			query.setParameter("telefone","%"+cliente.getTelefone()+"%");
+			query.setParameter("email","%"+cliente.getEmail()+"%");
+			return query.getResultList();
+		}catch (Exception e) {
+			em.getTransaction().rollback();
+			e.printStackTrace();
+			throw new DaoException("ERRO AO BUSCAR RESERVAS PENDENTES POR CLIENTE E FILIAL");
 		}finally {
 			em.close();
 		}

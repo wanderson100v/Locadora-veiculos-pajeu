@@ -8,6 +8,7 @@ import dao.DaoReserva;
 import dao.IDaoReserva;
 import entidade.CategoriaVeiculo;
 import entidade.Cliente;
+import entidade.Filial;
 import entidade.Reserva;
 import excecoes.BoException;
 import excecoes.DaoException;
@@ -158,6 +159,20 @@ public class BoReserva implements IBoReserva {
 			cliente.setEmail(dadoCliente);
 			cliente.setTelefone(dadoCliente);
 			return daoReserva.buscarReservaPendente(cliente);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+	
+	@Override
+	public List<ReservaPendente> buscarReservaPendente(String dadoCliente, Filial filial) throws BoException {
+		try {
+			Cliente cliente = new Cliente();
+			cliente.setNome(dadoCliente);
+			cliente.setCodigo(dadoCliente);
+			cliente.setEmail(dadoCliente);
+			cliente.setTelefone(dadoCliente);
+			return daoReserva.buscarReservaPendente(cliente,filial);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

@@ -1,26 +1,38 @@
 package controller;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 import banco.ReservaPendente;
+import business.BoFuncionario;
 import business.BoReserva;
 import business.IBoReserva;
+import dao.DaoRes;
+import entidade.Filial;
+import entidade.Funcionario;
 import entidade.Reserva;
+import enumeracoes.Cargo;
 import enumeracoes.EstadoRerserva;
 import excecoes.BoException;
+import excecoes.DaoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import sql.ConnectionFactory;
 import view.Alerta;
 
-public class AcompanhamentoReservaController{
+public class AcompanhamentoReservaController implements IFuncionarioObservadores{
 
 	@FXML
     private AnchorPane acompanhamentoReservaPane;
@@ -68,49 +80,108 @@ public class AcompanhamentoReservaController{
     private TextField dadosFilialFld;
     
     private IBoReserva boReserva = BoReserva.getInstance();
-
+    private Funcionario funcionario;
+    private Filial outraFilial;
+    private ToggleGroup toggleGroup;
+    
+    @FXML
+    void initialize() {
+    	FuncionarioObservavel.getIntance().getFuncionarioObservadores().add(this);
+    }
+    
     @FXML
     void actionHandle(ActionEvent event) {
-    	if(cancelarReservaBtn != null && categoriaCln.getCellValueFactory() == null)
-    		initialize();
+    	if(categoriaCln != null && categoriaCln.getCellValueFactory() == null)
+    		fazerLigacao();
     	try {
-    		System.out.println("eveto");
 	    	Object fonte  = event.getSource();
 	    	if(fonte == buscarBtn) {
-	    		reservasTbl.getItems().setAll(boReserva.buscarReservaPendente(dadosClienteFld.getText()));
-	    		Alerta.getInstance().imprimirMsg("Busca Concluida", reservasTbl.getItems().size()+" resultados",AlertType.INFORMATION);
+	    		if(toggleGroup.getSelectedToggle()!= null) {
+		    		if(empresaRb.isSelected()) {
+		    			reservasTbl.getItems().setAll(boReserva.buscarReservaPendente(dadosClienteFld.getText()));
+		    		}else {
+		    			Filial filial = null;
+		    			filial = (minhaFilialRb.isSelected()) ? funcionario.getFilial(): outraFilial;
+		    			reservasTbl.getItems().setAll(boReserva.buscarReservaPendente(dadosClienteFld.getText(),filial));
+		    		}
+		    		Alerta.getInstance().imprimirMsg("Busca Concluida", reservasTbl.getItems().size()+" resultados",AlertType.INFORMATION);
+	    		}else
+	    			Alerta.getInstance().imprimirMsg("Alerta", "É necessário selecionar opção de busca para filial",AlertType.WARNING);
+	    	
 	    	}else if(fonte == cancelarReservaBtn) {
+	    		
 	    		ReservaPendente reservaPendente  = reservasTbl.getSelectionModel().getSelectedItem();
-	    		if(reservaPendente != null 
-	    				&& Alerta.getInstance().imprimirMsgConfirmacao("Precione \"Ok\" para cancelar reserva com o cliente de código "+reservaPendente.getCodigoCliente())) {
-	    			Reserva reserva  = boReserva.buscarID(reservaPendente.getId());
-	    			reserva.setEstadoReserva(EstadoRerserva.CANCELADO);
-	    			boReserva.cadastrarEditar(reserva);
-	    			reservasTbl.getItems().setAll(boReserva.buscarReservaPendente(dadosClienteFld.getText()));
-	    			Alerta.getInstance().imprimirMsg("Sucesso", "Reserva cancelada com sucesso ",AlertType.INFORMATION);
+	    		if(reservaPendente != null) {
+	    			if(Alerta.getInstance().imprimirMsgConfirmacao("Precione \"Ok\" para cancelar reserva com o cliente de código "+reservaPendente.getCodigoCliente())) {
+		    			Reserva reserva  = boReserva.buscarID(reservaPendente.getId());
+		    			reserva.setEstadoReserva(EstadoRerserva.CANCELADO);
+		    			boReserva.cadastrarEditar(reserva);
+		    			reservasTbl.getItems().setAll(boReserva.buscarReservaPendente(dadosClienteFld.getText()));
+		    			Alerta.getInstance().imprimirMsg("Sucesso", "Reserva cancelada com sucesso ",AlertType.INFORMATION);
+	    			}
 	    		}else
 	    			Alerta.getInstance().imprimirMsg("Alerta", "Não há reserva selecionada na tabela",AlertType.WARNING);
+	    	
 	    	}else if(fonte == outraFilialRb) {
-	    		filialCln.setVisible(false);
+	    		
+	    		outraFilial = Util.selecionarFilialEmDialogo();
+	    		if(outraFilial!= null) {
+	    			filialCln.setVisible(false);
+	    			dadosFilialFld.setText(outraFilial.toString());
+	    		}
+	    		else {
+	    			outraFilialRb.setSelected(false);
+	    			dadosFilialFld.clear();
+	    		}
 	    	}else if(fonte == empresaRb) {
+	    	
 	    		filialCln.setVisible(true);
+	    		dadosFilialFld.clear();
 	    	}else if(fonte == minhaFilialRb) {
-	    		filialCln.setVisible(false);
+	    		
+	    		if(funcionario.getFilial() != null) {
+	    			filialCln.setVisible(false);
+	    			dadosFilialFld.setText(funcionario.getFilial().toString());
+	    		}
+	    		else {
+	    			dadosFilialFld.clear();
+	    			minhaFilialRb.setSelected(false);
+	    			Alerta.getInstance().imprimirMsg("Alerta", "Funcionário não esta relacionado a nenhuma filial",AlertType.WARNING);
+	    		}
+	    	
 	    	}
     	}catch (BoException e) {
     		Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
     	}
     }
 
-    void initialize() {
-    	System.out.println("inicalizando");
+	public void atualizar(Cargo cargo) {
+		try {
+			this.funcionario = null;
+			List<Funcionario> funcionarios = BoFuncionario.getInstance().buscaPorBusca(ConnectionFactory.getUser()[0].substring(1));
+			if(!funcionarios.isEmpty()) {
+				this.funcionario = funcionarios.get(0);
+				if(funcionario.getFilial()!= null) {
+					minhaFilialRb.setSelected(true);
+				}
+			}
+		} catch (BoException e) {
+			Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+		}
+	}
+
+	private void fazerLigacao() {
+    	toggleGroup = new ToggleGroup();
+    	minhaFilialRb.setToggleGroup(toggleGroup);
+    	empresaRb.setToggleGroup(toggleGroup);
+    	outraFilialRb.setToggleGroup(toggleGroup);
+    	
     	categoriaCln.setCellValueFactory(new PropertyValueFactory<>("tipo"));
         devolucaoCln.setCellValueFactory(new PropertyValueFactory<>("devolucao"));
     	retiradaCln.setCellValueFactory(new PropertyValueFactory<>("retirada"));
     	codigoClienteCln.setCellValueFactory(new PropertyValueFactory<>("codigoCliente"));
     	funcionarioCln.setCellValueFactory(new PropertyValueFactory<>("nomeFuncionario"));
     	filialCln.setCellValueFactory(new PropertyValueFactory<>("nomeFilial"));
-    	
     }
 }
 
