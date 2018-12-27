@@ -86,8 +86,6 @@ public class AcompanhamentoReservaController implements IFuncionarioObservadores
     
     @FXML
     void actionHandle(ActionEvent event) {
-    	if(categoriaCln != null && categoriaCln.getCellValueFactory() == null)
-    		fazerLigacao();
     	try {
 	    	Object fonte  = event.getSource();
 	    	if(fonte == buscarBtn) {
@@ -133,7 +131,6 @@ public class AcompanhamentoReservaController implements IFuncionarioObservadores
 	    		filialCln.setVisible(true);
 	    		dadosFilialFld.clear();
 	    	}else if(fonte == minhaFilialRb) {
-	    		
 	    		if(funcionario.getFilial() != null) {
 	    			filialCln.setVisible(false);
 	    			dadosFilialFld.setText(funcionario.getFilial().toString());
@@ -152,12 +149,15 @@ public class AcompanhamentoReservaController implements IFuncionarioObservadores
 
 	public void atualizar(Cargo cargo) {
 		try {
+			if(categoriaCln != null && categoriaCln.getCellValueFactory() == null)
+	    		fazerLigacao();
 			this.funcionario = null;
 			List<Funcionario> funcionarios = BoFuncionario.getInstance().buscaPorBusca(ConnectionFactory.getUser()[0].substring(1));
 			if(!funcionarios.isEmpty()) {
 				this.funcionario = funcionarios.get(0);
 				if(funcionario.getFilial()!= null) {
 					minhaFilialRb.setSelected(true);
+					dadosFilialFld.setText(funcionario.getFilial().toString());
 				}
 			}
 		} catch (BoException e) {

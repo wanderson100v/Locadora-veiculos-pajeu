@@ -299,22 +299,12 @@ public class CaminhonetaCargaController extends CRUDController<CaminhonetaCarga>
 	
 	@FXML
     void actionHandle(ActionEvent event) {
-		try {
-			if(event.getSource() == selectFilialBtn) {
-				Alert alerta = new Alert(AlertType.NONE);
-				SelecionarFilialController selecionarFilialController= (SelecionarFilialController) DaoRes.getInstance().carregarControllerFXML("SelecionarFilialDialog");
-				alerta.setDialogPane(selecionarFilialController.getSelecionarFilialDialog());
-				Optional<ButtonType> result = alerta.showAndWait();
-				if(result.isPresent() && result.get() == ButtonType.FINISH) {
-					Filial filial = selecionarFilialController.getFilialTbl().getSelectionModel().getSelectedItem();
-					if(filial!= null) {
-						filialFld.setText(filial.toString());
-						this.filial = filial;
-					}
-				}
+		if(event.getSource() == selectFilialBtn) {
+			Filial filial = Util.selecionarFilialEmDialogo();
+			if(filial!= null) {
+				filialFld.setText(filial.toString());
+				this.filial = filial;
 			}
-		} catch (DaoException e) {
-			alerta.imprimirMsg("Erro", e.getMessage(), AlertType.ERROR);
 		}
     }
 		

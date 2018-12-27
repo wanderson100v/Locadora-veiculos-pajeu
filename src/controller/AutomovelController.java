@@ -309,18 +309,11 @@ public class AutomovelController extends CRUDController<Automovel> {
     void actionHandle(ActionEvent event) {
 		try {
 			if(event.getSource() == selectFilialBtn) {
-				Alert alerta = new Alert(AlertType.NONE);
-				SelecionarFilialController selecionarFilialController= (SelecionarFilialController) DaoRes.getInstance().carregarControllerFXML("SelecionarFilialDialog");
-				alerta.setDialogPane(selecionarFilialController.getSelecionarFilialDialog());
-				Optional<ButtonType> result = alerta.showAndWait();
-				if(result.isPresent() && result.get() == ButtonType.FINISH) {
-					Filial filial = selecionarFilialController.getFilialTbl().getSelectionModel().getSelectedItem();
-					if(filial!= null) {
-						filialFld.setText(filial.toString());
-						this.filial = filial;
-					}
+				Filial filial = Util.selecionarFilialEmDialogo();
+				if(filial!= null) {
+					filialFld.setText(filial.toString());
+					this.filial = filial;
 				}
-				
 			}else if(event.getSource() == escolherAcessorioBtn) {
 					Alert alerta = new Alert(AlertType.NONE);
 					SelecionarAcessoriosController selecionarAcessoriosController = (SelecionarAcessoriosController) DaoRes.getInstance().carregarControllerFXML("SelecionarAcessoriosDialog");

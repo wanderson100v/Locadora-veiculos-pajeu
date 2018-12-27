@@ -5,6 +5,7 @@ import java.util.List;
 import business.BoFuncionario;
 import business.IBoFuncionario;
 import entidade.Entidade;
+import entidade.Filial;
 import entidade.Funcionario;
 import enumeracoes.Cargo;
 import excecoes.BoException;
@@ -69,13 +70,9 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
     @FXML
     private GridPane dadosAcessoPane;
 
-
     private Funcionario funcionario;
-    
     private IBoFuncionario boFuncionario = BoFuncionario.getInstance();
-    
-    
-    
+    private Filial filial;
     @FXML
     void initialize() {
     	super.initialize();
@@ -107,6 +104,10 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
 	    			funcionario.setAtivo(simAtivoRb.isSelected());
 	    			funcionario.setNome(nomeFld.getText());
 	    			funcionario.setCpf(cpfFld.getText());
+	    			if(filial!= null) {
+	    				funcionario.setFilial(filial);
+	    				this.filial = null;
+	    			}
 					boFuncionario.cadastrar(funcionario,senha,cargoBox.getValue());
 					alerta.imprimirMsg("Sucesso ao cadastrar","Funcionario cadastrado com sucesso", AlertType.INFORMATION);
 				}else {
@@ -163,6 +164,8 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
 		conSenhaFld.clear();
 		nivelAcessoBox.setVisible(true);
 		alterarNivelAcessoBtn.setVisible(true);
+		if(funcionario.getFilial()!= null)
+			filialFld.setText(funcionario.getFilial().toString());
 		try {
 			nivelAcessoBox.setValue(boFuncionario.requisitarGralDeAcesso(funcionario));
 		}catch (Exception e) {
@@ -173,6 +176,8 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
 	@Override
 	void limparCampos() {
 		this.funcionario = null;
+		this.filial = null;
+		filialFld.clear();
 		dadosAcessoPane.setVisible(true);
 		resertarSenhaBtn.setVisible(false);
 		simAtivoRb.setSelected(true);
@@ -191,7 +196,11 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
     void actionHandle(ActionEvent event) {
 		try {
 			if(event.getSource() == selectFilialBtn) {
-				
+				Filial filial = Util.selecionarFilialEmDialogo();
+				if(filial!= null) {
+					filialFld.setText(filial.toString());
+					this.filial = filial;
+				}
 			}else if(event.getSource() == resertarSenhaBtn) {
 				boFuncionario.resetarSenha(funcionario);
 				alerta.imprimirMsg("Sucesso ao editar", "Senha editada com sucesso",AlertType.INFORMATION);

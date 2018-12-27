@@ -6,8 +6,10 @@ import enumeracoes.Cargo;
 import excecoes.DaoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
+import view.Alerta;
 
 public class HomeController implements IFuncionarioObservadores{
 
@@ -19,6 +21,9 @@ public class HomeController implements IFuncionarioObservadores{
     
     @FXML
     private Tab reservaTab;
+    
+    @FXML
+    private Tab locacaoTab;
 
     @FXML
     private Button configBtn;
@@ -45,11 +50,13 @@ public class HomeController implements IFuncionarioObservadores{
 			
 			dadosTab.setContent(pesquisaController.getPesquisaPane());
 			reservaTab.setContent(daoRes.carregarPaneFXML("ReservaTabPane"));
+			locacaoTab.setContent(daoRes.carregarPaneFXML("LocacaoTabPane"));
 			
     	} catch (DaoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+			Alerta.getInstance().imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
+			System.exit(0);
+    	}
     }
     
     @FXML
