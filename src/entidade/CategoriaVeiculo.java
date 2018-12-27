@@ -3,59 +3,19 @@ package entidade;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity(name = "categoria_veiculo" )
-@NamedQueries({
-	@NamedQuery(name = "categoriaVeiculo.categorizarCaminhonetaCarga" ,
-			query = "select categoriaVeiculo from entidade.CategoriaVeiculo as categoriaVeiculo "
-					+ "inner join categoriaVeiculo.veiculoExemplo as caminhonetaCarga "
-					+ "where caminhonetaCarga.potencia <= :potencia "
-					+ "and caminhonetaCarga.desenpenho <= :desenpenho "
-					+ "and caminhonetaCarga.capacidadeCarga <= :capacidadeCarga "
-					+ "and caminhonetaCarga.tipoAcionamentoEmbreagem <= :tipoAcionamentoEmbreagem "
-					+ "and caminhonetaCarga.distanciaEixos <= :distanciaEixos "
-					+ "and caminhonetaCarga.capacidadeCombustivel <= :capacidadeCombustivel "
-					+ "and caminhonetaCarga.torqueMotor <= :torqueMotor "
-					+ "order by(caminhonetaCarga.capacidadeCarga, caminhonetaCarga.potencia, caminhonetaCarga.torqueMotor,"
-					+ "caminhonetaCarga.desenpenho, caminhonetaCarga.distanciaEixos, caminhonetaCarga.tipoAcionamentoEmbreagem, "
-					+ "caminhonetaCarga.tipoCombustivel, caminhonetaCarga.capacidadeCombustivel) desc"),
-	@NamedQuery(name = "categoriaVeiculo.categorizarAutomovelPequeno" ,
-			query = "select categoriaVeiculo from entidade.CategoriaVeiculo as categoriaVeiculo "
-					+ "inner join categoriaVeiculo.veiculoExemplo as automovel "
-					+ "where automovel.tipoAutomovel = 0  "
-					+ "and automovel.tipoCambio <= :tipoCambio "
-					+ "and automovel.tamanhoVeiculo <= :tamanhoVeiculo "
-					+ "and automovel.quantidadePortas <= :quantidadePortas "
-					+ "and automovel.quantidadePassageiro <= :quantidadePassageiro "
-					+ "and automovel.tipoCombustivel <= :tipoCombustivel "
-					+ "order by(automovel.tipoCambio ,automovel.tamanhoVeiculo, "
-					+ "automovel.quantidadePortas, automovel.quantidadePassageiro, "
-					+ "automovel.tipoCombustivel) desc"),
-	@NamedQuery(name = "categoriaVeiculo.categorizarCaminhonetaPassageiro" ,
-			query = "select categoriaVeiculo from entidade.CategoriaVeiculo as categoriaVeiculo "
-					+ "inner join categoriaVeiculo.veiculoExemplo as automovel "
-					+ "where automovel.tipoAutomovel = 1 "
-					+ "and automovel.tipoAirBag <= :tipoAirBag "
-					+ "and automovel.tipoCambio <= :tipoCambio "
-					+ "and automovel.tamanhoVeiculo <= :tamanhoVeiculo "
-					+ "and automovel.quantidadePortas <= :quantidadePortas "
-					+ "and automovel.quantidadePassageiro <= :quantidadePassageiro "
-					+ "and automovel.tipoCombustivel <= :tipoCombustivel "
-					+ "order by(automovel.tipoAirBag, automovel.tipoCambio ,automovel.tamanhoVeiculo, "
-					+ "automovel.quantidadePortas, automovel.quantidadePassageiro, automovel.tipoCombustivel) desc"),
-	@NamedQuery(name = "categoriaVeiculo.buscaPorBusca" , 
-			query = "select c from entidade.CategoriaVeiculo as c"
-					+ " where upper(c.tipo) like upper(:tipo)"
-					+ " or upper(c.descricao) like upper(:descricao)"
-					+ " or c.quilometragemRevisao = :quilometragemRevisao"
-					+ " or c.horasRevisao = :horasRevisao"
-					+ " or c.horasLimpesa = :horasLimpesa"
-					+ " or c.valorDiaria = :valorDiaria")
-})
+@NamedQuery(name = "categoriaVeiculo.buscaPorBusca" , 
+		query = "select c from entidade.CategoriaVeiculo as c"
+			+ " where upper(c.tipo) like upper(:tipo)"
+			+ " or upper(c.descricao) like upper(:descricao)"
+			+ " or c.quilometragemRevisao = :quilometragemRevisao"
+			+ " or c.horasRevisao = :horasRevisao"
+			+ " or c.horasLimpesa = :horasLimpesa"
+			+ " or c.valorDiaria = :valorDiaria")
 @SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "categoria_veiculo_seq")
 public class CategoriaVeiculo extends Entidade {
 	

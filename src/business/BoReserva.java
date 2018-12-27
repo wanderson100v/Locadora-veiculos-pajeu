@@ -1,7 +1,9 @@
 package business;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import adapter.ReservaDisponibilidade;
 import banco.ReservaHoje;
 import banco.ReservaPendente;
 import dao.DaoReserva;
@@ -177,7 +179,16 @@ public class BoReserva implements IBoReserva {
 			throw new BoException(e.getMessage());
 		}
 	}
-
+	
+	@Override
+	public List<ReservaDisponibilidade> buscarReservaDisponibilidade(Long filialId, LocalDateTime horario)
+			throws BoException {
+		try {
+			return daoReserva.buscarReservaDisponibilidade(filialId, horario);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
 
 	@Override
 	public long totalReservaDataRetirada(CategoriaVeiculo categoriaVeiculo) throws BoException {

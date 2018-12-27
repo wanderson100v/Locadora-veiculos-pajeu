@@ -132,6 +132,37 @@ public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 	}
 
 	@Override
+	public List<CategoriaVeiculo> categoriasSuperiorCaminhonetaCarga(CaminhonetaCarga caminhonetaCarga) throws BoException{
+		try {
+			List<CategoriaVeiculo> categoriasCandidatas = daoCategoriaVeiculo.categoriasSuperiorCaminhonetaCarga(caminhonetaCarga); 
+			if(categoriasCandidatas.isEmpty())
+				throw new BoException("Não há categorias de caminhonetas de carga superiores a especificada");
+			return categoriasCandidatas;
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<CategoriaVeiculo> categoriasSuperiorAutomovel(Automovel automovel) throws BoException {
+		try {
+			if(automovel.getTipoAutomovel() == null)
+				throw new BoException("Veiculo sem tipo(convencional ou caminhoneta de carga):\n impossibilidade de categorização");
+			List<CategoriaVeiculo> categoriasSuperiores;
+			if(automovel.getTipoAutomovel() == TipoAutomovel.CONVENCIONAL)
+				categoriasSuperiores = daoCategoriaVeiculo.categoriasSuperiorAutomovelPequeno(automovel); 
+			else
+				categoriasSuperiores = daoCategoriaVeiculo.categoriasSuperiorCaminhonetaPassageiro(automovel);
+			
+			if(categoriasSuperiores.isEmpty())
+				throw new BoException("Não há categorias de Automovel superiores a especificada");
+			
+			return categoriasSuperiores;
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+	@Override
 	public List<CategoriaVeiculo> buscaPorBusca(String busca) throws BoException {
 		try {
 			CategoriaVeiculo categoriaVeiculo = new CategoriaVeiculo();
@@ -170,4 +201,5 @@ public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 				
 		
 	}
+
 }

@@ -7,9 +7,7 @@ import javax.persistence.TypedQuery;
 import entidade.Automovel;
 import entidade.CaminhonetaCarga;
 import entidade.CategoriaVeiculo;
-import entidade.Entidade;
 import excecoes.DaoException;
-import excecoes.ValidarException;
 import sql.ConnectionFactory;
 
 public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCategoriaVeiculo  {
@@ -22,7 +20,7 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 	public List<CategoriaVeiculo> categorizarCaminhonetaCarga(CaminhonetaCarga caminhonetaCarga) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
-			TypedQuery<CategoriaVeiculo> query= em.createNamedQuery(CATEGORIZAR_CAMINHONETA_CARGA,CategoriaVeiculo.class);
+			TypedQuery<CategoriaVeiculo> query= em.createNamedQuery(SELECIONAR_CATEGORIA_CAMINHONETA_CARGA.replace('?','<'),CategoriaVeiculo.class);
 			query.setParameter("potencia",caminhonetaCarga.getPotencia());
 			query.setParameter("desenpenho",caminhonetaCarga.getDesenpenho());
 			query.setParameter("capacidadeCarga",caminhonetaCarga.getCapacidadeCarga());
@@ -44,7 +42,7 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 	public List<CategoriaVeiculo> categorizarCaminhonetaPassageiro(Automovel automovel) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
-			TypedQuery<CategoriaVeiculo> query= em.createNamedQuery(CATEGORIZAR_CAMINHONETA_PASSAGEIRO,CategoriaVeiculo.class);
+			TypedQuery<CategoriaVeiculo> query= em.createQuery(SELECIONAR_CAMINHONETA_PASSAGEIRO.replace('?','<'),CategoriaVeiculo.class);
 			query.setParameter("tipoAirBag",automovel.getTipoAirBag());
 			query.setParameter("tipoCambio",automovel.getTipoCambio());
 			query.setParameter("tamanhoVeiculo",automovel.getTamanhoVeiculo());
@@ -65,7 +63,7 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 	public List<CategoriaVeiculo> categorizarAutomovelPequeno(Automovel automovel) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
-			TypedQuery<CategoriaVeiculo> query= em.createNamedQuery(CATEGORIZAR_AUTOMOVEL_PEQUENO,CategoriaVeiculo.class);
+			TypedQuery<CategoriaVeiculo> query= em.createQuery(SELECIONAR_AUTOMOVEL_PEQUENO.replace('?','<'),CategoriaVeiculo.class);
 			query.setParameter("tipoCambio",automovel.getTipoCambio());
 			query.setParameter("tamanhoVeiculo",automovel.getTamanhoVeiculo());
 			query.setParameter("quantidadePortas",automovel.getQuantidadePortas());
@@ -76,6 +74,66 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw new DaoException("ERRO AO SELECIONAR CATEGORIAS DE AUTOMOVEL PEQUENO");
+		}finally {
+			em.close();
+		}
+	}
+	
+	public List<CategoriaVeiculo> categoriasSuperiorCaminhonetaCarga(CaminhonetaCarga caminhonetaCarga) throws DaoException {
+		try {
+			em = ConnectionFactory.getConnection();
+			TypedQuery<CategoriaVeiculo> query= em.createQuery(SELECIONAR_CATEGORIA_CAMINHONETA_CARGA.replace('?','>'),CategoriaVeiculo.class);
+			query.setParameter("potencia",caminhonetaCarga.getPotencia());
+			query.setParameter("desenpenho",caminhonetaCarga.getDesenpenho());
+			query.setParameter("capacidadeCarga",caminhonetaCarga.getCapacidadeCarga());
+			query.setParameter("tipoAcionamentoEmbreagem",caminhonetaCarga.getTipoAcionamentoEmbreagem());
+			query.setParameter("distanciaEixos",caminhonetaCarga.getDistanciaEixos());
+			query.setParameter("capacidadeCombustivel",caminhonetaCarga.getCapacidadeCombustivel());
+			query.setParameter("torqueMotor",caminhonetaCarga.getTorqueMotor());
+
+			return query.getResultList();
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new DaoException("ERRO AO SELECIONAR CATEGORIAS SUPERIORES DE CAMINHONETA DE CARGA");
+		}finally {
+			em.close();
+		}
+	}
+
+	public List<CategoriaVeiculo> categoriasSuperiorCaminhonetaPassageiro(Automovel automovel) throws DaoException {
+		try {
+			em = ConnectionFactory.getConnection();
+			TypedQuery<CategoriaVeiculo> query= em.createQuery(SELECIONAR_CAMINHONETA_PASSAGEIRO.replace('?','>'),CategoriaVeiculo.class);
+			query.setParameter("tipoAirBag",automovel.getTipoAirBag());
+			query.setParameter("tipoCambio",automovel.getTipoCambio());
+			query.setParameter("tamanhoVeiculo",automovel.getTamanhoVeiculo());
+			query.setParameter("quantidadePortas",automovel.getQuantidadePortas());
+			query.setParameter("quantidadePassageiro",automovel.getQuantidadePassageiro());
+			query.setParameter("tipoCombustivel",automovel.getTipoCombustivel());
+			
+			return query.getResultList();
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new DaoException("ERRO AO SELECIONAR CATEGORIAS SUPERIORES  DE CAMINHONETA DE PASSAGEIROS");
+		}finally {
+			em.close();
+		}
+	}
+
+	public List<CategoriaVeiculo> categoriasSuperiorAutomovelPequeno(Automovel automovel) throws DaoException {
+		try {
+			em = ConnectionFactory.getConnection();
+			TypedQuery<CategoriaVeiculo> query= em.createQuery(SELECIONAR_AUTOMOVEL_PEQUENO.replace('?','>'),CategoriaVeiculo.class);
+			query.setParameter("tipoCambio",automovel.getTipoCambio());
+			query.setParameter("tamanhoVeiculo",automovel.getTamanhoVeiculo());
+			query.setParameter("quantidadePortas",automovel.getQuantidadePortas());
+			query.setParameter("quantidadePassageiro",automovel.getQuantidadePassageiro());
+			query.setParameter("tipoCombustivel",automovel.getTipoCombustivel());
+			
+			return query.getResultList();
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new DaoException("ERRO AO SELECIONAR CATEGORIAS SUPERIORES DE AUTOMOVEL PEQUENO");
 		}finally {
 			em.close();
 		}

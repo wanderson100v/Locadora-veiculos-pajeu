@@ -1,10 +1,12 @@
 package dao;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import adapter.ReservaDisponibilidade;
 import banco.ReservaHoje;
 import banco.ReservaPendente;
 import entidade.CategoriaVeiculo;
@@ -73,7 +75,6 @@ public class DaoReserva extends Dao<Reserva> implements IDaoReserva{
 		}finally {
 			em.close();
 		}
-	
 	}
 	
 	public List<ReservaPendente> buscarReservaPendente(Cliente cliente, Filial filial) throws DaoException {
@@ -95,5 +96,52 @@ public class DaoReserva extends Dao<Reserva> implements IDaoReserva{
 		}
 	
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	public List<ReservaDisponibilidade> buscarReservaDisponibilidade(Long filialId, LocalDateTime horario)throws DaoException{
+		try {
+			em = ConnectionFactory.getConnection();
+			List<ReservaDisponibilidade> elementos = em.createNativeQuery(
+					"select" + 
+					" cate.tipo as tipo_categoria" + 
+					" ,(select count(*) from veiculo as v"+ 
+					" inner join filial as f on(f.id = v.filial_id)" + 
+					" left join categoria_veiculo as c on(c.id = v.categoriaveiculo_id)" + 
+					" where v.ativo = true" + 
+					" and v.locado = false"+ 
+					" and f.id = fili.id" + 
+					" and c.id = cate.id" + 
+					" ) as reservavel" +
+					" ,(select count(*) from locacao as l" + 
+					" inner join veiculo as v on(v.id = l.veiculo_id)" + 
+					" inner join categoria_veiculo as c on(c.id = v.categoriaveiculo_id)" + 
+					" inner join filial as f on(f.id = l.filialentrega_id)" + 
+					" where l.data_devolucao <= :horario" + 
+					" and f.id = fili.id" + 
+					" and c.id = cate.id" + 
+					" ) as a_receber " +
+					" ,(select count(*) from reserva as r" + 
+					" inner join categoria_veiculo as c on(c.id = r.categoriaveiculo_id)" + 
+					" inner join filial as f on(f.id = r.filial_id)" + 
+					" where r.estado_reserva = 1" + 
+					" and f.id = fili.id" + 
+					" and c.id = cate.id" + 
+					" ) as reservado"+ 
+					" from categoria_veiculo as cate" + 
+					" cross join filial fili"+
+					" where fili.id = :id" ,"reservaDisponibilidade")
+			.setParameter("id",filialId)
+			.setParameter("horario",horario).getResultList();
+			
+			for(ReservaDisponibilidade e : elementos)
+				e.setPrevisto(e.getReceber()+ e.getReservavel() - e.getReservado());
+			return elementos;
+		}catch (Exception e) {
+			em.getTransaction().rollback();
+			e.printStackTrace();
+			throw new DaoException("ERRO AO REQUISITAR DISPONIBILIDADE DE RESERVAS EM FILIAL PARA O HORARIO ");
+		}finally {
+			em.close();
+		}
+	}
 }

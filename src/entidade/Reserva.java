@@ -5,15 +5,28 @@ package entidade;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.SqlResultSetMapping;
 
+import adapter.ReservaDisponibilidade;
 import enumeracoes.EstadoRerserva;
 
 @Entity
+@SqlResultSetMapping(
+        name  =  "reservaDisponibilidade" ,
+		classes  =  @ConstructorResult (
+                targetClass  =  ReservaDisponibilidade.class,
+                columns  = {
+                    @ColumnResult ( name  =  "tipo_categoria",type = String.class),
+                    @ColumnResult ( name  =  "reservado",type = Integer.class ),
+                    @ColumnResult ( name  =  "a_receber",type = Integer.class),
+                    @ColumnResult ( name  =  "reservavel",type = Integer.class )}))
 @SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "reserva_seq")
 @NamedQuery(name = "reserva.totalDataRetirada", 
 	query = "select count(*) from Reserva r "

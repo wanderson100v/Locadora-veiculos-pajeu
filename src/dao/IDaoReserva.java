@@ -1,7 +1,9 @@
 package dao;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import adapter.ReservaDisponibilidade;
 import banco.ReservaHoje;
 import banco.ReservaPendente;
 import entidade.CategoriaVeiculo;
@@ -24,5 +26,7 @@ public interface IDaoReserva extends IDao<Reserva>{
 	public List<ReservaPendente> buscarReservaPendente(Cliente cliente) throws DaoException ;
 	
 	public List<ReservaPendente> buscarReservaPendente(Cliente cliente, Filial filial) throws DaoException ;
+	
+	public List<ReservaDisponibilidade> buscarReservaDisponibilidade(Long filialId, LocalDateTime horario) throws DaoException;
 
 }
