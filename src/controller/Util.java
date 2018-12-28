@@ -1,7 +1,9 @@
 package controller;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
+import adapter.ReservaDisponibilidade;
 import banco.ReservaPendente;
 import business.BoReserva;
 import dao.DaoRes;
@@ -107,6 +109,27 @@ public class Util {
 				reservaSelecionada = selecionarReservaPendenteController.getReservasTbl().getSelectionModel().getSelectedItem();
 				if(reservaSelecionada != null) 
 					Alerta.getInstance().imprimirMsg("Sucesso","Reserva do cliente "+cliente.getNome()+" selecionada com sucesso",AlertType.INFORMATION);
+			}
+		} catch (DaoException | BoException e) {
+			Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+		}
+		return reservaSelecionada;
+	}
+	
+
+	public static ReservaDisponibilidade selecionarReservaDispoSuperiorEmDialogo(CategoriaVeiculo categoriaVeiculo, Filial filial, LocalDateTime horario) {
+		ReservaDisponibilidade reservaSelecionada = null;
+		try {
+			Alert alerta = new Alert(AlertType.NONE);
+			SelecionarReservaDispoController selecionarReservaDispoController;
+			selecionarReservaDispoController = (SelecionarReservaDispoController) DaoRes.getInstance().carregarControllerFXML("SelecionarReservaDispoDialog");
+			selecionarReservaDispoController.getReservaDispoTbl().getItems().addAll(BoReserva.getInstance().reservaDisponibilidadeSuperior(categoriaVeiculo, filial.getId(), horario));
+			alerta.setDialogPane(selecionarReservaDispoController.getSelectReservaDispoDialog());
+			Optional<ButtonType> result = alerta.showAndWait();
+			if(result.isPresent() && result.get() == ButtonType.FINISH) {
+				reservaSelecionada = selecionarReservaDispoController.getReservaDispoTbl().getSelectionModel().getSelectedItem();
+				if(reservaSelecionada != null) 
+					Alerta.getInstance().imprimirMsg("Sucesso","Reserva Superior selecionada com sucesso",AlertType.INFORMATION);
 			}
 		} catch (DaoException | BoException e) {
 			Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);

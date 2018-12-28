@@ -31,24 +31,6 @@ public class DisponibilidadeReservaController implements IFuncionarioObservadore
 
 
     @FXML
-    private TableView<ReservaDisponibilidade> reservasTbl;
-
-    @FXML
-    private TableColumn<ReservaDisponibilidade, String> categoriaCln;
-
-    @FXML
-    private TableColumn<ReservaDisponibilidade, Integer> reservadoCln;
-
-    @FXML
-    private TableColumn<ReservaDisponibilidade, Integer> aReceberCln;
-
-    @FXML
-    private TableColumn<ReservaDisponibilidade, Integer> reservavelCln;
-
-    @FXML
-    private TableColumn<ReservaDisponibilidade, Integer> previstoCln;
-
-    @FXML
     private Button atualizarTabelaBtn;
 
     @FXML
@@ -68,6 +50,30 @@ public class DisponibilidadeReservaController implements IFuncionarioObservadore
 
     @FXML
     private Button selecionarFilialBtn;
+    
+    @FXML
+    private TableView<ReservaDisponibilidade> reservasTbl;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, String> categoriaCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, Integer> reservadoCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, Integer> aReceberCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, Integer> reservavelCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, Integer> previstoCln;
+    
+    @FXML
+    private TableColumn<ReservaDisponibilidade, Float> valorCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, String> descricaoCln;
     
     private IBoReserva boReserva = BoReserva.getInstance();
     private Funcionario funcionario;
@@ -161,6 +167,8 @@ public class DisponibilidadeReservaController implements IFuncionarioObservadore
     	aReceberCln.setCellValueFactory(new PropertyValueFactory<>("receber"));
     	reservavelCln.setCellValueFactory(new PropertyValueFactory<>("reservavel"));
     	previstoCln.setCellValueFactory(new PropertyValueFactory<>("previsto"));
+    	valorCln.setCellValueFactory(new PropertyValueFactory<>("valorDiariaCategoria"));
+    	descricaoCln.setCellValueFactory(new PropertyValueFactory<>("descricaoCategoria"));
+  
     }
-
 }

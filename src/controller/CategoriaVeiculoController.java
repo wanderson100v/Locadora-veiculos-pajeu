@@ -27,7 +27,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import view.Mascara;
 
 public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo> {
 

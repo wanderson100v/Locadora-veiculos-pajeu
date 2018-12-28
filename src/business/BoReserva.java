@@ -8,6 +8,8 @@ import banco.ReservaHoje;
 import banco.ReservaPendente;
 import dao.DaoReserva;
 import dao.IDaoReserva;
+import entidade.Automovel;
+import entidade.CaminhonetaCarga;
 import entidade.CategoriaVeiculo;
 import entidade.Cliente;
 import entidade.Filial;
@@ -178,6 +180,21 @@ public class BoReserva implements IBoReserva {
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}
+	}
+	
+	@Override
+	public List<ReservaDisponibilidade> reservaDisponibilidadeSuperior(CategoriaVeiculo categoriaVeiculo, Long filialId,
+			LocalDateTime horario) throws BoException {
+		try {
+			if(categoriaVeiculo.getVeiculoExemplo() instanceof CaminhonetaCarga)
+				return daoReserva.reservaDisponibilidadeSuperior((CaminhonetaCarga) categoriaVeiculo.getVeiculoExemplo(), filialId, horario);
+			else if(categoriaVeiculo.getVeiculoExemplo() instanceof Automovel) {
+				return daoReserva.reservaDisponibilidadeSuperior((Automovel) categoriaVeiculo.getVeiculoExemplo(), filialId, horario);
+			}
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+		return null;
 	}
 	
 	@Override

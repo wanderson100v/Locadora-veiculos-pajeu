@@ -137,11 +137,14 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
     				ReservaPendente reservaPendente = Util.selecionarReservaPendenteEmDialogo(locacao.getCliente(), 
     						locacao.getFilialRetirada());
 		    		if(reservaPendente!= null) {
+		    			// verificar se há veiculos dispoiveis para locação , caso não satisfeito mostrar tela de disponibilidade
 		    			Reserva reserva  = BoReserva.getInstance().buscarID(reservaPendente.getId());
+		    			/*
 		    			reservaFld.setText(reservaPendente.toString());
 		    			filialRetiFld.setText(reserva.getFilial().toString());
 		    			locacao.setFilialRetirada(reserva.getFilial());
-		    			locacao.setReservaOrigem(reserva);
+		    			locacao.setReservaOrigem(reserva);*/
+		    			Util.selecionarReservaDispoSuperiorEmDialogo(reserva.getCategoriaVeiculo(),reserva.getFilial(),LocalDateTime.now());
 		    		}
 	    		}else
 	    			Alerta.getInstance().imprimirMsg("Alerta","É necessário selecionar um cliente e filial de retirada antes de "

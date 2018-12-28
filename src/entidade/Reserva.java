@@ -24,9 +24,11 @@ import enumeracoes.EstadoRerserva;
                 targetClass  =  ReservaDisponibilidade.class,
                 columns  = {
                     @ColumnResult ( name  =  "tipo_categoria",type = String.class),
+                    @ColumnResult ( name  =  "descricao_categoria",type = String.class ),
                     @ColumnResult ( name  =  "reservado",type = Integer.class ),
                     @ColumnResult ( name  =  "a_receber",type = Integer.class),
-                    @ColumnResult ( name  =  "reservavel",type = Integer.class )}))
+                    @ColumnResult ( name  =  "reservavel",type = Integer.class ),
+                    @ColumnResult ( name  =  "valor_diaria_categoria",type = Float.class )}))
 @SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "reserva_seq")
 @NamedQuery(name = "reserva.totalDataRetirada", 
 	query = "select count(*) from Reserva r "

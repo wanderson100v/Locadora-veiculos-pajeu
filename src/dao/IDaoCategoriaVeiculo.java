@@ -28,7 +28,7 @@ public interface IDaoCategoriaVeiculo extends IDao<CategoriaVeiculo>{
 						+ "order by(caminhonetaCarga.capacidadeCarga, caminhonetaCarga.potencia, caminhonetaCarga.torqueMotor,"
 						+ "caminhonetaCarga.desenpenho, caminhonetaCarga.distanciaEixos, caminhonetaCarga.tipoAcionamentoEmbreagem, "
 						+ "caminhonetaCarga.tipoCombustivel, caminhonetaCarga.capacidadeCombustivel) desc";
-	String SELECIONAR_CAMINHONETA_PASSAGEIRO = "select categoriaVeiculo from entidade.CategoriaVeiculo as categoriaVeiculo "
+	String SELECIONAR_AUTOMOVEL_PEQUENO = "select categoriaVeiculo from entidade.CategoriaVeiculo as categoriaVeiculo "
 						+ "inner join categoriaVeiculo.veiculoExemplo as automovel "
 						+ "where automovel.tipoAutomovel = 0  "
 						+ "and automovel.tipoCambio ?= :tipoCambio "
@@ -39,7 +39,7 @@ public interface IDaoCategoriaVeiculo extends IDao<CategoriaVeiculo>{
 						+ "order by(automovel.tipoCambio ,automovel.tamanhoVeiculo, "
 						+ "automovel.quantidadePortas, automovel.quantidadePassageiro, "
 						+ "automovel.tipoCombustivel) desc";
-	String SELECIONAR_AUTOMOVEL_PEQUENO  = "select categoriaVeiculo from entidade.CategoriaVeiculo as categoriaVeiculo "
+	String SELECIONAR_CAMINHONETA_PASSAGEIRO  = "select categoriaVeiculo from entidade.CategoriaVeiculo as categoriaVeiculo "
 						+ "inner join categoriaVeiculo.veiculoExemplo as automovel "
 						+ "where automovel.tipoAutomovel = 1 "
 						+ "and automovel.tipoAirBag ?= :tipoAirBag "
