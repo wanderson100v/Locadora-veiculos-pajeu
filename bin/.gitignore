@@ -1,4 +1,4 @@
-/META-INF/
+/adapter/
 /antlr-2.7.7.jar
 /app/
 /banco/
@@ -21,4 +21,3 @@
 /res/
 /sql/
 /view/
-/adapter/

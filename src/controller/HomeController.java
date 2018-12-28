@@ -50,7 +50,8 @@ public class HomeController implements IFuncionarioObservadores{
 			
 			dadosTab.setContent(pesquisaController.getPesquisaPane());
 			reservaTab.setContent(daoRes.carregarPaneFXML("ReservaTabPane"));
-			locacaoTab.setContent(daoRes.carregarPaneFXML("LocacaoTabPane"));
+			locacaoTab.setContent(daoRes.carregarPaneFXML("LocacaoTabPane"
+					+ ""));
 			
     	} catch (DaoException e) {
 			e.printStackTrace();

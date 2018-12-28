@@ -23,7 +23,6 @@ public class Alerta extends Alert {
 	}
 	
 	public void imprimirMsg(String title, String contentText, AlertType alertType) {
-		
 		setTitle(title);
 		setContentText(contentText);
 		setAlertType(alertType);
@@ -43,4 +42,11 @@ public class Alerta extends Alert {
 		return false;
 	}
 	
+	public void imprimir() {
+		setAlertType(AlertType.NONE);
+		getButtonTypes().add(ButtonType.NEXT);
+	}
+	public static void main(String[] args) {
+		Alerta.getInstance().imprimir();
+	}
 }

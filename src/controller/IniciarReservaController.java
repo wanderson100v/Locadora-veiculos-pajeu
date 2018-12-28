@@ -2,11 +2,9 @@ package controller;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import business.BoReserva;
 import business.IBoReserva;
-import dao.DaoRes;
 import entidade.CategoriaVeiculo;
 import entidade.Cliente;
 import entidade.Filial;
@@ -14,12 +12,9 @@ import entidade.Funcionario;
 import entidade.Reserva;
 import enumeracoes.EstadoRerserva;
 import excecoes.BoException;
-import excecoes.DaoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -78,8 +73,6 @@ public class IniciarReservaController {
     	horaDevolucaoBox.getItems().addAll(horaRetiradaBox.getItems());
     	retiradaDate.setValue(LocalDate.now());
     	entregaDate.setValue(LocalDate.now());
-    	
-    	
     }
     
     @FXML
@@ -87,56 +80,28 @@ public class IniciarReservaController {
     	Button btn = (Button) event.getSource();
     	try {
     		if(btn == selectClienteBtn) {
-    			Alert alerta = new Alert(AlertType.NONE);
-				SelecionarClienteController selecionarClienteController;
-				selecionarClienteController = (SelecionarClienteController) DaoRes.getInstance().carregarControllerFXML("SelecionarClienteDialog");
-				alerta.setDialogPane(selecionarClienteController.getSelecionarClienteDialog());
-				Optional<ButtonType> result = alerta.showAndWait();
-				if(result.isPresent() && result.get() == ButtonType.FINISH) {
-					Cliente cliente = selecionarClienteController.getClienteTbl().getSelectionModel().getSelectedItem();
-					if(cliente!= null) {
-						clienteFld.setText(cliente.toString());
-						reserva.setCliente(cliente);
-					}
+    			Cliente cliente = Util.selecionarClienteEmDialogo();
+	    		if(cliente!= null) {
+					clienteFld.setText(cliente.toString());
+					reserva.setCliente(cliente);
 				}
 	    	}else if(btn == selectFuncionarioBtn) {
-	    		Alert alerta = new Alert(AlertType.NONE);
-				SelecionarFuncionarioController selecionarFuncionarioController;
-				selecionarFuncionarioController = (SelecionarFuncionarioController) DaoRes.getInstance().carregarControllerFXML("SelecionarFuncionarioDialog");
-				alerta.setDialogPane(selecionarFuncionarioController.getSelecionarFuncionarioDialog());
-				Optional<ButtonType> result = alerta.showAndWait();
-				if(result.isPresent() && result.get() == ButtonType.FINISH) {
-					Funcionario funcionario = selecionarFuncionarioController.getFuncionarioTbl().getSelectionModel().getSelectedItem();
-					if(funcionario!= null) {
-						funcionarioFld.setText(funcionario.toString());
-						reserva.setFuncionario(funcionario);
-					}
+	    		Funcionario funcionario = Util.selecionarFucnionarioEmDialogo();
+	    		if(funcionario!= null) {
+					funcionarioFld.setText(funcionario.toString());
+					reserva.setFuncionario(funcionario);
 				}
 	    	}else if(btn == selectFilialBtn) {
-	    		Alert alerta = new Alert(AlertType.NONE);
-				SelecionarFilialController selecionarFilialController;
-				selecionarFilialController = (SelecionarFilialController) DaoRes.getInstance().carregarControllerFXML("SelecionarFilialDialog");
-				alerta.setDialogPane(selecionarFilialController.getSelecionarFilialDialog());
-				Optional<ButtonType> result = alerta.showAndWait();
-				if(result.isPresent() && result.get() == ButtonType.FINISH) {
-					Filial filial = selecionarFilialController.getFilialTbl().getSelectionModel().getSelectedItem();
-					if(filial!= null) {
-						filialFld.setText(filial.toString());
-						reserva.setFilial(filial);
-					}
+				Filial filial = Util.selecionarFilialEmDialogo();
+	    		if(filial!= null) {
+					filialFld.setText(filial.toString());
+					reserva.setFilial(filial);
 				}
 	    	}else if(btn == selectCategoriaBtn) {
-	    		Alert alerta = new Alert(AlertType.NONE);
-				SelecionarCategoriaVeiculoController selecionarCategoriaVeiculoController;
-				selecionarCategoriaVeiculoController = (SelecionarCategoriaVeiculoController) DaoRes.getInstance().carregarControllerFXML("SelecionarCategoriaVeiculoDialog");
-				alerta.setDialogPane(selecionarCategoriaVeiculoController.getSelecionarCategoriaVeiculoDialog());
-				Optional<ButtonType> result = alerta.showAndWait();
-				if(result.isPresent() && result.get() == ButtonType.FINISH) {
-					CategoriaVeiculo categoriaVeiculo = selecionarCategoriaVeiculoController.getCategoriaVeiculoTbl().getSelectionModel().getSelectedItem();
-					if(categoriaVeiculo != null) {
-						categoriaFld.setText(categoriaVeiculo .toString());
-						reserva.setCategoriaVeiculo(categoriaVeiculo );
-					}
+	    		CategoriaVeiculo categoriaVeiculo = Util.selecionarCategoriaVeiculoEmDialogo();
+	    		if(categoriaVeiculo!= null) {
+					categoriaFld.setText(categoriaVeiculo.toString());
+					reserva.setCategoriaVeiculo(categoriaVeiculo);
 				}
 	    	}else if(btn == reservarBtn) {
 	    		reserva.setEstadoReserva(EstadoRerserva.PENDENTE);
@@ -149,7 +114,7 @@ public class IniciarReservaController {
 	    		this.reserva = new Reserva();
 	    		limparCampos();
 	    	}
-    	} catch (BoException | DaoException e) {
+    	} catch (BoException e) {
     		Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
     		limparCampos();
 		}
@@ -161,7 +126,10 @@ public class IniciarReservaController {
     	funcionarioFld.clear();
     	filialFld.clear();
     	categoriaFld.clear();
-    
+    	entregaDate.setValue(LocalDate.now());
+    	horaDevolucaoBox.setValue(null);
+    	retiradaDate.setValue(LocalDate.now());
+    	horaRetiradaBox.setValue(null);
     }
    
 }

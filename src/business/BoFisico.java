@@ -10,10 +10,8 @@ import excecoes.DaoException;
 import excecoes.ValidarException;
 
 public class BoFisico implements IBoFisico{
-	private IDaoFisico daoFisico = new DaoFisico();
-	
 	private static IBoFisico instance;
-	
+	private IDaoFisico daoFisico = new DaoFisico();
 	
 	private BoFisico() {}
 	

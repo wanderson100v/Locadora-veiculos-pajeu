@@ -24,7 +24,7 @@
         <tabs>
             <Tab text="Iniciar Locação">
               <content>
-                <fx:include fx:id="iniciarReservasPane" source="IniciarReservaPane.fxml" />
+                <fx:include fx:id="iniciarLocacoesPane" source="IniciarLocacaoPane.fxml" />
               </content>
                <graphic>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
