@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ButtonType?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -18,7 +16,7 @@
    <header>
       <FlowPane alignment="CENTER" prefHeight="70.0" prefWidth="200.0" style="-fx-background-color: #1e1e1e;">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="Selecione outra Categoria de Veiculodo" textFill="WHITE">
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Selecione Uma Categoria Superior" textFill="WHITE">
                <font>
                   <Font name="Verdana" size="18.0" />
                </font>
@@ -29,21 +27,15 @@
    <content>
       <VBox>
          <children>
-            <ButtonBar prefHeight="40.0" prefWidth="200.0">
-               <buttons>
-                  <CheckBox fx:id="superiorCk" mnemonicParsing="false" onAction="#checkHandle" selected="true" text="Apenas Superiores" />
-                  <CheckBox fx:id="locavelCk" mnemonicParsing="false" onAction="#checkHandle" selected="true" text="Locaveis" />
-               </buttons>
-            </ButtonBar>
             <TableView fx:id="reservaDispoTbl" prefHeight="234.0" prefWidth="618.0" tableMenuButtonVisible="true">
                <columns>
                   <TableColumn fx:id="categoriaCln" prefWidth="79.0" text="Categoria" />
                   <TableColumn fx:id="valorCln" prefWidth="82.0" text="Valor" />
                   <TableColumn fx:id="descricaoCln" prefWidth="320.0" text="Descrição" visible="false" />
-                  <TableColumn fx:id="reservadoCln" minWidth="0.0" prefWidth="110.0" text="Reservado(x)" />
-                  <TableColumn fx:id="aReceberCln" minWidth="0.0" prefWidth="114.0" text="A Receber(y)" visible="false" />
-                  <TableColumn fx:id="reservavelCln" minWidth="0.0" prefWidth="117.0" text="Reservavel(z)" visible="false" />
-                  <TableColumn fx:id="previstoCln" prefWidth="125.0" text="Previsto(x+y-z)" />
+                  <TableColumn fx:id="reservadoCln" minWidth="0.0" prefWidth="110.0" text="Reservado (x)" />
+                  <TableColumn fx:id="aReceberCln" minWidth="0.0" prefWidth="114.0" text="A Receber (y)" visible="false" />
+                  <TableColumn fx:id="emEstoqueCln" minWidth="0.0" prefWidth="117.0" text="Em Estoque (z)" visible="false" />
+                  <TableColumn fx:id="disponivelCln" prefWidth="125.0" text="Disponivel (x+y-z)" />
                </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

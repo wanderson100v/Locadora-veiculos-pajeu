@@ -9,6 +9,7 @@ import javax.persistence.Persistence;
 
 import org.postgresql.util.PSQLException;
 
+import business.BoCliente;
 import excecoes.BoException;
 
 public class ConnectionFactory{
@@ -31,6 +32,7 @@ public class ConnectionFactory{
 			}
 			entityManagerFactory = Persistence.createEntityManagerFactory("banco",propriedades);
 		}catch(Exception e) {
+			e.printStackTrace();
 			throw new BoException("Dados de acesso invalidos");
 		}
 	}
@@ -40,5 +42,4 @@ public class ConnectionFactory{
 		loginSenha[1] =propriedades.get("javax.persistence.jdbc.password");
 		return loginSenha;
 	}
-	
 }

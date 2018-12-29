@@ -39,11 +39,11 @@ public class SelecionarReservaDispoController {
     private TableColumn<ReservaDisponibilidade, Integer> aReceberCln;
 
     @FXML
-    private TableColumn<ReservaDisponibilidade, Integer> reservavelCln;
+    private TableColumn<ReservaDisponibilidade, Integer> emEstoqueCln;
 
     @FXML
-    private TableColumn<ReservaDisponibilidade, Integer> previstoCln;
-    
+    private TableColumn<ReservaDisponibilidade, Integer> disponivelCln;
+
     @FXML
     private TableColumn<ReservaDisponibilidade, Float> valorCln;
 
@@ -59,8 +59,8 @@ public class SelecionarReservaDispoController {
     	categoriaCln.setCellValueFactory(new PropertyValueFactory<>("tipoCategoria"));
     	reservadoCln.setCellValueFactory(new PropertyValueFactory<>("reservado"));
     	aReceberCln.setCellValueFactory(new PropertyValueFactory<>("receber"));
-    	reservavelCln.setCellValueFactory(new PropertyValueFactory<>("reservavel"));
-    	previstoCln.setCellValueFactory(new PropertyValueFactory<>("previsto"));
+    	emEstoqueCln.setCellValueFactory(new PropertyValueFactory<>("emEstoque"));
+    	disponivelCln.setCellValueFactory(new PropertyValueFactory<>("disponivel"));
     	valorCln.setCellValueFactory(new PropertyValueFactory<>("valorDiariaCategoria"));
     	descricaoCln.setCellValueFactory(new PropertyValueFactory<>("descricaoCategoria"));
     }

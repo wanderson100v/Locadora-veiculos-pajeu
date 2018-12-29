@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import entidade.CategoriaVeiculo;
 import entidade.Filial;
 import entidade.Veiculo;
@@ -12,4 +14,9 @@ public interface IDaoVeiculo extends IDao<Veiculo>{
 	public long totalVeiculoDisponivel(Filial filial, CategoriaVeiculo categoria)throws DaoException;
 	
 	public long totalManutencaoPendente(Veiculo veiculo)throws DaoException;
+	
+	public List<Veiculo> buscarVeiculosDisponivel(Long filialId, Long categoriaVeiculoId , Veiculo veiculo)throws DaoException;
+	
+	public List<Veiculo> buscarVeiculosDisponivel(Long filialId, Veiculo veiculo)throws DaoException;
+	
 }

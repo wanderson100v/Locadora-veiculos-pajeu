@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<DialogPane fx:id="selectVeiculoDialog" expanded="true" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SelecionarVeiculoController">
+   <buttonTypes>
+      <ButtonType fx:constant="FINISH" />
+   </buttonTypes>
+   <header>
+      <FlowPane alignment="CENTER" prefHeight="70.0" prefWidth="200.0" style="-fx-background-color: #1e1e1e;">
+         <children>
+            <Label fx:id="tituloLbl" alignment="CENTER" contentDisplay="CENTER" text="Selecione Veículo" textFill="WHITE">
+               <font>
+                  <Font name="Verdana" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </FlowPane>
+   </header>
+   <content>
+      <VBox>
+         <children>
+            <FlowPane alignment="CENTER" hgap="10.0" prefHeight="39.0" prefWidth="500.0">
+               <children>
+                  <TextField fx:id="pesquisaFld" alignment="CENTER" onAction="#actionHandle" prefHeight="25.0" prefWidth="188.0" promptText="Campo Para Busca" />
+                  <CheckBox fx:id="buscaRapidaChk" mnemonicParsing="false" text="Busca Rápida" />
+               </children>
+            </FlowPane>
+            <TableView fx:id="veiculoTbl" editable="true" prefHeight="243.0" prefWidth="609.0" tableMenuButtonVisible="true">
+              <columns>
+                <TableColumn fx:id="placaCln" prefWidth="75.0" text="Placa" />
+                  <TableColumn fx:id="numChassiCln" prefWidth="110.0" text="Número Chassi" />
+                  <TableColumn fx:id="numMotorCln" prefWidth="103.0" text="Número Motor" />
+                  <TableColumn fx:id="categoriaCln" prefWidth="320.0" text="Categoria" />
+                  <TableColumn fx:id="torqueCln" prefWidth="100.0" text="Torque Motor" visible="false" />
+                  <TableColumn fx:id="combusCln" prefWidth="90.0" text="Combustível" visible="false" />
+                <TableColumn fx:id="modeloCln" prefWidth="75.0" text="Modelo" visible="false" />
+                  <TableColumn fx:id="anoModeloCln" prefWidth="90.0" text="Ano Modelo" visible="false" />
+                  <TableColumn fx:id="fabricanteCln" prefWidth="75.0" text="Fabricante" visible="false" />
+                  <TableColumn fx:id="anoFabriCln" prefWidth="104.0" text="Ano Fabricação" visible="false" />
+                  <TableColumn fx:id="quilomCln" prefWidth="101.0" text="Quilometragem" visible="false" />
+                  <TableColumn fx:id="corCln" prefWidth="65.0" text="Cor" visible="false" />
+                  <TableColumn fx:id="passagCln" prefWidth="77.0" text="Passageiros" visible="false" />
+                  <TableColumn fx:id="portasCln" minWidth="5.0" prefWidth="57.0" text="Postas" visible="false" />
+              </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </content>
+</DialogPane>

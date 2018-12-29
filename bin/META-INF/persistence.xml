@@ -5,7 +5,6 @@
              version="2.1">
 
     <persistence-unit name="banco" transaction-type="RESOURCE_LOCAL">
-    	<class>banco.ReservaHoje</class>
     	<class>entidade.Acessorio</class>
     	<class>entidade.Automovel</class>
     	<class>entidade.CaminhonetaCarga</class>

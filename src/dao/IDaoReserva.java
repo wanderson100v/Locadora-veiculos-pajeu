@@ -20,8 +20,9 @@ public interface IDaoReserva extends IDao<Reserva>{
 	String TUDO_RESERVA_HOJE = "reservaHoje.buscarTudo";
 	String RESERVA_PENDENTE_POR_CLIENTE = "reservaPendente.buscarPorCliente";
 	String RESERVA_PENDENTE_POR_CLIENTE_FILIAL = "reservaPendente.buscarPorCliente_Filial";
-	String RESERVA_DISPONIBILIDADE_PARCIAL = "select" + 
-				" cate.tipo as tipo_categoria" +
+	String RESERVA_DISPONIBILIDADE_PARCIAL = "select"+
+				" cate.id as id_categoria" + 
+				" ,cate.tipo as tipo_categoria" +
 				" ,cate.valor_diaria as valor_diaria_categoria" +
 				" ,cate.descricao as descricao_categoria" +
 				" ,(select count(*) from veiculo as v"+ 
@@ -31,7 +32,7 @@ public interface IDaoReserva extends IDao<Reserva>{
 				" and v.locado = false"+ 
 				" and f.id = fili.id" + 
 				" and c.id = cate.id" + 
-				" ) as reservavel" +
+				" ) as em_estoque" +
 				" ,(select count(*) from locacao as l" + 
 				" inner join veiculo as v on(v.id = l.veiculo_id)" + 
 				" inner join categoria_veiculo as c on(c.id = v.categoriaveiculo_id)" + 
@@ -56,10 +57,11 @@ public interface IDaoReserva extends IDao<Reserva>{
 	
 	public List<ReservaPendente> buscarReservaPendente(Cliente cliente, Filial filial) throws DaoException ;
 	
-	public List<ReservaDisponibilidade> reservaDisponibilidadeSuperior(Automovel automovel, Long filialId,LocalDateTime horario) throws DaoException;
+	public List<ReservaDisponibilidade> buscarReservaDisponibilidadeSuperior(Automovel automovel, Long filialId,LocalDateTime horario) throws DaoException;
 	
-	public List<ReservaDisponibilidade> reservaDisponibilidadeSuperior(CaminhonetaCarga automovel, Long filialId,LocalDateTime horario) throws DaoException; 
+	public List<ReservaDisponibilidade> buscarReservaDisponibilidadeSuperior(CaminhonetaCarga automovel, Long filialId,LocalDateTime horario) throws DaoException; 
 	
 	public List<ReservaDisponibilidade> buscarReservaDisponibilidade(Long filialId, LocalDateTime horario) throws DaoException;
 
+	public ReservaDisponibilidade buscarReservaDisponibilidade(Long categoriaVeiculoId, Long filialId,LocalDateTime horario) throws DaoException ;
 }

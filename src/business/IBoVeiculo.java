@@ -19,4 +19,8 @@ public interface IBoVeiculo  {
 	
 	public List<Veiculo> buscarPorExemplo(Veiculo veiculo) throws BoException;
 	
+	public List<Veiculo> buscarVeiculosDisponivel(Long filialId,Long categoriaVeiculoId, String dadoVeiculo)throws BoException;
+	
+	public List<Veiculo> buscarVeiculosDisponivel(Long filialId, String dadoVeiculo)throws BoException;
+	
 }

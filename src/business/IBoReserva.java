@@ -26,4 +26,5 @@ public interface IBoReserva extends IBussines<Reserva>{
 	
 	public List<ReservaDisponibilidade> buscarReservaDisponibilidade(Long filialId, LocalDateTime horario)throws BoException;
 	
+	public Boolean disponibilidadeCategoriaEmFilial(Long categoriaVeiculoId, Long filialId, LocalDateTime horario) throws BoException;
 }

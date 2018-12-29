@@ -1,7 +1,5 @@
 package controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import business.BoFuncionario;
 import business.IBoFuncionario;

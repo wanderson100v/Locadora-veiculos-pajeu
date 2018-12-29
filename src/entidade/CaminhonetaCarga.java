@@ -1,5 +1,7 @@
 package entidade;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -25,23 +27,6 @@ public class CaminhonetaCarga extends Veiculo {
 	private Integer capacidadeCombustivel;
 	
 	public CaminhonetaCarga() {}
-
-	public CaminhonetaCarga(boolean locado, boolean ativo, String placa, String cor, String modelo, String fabricante,
-		String numeroChassi, String numeroMotor, float torqueMotor, TipoCombustivel tipoCombustivel,
-		Integer quilometragem, Integer anoFabricante, Integer anoModelo, Integer quantidadePortas,
-		Integer quantidadePassageiro, CategoriaVeiculo categoriaVeiculo, Filial filial, Float desenpenho,
-		Float potencia, Float distanciaEixos, TipoAcionamentoEmbreagem tipoAcionamentoEmbreagem,
-		Integer capacidadeCarga, Integer capacidadeCombustivel) {
-		
-		super(locado, ativo, placa, cor, modelo, fabricante, numeroChassi, numeroMotor, torqueMotor, tipoCombustivel,
-				quilometragem, anoFabricante, anoModelo, quantidadePortas, quantidadePassageiro, categoriaVeiculo, filial);
-		this.desenpenho = desenpenho;
-		this.potencia = potencia;
-		this.distanciaEixos = distanciaEixos;
-		this.tipoAcionamentoEmbreagem = tipoAcionamentoEmbreagem;
-		this.capacidadeCarga = capacidadeCarga;
-		this.capacidadeCombustivel = capacidadeCombustivel;
-	}
 
 	/**
 	 * Construtor para Caminhoneta de carga de exemplo

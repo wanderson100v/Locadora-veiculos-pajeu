@@ -11,6 +11,7 @@ import entidade.CategoriaVeiculo;
 import entidade.Cliente;
 import entidade.Filial;
 import entidade.Funcionario;
+import entidade.Veiculo;
 import excecoes.BoException;
 import excecoes.DaoException;
 import javafx.scene.control.Alert;
@@ -135,6 +136,46 @@ public class Util {
 			Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
 		}
 		return reservaSelecionada;
+	}
+	
+	public static Veiculo selecionarVeiculoEmDialogo(CategoriaVeiculo categoriaVeiculo, Filial filial) {
+		Veiculo veiculoSelecionado = null;
+		try {
+			Alert alerta = new Alert(AlertType.NONE);
+			SelecionarVeiculoController selecionarVeiculoController;
+			selecionarVeiculoController = (SelecionarVeiculoController) DaoRes.getInstance().carregarControllerFXML("SelecionarVeiculoDialog");
+			selecionarVeiculoController.setParemetrizadoPor(categoriaVeiculo, filial);
+			alerta.setDialogPane(selecionarVeiculoController.getSelectVeiculoDialog());
+			Optional<ButtonType> result = alerta.showAndWait();
+			if(result.isPresent() && result.get() == ButtonType.FINISH) {
+				veiculoSelecionado = selecionarVeiculoController.getVeiculoTbl().getSelectionModel().getSelectedItem();
+				if(veiculoSelecionado != null) 
+					Alerta.getInstance().imprimirMsg("Sucesso","Veículo selecionada com sucesso",AlertType.INFORMATION);
+			}
+		} catch (DaoException e) {
+			Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+		}
+		return veiculoSelecionado;
+	}
+	
+	public static Veiculo selecionarVeiculoEmDialogo(Filial filial) {
+		Veiculo veiculoSelecionado = null;
+		try {
+			Alert alerta = new Alert(AlertType.NONE);
+			SelecionarVeiculoController selecionarVeiculoController;
+			selecionarVeiculoController = (SelecionarVeiculoController) DaoRes.getInstance().carregarControllerFXML("SelecionarVeiculoDialog");
+			selecionarVeiculoController.setParemetrizadoPor(filial);
+			alerta.setDialogPane(selecionarVeiculoController.getSelectVeiculoDialog());
+			Optional<ButtonType> result = alerta.showAndWait();
+			if(result.isPresent() && result.get() == ButtonType.FINISH) {
+				veiculoSelecionado = selecionarVeiculoController.getVeiculoTbl().getSelectionModel().getSelectedItem();
+				if(veiculoSelecionado != null) 
+					Alerta.getInstance().imprimirMsg("Sucesso","Veículo selecionada com sucesso",AlertType.INFORMATION);
+			}
+		} catch (DaoException e) {
+			Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+		}
+		return veiculoSelecionado;
 	}
 
 }

@@ -70,4 +70,36 @@ public class BoVeiculo implements IBoVeiculo {
 		}
 	}
 
+	@Override
+	public List<Veiculo> buscarVeiculosDisponivel(Long filialId, Long categoriaVeiculoId, String dadoVeiculo) throws BoException {
+		try {
+			Veiculo veiculo = new Veiculo();
+			veiculo.setCor(dadoVeiculo);
+			veiculo.setFabricante(dadoVeiculo);
+			veiculo.setModelo(dadoVeiculo);
+			veiculo.setNumeroChassi(dadoVeiculo);
+			veiculo.setNumeroMotor(dadoVeiculo);
+			veiculo.setPlaca(dadoVeiculo);
+			return daoVeiculo.buscarVeiculosDisponivel(filialId, categoriaVeiculoId, veiculo);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<Veiculo> buscarVeiculosDisponivel(Long filialId, String dadoVeiculo) throws BoException {
+		try {
+			Veiculo veiculo = new Veiculo();
+			veiculo.setCor(dadoVeiculo);
+			veiculo.setFabricante(dadoVeiculo);
+			veiculo.setModelo(dadoVeiculo);
+			veiculo.setNumeroChassi(dadoVeiculo);
+			veiculo.setNumeroMotor(dadoVeiculo);
+			veiculo.setPlaca(dadoVeiculo);
+			return daoVeiculo.buscarVeiculosDisponivel(filialId,veiculo);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
 }

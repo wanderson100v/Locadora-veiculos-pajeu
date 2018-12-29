@@ -113,7 +113,7 @@ public class DaoReserva extends Dao<Reserva> implements IDaoReserva{
 			.setParameter("horario",horario).getResultList();
 			
 			for(ReservaDisponibilidade e : elementos)
-				e.setPrevisto(e.getReceber()+ e.getReservavel() - e.getReservado());
+				e.setDisponivel(e.getEmEstoque()+ e.getReceber() - e.getReservado());
 			return elementos;
 		}catch (Exception e) {
 			em.getTransaction().rollback();
@@ -134,7 +134,7 @@ public class DaoReserva extends Dao<Reserva> implements IDaoReserva{
 	 * @throws DaoException
 	 */
 	@SuppressWarnings("unchecked")
-	public List<ReservaDisponibilidade> reservaDisponibilidadeSuperior(CaminhonetaCarga caminhonetaCarga,Long filialId,LocalDateTime horario) throws DaoException {
+	public List<ReservaDisponibilidade> buscarReservaDisponibilidadeSuperior(CaminhonetaCarga caminhonetaCarga,Long filialId,LocalDateTime horario) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
 			List<ReservaDisponibilidade> elementos = em.createNativeQuery(
@@ -164,7 +164,7 @@ public class DaoReserva extends Dao<Reserva> implements IDaoReserva{
 			.setParameter("torqueMotor",caminhonetaCarga.getTorqueMotor()).getResultList();
 
 			for(ReservaDisponibilidade e : elementos)
-				e.setPrevisto(e.getReceber()+ e.getReservavel() - e.getReservado());
+				e.setDisponivel(e.getEmEstoque()+ e.getReceber() - e.getReservado());
 			return elementos;
 
 		}catch (Exception e) {
@@ -176,7 +176,7 @@ public class DaoReserva extends Dao<Reserva> implements IDaoReserva{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ReservaDisponibilidade> reservaDisponibilidadeSuperior(Automovel automovel, Long filialId,LocalDateTime horario) throws DaoException {
+	public List<ReservaDisponibilidade> buscarReservaDisponibilidadeSuperior(Automovel automovel, Long filialId,LocalDateTime horario) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
 			Query query =  em.createNativeQuery(
@@ -208,7 +208,7 @@ public class DaoReserva extends Dao<Reserva> implements IDaoReserva{
 			
 			List<ReservaDisponibilidade> elementos = query.getResultList();
 			for(ReservaDisponibilidade e : elementos)
-				e.setPrevisto(e.getReceber()+ e.getReservavel() - e.getReservado());
+				e.setDisponivel(e.getEmEstoque()+ e.getReceber() - e.getReservado());
 			return elementos;
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -217,4 +217,28 @@ public class DaoReserva extends Dao<Reserva> implements IDaoReserva{
 			em.close();
 		}
 	}
+	
+	public ReservaDisponibilidade buscarReservaDisponibilidade(Long categoriaVeiculoId, Long filialId,LocalDateTime horario) throws DaoException {
+		try {
+			em = ConnectionFactory.getConnection();
+			ReservaDisponibilidade reservaDisponibilidade=(ReservaDisponibilidade) em.createNativeQuery(
+					RESERVA_DISPONIBILIDADE_PARCIAL
+					+" categoria_veiculo as cate" 
+					+" cross join filial as fili"
+					+" where fili.id = :filialId"
+					+" and cate.id = :categoriaVeiculoId"
+					,"reservaDisponibilidade")
+			.setParameter("filialId",filialId)
+			.setParameter("categoriaVeiculoId",categoriaVeiculoId)
+			.setParameter("horario",horario).getSingleResult();
+			reservaDisponibilidade.setDisponivel(reservaDisponibilidade.getEmEstoque()+ reservaDisponibilidade.getReceber()
+					- reservaDisponibilidade.getReservado());
+			return reservaDisponibilidade;
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new DaoException("ERRO AO BUSCAR DISPONIBILIDADE DE RESERVAS PARA CATEGORIAS SUPERIORES DE AUTOMOVEIS ");
+		}finally {
+			em.close();
+		}
+	}	
 }

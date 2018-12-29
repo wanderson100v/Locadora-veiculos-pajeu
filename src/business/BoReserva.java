@@ -187,9 +187,9 @@ public class BoReserva implements IBoReserva {
 			LocalDateTime horario) throws BoException {
 		try {
 			if(categoriaVeiculo.getVeiculoExemplo() instanceof CaminhonetaCarga)
-				return daoReserva.reservaDisponibilidadeSuperior((CaminhonetaCarga) categoriaVeiculo.getVeiculoExemplo(), filialId, horario);
+				return daoReserva.buscarReservaDisponibilidadeSuperior((CaminhonetaCarga) categoriaVeiculo.getVeiculoExemplo(), filialId, horario);
 			else if(categoriaVeiculo.getVeiculoExemplo() instanceof Automovel) {
-				return daoReserva.reservaDisponibilidadeSuperior((Automovel) categoriaVeiculo.getVeiculoExemplo(), filialId, horario);
+				return daoReserva.buscarReservaDisponibilidadeSuperior((Automovel) categoriaVeiculo.getVeiculoExemplo(), filialId, horario);
 			}
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
@@ -207,6 +207,16 @@ public class BoReserva implements IBoReserva {
 		}
 	}
 
+	public Boolean disponibilidadeCategoriaEmFilial(Long categoriaVeiculoId, Long filialId, LocalDateTime horario) throws BoException{
+		try {
+		 if(daoReserva.buscarReservaDisponibilidade(categoriaVeiculoId, filialId,horario).getDisponivel() >0)
+			 return true;
+		 return false;
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+	
 	@Override
 	public long totalReservaDataRetirada(CategoriaVeiculo categoriaVeiculo) throws BoException {
 		try {
@@ -215,5 +225,5 @@ public class BoReserva implements IBoReserva {
 			throw new BoException(e.getMessage());
 		}
 	}
-
+	
 }

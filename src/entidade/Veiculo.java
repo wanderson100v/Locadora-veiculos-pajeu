@@ -1,5 +1,6 @@
 package entidade;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -54,30 +55,7 @@ public class Veiculo extends Entidade {
 	
 	public Veiculo() {}
 
-	public Veiculo(boolean locado, boolean ativo, String placa, String cor, String modelo, String fabricante,
-			String numeroChassi, String numeroMotor, float torqueMotor, TipoCombustivel tipoCombustivel,
-			Integer quilometragem, Integer anoFabricante, Integer anoModelo, Integer quantidadePortas,
-			Integer quantidadePassageiro, CategoriaVeiculo categoriaVeiculo, Filial filial) {
-		this.locado = locado;
-		this.ativo = ativo;
-		this.placa = placa;
-		this.cor = cor;
-		this.modelo = modelo;
-		this.fabricante = fabricante;
-		this.numeroChassi = numeroChassi;
-		this.numeroMotor = numeroMotor;
-		this.torqueMotor = torqueMotor;
-		this.tipoCombustivel = tipoCombustivel;
-		this.quilometragem = quilometragem;
-		this.anoFabricante = anoFabricante;
-		this.anoModelo = anoModelo;
-		this.quantidadePortas = quantidadePortas;
-		this.quantidadePassageiro = quantidadePassageiro;
-		this.categoriaVeiculo = categoriaVeiculo;
-		this.filial = filial;
-	}
-	
-	
+
 	/**
 	 * Construtor para veiculo de exemplo do tipo Caminhoneta de carga
 	 * @param torqueMotor
@@ -86,6 +64,11 @@ public class Veiculo extends Entidade {
 		this.torqueMotor = torqueMotor;
 	}
 	
+	public Veiculo(String placa) {
+		super();
+		this.placa = placa;
+	}
+
 	/**
 	 * Costrutor para veiculo de exemplo do tipo Automovel
 	 * @param tipoCombustivel
@@ -260,7 +243,7 @@ public class Veiculo extends Entidade {
 		result = prime * result + ((quantidadePortas == null) ? 0 : quantidadePortas.hashCode());
 		result = prime * result + ((quilometragem == null) ? 0 : quilometragem.hashCode());
 		result = prime * result + ((tipoCombustivel == null) ? 0 : tipoCombustivel.hashCode());
-		result = prime * result + Float.floatToIntBits(torqueMotor);
+		result = prime * result + ((torqueMotor == null) ? 0 : torqueMotor.hashCode());
 		return result;
 	}
 
@@ -270,7 +253,7 @@ public class Veiculo extends Entidade {
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (!(obj instanceof Veiculo))
+		if (getClass() != obj.getClass())
 			return false;
 		Veiculo other = (Veiculo) obj;
 		if (anoFabricante == null) {
@@ -304,6 +287,8 @@ public class Veiculo extends Entidade {
 			if (other.filial != null)
 				return false;
 		} else if (!filial.equals(other.filial))
+			return false;
+		if (locado != other.locado)
 			return false;
 		if (modelo == null) {
 			if (other.modelo != null)
@@ -342,10 +327,14 @@ public class Veiculo extends Entidade {
 			return false;
 		if (tipoCombustivel != other.tipoCombustivel)
 			return false;
-		if (Float.floatToIntBits(torqueMotor) != Float.floatToIntBits(other.torqueMotor))
+		if (torqueMotor == null) {
+			if (other.torqueMotor != null)
+				return false;
+		} else if (!torqueMotor.equals(other.torqueMotor))
 			return false;
 		return true;
 	}
+
 
 	@Override
 	public String toString() {
