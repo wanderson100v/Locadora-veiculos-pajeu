@@ -72,20 +72,4 @@ public class DaoFisico extends Dao<Fisico> implements IDaoFisico {
 			em.close();
 		}
 	}
-	
-	/*
-	 * return em.createNativeQuery(
-					"select motorista from Fisico as motorista"
-					+ " where motorista.dataValidadeHabilitacao <= :dataSuperior"
-					+ " and motorista.identificacaoMotorista is not null"
-					+ " and motorista.numeroHabilitacao is not null"
-					+ " and current_time > motorista.dataNascimento + '21 years'"
-					+ " and (upper(motorista.nome) like upper(:nome)"
-					+ " or upper(motorista.cpf) like upper(:cpf)"
-					+ " or upper(motorista.identificacaoMotorista) like upper(:identificacaoMotorista)"
-					+ " or upper(motorista.numeroHabilitacao) like upper(:numeroHabilitacao)"
-					+ " or upper(motorista.email) like upper(:email)"
-					+ " or upper(motorista.telefone) like upper(:telefone))"
-					+ ")", Fisico.class)
-	 */
 }

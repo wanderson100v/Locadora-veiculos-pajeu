@@ -33,7 +33,7 @@ public class Locacao extends Entidade {
 	@Column(name = "valor_diaria",nullable = false)
 	private Float valorDiaria;
 	@Column(name = "valor_pago",nullable = false)
-	private Float valorPago;
+	private float valorPago;
 	private boolean finalizado;
 	@OneToOne
 	private Reserva reservaOrigem;
@@ -47,11 +47,13 @@ public class Locacao extends Entidade {
 	@JoinColumn(nullable = false)
 	private Filial filialRetirada;
 	@ManyToOne
+	@JoinColumn(nullable = false)
 	private Filial filialEntrega;
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Funcionario funcionario;
 	@ManyToOne
+	@JoinColumn(nullable = false)
 	private Fisico motorista;
 	
 	
@@ -160,6 +162,8 @@ public class Locacao extends Entidade {
 		this.valorPago = valorPago;
 	}
 
+	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -175,7 +179,7 @@ public class Locacao extends Entidade {
 		result = prime * result + ((reservaOrigem == null) ? 0 : reservaOrigem.hashCode());
 		result = prime * result + ((tipoLocacao == null) ? 0 : tipoLocacao.hashCode());
 		result = prime * result + ((valorDiaria == null) ? 0 : valorDiaria.hashCode());
-		result = prime * result + ((valorPago == null) ? 0 : valorPago.hashCode());
+		result = prime * result + Float.floatToIntBits(valorPago);
 		result = prime * result + ((veiculo == null) ? 0 : veiculo.hashCode());
 		return result;
 	}
@@ -238,10 +242,7 @@ public class Locacao extends Entidade {
 				return false;
 		} else if (!valorDiaria.equals(other.valorDiaria))
 			return false;
-		if (valorPago == null) {
-			if (other.valorPago != null)
-				return false;
-		} else if (!valorPago.equals(other.valorPago))
+		if (Float.floatToIntBits(valorPago) != Float.floatToIntBits(other.valorPago))
 			return false;
 		if (veiculo == null) {
 			if (other.veiculo != null)

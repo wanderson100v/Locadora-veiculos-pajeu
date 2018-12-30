@@ -22,7 +22,9 @@ import entidade.Veiculo;
 import enumeracoes.Cargo;
 import enumeracoes.TipoLocacao;
 import excecoes.BoException;
+import excecoes.ValidarException;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -106,6 +108,18 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
    
     @FXML
     private TextField veiculoFld;
+    
+    @FXML
+    private Button calcularValBtn;
+
+    @FXML
+    private TextField valLocacaoFld;
+
+    @FXML
+    private TextField valPagoFld;
+
+    @FXML
+    private TextField trocoFld;
 
     @FXML
     private Button selectVeiculoBtn;
@@ -121,16 +135,20 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
     	for(int i = 1 ; i <25 ; i++)
     		horaRetiradaBox.getItems().add(i);
     	horaDevolucaoBox.getItems().addAll(horaRetiradaBox.getItems());
-    	retiradaDate.setValue(LocalDate.now());
-    	entregaDate.setValue(LocalDate.now());
+    	horaAtual();
     	tipoLocacaoBox.getItems().addAll(TipoLocacao.values());
     	selectReservaBtn.setDisable(true);
     	selectFuncionarioBtn.setDisable(true);
+    	valPagoFld.setOnAction((e)->{
+    		if(!valLocacaoFld.getText().isEmpty()) {
+    			trocoFld.setText(Float.parseFloat(valLocacaoFld.getText()) - Float.parseFloat(valPagoFld.getText())+"");
+    			locacao.setValorPago(Float.parseFloat(valPagoFld.getText()));
+    		}
+    	});
     	
     }
     
-    
-    @FXML
+	@FXML
     void buttonHandle(ActionEvent event) {
     	Button btn = (Button) event.getSource();
     	try {
@@ -140,6 +158,10 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
 	    		if(cliente!= null) {
 					clienteFld.setText(cliente.toString());
 					locacao.setCliente(cliente);
+					locacao.setReservaOrigem(null);
+					reservaFld.clear();
+					locacao.setVeiculo(null);
+					veiculoFld.clear();
 				}
     		}
     		else if(btn == selectMotoristaBtn) 
@@ -163,28 +185,8 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
 		    		if(reservaPendente!= null) 
 		    		{
 		    			Reserva reserva  = BoReserva.getInstance().buscarID(reservaPendente.getId());
-		    			boolean sucesso = false;
-		    			if(!BoVeiculo.getInstance().buscarVeiculosDisponivel(reserva.getFilial().getId(),
-		    					reserva.getCategoriaVeiculo().getId(),"").isEmpty()) 
-		    				sucesso = true;
-		    			else 
-		    				if(Alerta.getInstance().imprimirMsgConfirmacao("Não Há veiculos disponiveis para locação "
-		    						+ "na categoria de veículo reservada. Deseja Selecionar Categoria Superior?")) 
-		    				{
-		    					locacao.setValorDiaria(reserva.getCategoriaVeiculo().getValorDiaria());
-		    					ReservaDisponibilidade reservaDispoSuperior = Util.selecionarReservaDispoSuperiorEmDialogo(reserva.getCategoriaVeiculo(),reserva.getFilial(),LocalDateTime.now());
-		    					reserva.setCategoriaVeiculo(BoCategoriaVeiculo.getInstance().buscarID(reservaDispoSuperior.getIdCategoria()));
-		    					sucesso = true;
-		    				}
-		    			if(sucesso) 
-		    			{
-		    				veiculoFld.clear();
-		    				locacao.setVeiculo(null);
-		    				reservaFld.setText(reserva.toString());
-	    					filialRetiFld.setText(reserva.getFilial().toString());
-	    					locacao.setReservaOrigem(reserva);
-	    					locacao.setFilialRetirada(reserva.getFilial());
-		    			}
+	    				reservaFld.setText(reserva.toString());
+    					locacao.setReservaOrigem(reserva);
 		    		}
 	    		}
     			else
@@ -195,9 +197,9 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
     		{
     			Veiculo veiculo = null;
     			if(aproveitarReservaCk.isSelected())
-    				if(locacao.getReservaOrigem() != null && locacao.getReservaOrigem().getCategoriaVeiculo() != null) 
+    				if(locacao.getReservaOrigem() != null) 
     					veiculo = Util.selecionarVeiculoEmDialogo(locacao.getReservaOrigem().getCategoriaVeiculo(),
-    							locacao.getReservaOrigem().getFilial());
+    							locacao.getFilialRetirada());
     				else
     					Alerta.getInstance().imprimirMsg("Alerta", "Aproveitamento de reserva ativo. Selecione reserva antes do veículo", AlertType.WARNING);
     			else 
@@ -234,22 +236,31 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
 					locacao.setFilialEntrega(filialDevolucao);
 				}
 	    	}
+    		else if(btn == calcularValBtn) 
+    		{
+				pegarDadosTela();
+    			Object[] tupla = boLocacao.calcularValorLocacaoDetalhamento(locacao);
+				valLocacaoFld.setText(tupla[0]+"");
+				Alerta.getInstance().imprimirMsg("Detalhes",tupla[1]+"", AlertType.INFORMATION);
+    		}
     		else if(btn == locarBtn) {
-	    		LocalDate dataRetidada = retiradaDate.getValue();
-	    		LocalDate dataEntrega = entregaDate.getValue();
-	    		locacao.setDataRetirada(LocalDateTime.of(dataRetidada.getYear(), dataRetidada.getMonthValue(),
-	    				dataRetidada.getDayOfMonth(), horaRetiradaBox.getValue(),0));
-	    		locacao.setDataDevolucao(LocalDateTime.of(dataEntrega.getYear(), dataEntrega.getMonthValue(), 
-	    				dataEntrega.getDayOfMonth(), horaDevolucaoBox.getValue(),0));
-	    		boLocacao.cadastrarEditar(locacao);
-	    		Alerta.getInstance().imprimirMsg("Sucesso ao cadastrar","Reserva iniciada com sucesso",AlertType.INFORMATION);
-	    		this.locacao = new Locacao();
-	    		limparCampos();
+    			try{
+    				pegarDadosTela();
+		    		boLocacao.cadastrarEditar(locacao);
+		    		Alerta.getInstance().imprimirMsg("Sucesso ao cadastrar","Locação iniciada com sucesso",AlertType.INFORMATION);
+		    		this.locacao = new Locacao();
+		    		limparCampos();
+	    		}catch (BoException e) {
+	    			Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), (e instanceof ValidarException)? AlertType.WARNING : AlertType.ERROR);
+	    			if(motoristaFld.getText().isEmpty())
+	        			locacao.setMotorista(null);
+	        		if(filialDevuFld.getText().isEmpty())
+	        			locacao.setFilialEntrega(null);
+	    		}
 	    	}
     	} catch (BoException e) {
     		Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
-    		limparCampos();
-		}
+    	}
     	
     }
     
@@ -259,13 +270,8 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
     	if(fonte == clienteMotoristaCk) 
     	{
     		selectMotoristaBtn.setDisable(clienteMotoristaCk.isSelected());
-    		if(clienteMotoristaCk.isSelected()) {
-    			// validar cliente
-    			motoristaFld.setText("O Motorista da Locação Será o Cliente");
-    		}else {
-    			locacao.setMotorista(null);
-    			motoristaFld.clear();
-    		}
+			locacao.setMotorista(null);
+			motoristaFld.clear();
     	}
     	else if(fonte == aproveitarReservaCk)
     	{
@@ -316,8 +322,11 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
   			List<Funcionario> funcionarios = BoFuncionario.getInstance().buscaPorBusca(ConnectionFactory.getUser()[0].substring(1));
   			if(!funcionarios.isEmpty()) {
   				this.funcionario = funcionarios.get(0);
+  				locacao.setFuncionario(funcionario);
+  				funcionarioFld.setText(funcionario.toString());
   				if(funcionario.getFilial()!= null) {
   					filialRetiFld.setText(funcionario.getFilial().toString());
+  					locacao.setFilialRetirada(funcionario.getFilial());
   					outraFilialCk.setSelected(false);
   				}else
   					outraFilialCk.setSelected(true);
@@ -327,17 +336,40 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
   		}
   	}
     
+    private void horaAtual() {
+    	retiradaDate.setValue(LocalDate.now());
+    	entregaDate.setValue(LocalDate.now());
+    	horaDevolucaoBox.setValue(LocalDateTime.now().getHour());
+    	horaRetiradaBox.setValue(LocalDateTime.now().getHour());
+	}
+
+    private void pegarDadosTela() {
+    	LocalDate dataRetidada = retiradaDate.getValue();
+		LocalDate dataEntrega = entregaDate.getValue();
+		if(horarioAtualCk.isSelected())
+			locacao.setDataRetirada(LocalDateTime.of(LocalDate.now().getYear(),LocalDate.now().getMonthValue(),
+					LocalDate.now().getDayOfMonth(),LocalDateTime.now().getHour(),0));
+		else
+			locacao.setDataRetirada(LocalDateTime.of(dataRetidada.getYear(), dataRetidada.getMonthValue(),
+					dataRetidada.getDayOfMonth(), horaRetiradaBox.getValue(),0));
+		locacao.setDataDevolucao(LocalDateTime.of(dataEntrega.getYear(), dataEntrega.getMonthValue(), 
+				dataEntrega.getDayOfMonth(), horaDevolucaoBox.getValue(),0));
+		locacao.setTipoLocacao(tipoLocacaoBox.getValue());
+    }
+    
+    
     private void limparCampos() {
     	clienteFld.clear();
     	motoristaFld.clear();
     	reservaFld.clear();
-    	funcionarioFld.clear();
+    	veiculoFld.clear();
+    	valLocacaoFld.clear();
+    	valPagoFld.clear();
+    	trocoFld.clear();
+    	funcionarioFld.setText(funcionarioFld.toString());
+    	locacao.setFuncionario(funcionario);
     	filialRetiFld.clear();
     	filialDevuFld.clear();
-    	entregaDate.setValue(LocalDate.now());
-    	horaDevolucaoBox.setValue(null);
-    	retiradaDate.setValue(LocalDate.now());
-    	horaRetiradaBox.setValue(null);
     	clienteMotoristaCk.setSelected(false);
     	aproveitarReservaCk.setSelected(false);
     	outroFuncionarioCk.setSelected(false);
@@ -346,5 +378,6 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
     	horaRetiradaBox.setDisable(true);
     	outraFilialCk.setSelected(funcionario.getFilial() == null);
     	horarioAtualCk.setSelected(true);
+    	horaAtual();
     }
 }

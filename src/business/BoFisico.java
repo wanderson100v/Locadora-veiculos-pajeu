@@ -1,8 +1,8 @@
 package business;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
+
 
 import dao.DaoFisico;
 import dao.IDaoFisico;
@@ -103,6 +103,21 @@ public class BoFisico implements IBoFisico{
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}
+	}
+	
+	public void validarMotorista(Fisico fisico) throws ValidarException {
+		StringBuilder erro = new StringBuilder();
+		if(fisico.getIdentificacaoMotorista() == null)
+			erro.append("\tSem identificação\n");
+		if(fisico.getDataValidadeHabilitacao() == null)
+			erro.append("\tSem data de validade de habilitação\n");
+		else if (fisico.getDataValidadeHabilitacao().isBefore(LocalDate.now()))
+			erro.append("\tHabilitação vencida\n");
+		if(fisico.getNumeroHabilitacao() == null)
+			erro.append("\tSem numero de habilitação");
+		if(erro.length() >0)
+			throw new ValidarException("Foram encontrado os seguintes erros no motorista:\n "+erro.toString());
+		
 	}
 
 	private void atribuirCodigo(Fisico entidade){

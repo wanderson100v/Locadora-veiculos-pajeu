@@ -149,10 +149,14 @@ public class SelecionarVeiculoController {
 		return selectVeiculoDialog;
 	}
     
-    public void paremetrizadoPor(CategoriaVeiculo categoriaVeiculo, Filial filial) {
-    	tituloLbl.setText("Selecione Veículo para a categoria "+categoriaVeiculo.getTipo()+ "na filial "+filial.getNome());
-    	this.categoriaVeiculo = categoriaVeiculo;
+    public boolean paremetrizadoPor(CategoriaVeiculo categoriaVeiculo, Filial filial) throws BoException{
+		veiculoTbl.getItems().setAll(boVeiculo.buscarVeiculosDisponivel(filial.getId(), categoriaVeiculo.getId(),""));
+    	if(veiculoTbl.getItems().size() == 0)
+    		return false;
+		tituloLbl.setText("Selecione Veículo para a categoria "+categoriaVeiculo.getTipo()+ "na filial "+filial.getNome());
+		this.categoriaVeiculo = categoriaVeiculo;
     	this.filial = filial;
+    	return true;
     }
     
     public void paremetrizadoPor(Filial filial) {

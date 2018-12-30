@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import adapter.ReservaDisponibilidade;
 import banco.ReservaPendente;
+import business.BoCategoriaVeiculo;
 import business.BoReserva;
 import dao.DaoRes;
 import entidade.CategoriaVeiculo;
@@ -143,18 +144,26 @@ public class Util {
 	public static Veiculo selecionarVeiculoEmDialogo(CategoriaVeiculo categoriaVeiculo, Filial filial) {
 		Veiculo veiculoSelecionado = null;
 		try {
-			Alert alerta = new Alert(AlertType.NONE);
 			SelecionarVeiculoController selecionarVeiculoController;
 			selecionarVeiculoController = (SelecionarVeiculoController) DaoRes.getInstance().carregarControllerFXML("SelecionarVeiculoDialog");
-			selecionarVeiculoController.paremetrizadoPor(categoriaVeiculo, filial);
-			alerta.setDialogPane(selecionarVeiculoController.getSelectVeiculoDialog());
-			Optional<ButtonType> result = alerta.showAndWait();
-			if(result.isPresent() && result.get() == ButtonType.FINISH) {
-				veiculoSelecionado = selecionarVeiculoController.getVeiculoTbl().getSelectionModel().getSelectedItem();
-				if(veiculoSelecionado != null) 
-					Alerta.getInstance().imprimirMsg("Sucesso","Veículo selecionada com sucesso",AlertType.INFORMATION);
+			if(selecionarVeiculoController.paremetrizadoPor(categoriaVeiculo, filial)) {
+				Alert alerta = new Alert(AlertType.NONE);
+				alerta.setDialogPane(selecionarVeiculoController.getSelectVeiculoDialog());
+				Optional<ButtonType> result = alerta.showAndWait();
+				if(result.isPresent() && result.get() == ButtonType.FINISH) {
+					veiculoSelecionado = selecionarVeiculoController.getVeiculoTbl().getSelectionModel().getSelectedItem();
+					if(veiculoSelecionado != null) 
+						Alerta.getInstance().imprimirMsg("Sucesso","Veículo selecionada com sucesso",AlertType.INFORMATION);
+				}
 			}
-		} catch (DaoException e) {
+			else
+				if(Alerta.getInstance().imprimirMsgConfirmacao("Não Há veiculos disponiveis para locação "
+					+ "na categoria de veículo reservada. Deseja Selecionar Categoria Superior?")) 
+				{
+					ReservaDisponibilidade reservaDispoSuperior = selecionarReservaDispoSuperiorEmDialogo(categoriaVeiculo,filial,LocalDateTime.now());
+					selecionarVeiculoEmDialogo(BoCategoriaVeiculo.getInstance().buscarID(reservaDispoSuperior.getIdCategoria()), filial);
+				}
+		} catch (DaoException | BoException e) {
 			Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
 		}
 		return veiculoSelecionado;

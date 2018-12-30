@@ -11,4 +11,5 @@ public interface IBoLocacao extends IBussines<Locacao>{
 
 	public long totalLocacoePrevisaoEntrega(Filial filialEntrega ,CategoriaVeiculo categoriaVeiculo ,LocalDateTime dataLimite)throws BoException;
 	
+	public Object[] calcularValorLocacaoDetalhamento(Locacao locacao) throws BoException;
 }

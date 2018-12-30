@@ -32,9 +32,30 @@ public class CategoriaVeiculo extends Entidade {
 	private Float valorDiaria;
 	@Column(nullable = false)
 	private String descricao;
+	@Column(name = "valor_livre", nullable = false)
+	private float valorLivre;
+	@Column(name = "valor_km", nullable = false)
+	private float valorKm;
 	@OneToOne(cascade = CascadeType.REMOVE,targetEntity = Veiculo.class)
 	private Veiculo veiculoExemplo;
 	
+	
+	public float getValorLivre() {
+		return valorLivre;
+	}
+
+	public void setValorLivre(float valorLivre) {
+		this.valorLivre = valorLivre;
+	}
+
+	public float getValorKm() {
+		return valorKm;
+	}
+
+	public void setValorKm(float valorKm) {
+		this.valorKm = valorKm;
+	}
+
 	public String getTipo() {
 		return tipo;
 	}
@@ -94,12 +115,16 @@ public class CategoriaVeiculo extends Entidade {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
+		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
 		result = prime * result + Float.floatToIntBits(horasLimpesa);
 		result = prime * result + Float.floatToIntBits(horasRevisao);
 		result = prime * result + Float.floatToIntBits(quilometragemRevisao);
 		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
 		result = prime * result + ((valorDiaria == null) ? 0 : valorDiaria.hashCode());
+		result = prime * result + Float.floatToIntBits(valorKm);
+		result = prime * result + Float.floatToIntBits(valorLivre);
+		result = prime * result + ((veiculoExemplo == null) ? 0 : veiculoExemplo.hashCode());
 		return result;
 	}
 
@@ -107,11 +132,16 @@ public class CategoriaVeiculo extends Entidade {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
-		if (!(obj instanceof CategoriaVeiculo))
+		if (getClass() != obj.getClass())
 			return false;
 		CategoriaVeiculo other = (CategoriaVeiculo) obj;
+		if (descricao == null) {
+			if (other.descricao != null)
+				return false;
+		} else if (!descricao.equals(other.descricao))
+			return false;
 		if (Float.floatToIntBits(horasLimpesa) != Float.floatToIntBits(other.horasLimpesa))
 			return false;
 		if (Float.floatToIntBits(horasRevisao) != Float.floatToIntBits(other.horasRevisao))
@@ -128,14 +158,24 @@ public class CategoriaVeiculo extends Entidade {
 				return false;
 		} else if (!valorDiaria.equals(other.valorDiaria))
 			return false;
+		if (Float.floatToIntBits(valorKm) != Float.floatToIntBits(other.valorKm))
+			return false;
+		if (Float.floatToIntBits(valorLivre) != Float.floatToIntBits(other.valorLivre))
+			return false;
+		if (veiculoExemplo == null) {
+			if (other.veiculoExemplo != null)
+				return false;
+		} else if (!veiculoExemplo.equals(other.veiculoExemplo))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
 		return "CategoriaVeiculo [tipo=" + tipo + ", quilometragemRevisao=" + quilometragemRevisao + ", horasRevisao="
-				+ horasRevisao + ", horasLimpesa=" + horasLimpesa + ", valorDiaria=" + valorDiaria + ", veiculos="
-				+"]";
+				+ horasRevisao + ", horasLimpesa=" + horasLimpesa + ", valorDiaria=" + valorDiaria + ", descricao="
+				+ descricao + ", valorLivre=" + valorLivre + ", valorKm=" + valorKm + ", veiculoExemplo="
+				+ veiculoExemplo + "]";
 	}
 	
 }
