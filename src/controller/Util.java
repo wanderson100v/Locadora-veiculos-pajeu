@@ -1,5 +1,6 @@
 package controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import dao.DaoRes;
 import entidade.CategoriaVeiculo;
 import entidade.Cliente;
 import entidade.Filial;
+import entidade.Fisico;
 import entidade.Funcionario;
 import entidade.Veiculo;
 import excecoes.BoException;
@@ -144,7 +146,7 @@ public class Util {
 			Alert alerta = new Alert(AlertType.NONE);
 			SelecionarVeiculoController selecionarVeiculoController;
 			selecionarVeiculoController = (SelecionarVeiculoController) DaoRes.getInstance().carregarControllerFXML("SelecionarVeiculoDialog");
-			selecionarVeiculoController.setParemetrizadoPor(categoriaVeiculo, filial);
+			selecionarVeiculoController.paremetrizadoPor(categoriaVeiculo, filial);
 			alerta.setDialogPane(selecionarVeiculoController.getSelectVeiculoDialog());
 			Optional<ButtonType> result = alerta.showAndWait();
 			if(result.isPresent() && result.get() == ButtonType.FINISH) {
@@ -164,7 +166,7 @@ public class Util {
 			Alert alerta = new Alert(AlertType.NONE);
 			SelecionarVeiculoController selecionarVeiculoController;
 			selecionarVeiculoController = (SelecionarVeiculoController) DaoRes.getInstance().carregarControllerFXML("SelecionarVeiculoDialog");
-			selecionarVeiculoController.setParemetrizadoPor(filial);
+			selecionarVeiculoController.paremetrizadoPor(filial);
 			alerta.setDialogPane(selecionarVeiculoController.getSelectVeiculoDialog());
 			Optional<ButtonType> result = alerta.showAndWait();
 			if(result.isPresent() && result.get() == ButtonType.FINISH) {
@@ -176,6 +178,26 @@ public class Util {
 			Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
 		}
 		return veiculoSelecionado;
+	}
+
+	public static Fisico selecionarMotoristaValidoEmDialogo(LocalDate dataSuperior) {
+		Fisico motoristaSelecionado = null;
+		try {
+			Alert alerta = new Alert(AlertType.NONE);
+			SelecionarMotoristaController selecionarMotoristaController;
+			selecionarMotoristaController = (SelecionarMotoristaController) DaoRes.getInstance().carregarControllerFXML("SelecionarMotoristaDialog");
+			selecionarMotoristaController.paremetrizadoPor(dataSuperior);
+			alerta.setDialogPane(selecionarMotoristaController.getSelecionarMotoristaDialog());
+			Optional<ButtonType> result = alerta.showAndWait();
+			if(result.isPresent() && result.get() == ButtonType.FINISH) {
+				motoristaSelecionado = selecionarMotoristaController.getMotoristaTbl().getSelectionModel().getSelectedItem();
+				if(motoristaSelecionado != null) 
+					Alerta.getInstance().imprimirMsg("Sucesso","Motorista selecionada com sucesso",AlertType.INFORMATION);
+			}
+		} catch (DaoException e) {
+			Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+		}
+		return motoristaSelecionado;
 	}
 
 }

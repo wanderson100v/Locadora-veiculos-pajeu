@@ -149,13 +149,13 @@ public class SelecionarVeiculoController {
 		return selectVeiculoDialog;
 	}
     
-    public void setParemetrizadoPor(CategoriaVeiculo categoriaVeiculo, Filial filial) {
+    public void paremetrizadoPor(CategoriaVeiculo categoriaVeiculo, Filial filial) {
     	tituloLbl.setText("Selecione Veículo para a categoria "+categoriaVeiculo.getTipo()+ "na filial "+filial.getNome());
     	this.categoriaVeiculo = categoriaVeiculo;
     	this.filial = filial;
     }
     
-    public void setParemetrizadoPor(Filial filial) {
+    public void paremetrizadoPor(Filial filial) {
     	tituloLbl.setText("Selecione Veículo na filial "+filial.getNome());
     	this.filial = filial;
     }

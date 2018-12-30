@@ -1,5 +1,7 @@
 package business;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import dao.DaoFisico;
@@ -87,8 +89,23 @@ public class BoFisico implements IBoFisico{
 		}
 	}
 	
+	@Override
+	public List<Fisico> buscarMotoristasValidos(LocalDate dataSuperior, String dadoMotorista) throws BoException {
+		try {
+			Fisico fisico = new Fisico();
+			fisico.setCpf(dadoMotorista);
+			fisico.setNome(dadoMotorista);
+			fisico.setEmail(dadoMotorista);
+			fisico.setCpf(dadoMotorista);
+			fisico.setIdentificacaoMotorista(dadoMotorista);
+			fisico.setNumeroHabilitacao(dadoMotorista);
+			return daoFisico.buscarMotoristasValidos(fisico, dataSuperior);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
 	private void atribuirCodigo(Fisico entidade){
 		entidade.setCodigo("PJ"+entidade.getCpf());
 	}
-
 }

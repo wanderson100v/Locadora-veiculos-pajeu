@@ -1,6 +1,7 @@
 package controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import business.BoFisico;
 import business.IBoFisico;
@@ -50,6 +51,8 @@ public class SelecionarMotoristaController {
     
     private IBoFisico boFisico = BoFisico.getInstance();
     private Alerta alerta = Alerta.getInstance();
+    private LocalDate dataSuperior;
+    
 	
     @FXML
     void initialize() {
@@ -58,32 +61,34 @@ public class SelecionarMotoristaController {
     	validadeCln.setCellValueFactory(new PropertyValueFactory<>("dataValidadeHabilitacao"));
     	identificacaoCln.setCellValueFactory(new PropertyValueFactory<>("identificacaoMotorista"));
     	habilitacaoCln.setCellValueFactory(new PropertyValueFactory<>("numeroHabilitacao"));
-    	/*
+    	
     	pesquisaFld.setOnKeyTyped(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
 				if(buscaRapidaChk.isSelected() && pesquisaFld.getText().trim().length() > 0) {
 		    		try {
-						motoristaTbl.getItems().setAll(boFisico.buscaPorBusca(pesquisaFld.getText()));
+						if(dataSuperior!= null)
+							motoristaTbl.getItems().setAll(boFisico.buscarMotoristasValidos(dataSuperior,pesquisaFld.getText().trim()));
 					} catch (BoException e) {
 						e.printStackTrace();
 					}
 		    	}
 			}
-		});*/
+		});
     	
     }
     
     @FXML
     void actionHandle(ActionEvent event) {
-    	/*if(!buscaRapidaChk.isSelected()) {
+    	if(!buscaRapidaChk.isSelected()) {
     		try {
-				clienteTbl.getItems().setAll(boFisico.buscaPorBusca(pesquisaFld.getText()));
-				alerta.imprimirMsg("Busca concluída","Foram econtrados "+clienteTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
+    			if(dataSuperior!= null)
+					motoristaTbl.getItems().setAll(boFisico.buscarMotoristasValidos(dataSuperior,pesquisaFld.getText().trim()));
+				alerta.imprimirMsg("Busca concluída","Foram econtrados "+motoristaTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 			} catch (BoException e) {
 				alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
 			}
-    	}*/
+    	}
     }
     
     public TableView<Fisico> getMotoristaTbl() {
@@ -94,4 +99,7 @@ public class SelecionarMotoristaController {
 		return selecionarMotoristaDialog;
 	}
 	
+    public void paremetrizadoPor(LocalDate dataSuperior) {
+		this.dataSuperior = dataSuperior;
+	}
 }

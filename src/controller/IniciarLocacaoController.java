@@ -14,6 +14,7 @@ import business.BoVeiculo;
 import business.IBoLocacao;
 import entidade.Cliente;
 import entidade.Filial;
+import entidade.Fisico;
 import entidade.Funcionario;
 import entidade.Locacao;
 import entidade.Reserva;
@@ -143,9 +144,15 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
     		}
     		else if(btn == selectMotoristaBtn) 
     		{
-	    		
-    			//...
-    			
+	    		if(entregaDate.getValue() != null) {
+	    			Fisico motorista = Util.selecionarMotoristaValidoEmDialogo(entregaDate.getValue());
+	    			if(motorista != null) {
+	    				locacao.setMotorista(motorista);
+	    				motoristaFld.setText(motorista.toString());
+	    			}
+	    		}else
+	    			Alerta.getInstance().imprimirMsg("Alerta","É necessário selecionar a data de retirada para em seguida selecionar motoristas validos até o fim do período de locação", AlertType.WARNING);
+	    			
     		}
     		else if(btn == selectReservaBtn) 
     		{
