@@ -65,7 +65,7 @@ public class SelecionarClienteController {
 			public void handle(KeyEvent event) {
 				if(buscaRapidaChk.isSelected() && pesquisaFld.getText().trim().length() > 0) {
 		    		try {
-						clienteTbl.getItems().setAll(boCliente.buscaPorBusca(pesquisaFld.getText()));
+						clienteTbl.getItems().setAll(boCliente.buscaPorBuscaAbrangente(pesquisaFld.getText()));
 					} catch (BoException e) {
 						e.printStackTrace();
 					}
@@ -79,7 +79,7 @@ public class SelecionarClienteController {
     void actionHandle(ActionEvent event) {
     	if(!buscaRapidaChk.isSelected()) {
     		try {
-				clienteTbl.getItems().setAll(boCliente.buscaPorBusca(pesquisaFld.getText()));
+				clienteTbl.getItems().setAll(boCliente.buscaPorBuscaAbrangente(pesquisaFld.getText()));
 				alerta.imprimirMsg("Busca concluída","Foram econtrados "+clienteTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 			} catch (BoException e) {
 				alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);

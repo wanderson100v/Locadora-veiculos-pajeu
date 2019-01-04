@@ -23,4 +23,6 @@ public interface IBoVeiculo  {
 	
 	public List<Veiculo> buscarVeiculosDisponivel(Long filialId, String dadoVeiculo)throws BoException;
 	
+	public List<Veiculo> buscaPorBuscaAbrangente(String busca) throws BoException ;
+	
 }

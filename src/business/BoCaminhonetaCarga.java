@@ -78,4 +78,13 @@ public class BoCaminhonetaCarga implements IBoCaminhonetaCarga{
 		}
 	}
 
+	@Override
+	public List<CaminhonetaCarga> buscaPorBuscaAbrangente(String busca) throws BoException {
+		try {
+			return daoCaminhonetaCarga.buscaPorBuscaAbrangente(busca);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
 }

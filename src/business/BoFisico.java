@@ -79,16 +79,6 @@ public class BoFisico implements IBoFisico{
 			throw new BoException(e.getMessage());
 		}
 	}
-
-	@Override
-	public List<Fisico> buscaPorBusca(Fisico fisico) throws BoException {
-		try {
-			return daoFisico.buscaPorBusca(fisico);
-		}catch (DaoException e) {
-			throw new BoException(e.getMessage());
-		}
-	}
-	
 	@Override
 	public List<Fisico> buscarMotoristasValidos(LocalDate dataSuperior, String dadoMotorista) throws BoException {
 		try {
@@ -122,5 +112,14 @@ public class BoFisico implements IBoFisico{
 
 	private void atribuirCodigo(Fisico entidade){
 		entidade.setCodigo("PJ"+entidade.getCpf());
+	}
+
+	@Override
+	public List<Fisico> buscaPorBuscaAbrangente(String busca) throws BoException {
+		try {
+			return daoFisico.buscaPorBuscaAbrangente(busca);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
 	}
 }

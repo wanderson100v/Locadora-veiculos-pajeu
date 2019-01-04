@@ -1,7 +1,6 @@
 package controller;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import banco.ReservaPendente;
 import business.BoFuncionario;
@@ -152,9 +151,9 @@ public class AcompanhamentoReservaController implements IFuncionarioObservadores
 			if(categoriaCln != null && categoriaCln.getCellValueFactory() == null)
 	    		fazerLigacao();
 			this.funcionario = null;
-			List<Funcionario> funcionarios = BoFuncionario.getInstance().buscaPorBusca(ConnectionFactory.getUser()[0].substring(1));
-			if(!funcionarios.isEmpty()) {
-				this.funcionario = funcionarios.get(0);
+			Funcionario funcionario = BoFuncionario.getInstance().buscaPorCpf(ConnectionFactory.getUser()[0].substring(1));
+			if(funcionario != null) {
+				this.funcionario = funcionario;
 				if(funcionario.getFilial()!= null) {
 					minhaFilialRb.setSelected(true);
 					dadosFilialFld.setText(funcionario.getFilial().toString());

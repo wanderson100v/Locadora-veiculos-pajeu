@@ -31,52 +31,6 @@ public class BoReserva implements IBoReserva {
 		return instance;
 	}
 	
-	/*
-	public static void main(String[] args) {
-		ConnectionFactory.setUser("postgres","admin");
-		Endereco endereco = new Endereco();
-		endereco.setCep("3213-a");
-		
-		Endereco endereco2 = new Endereco();
-		endereco2.setCep("adsd312-a");
-		
-		Filial filial = new Filial();
-		filial.setAtivo(true);
-		filial.setEndereco(endereco);
-		filial.setNome("Cabana veiculo");
-		
-		Fisico fisico = new Fisico();
-		fisico.setAtivo(true);
-		fisico.setNome("Wanderson Pereira");
-		fisico.setCpf("3123dsad-13");
-		fisico.setDataNascimento(LocalDate.of(1998, 06, 17));
-		fisico.setEndereco(endereco2);
-		fisico.setEmail("wanderson@Exemplo.com");
-		fisico.setTelefone("(32)d3213");
-		fisico.setSexo(Sexo.MASCULINO);
-		
-		try {
-			Filial filial = BoFilial.getInstance().buscarID(new Long(15));
-			Funcionario funcionario = BoFuncionario.getInstance().buscarID(new Long(22));
-			
-			Reserva reserva = new Reserva();
-			reserva.setCategoriaVeiculo(BoCategoriaVeiculo.getInstance().buscarID(new Long(3)));
-			reserva.setCliente(BoFisico.getInstance().buscarID(new Long(13)));
-			reserva.setDataDevolucao(LocalDateTime.of(2018,11,30,12,0));
-			reserva.setDataRetirada(LocalDateTime.of(2018,11,22,11,0));
-			reserva.setEstadoReserva(EstadoRerserva.PENDENTE);
-			reserva.setFilial(filial);
-			reserva.setFuncionario(funcionario);
-			reserva.setValor(30f);
-			
-			getInstance().cadastrarEditar(reserva);
-		} catch (BoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}*/
-	
 	@Override
 	public void cadastrarEditar(Reserva entidade) throws BoException {
 		try {
@@ -221,6 +175,15 @@ public class BoReserva implements IBoReserva {
 	public long totalReservaDataRetirada(CategoriaVeiculo categoriaVeiculo) throws BoException {
 		try {
 			return daoReserva.totalReservaDataRetirada(categoriaVeiculo);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<Reserva> buscaPorBuscaAbrangente(String busca) throws BoException {
+		try {
+			return daoReserva.buscaPorBuscaAbrangente(busca);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

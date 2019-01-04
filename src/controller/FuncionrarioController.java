@@ -140,11 +140,12 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
 	@Override
 	void popularTabela(String busca) {
 		try {
-			List<Funcionario> funcionarios = boFuncionario.buscaPorBusca(busca);
+			List<Funcionario> funcionarios = boFuncionario.buscaPorBuscaAbrangente(busca);
+			Funcionario instanciaRemover = null;
 			for(Funcionario f : funcionarios)
-				if(boFuncionario.gerarLogin(f).equals(ConnectionFactory.getUser()[0]))
-					funcionarios.remove(f);
-			entidadeTabela.getItems().clear();
+				if(f.getCpf().equals(this.funcionario.getCpf()))
+					instanciaRemover = f;
+			funcionarios.remove(instanciaRemover);
 			entidadeTabela.getItems().setAll(funcionarios);
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+funcionarios.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
@@ -215,11 +216,20 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
 
 	@Override
 	public void atualizar(Cargo cargo) {
-		cargoBox.getItems().clear();
-		if(cargo == Cargo.SU) {
-			cargoBox.getItems().addAll(Cargo.values());
-		}else if(cargo == Cargo.ADM) { 
-			cargoBox.getItems().addAll(Cargo.ADM,Cargo.AT);
+		try {
+			cargoBox.getItems().clear();
+			if(cargo == Cargo.SU) {
+				cargoBox.getItems().addAll(Cargo.values());
+			}else if(cargo == Cargo.ADM) { 
+				cargoBox.getItems().addAll(Cargo.ADM,Cargo.AT);
+			}
+			this.funcionario = null;
+			Funcionario funcionario = BoFuncionario.getInstance().buscaPorCpf(ConnectionFactory.getUser()[0].substring(1));
+			if(funcionario != null) 
+				this.funcionario = funcionario;
+		}catch(Exception e) {
+			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+			e.printStackTrace();
 		}
 	}
 }

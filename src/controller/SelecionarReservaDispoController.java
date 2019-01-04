@@ -27,42 +27,57 @@ public class SelecionarReservaDispoController {
     private CheckBox locavelCk;
 
     @FXML
-    private TableView<ReservaDisponibilidade> reservaDispoTbl;
+    private TableView<ReservaDisponibilidade> disponiTbl;
 
     @FXML
-    private TableColumn<ReservaDisponibilidade, String> categoriaCln;
+    private TableColumn<ReservaDisponibilidade, String> tipoCatCln;
 
     @FXML
-    private TableColumn<ReservaDisponibilidade, Integer> reservadoCln;
+    private TableColumn<ReservaDisponibilidade, Float> valorDiariaCatCln;
 
     @FXML
-    private TableColumn<ReservaDisponibilidade, Integer> aReceberCln;
+    private TableColumn<ReservaDisponibilidade, String> descricaoCatCln;
 
     @FXML
-    private TableColumn<ReservaDisponibilidade, Integer> emEstoqueCln;
+    private TableColumn<ReservaDisponibilidade, Integer> prevLocaCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, Integer> prevManuCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, Integer> prevReseCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, Integer> totalLocaCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, Integer> totalManuCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, Integer> totalReseCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, Integer> totalVeiculoCln;
 
     @FXML
     private TableColumn<ReservaDisponibilidade, Integer> disponivelCln;
-
-    @FXML
-    private TableColumn<ReservaDisponibilidade, Float> valorCln;
-
-    @FXML
-    private TableColumn<ReservaDisponibilidade, String> descricaoCln;
-    
     private List<ReservaDisponibilidade> reservasSuperiores;
     
     private Long filialId;
     
     @FXML
     void initialize() {
-    	categoriaCln.setCellValueFactory(new PropertyValueFactory<>("tipoCategoria"));
-    	reservadoCln.setCellValueFactory(new PropertyValueFactory<>("reservado"));
-    	aReceberCln.setCellValueFactory(new PropertyValueFactory<>("receber"));
-    	emEstoqueCln.setCellValueFactory(new PropertyValueFactory<>("emEstoque"));
+    	tipoCatCln.setCellValueFactory(new PropertyValueFactory<>("tipoCategoria"));
+    	valorDiariaCatCln.setCellValueFactory(new PropertyValueFactory<>("valorDiariaCategoria"));
+    	descricaoCatCln.setCellValueFactory(new PropertyValueFactory<>("descricaoCategoria"));
+    	prevLocaCln.setCellValueFactory(new PropertyValueFactory<>("previsaoLocacaoAcumulada"));
+    	prevManuCln.setCellValueFactory(new PropertyValueFactory<>("previsaoManutencaoAcumulada"));
+    	prevReseCln.setCellValueFactory(new PropertyValueFactory<>("previsaoReservaAcumulada"));
+    	totalLocaCln.setCellValueFactory(new PropertyValueFactory<>("totalLocado"));
+    	totalManuCln.setCellValueFactory(new PropertyValueFactory<>("totalManter"));
+    	totalReseCln.setCellValueFactory(new PropertyValueFactory<>("totalReserva"));
+    	totalVeiculoCln.setCellValueFactory(new PropertyValueFactory<>("totalVeiculo"));
     	disponivelCln.setCellValueFactory(new PropertyValueFactory<>("disponivel"));
-    	valorCln.setCellValueFactory(new PropertyValueFactory<>("valorDiariaCategoria"));
-    	descricaoCln.setCellValueFactory(new PropertyValueFactory<>("descricaoCategoria"));
     }
     
 
@@ -71,14 +86,14 @@ public class SelecionarReservaDispoController {
     	CheckBox fonte = (CheckBox) event.getSource();
     	if(reservasSuperiores == null) {
     		reservasSuperiores = new ArrayList<>();
-    		reservasSuperiores.addAll(reservaDispoTbl.getItems());
+    		reservasSuperiores.addAll(disponiTbl.getItems());
     	}
     	if(fonte == superiorCk) {
     		if(superiorCk.isSelected()) {
-    			reservaDispoTbl.getItems().setAll(reservasSuperiores);
+    			disponiTbl.getItems().setAll(reservasSuperiores);
     		}else {
     			try {
-    				reservaDispoTbl.getItems().setAll(BoReserva.getInstance().buscarReservaDisponibilidade(filialId, LocalDateTime.now()));
+    				disponiTbl.getItems().setAll(BoReserva.getInstance().buscarReservaDisponibilidade(filialId, LocalDateTime.now()));
 				} catch (BoException e) {
 				}
     		}
@@ -93,7 +108,7 @@ public class SelecionarReservaDispoController {
     }
 
     public TableView<ReservaDisponibilidade> getReservaDispoTbl() {
-		return reservaDispoTbl;
+		return disponiTbl;
 	}
     
     public DialogPane getSelectReservaDispoDialog() {

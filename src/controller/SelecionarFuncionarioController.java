@@ -51,7 +51,7 @@ public class SelecionarFuncionarioController {
 			public void handle(KeyEvent event) {
 				if(buscaRapidaChk.isSelected() && pesquisaFld.getText().trim().length() > 0) {
 		    		try {
-						funcionarioTbl.getItems().setAll(boFuncionario.buscaPorBusca(pesquisaFld.getText()));
+						funcionarioTbl.getItems().setAll(boFuncionario.buscaPorBuscaAbrangente(pesquisaFld.getText()));
 					} catch (BoException e) {
 						e.printStackTrace();
 					}
@@ -64,7 +64,7 @@ public class SelecionarFuncionarioController {
     void actionHandle(ActionEvent event) {
     	if(!buscaRapidaChk.isSelected()) {
     		try {
-				funcionarioTbl.getItems().setAll(boFuncionario.buscaPorBusca(pesquisaFld.getText()));
+				funcionarioTbl.getItems().setAll(boFuncionario.buscaPorBuscaAbrangente(pesquisaFld.getText()));
 				alerta.imprimirMsg("Busca concluída","Foram econtrados "+funcionarioTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 			} catch (BoException e) {
 				alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);

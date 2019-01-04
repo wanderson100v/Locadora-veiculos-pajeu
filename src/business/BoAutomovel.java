@@ -78,5 +78,14 @@ public class BoAutomovel implements IBoAutomovel {
 			throw new BoException(e.getMessage());
 		}
 	}
+	
+	@Override
+	public List<Automovel> buscaPorBuscaAbrangente(String busca) throws BoException {
+		try {
+			return daoAutomovel.buscaPorBuscaAbrangente(busca);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
 
 }

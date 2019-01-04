@@ -219,5 +219,14 @@ public class BoLocacao implements IBoLocacao {
 			erroLocacao.append(e.getMessage());
 		}
 	}
+
+	@Override
+	public List<Locacao> buscaPorBuscaAbrangente(String busca) throws BoException {
+		try {
+			return daoLocacao.buscaPorBuscaAbrangente(busca);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
 	
 }

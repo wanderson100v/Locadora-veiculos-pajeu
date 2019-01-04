@@ -2,23 +2,18 @@ package controller;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import business.BoCaminhonetaCarga;
 import business.IBoCaminhonetaCarga;
-import dao.DaoRes;
 import entidade.CaminhonetaCarga;
 import entidade.Entidade;
 import entidade.Filial;
 import enumeracoes.TipoAcionamentoEmbreagem;
 import enumeracoes.TipoCombustivel;
 import excecoes.BoException;
-import excecoes.DaoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -217,13 +212,8 @@ public class CaminhonetaCargaController extends CRUDController<CaminhonetaCarga>
 
 	@Override
 	void popularTabela(String busca) {
-		/*CaminhonetaCarga caminhonetaCarga = new CaminhonetaCarga();
-		caminhonetaCarga.setPlaca(busca);
-		caminhonetaCarga.setAtivo(true);
-		caminhonetaCarga.setLocado(false);*/
 		try {
-			List<CaminhonetaCarga> caminhonetaCargas = boCaminhonetaCarga.buscarAll();
-			entidadeTabela.getItems().clear();
+			List<CaminhonetaCarga> caminhonetaCargas = boCaminhonetaCarga.buscaPorBuscaAbrangente(busca);
 			entidadeTabela.getItems().setAll(caminhonetaCargas);
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+caminhonetaCargas.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {

@@ -213,8 +213,7 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
 	@Override
 	void popularTabela(String busca) {
 		try {
-			List<CategoriaVeiculo> categoriasVeiculos = boCategoriaVeiculo.buscarAll();
-			entidadeTabela.getItems().clear();
+			List<CategoriaVeiculo> categoriasVeiculos = boCategoriaVeiculo.buscaPorBuscaAbrangente(busca);
 			entidadeTabela.getItems().setAll(categoriasVeiculos);
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+categoriasVeiculos.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {

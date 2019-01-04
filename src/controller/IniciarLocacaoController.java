@@ -2,15 +2,11 @@ package controller;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
-import adapter.ReservaDisponibilidade;
 import banco.ReservaPendente;
-import business.BoCategoriaVeiculo;
 import business.BoFuncionario;
 import business.BoLocacao;
 import business.BoReserva;
-import business.BoVeiculo;
 import business.IBoLocacao;
 import entidade.Cliente;
 import entidade.Filial;
@@ -24,7 +20,6 @@ import enumeracoes.TipoLocacao;
 import excecoes.BoException;
 import excecoes.ValidarException;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -319,9 +314,9 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
     public void atualizar(Cargo cargo) {
   		try {
   			this.funcionario = null;
-  			List<Funcionario> funcionarios = BoFuncionario.getInstance().buscaPorBusca(ConnectionFactory.getUser()[0].substring(1));
-  			if(!funcionarios.isEmpty()) {
-  				this.funcionario = funcionarios.get(0);
+  			Funcionario funcionario = BoFuncionario.getInstance().buscaPorCpf(ConnectionFactory.getUser()[0].substring(1));
+			if(funcionario != null) {
+				this.funcionario = funcionario;
   				locacao.setFuncionario(funcionario);
   				funcionarioFld.setText(funcionario.toString());
   				if(funcionario.getFilial()!= null) {

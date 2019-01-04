@@ -233,10 +233,8 @@ public class AutomovelController extends CRUDController<Automovel> {
 
 	@Override
 	void popularTabela(String busca) {
-		//Automovel automovel = new Automovel();
 		try {
-			List<Automovel> automoveis = boAutomovel.buscarAll();
-			entidadeTabela.getItems().clear();
+			List<Automovel> automoveis = boAutomovel.buscaPorBuscaAbrangente(busca);
 			entidadeTabela.getItems().setAll(automoveis);
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+automoveis.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {

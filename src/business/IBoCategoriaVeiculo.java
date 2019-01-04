@@ -17,6 +17,4 @@ public interface IBoCategoriaVeiculo extends IBussines<CategoriaVeiculo> {
 	
 	public List<CategoriaVeiculo> categoriasSuperiorAutomovel(Automovel automovel) throws BoException;	
 	
-	public List<CategoriaVeiculo> buscaPorBusca(String busca) throws BoException ;
-	
 }

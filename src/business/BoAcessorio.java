@@ -115,4 +115,13 @@ public class BoAcessorio implements IBoAcessorio{
 		}
 	}
 
+	@Override
+	public List<Acessorio> buscaPorBuscaAbrangente(String busca) throws BoException {
+		try {
+			return daoAcessorio.buscaPorBuscaAbrangente(busca);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
 }

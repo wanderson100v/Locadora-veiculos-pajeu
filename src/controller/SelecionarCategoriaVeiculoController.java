@@ -2,7 +2,6 @@ package controller;
 
 import business.BoCategoriaVeiculo;
 import business.IBoCategoriaVeiculo;
-import business.IBoFuncionario;
 import entidade.CategoriaVeiculo;
 import excecoes.BoException;
 import javafx.event.ActionEvent;
@@ -56,7 +55,7 @@ public class SelecionarCategoriaVeiculoController {
 			public void handle(KeyEvent event) {
 				if(buscaRapidaChk.isSelected() && pesquisaFld.getText().trim().length() > 0) {
 		    		try {
-						categoriaVeiculoTbl.getItems().setAll(boCategoriaVeiculo.buscaPorBusca(pesquisaFld.getText()));
+						categoriaVeiculoTbl.getItems().setAll(boCategoriaVeiculo.buscaPorBuscaAbrangente(pesquisaFld.getText()));
 					} catch (BoException e) {
 						e.printStackTrace();
 					}
@@ -69,7 +68,7 @@ public class SelecionarCategoriaVeiculoController {
     void actionHandle(ActionEvent event) {
     	if(!buscaRapidaChk.isSelected()) {
     		try {
-				categoriaVeiculoTbl.getItems().setAll(boCategoriaVeiculo.buscaPorBusca(pesquisaFld.getText()));
+				categoriaVeiculoTbl.getItems().setAll(boCategoriaVeiculo.buscaPorBuscaAbrangente(pesquisaFld.getText()));
 				alerta.imprimirMsg("Busca concluída","Foram econtrados "+categoriaVeiculoTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 			} catch (BoException e) {
 				alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);

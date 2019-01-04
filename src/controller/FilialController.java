@@ -70,9 +70,7 @@ public class FilialController extends CRUDController<Filial> {
     	ToggleGroup toggleGroup = new ToggleGroup();
     	simAtivoRb.setToggleGroup(toggleGroup);
     	naoAtivoRb.setToggleGroup(toggleGroup);
-    	
     	nomeCln.setCellValueFactory( new PropertyValueFactory<>("nome"));
-    	
     	estadoBox.getItems().setAll(Estado.values());
     }
     
@@ -138,11 +136,8 @@ public class FilialController extends CRUDController<Filial> {
 
 	@Override
 	void popularTabela(String busca) {
-		Filial filial = new Filial();
-		filial.setNome(busca);
-		filial.setAtivo(true);
 		try {
-			List<Filial> filiais = boFilial.buscarPorExemplo(filial);
+			List<Filial> filiais = boFilial.buscaPorBuscaAbrangente(busca);
 			entidadeTabela.getItems().setAll(filiais);
 			entidadeTabela.refresh();
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+filiais.size()+" resultado(s)",AlertType.INFORMATION);

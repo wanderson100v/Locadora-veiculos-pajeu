@@ -27,19 +27,36 @@
    <content>
       <VBox>
          <children>
-            <TableView fx:id="reservaDispoTbl" prefHeight="234.0" prefWidth="618.0" tableMenuButtonVisible="true">
+            <TableView id=".column-header" fx:id="disponiTbl" accessibleHelp="test" accessibleRoleDescription="test" accessibleText="test" editable="true" prefHeight="259.0" prefWidth="1015.0" tableMenuButtonVisible="true">
                <columns>
-                  <TableColumn fx:id="categoriaCln" prefWidth="79.0" text="Categoria" />
-                  <TableColumn fx:id="valorCln" prefWidth="82.0" text="Valor" />
-                  <TableColumn fx:id="descricaoCln" prefWidth="320.0" text="Descrição" visible="false" />
-                  <TableColumn fx:id="reservadoCln" minWidth="0.0" prefWidth="110.0" text="Reservado (x)" />
-                  <TableColumn fx:id="aReceberCln" minWidth="0.0" prefWidth="114.0" text="A Receber (y)" visible="false" />
-                  <TableColumn fx:id="emEstoqueCln" minWidth="0.0" prefWidth="117.0" text="Em Estoque (z)" visible="false" />
-                  <TableColumn fx:id="disponivelCln" prefWidth="125.0" text="Disponivel (x+y-z)" />
+                  <TableColumn prefWidth="91.0" text="Categoria">
+                     <columns>
+                        <TableColumn fx:id="tipoCatCln" prefWidth="75.0" style="fx-background-color: red;" text="Tipo" />
+                        <TableColumn fx:id="valorDiariaCatCln" prefWidth="90.0" text="Valor" visible="false" />
+                        <TableColumn fx:id="descricaoCatCln" prefWidth="220.0" text="Descrição" visible="false" />
+                     </columns>
+                  </TableColumn>
+                  <TableColumn prefWidth="200.0" text="Veículo">
+                     <columns>
+                        <TableColumn fx:id="totalVeiculoCln" prefWidth="75.0" text="Total (TV)" />
+                        <TableColumn fx:id="disponivelCln" prefWidth="100.0" text=" Disponível (TV-TL-TM-TR+EM+EL)" />
+                     </columns>
+                  </TableColumn>
+                  <TableColumn prefWidth="400.0" text="Previsão de Efetivações Acumuladas Para Hórario e filial">
+                     <columns>
+                        <TableColumn fx:id="prevLocaCln" minWidth="0.0" prefWidth="120.0" text="Locação (EL)" />
+                        <TableColumn fx:id="prevManuCln" minWidth="0.0" prefWidth="140.0" text="Manutenção (EM)" />
+                        <TableColumn fx:id="prevReseCln" minWidth="0.0" prefWidth="120.0" text="Reserva" />
+                     </columns>
+                  </TableColumn>
+                  <TableColumn prefWidth="75.0" text="Total de Pendencias Para Todos os Horários na Filial">
+                     <columns>
+                        <TableColumn fx:id="totalLocaCln" prefWidth="120.0" text="Locação (TL)" />
+                        <TableColumn fx:id="totalManuCln" prefWidth="140.0" text="Manutenção (TM)" />
+                        <TableColumn fx:id="totalReseCln" prefWidth="120.0" text="Reserva (TR)" />
+                     </columns>
+                  </TableColumn>
                </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
             </TableView>
          </children>
       </VBox>

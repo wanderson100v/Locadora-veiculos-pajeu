@@ -21,17 +21,12 @@ public class BoCliente implements IBoCliente{
 	}
 
 	@Override
-	public List<Cliente> buscaPorBusca(String busca) throws BoException {
+	public List<Cliente> buscaPorBuscaAbrangente(String busca) throws BoException {
 		try {
-			Cliente cliente = new Cliente();
-			cliente.setNome(busca);
-			cliente.setCodigo(busca);
-			cliente.setEmail(busca);
-			cliente.setTelefone(busca);
-			return daoCliente.buscaPorBusca(cliente);
+			return daoCliente.buscaPorBuscaAbrangente(busca);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}
 	}
-	
+
 }

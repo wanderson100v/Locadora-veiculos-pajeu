@@ -3,7 +3,6 @@ package dao;
 import java.util.List;
 
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 import entidade.Funcionario;
 import enumeracoes.Cargo;
@@ -73,22 +72,6 @@ public class DaoFuncionario  extends Dao<Funcionario> implements IDaoFuncionario
 	}
 	
 	@Override
-	public List<Funcionario> buscaPorBusca(Funcionario funcionario) throws DaoException {
-		try {
-			em = ConnectionFactory.getConnection();
-			TypedQuery<Funcionario> typedQuery = em.createNamedQuery(BUSCA_POR_BUSCA, Funcionario.class);
-			typedQuery.setParameter("nome","%"+funcionario.getNome()+"%");
-			typedQuery.setParameter("cpf","%"+funcionario.getCpf()+"%");
-			return typedQuery.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new DaoException("ERRO AO BUSCAR FUNCIONARIOS POR BUSCA - CONTATE ADM");
-		}finally {
-			em.close();
-		}
-	}
-	
-	@Override
 	@SuppressWarnings("unchecked")
 	public List<String> requisitarGralDeAcesso(String login) throws DaoException {
 		try{
@@ -107,6 +90,22 @@ public class DaoFuncionario  extends Dao<Funcionario> implements IDaoFuncionario
 		}
 	}
 	
+	public Funcionario buscaPorCpf(String cpf) throws DaoException {
+		try{
+			em = ConnectionFactory.getConnection();
+			return em.createQuery(
+					  " select f from Funcionario as f "
+					+ " where f.ativo = true "
+					+ " and upper(f.cpf) = upper(:cpf))", Funcionario.class)
+			.setParameter("cpf",cpf)
+			.getSingleResult();
+		}
+		catch (Exception e) {
+			throw new DaoException("ERRO AO BUSCAR FUNCIONÁRIO POR CPF");
+		}finally {
+			em.close();
+		}
+	}
 	
 	public void utilizarGralAcesso(Cargo cargo) throws DaoException{
 		try{

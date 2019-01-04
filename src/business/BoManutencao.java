@@ -88,4 +88,13 @@ public class BoManutencao implements IBoManutencao {
 		}
 	}
 
+	@Override
+	public List<Manutencao> buscaPorBuscaAbrangente(String busca) throws BoException {
+		try {
+			return daoManutencao.buscaPorBuscaAbrangente(busca);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
 }

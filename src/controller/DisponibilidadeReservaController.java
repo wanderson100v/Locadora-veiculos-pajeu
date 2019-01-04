@@ -2,7 +2,6 @@ package controller;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import adapter.ReservaDisponibilidade;
 import business.BoFuncionario;
@@ -15,6 +14,7 @@ import excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
@@ -24,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.FlowPane;
 import sql.ConnectionFactory;
 import view.Alerta;
 
@@ -31,7 +32,46 @@ public class DisponibilidadeReservaController implements IFuncionarioObservadore
 
 
     @FXML
+    private TableView<ReservaDisponibilidade> disponiTbl;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, String> tipoCatCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, Float> valorDiariaCatCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, String> descricaoCatCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, Integer> prevLocaCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, Integer> prevManuCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, Integer> prevReseCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, Integer> totalLocaCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, Integer> totalManuCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, Integer> totalReseCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, Integer> totalVeiculoCln;
+
+    @FXML
+    private TableColumn<ReservaDisponibilidade, Integer> disponivelCln;
+
+    @FXML
     private Button atualizarTabelaBtn;
+
+    @FXML
+    private FlowPane horarioPane;
 
     @FXML
     private DatePicker dataDate;
@@ -46,34 +86,13 @@ public class DisponibilidadeReservaController implements IFuncionarioObservadore
     private RadioButton outraFilialRb;
 
     @FXML
+    private CheckBox horarioAtualCk;
+
+    @FXML
     private TextField dadosFilialFld;
 
     @FXML
     private Button selecionarFilialBtn;
-    
-    @FXML
-    private TableView<ReservaDisponibilidade> reservasTbl;
-
-    @FXML
-    private TableColumn<ReservaDisponibilidade, String> categoriaCln;
-
-    @FXML
-    private TableColumn<ReservaDisponibilidade, Integer> reservadoCln;
-
-    @FXML
-    private TableColumn<ReservaDisponibilidade, Integer> aReceberCln;
-
-    @FXML
-    private TableColumn<ReservaDisponibilidade, Integer> emEstoqueCln;
-
-    @FXML
-    private TableColumn<ReservaDisponibilidade, Integer> disponivelCln;
-    
-    @FXML
-    private TableColumn<ReservaDisponibilidade, Float> valorCln;
-
-    @FXML
-    private TableColumn<ReservaDisponibilidade, String> descricaoCln;
     
     private IBoReserva boReserva = BoReserva.getInstance();
     private Funcionario funcionario;
@@ -91,14 +110,15 @@ public class DisponibilidadeReservaController implements IFuncionarioObservadore
 	    	Object fonte  = event.getSource();
 	    	if(fonte == atualizarTabelaBtn) {
 	    		if(toggleGroup.getSelectedToggle()!= null) {
-	    			Filial filial = null;
-	    			if(dataDate.getValue() != null && horaBox.getValue()!= null ) {
-		    			filial = (minhaFilialRb.isSelected()) ? funcionario.getFilial(): outraFilial;
-		    			LocalDate data = dataDate.getValue();
-		    			reservasTbl.getItems().setAll(boReserva.buscarReservaDisponibilidade(filial.getId(),LocalDateTime.of(data.getYear(),data.getMonthValue(),data.getDayOfMonth(),horaBox.getValue(),0)));
-			    		Alerta.getInstance().imprimirMsg("Busca Concluida", reservasTbl.getItems().size()+" resultados",AlertType.INFORMATION);
-		    		}else
-		    			Alerta.getInstance().imprimirMsg("Alerta", "Um ou mais campos de horario estão vazios",AlertType.WARNING);
+	    			LocalDateTime horario = 
+	    			(horarioAtualCk.isSelected())?
+	    				LocalDateTime.of(LocalDate.now().getYear(),LocalDate.now().getMonthValue(),
+	    						LocalDate.now().getDayOfMonth(),LocalDateTime.now().getHour(),0)
+	    				: LocalDateTime.of(dataDate.getValue().getYear(),dataDate.getValue().getMonthValue(),
+	    						dataDate.getValue().getDayOfMonth(),horaBox.getValue(),0);
+    				Filial filial = (minhaFilialRb.isSelected()) ? funcionario.getFilial(): outraFilial;
+	    			disponiTbl.getItems().setAll(boReserva.buscarReservaDisponibilidade(filial.getId(),horario));
+		    		Alerta.getInstance().imprimirMsg("Busca Concluida", disponiTbl.getItems().size()+" resultados",AlertType.INFORMATION);
 	    		}else
 	    			Alerta.getInstance().imprimirMsg("Alerta", "É necessário selecionar opção de busca para filial",AlertType.WARNING);
 	    	
@@ -132,19 +152,26 @@ public class DisponibilidadeReservaController implements IFuncionarioObservadore
     		Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
     	}
     }
+    
+
+    @FXML
+    void checkHandle(ActionEvent event) {
+		horarioPane.setDisable(horarioAtualCk.isSelected());
+    }
+    
 
 	public void atualizar(Cargo cargo) {
 		try {
-			if(categoriaCln != null && categoriaCln.getCellValueFactory() == null)
+			if(tipoCatCln != null && tipoCatCln.getCellValueFactory() == null)
 	    		fazerLigacao();
 			this.funcionario = null;
-			List<Funcionario> funcionarios = BoFuncionario.getInstance().buscaPorBusca(ConnectionFactory.getUser()[0].substring(1));
-			if(!funcionarios.isEmpty()) {
-				this.funcionario = funcionarios.get(0);
+			Funcionario funcionario = BoFuncionario.getInstance().buscaPorCpf(ConnectionFactory.getUser()[0].substring(1));
+			if(funcionario != null) {
+				this.funcionario = funcionario;
 				if(funcionario.getFilial()!= null) {
 					minhaFilialRb.setSelected(true);
 					dadosFilialFld.setText(funcionario.getFilial().toString());
-					reservasTbl.getItems().setAll(boReserva.buscarReservaDisponibilidade(funcionario.getFilial().getId(),LocalDateTime.now()));
+					disponiTbl.getItems().setAll(boReserva.buscarReservaDisponibilidade(funcionario.getFilial().getId(),LocalDateTime.now()));
 				}
 			}
 		} catch (BoException e) {
@@ -157,18 +184,22 @@ public class DisponibilidadeReservaController implements IFuncionarioObservadore
     		horaBox.getItems().add(i);
     	
     	dataDate.setValue(LocalDate.now());
+    	horaBox.setValue(LocalDateTime.now().getHour());
 
     	toggleGroup = new ToggleGroup();
     	minhaFilialRb.setToggleGroup(toggleGroup);
     	outraFilialRb.setToggleGroup(toggleGroup);
     	
-    	categoriaCln.setCellValueFactory(new PropertyValueFactory<>("tipoCategoria"));
-    	reservadoCln.setCellValueFactory(new PropertyValueFactory<>("reservado"));
-    	aReceberCln.setCellValueFactory(new PropertyValueFactory<>("receber"));
-    	emEstoqueCln.setCellValueFactory(new PropertyValueFactory<>("emEstoque"));
+    	tipoCatCln.setCellValueFactory(new PropertyValueFactory<>("tipoCategoria"));
+    	valorDiariaCatCln.setCellValueFactory(new PropertyValueFactory<>("valorDiariaCategoria"));
+    	descricaoCatCln.setCellValueFactory(new PropertyValueFactory<>("descricaoCategoria"));
+    	prevLocaCln.setCellValueFactory(new PropertyValueFactory<>("previsaoLocacaoAcumulada"));
+    	prevManuCln.setCellValueFactory(new PropertyValueFactory<>("previsaoManutencaoAcumulada"));
+    	prevReseCln.setCellValueFactory(new PropertyValueFactory<>("previsaoReservaAcumulada"));
+    	totalLocaCln.setCellValueFactory(new PropertyValueFactory<>("totalLocado"));
+    	totalManuCln.setCellValueFactory(new PropertyValueFactory<>("totalManter"));
+    	totalReseCln.setCellValueFactory(new PropertyValueFactory<>("totalReserva"));
+    	totalVeiculoCln.setCellValueFactory(new PropertyValueFactory<>("totalVeiculo"));
     	disponivelCln.setCellValueFactory(new PropertyValueFactory<>("disponivel"));
-    	valorCln.setCellValueFactory(new PropertyValueFactory<>("valorDiariaCategoria"));
-    	descricaoCln.setCellValueFactory(new PropertyValueFactory<>("descricaoCategoria"));
-  
     }
 }

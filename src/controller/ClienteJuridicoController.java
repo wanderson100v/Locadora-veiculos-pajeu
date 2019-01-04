@@ -149,16 +149,8 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
     
     @Override
     void popularTabela(String busca) {
-    	Juridico juridico = new Juridico();
-		juridico.setNome(busca);
-		juridico.setCodigo(busca);
-		juridico.setCnpj(busca);
-		juridico.setInscricaoEstadual(busca);
-		juridico.setEmail(busca);
-		juridico.setTelefone(busca);
 		try {
-			List<Juridico> juridicos = boJuridico.buscaPorBusca(juridico);
-			entidadeTabela.getItems().clear();
+			List<Juridico> juridicos = boJuridico.buscaPorBuscaAbrangente(busca);
 			entidadeTabela.getItems().setAll(juridicos);
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+juridicos.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {

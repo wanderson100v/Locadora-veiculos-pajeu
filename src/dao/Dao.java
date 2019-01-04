@@ -104,6 +104,20 @@ public abstract class Dao<T extends Entidade>{
 			
 	}
 	
+	public List<T> buscaPorBuscaAbrangente(String busca) throws DaoException{
+		try {
+			em = ConnectionFactory.getConnection();
+			return em.createQuery(Util.gerarSqlBuscaAbrangente(tipoDaClasse, tipoDaClasse.getSimpleName().toLowerCase()), tipoDaClasse)
+			.setParameter("busca","%"+busca+"%")
+			.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DaoException("ERRO AO BUSCAR "+tipoDaClasse.getSimpleName().toUpperCase()+" POR BUSCA ABRANGENTE- CONTATE ADM");
+		}finally {
+			em.close();
+		}
+	}
+	
 	public List<T> buscarAll() throws DaoException {
 		EntityManager em = ConnectionFactory.getConnection();
 		List<T> t = new ArrayList<>();

@@ -4,7 +4,6 @@ import java.util.List;
 
 import dao.DaoFilial;
 import dao.IDaoFilial;
-import entidade.Endereco;
 import entidade.Filial;
 import excecoes.BoException;
 import excecoes.DaoException;
@@ -61,26 +60,6 @@ public class BoFilial implements IBoFilial{
 	}
 	
 	@Override
-	public List<Filial> buscaPorBusca(String busca) throws BoException {
-		try {
-			Filial filial = new Filial();
-			filial.setNome(busca);
-			Endereco endereco = new Endereco();
-			endereco.setRua(busca);
-			endereco.setCep(busca);
-			endereco.setNumero(busca);
-			endereco.setCidade(busca);
-			endereco.setBairro(busca);
-			filial.setEndereco(endereco);
-			
-			return daoFilial.buscaPorBusca(filial);
-		} catch (DaoException e) {
-			throw new BoException(e.getMessage());		
-		}
-	}
-
-
-	@Override
 	public List<Filial> buscarAll() throws BoException {
 		try {
 			return daoFilial.buscarAll();
@@ -97,5 +76,15 @@ public class BoFilial implements IBoFilial{
 			throw new BoException(e.getMessage());
 		}
 	}
+
+	@Override
+	public List<Filial> buscaPorBuscaAbrangente(String busca) throws BoException {
+		try {
+			return daoFilial.buscaPorBuscaAbrangente(busca);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
 
 }

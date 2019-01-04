@@ -1,23 +1,30 @@
 package adapter;
 
 public class ReservaDisponibilidade {
-	private String tipoCategoria,descricaoCategoria;
-	private Integer reservado, receber, emEstoque, disponivel;
-	private Float valorDiariaCategoria;
 	private Long idCategoria;
-
-	public ReservaDisponibilidade(Long idCategoria,String tipoCategoria, String descricaoCategoria, Integer reservado, Integer receber,
-			Integer emEstoque, Float valorDiariaCategoria) {
-		super();
+	private String tipoCategoria,descricaoCategoria;
+	private Float valorDiariaCategoria;
+	private Integer previsaoLocacaoAcumulada, previsaoManutencaoAcumulada, 
+			previsaoReservaAcumulada,totalLocado,totalManter,totalReserva,
+			totalVeiculo,disponivel;
+	
+	public ReservaDisponibilidade(Long idCategoria, String tipoCategoria, String descricaoCategoria,
+			Float valorDiariaCategoria, Integer previsaoLocacaoAcumulada, Integer previsaoManutencaoAcumulada,
+			Integer previsaoReservaAcumulada, Integer totalLocado, Integer totalManter, Integer totalReserva,
+			Integer totalVeiculo) {
 		this.idCategoria = idCategoria;
 		this.tipoCategoria = tipoCategoria;
 		this.descricaoCategoria = descricaoCategoria;
-		this.reservado = reservado;
-		this.receber = receber;
-		this.emEstoque = emEstoque;
 		this.valorDiariaCategoria = valorDiariaCategoria;
+		this.previsaoLocacaoAcumulada = previsaoLocacaoAcumulada;
+		this.previsaoManutencaoAcumulada = previsaoManutencaoAcumulada;
+		this.previsaoReservaAcumulada = previsaoReservaAcumulada;
+		this.totalLocado = totalLocado;
+		this.totalManter = totalManter;
+		this.totalReserva = totalReserva;
+		this.totalVeiculo = totalVeiculo;
 	}
-	
+
 	public Long getIdCategoria() {
 		return idCategoria;
 	}
@@ -42,28 +49,68 @@ public class ReservaDisponibilidade {
 		this.descricaoCategoria = descricaoCategoria;
 	}
 
-	public Integer getReservado() {
-		return reservado;
+	public Float getValorDiariaCategoria() {
+		return valorDiariaCategoria;
 	}
 
-	public void setReservado(Integer reservado) {
-		this.reservado = reservado;
+	public void setValorDiariaCategoria(Float valorDiariaCategoria) {
+		this.valorDiariaCategoria = valorDiariaCategoria;
 	}
 
-	public Integer getReceber() {
-		return receber;
+	public Integer getPrevisaoLocacaoAcumulada() {
+		return previsaoLocacaoAcumulada;
 	}
 
-	public void setReceber(Integer receber) {
-		this.receber = receber;
+	public void setPrevisaoLocacaoAcumulada(Integer previsaoLocacaoAcumulada) {
+		this.previsaoLocacaoAcumulada = previsaoLocacaoAcumulada;
 	}
 
-	public Integer getEmEstoque() {
-		return emEstoque;
+	public Integer getPrevisaoManutencaoAcumulada() {
+		return previsaoManutencaoAcumulada;
 	}
 
-	public void setEmEstoque(Integer emEstoque) {
-		this.emEstoque = emEstoque;
+	public void setPrevisaoManutencaoAcumulada(Integer previsaoManutencaoAcumulada) {
+		this.previsaoManutencaoAcumulada = previsaoManutencaoAcumulada;
+	}
+
+	public Integer getPrevisaoReservaAcumulada() {
+		return previsaoReservaAcumulada;
+	}
+
+	public void setPrevisaoReservaAcumulada(Integer previsaoReservaAcumulada) {
+		this.previsaoReservaAcumulada = previsaoReservaAcumulada;
+	}
+
+	public Integer getTotalLocado() {
+		return totalLocado;
+	}
+
+	public void setTotalLocado(Integer totalLocado) {
+		this.totalLocado = totalLocado;
+	}
+
+	public Integer getTotalManter() {
+		return totalManter;
+	}
+
+	public void setTotalManter(Integer totalManter) {
+		this.totalManter = totalManter;
+	}
+
+	public Integer getTotalReserva() {
+		return totalReserva;
+	}
+
+	public void setTotalReserva(Integer totalReserva) {
+		this.totalReserva = totalReserva;
+	}
+
+	public Integer getTotalVeiculo() {
+		return totalVeiculo;
+	}
+
+	public void setTotalVeiculo(Integer totalVeiculo) {
+		this.totalVeiculo = totalVeiculo;
 	}
 
 	public Integer getDisponivel() {
@@ -73,20 +120,5 @@ public class ReservaDisponibilidade {
 	public void setDisponivel(Integer disponivel) {
 		this.disponivel = disponivel;
 	}
-
-	public Float getValorDiariaCategoria() {
-		return valorDiariaCategoria;
-	}
-
-	public void setValorDiariaCategoria(Float valorDiariaCategoria) {
-		this.valorDiariaCategoria = valorDiariaCategoria;
-	}
-
-	@Override
-	public String toString() {
-		return "ReservaDisponibilidade [tipoCategoria=" + tipoCategoria + ", descricaoCategoria=" + descricaoCategoria
-				+ ", reservado=" + reservado + ", aReceber=" + receber + ", emEstoque=" + emEstoque + ", disponivel="
-				+ disponivel + ", valorDiariaCategoria=" + valorDiariaCategoria + "]";
-	}
-
+	
 }

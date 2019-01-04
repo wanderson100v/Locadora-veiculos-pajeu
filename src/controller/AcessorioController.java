@@ -90,12 +90,8 @@ public class AcessorioController extends CRUDController<Acessorio>{
 
 	@Override
 	void popularTabela(String busca) {
-		/*Acessorio acessorio = new Acessorio();
-		acessorio.setNome(busca);
-		acessorio.setDepreciado(false);*/
 		try {
-			List<Acessorio> acessorios = boAcessorio.buscarAll();
-			entidadeTabela.getItems().clear();
+			List<Acessorio> acessorios = boAcessorio.buscaPorBuscaAbrangente(busca);
 			entidadeTabela.getItems().setAll(acessorios);
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+acessorios.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {

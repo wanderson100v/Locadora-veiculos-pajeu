@@ -1,12 +1,10 @@
 package entidade;
 
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import enumeracoes.TipoAcionamentoEmbreagem;
-import enumeracoes.TipoCombustivel;
 
 @Entity(name = "caminhoneta_carga")
 //@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "caminhoneta_carga_seq")

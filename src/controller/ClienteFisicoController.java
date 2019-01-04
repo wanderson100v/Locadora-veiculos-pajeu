@@ -3,26 +3,20 @@ package controller;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import business.BoEndereco;
 import business.BoFisico;
 import business.IBoEndereco;
 import business.IBoFisico;
-import dao.DaoRes;
 import entidade.Endereco;
 import entidade.Entidade;
-import entidade.Filial;
 import entidade.Fisico;
 import enumeracoes.Estado;
 import enumeracoes.Sexo;
 import excecoes.BoException;
-import excecoes.DaoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
@@ -212,18 +206,9 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
 	}
 	@Override
 	void popularTabela(String busca) {
-		Fisico fisico = new Fisico();
-		fisico.setNome(busca);
-		fisico.setCpf(busca);
-		fisico.setCodigo(busca);
-		fisico.setEmail(busca);
-		fisico.setTelefone(busca);
-		fisico.setIdentificacaoMotorista(busca);
-		fisico.setNumeroHabilitacao(busca);
 		try {
-			List<Fisico> fisicos = BoFisico.getInstance().buscaPorBusca(fisico);
+			List<Fisico> fisicos = BoFisico.getInstance().buscaPorBuscaAbrangente(busca);
 			entidadeTabela.getItems().setAll(fisicos);
-			entidadeTabela.refresh();
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+fisicos.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);

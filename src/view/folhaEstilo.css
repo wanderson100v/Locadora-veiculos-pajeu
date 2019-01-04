@@ -10,11 +10,11 @@
    -fx-background-color: white;
 }
 
-.label, .radio-button{
+/*.label, .radio-button{
 	-fx-text-fill: black;
 	-fx-font-family: verdana;
 }
-
+ */
 
 .titulo{
 	-fx-text-fill: white;
@@ -42,9 +42,10 @@
     -fx-background-color: white;
 }
 
+/* 
 .text-field {
     -fx-border-radius: 5;
     -fx-background-color : white;
     -fx-border-color: black;
     -fx-border-width: 1;
-}
+}*/

@@ -1,7 +1,6 @@
 package controller;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import business.BoFuncionario;
@@ -95,9 +94,9 @@ public class PerfilController implements IFuncionarioObservadores {
 		try {
 			System.out.println("chamado");
 			this.funcionario = null;
-			List<Funcionario> funcionarios = boFuncionario.buscaPorBusca(ConnectionFactory.getUser()[0].substring(1));
-			if(!funcionarios.isEmpty()) {
-				this.funcionario = funcionarios.get(0);
+			Funcionario funcionario = BoFuncionario.getInstance().buscaPorCpf(ConnectionFactory.getUser()[0].substring(1));
+			if(funcionario != null) {
+				this.funcionario = funcionario;
 				nomeFld.setText(funcionario.getNome());
 				cpfFld.setText(funcionario.getCpf());
 			}

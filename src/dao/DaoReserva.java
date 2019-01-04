@@ -111,9 +111,9 @@ public class DaoReserva extends Dao<Reserva> implements IDaoReserva{
 					" where fili.id = :id" ,"reservaDisponibilidade")
 			.setParameter("id",filialId)
 			.setParameter("horario",horario).getResultList();
-			
 			for(ReservaDisponibilidade e : elementos)
-				e.setDisponivel(e.getEmEstoque()+ e.getReceber() - e.getReservado());
+				e.setDisponivel(e.getTotalVeiculo() - e.getTotalReserva() - e.getTotalLocado() - e.getTotalManter()
+						+e.getPrevisaoLocacaoAcumulada() + e.getPrevisaoManutencaoAcumulada());
 			return elementos;
 		}catch (Exception e) {
 			em.getTransaction().rollback();
@@ -162,11 +162,10 @@ public class DaoReserva extends Dao<Reserva> implements IDaoReserva{
 			.setParameter("distanciaEixos",caminhonetaCarga.getDistanciaEixos())
 			.setParameter("capacidadeCombustivel",caminhonetaCarga.getCapacidadeCombustivel())
 			.setParameter("torqueMotor",caminhonetaCarga.getTorqueMotor()).getResultList();
-
 			for(ReservaDisponibilidade e : elementos)
-				e.setDisponivel(e.getEmEstoque()+ e.getReceber() - e.getReservado());
+				e.setDisponivel(e.getTotalVeiculo() - e.getTotalReserva() - e.getTotalLocado() - e.getTotalManter()
+						+e.getPrevisaoLocacaoAcumulada() + e.getPrevisaoManutencaoAcumulada());
 			return elementos;
-
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw new DaoException("ERRO AO BUSCAR DISPONIBILIDADE DE RESERVAS PARA CATEGORIAS SUPERIORES DE CAMINHONETAS DE CARGA ");
@@ -205,10 +204,10 @@ public class DaoReserva extends Dao<Reserva> implements IDaoReserva{
 			.setParameter("tipoCombustivel",automovel.getTipoCombustivel().ordinal());
 			if(automovel.getTipoAutomovel() == TipoAutomovel.CAMINHONETA_PASSAGEIRO)
 				query.setParameter("tipoAirBag", automovel.getTipoAirBag().ordinal());
-			
 			List<ReservaDisponibilidade> elementos = query.getResultList();
 			for(ReservaDisponibilidade e : elementos)
-				e.setDisponivel(e.getEmEstoque()+ e.getReceber() - e.getReservado());
+				e.setDisponivel(e.getTotalVeiculo() - e.getTotalReserva() - e.getTotalLocado() - e.getTotalManter()
+						+e.getPrevisaoLocacaoAcumulada() + e.getPrevisaoManutencaoAcumulada());
 			return elementos;
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -231,8 +230,8 @@ public class DaoReserva extends Dao<Reserva> implements IDaoReserva{
 			.setParameter("filialId",filialId)
 			.setParameter("categoriaVeiculoId",categoriaVeiculoId)
 			.setParameter("horario",horario).getSingleResult();
-			reservaDisponibilidade.setDisponivel(reservaDisponibilidade.getEmEstoque()+ reservaDisponibilidade.getReceber()
-					- reservaDisponibilidade.getReservado());
+			reservaDisponibilidade.setDisponivel(reservaDisponibilidade.getTotalVeiculo() - reservaDisponibilidade.getTotalReserva() - reservaDisponibilidade.getTotalLocado() - reservaDisponibilidade.getTotalManter()
+					+reservaDisponibilidade.getPrevisaoLocacaoAcumulada() + reservaDisponibilidade.getPrevisaoManutencaoAcumulada());
 			return reservaDisponibilidade;
 		}catch (Exception e) {
 			e.printStackTrace();

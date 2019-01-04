@@ -6,7 +6,7 @@ import entidade.Cliente;
 import excecoes.BoException;
 
 public interface IBoCliente {
-
-	public List<Cliente> buscaPorBusca(String busca) throws BoException;
+	
+	List<Cliente> buscaPorBuscaAbrangente(String busca) throws BoException;
 	
 }

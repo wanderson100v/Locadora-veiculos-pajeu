@@ -1,18 +1,13 @@
 package controller;
 
-import java.util.Optional;
-
 import business.BoFilial;
 import business.IBoFilial;
-import dao.DaoRes;
 import entidade.Endereco;
 import entidade.Filial;
 import excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TableColumn;
@@ -58,7 +53,7 @@ public class SelecionarFilialController {
 			public void handle(KeyEvent event) {
 				if(buscaRapidaChk.isSelected() && pesquisaFld.getText().trim().length() > 0) {
 		    		try {
-						filialTbl.getItems().setAll(boFilial.buscaPorBusca(pesquisaFld.getText()));
+						filialTbl.getItems().setAll(boFilial.buscaPorBuscaAbrangente(pesquisaFld.getText()));
 					} catch (BoException e) {
 						e.printStackTrace();
 					}
@@ -71,7 +66,7 @@ public class SelecionarFilialController {
     void actionHandle(ActionEvent event) {
     	if(!buscaRapidaChk.isSelected()) {
     		try {
-				filialTbl.getItems().setAll(boFilial.buscaPorBusca(pesquisaFld.getText()));
+				filialTbl.getItems().setAll(boFilial.buscaPorBuscaAbrangente(pesquisaFld.getText()));
 				alerta.imprimirMsg("Busca concluída","Foram econtrados "+filialTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 			} catch (BoException e) {
 				alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);

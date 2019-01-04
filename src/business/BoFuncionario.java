@@ -20,7 +20,6 @@ public class BoFuncionario implements IBoFuncionario {
 			instance = new BoFuncionario();
 		return instance;
 	}
-	
 
 	@Override
 	public void excluir(Funcionario entidade) throws BoException {
@@ -65,18 +64,6 @@ public class BoFuncionario implements IBoFuncionario {
 		}
 	}
 	
-	@Override
-	public List<Funcionario> buscaPorBusca(String busca) throws BoException {
-		try {
-			Funcionario funcionario = new Funcionario();
-			funcionario.setNome(busca);
-			funcionario.setCpf(busca);
-			return daoFuncionario.buscaPorBusca(funcionario);
-		}catch (DaoException e) {
-			throw new BoException(e.getMessage());
-		}
-	}
-
 	
 	@Override
 	public List<Funcionario> buscarAll() throws BoException {
@@ -87,6 +74,25 @@ public class BoFuncionario implements IBoFuncionario {
 		}
 	}
 
+	@Override
+	public List<Funcionario> buscaPorBuscaAbrangente(String busca) throws BoException {
+		try {
+			return daoFuncionario.buscaPorBuscaAbrangente(busca);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+	
+	@Override
+	public Funcionario buscaPorCpf(String cpf) throws BoException {
+		try {
+			return daoFuncionario.buscaPorCpf(cpf);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+	
+	
 	@Override
 	public void resetarSenha(Funcionario funcionario) throws BoException {
 		try {
@@ -144,4 +150,5 @@ public class BoFuncionario implements IBoFuncionario {
 		if(erro.length()>0)
 			throw new BoException("Erro(s) ao validar dados de acesso para Funcionario:\n"+erro.toString());
 	}
+
 }

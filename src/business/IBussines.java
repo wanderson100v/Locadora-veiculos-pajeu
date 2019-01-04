@@ -16,4 +16,6 @@ public interface IBussines<T extends Entidade> {
 	public List<T> buscarAll() throws BoException;
 	
 	public List<T> buscarPorExemplo(T exemploEntidade)throws BoException;
+	
+	List<T> buscaPorBuscaAbrangente(String busca) throws BoException;
 }

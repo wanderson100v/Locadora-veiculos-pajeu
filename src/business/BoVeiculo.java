@@ -101,5 +101,14 @@ public class BoVeiculo implements IBoVeiculo {
 			throw new BoException(e.getMessage());
 		}
 	}
+	
+	@Override
+	public List<Veiculo> buscaPorBuscaAbrangente(String busca) throws BoException {
+		try {
+			return daoVeiculo.buscaPorBuscaAbrangente(busca);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
 
 }

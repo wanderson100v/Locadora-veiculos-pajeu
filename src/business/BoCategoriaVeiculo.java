@@ -1,8 +1,6 @@
 package business;
 
-import java.time.LocalDateTime;
 import java.util.List;
-
 import dao.DaoCategoriaVeiculo;
 import dao.IDaoCategoriaVeiculo;
 import entidade.Automovel;
@@ -163,24 +161,11 @@ public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 			throw new BoException(e.getMessage());
 		}
 	}
+
 	@Override
-	public List<CategoriaVeiculo> buscaPorBusca(String busca) throws BoException {
+	public List<CategoriaVeiculo> buscaPorBuscaAbrangente(String busca) throws BoException {
 		try {
-			CategoriaVeiculo categoriaVeiculo = new CategoriaVeiculo();
-			categoriaVeiculo.setTipo(busca);
-			categoriaVeiculo.setDescricao(busca);
-			try {
-				categoriaVeiculo.setHorasLimpesa(Integer.parseInt(busca));
-				categoriaVeiculo.setHorasRevisao(Integer.parseInt(busca));
-				categoriaVeiculo.setValorDiaria(Float.parseFloat(busca));
-				categoriaVeiculo.setQuilometragemRevisao(Integer.parseInt(busca));
-			}catch (NumberFormatException e) {
-				categoriaVeiculo.setHorasLimpesa(0);
-				categoriaVeiculo.setHorasRevisao(0);
-				categoriaVeiculo.setValorDiaria(0f);
-				categoriaVeiculo.setQuilometragemRevisao(0);
-			}
-			return daoCategoriaVeiculo.buscaPorBusca(categoriaVeiculo);
+			return daoCategoriaVeiculo.buscaPorBuscaAbrangente(busca);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}
@@ -202,5 +187,6 @@ public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 				
 		
 	}
+
 
 }

@@ -46,6 +46,18 @@
                   </ImageView>
                </graphic>
             </Tab>
+            <Tab text="Disponibilidade">
+              <content>
+                  <fx:include fx:id="disponibilidadeReservaPane" source="DisponibilidadeReservaPane.fxml" />
+              </content>
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/icones/reserva-ico.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Tab>
           <Tab fx:id="dadosTab" text="Dados">
                <graphic>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
