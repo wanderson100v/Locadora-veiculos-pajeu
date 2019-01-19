@@ -2,6 +2,7 @@ package dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 
@@ -107,7 +108,21 @@ public abstract class Dao<T extends Entidade>{
 	public List<T> buscaPorBuscaAbrangente(String busca) throws DaoException{
 		try {
 			em = ConnectionFactory.getConnection();
-			return em.createQuery(Util.gerarSqlBuscaAbrangente(tipoDaClasse, tipoDaClasse.getSimpleName().toLowerCase()), tipoDaClasse)
+			return em.createQuery(Util.gerarHqlBuscaAbrangente(tipoDaClasse, tipoDaClasse.getSimpleName().toLowerCase()), tipoDaClasse)
+			.setParameter("busca","%"+busca+"%")
+			.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DaoException("ERRO AO BUSCAR "+tipoDaClasse.getSimpleName().toUpperCase()+" POR BUSCA ABRANGENTE- CONTATE ADM");
+		}finally {
+			em.close();
+		}
+	}
+	
+	public List<T> buscaPorBuscaAbrangente(String busca, Map<String, String> restricoes) throws DaoException{
+		try {
+			em = ConnectionFactory.getConnection();
+			return em.createQuery(Util.gerarHqlBuscaAbrangente(tipoDaClasse, restricoes), tipoDaClasse)
 			.setParameter("busca","%"+busca+"%")
 			.getResultList();
 		} catch (Exception e) {

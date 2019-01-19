@@ -37,20 +37,18 @@ public class LoginController{
     
     @FXML
     void eventHandler(ActionEvent event) {
-    	if(event.getSource() == loginBtn) {
-    		try {
-    			String login = loginField.getText();
-    			String senha = senhaField.getText();
-	    		ConnectionFactory.setUser(login,senha);
-	    		Cargo cargo = boFuncionario.requisitarGralDeAcesso(login);
-	    		FuncionarioObservavel.getIntance().avisarOuvintes(cargo);
-	    		boFuncionario.utilizarGralAcesso(cargo);
-				App.iniTelaMenu();
-    		} catch (BoException e) {
-    			alerta.imprimirMsg("Alerta", e.getMessage(),AlertType.WARNING);
-    		}
+		try {
+			String login = loginField.getText();
+			String senha = senhaField.getText();
+    		ConnectionFactory.setUser(login,senha);
+    		Cargo cargo = boFuncionario.requisitarGralDeAcesso(login);
+    		FuncionarioObservavel.getIntance().avisarOuvintes(cargo);
+    		boFuncionario.utilizarGralAcesso(cargo);
+			App.iniTelaMenu();
+		} catch (BoException e) {
+			alerta.imprimirMsg("Alerta", e.getMessage(),AlertType.WARNING);
+		}
     		
-    	}
     }
     
     

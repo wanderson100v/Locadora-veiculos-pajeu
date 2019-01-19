@@ -2,6 +2,7 @@ package business;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import adapter.ReservaDisponibilidade;
 import banco.ReservaHoje;
@@ -189,4 +190,12 @@ public class BoReserva implements IBoReserva {
 		}
 	}
 	
+	@Override
+	public List<Reserva> buscaPorBuscaAbrangente(String busca, Map<String, String> restricoes) throws BoException {
+		try {
+			return daoReserva.buscaPorBuscaAbrangente(busca, restricoes);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
 }

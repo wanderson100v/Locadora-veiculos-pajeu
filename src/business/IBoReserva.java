@@ -3,6 +3,7 @@ package business;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import adapter.ReservaDisponibilidade;
 import banco.ReservaHoje;
@@ -27,4 +28,6 @@ public interface IBoReserva extends IBussines<Reserva>{
 	public List<ReservaDisponibilidade> buscarReservaDisponibilidade(Long filialId, LocalDateTime horario)throws BoException;
 	
 	public Boolean disponibilidadeCategoriaEmFilial(Long categoriaVeiculoId, Long filialId, LocalDateTime horario) throws BoException;
+	
+	public List<Reserva> buscaPorBuscaAbrangente(String busca, Map<String, String> restricoes) throws BoException;
 }

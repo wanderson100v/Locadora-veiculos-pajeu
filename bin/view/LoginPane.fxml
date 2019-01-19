@@ -47,9 +47,9 @@
                   <RowConstraints maxHeight="63.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <PasswordField fx:id="senhaField" alignment="CENTER" promptText="Senha" GridPane.rowIndex="2" />
                   <Label style="-fx-text-fill: black;" text="Dados de Acesso" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <TextField fx:id="loginField" alignment="CENTER" prefHeight="25.0" prefWidth="137.0" promptText="Login" GridPane.rowIndex="1" />
+                  <TextField fx:id="loginField" onAction="#eventHandler" alignment="CENTER" prefHeight="25.0" prefWidth="137.0" promptText="Login" GridPane.rowIndex="1" />
+                  <PasswordField fx:id="senhaField" onAction="#eventHandler" alignment="CENTER" promptText="Senha" GridPane.rowIndex="2" />
                   <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#eventHandler" styleClass="button-com-ico" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
                      <font>
                         <Font name="Verdana" size="12.0" />
