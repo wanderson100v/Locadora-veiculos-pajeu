@@ -1,5 +1,6 @@
 package business;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,9 @@ public interface IBoLocacao extends IBussines<Locacao>{
 	public long totalLocacoePrevisaoEntrega(Filial filialEntrega ,CategoriaVeiculo categoriaVeiculo ,LocalDateTime dataLimite)throws BoException;
 	
 	public Object[] calcularValorLocacaoDetalhamento(Locacao locacao) throws BoException;
+	
+	public Object[] calcularValorLocacaoDetalhamento(Locacao locacao, int novaQuilometragem, LocalDateTime dataDevulucaoAtt, 
+			Boolean abastecer , Boolean limpeza) throws BoException;
 	
 	public List<Locacao> buscaPorBuscaAbrangente(String busca, Map<String, String> restricoes) throws BoException;
 }

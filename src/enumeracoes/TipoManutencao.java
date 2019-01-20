@@ -1,7 +1,7 @@
 package enumeracoes;
 
 public enum TipoManutencao {
-	LIMPEZA("Limpeza"),MANUTENCAO("Manutenção");
+	LIMPEZA("Limpeza"),REVISAO("RevisÃ£o"),ABASTECIMENTO("Abastecimento");
 	
 	private String value;
 

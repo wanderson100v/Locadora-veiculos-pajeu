@@ -288,6 +288,16 @@ public class AcompanhamentoController {
     			}else
     				Alerta.getInstance().imprimirMsg("Alerta", "Não há nenhuma reserva pendente seleciona na tabela", AlertType.WARNING);
     		}
+    		else if(e.getSource() == finalizarLocacaoBnt) 
+    		{
+    			Locacao locacaoSelecionada = locacaoTbl.getSelectionModel().getSelectedItem();
+    			if(locacaoSelecionada != null && Alerta.getInstance().imprimirMsgConfirmacao("Precione \"Ok\" para iniciar tela para "
+    					+ "finalizar locacao com o cliente "+ locacaoSelecionada.getCliente())) {
+    				Util.exibirFinalizarLocacaoDialogo(locacaoSelecionada);
+    			}else
+    				Alerta.getInstance().imprimirMsg("Alerta", "Não há nenhuma locação pendente seleciona na tabela", AlertType.WARNING);
+    			
+    		}
 			
     	} catch (BoException e1) {
 			e1.printStackTrace();

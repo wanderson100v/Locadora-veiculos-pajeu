@@ -2,6 +2,7 @@ package entidade;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -40,7 +41,7 @@ public class Locacao extends Entidade {
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Cliente cliente;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(nullable = false)
 	private Veiculo veiculo;
 	@ManyToOne

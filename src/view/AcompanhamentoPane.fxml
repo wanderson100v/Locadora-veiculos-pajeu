@@ -31,7 +31,7 @@
                      <children>
                         <VBox minHeight="545.0" minWidth="830.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                            <TitledPane alignment="CENTER" prefHeight="269.0" prefWidth="832.0" text="Reservas">
+                            <TitledPane alignment="CENTER" text="Reservas">
                                  <content>
                                     <AnchorPane>
                                        <children>
@@ -59,7 +59,7 @@
                                     </AnchorPane>
                                  </content>
                               </TitledPane>
-                            <TitledPane alignment="CENTER" prefHeight="277.0" prefWidth="832.0" text="Locações">
+                            <TitledPane alignment="CENTER" text="Locações">
                                  <content>
                                     <AnchorPane prefHeight="269.0" prefWidth="830.0">
                                        <children>

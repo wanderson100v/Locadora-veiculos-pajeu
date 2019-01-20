@@ -100,6 +100,27 @@ public class BoLocacao implements IBoLocacao {
 		}
 	}
 	
+	public void calcularValorLocacao(Locacao locacao) {
+		Float valorDiaria = 0f;
+		Float valorLocacao = 0f;
+		if(locacao.getReservaOrigem()!= null) {
+			valorDiaria =  locacao.getReservaOrigem().getCategoriaVeiculo().getValorDiaria();
+			if(locacao.getTipoLocacao() == TipoLocacao.KM_LIVRE)
+				valorLocacao += locacao.getReservaOrigem().getCategoriaVeiculo().getValorLivre();
+		}else {
+			valorDiaria =  locacao.getVeiculo().getCategoriaVeiculo().getValorDiaria();
+			if(locacao.getTipoLocacao() == TipoLocacao.KM_LIVRE) 
+				valorLocacao +=  locacao.getVeiculo().getCategoriaVeiculo().getValorLivre();
+		}
+		//valor do período
+		valorLocacao += valorDiaria * Duration.between(locacao.getDataRetirada(),locacao.getDataDevolucao()).toDays();// dias
+		Long horasAposTerminoPrevistoDiaria = Duration.between(locacao.getDataRetirada(),locacao.getDataDevolucao()).toHours() % 24;
+		if(horasAposTerminoPrevistoDiaria >0)
+			valorLocacao += (horasAposTerminoPrevistoDiaria <=4) ?  valorDiaria/4 : valorDiaria; //horas
+		locacao.setValorDiaria(valorLocacao);
+	}
+	
+	
 	public Object[] calcularValorLocacaoDetalhamento(Locacao locacao) throws BoException {
 		try {
 			StringBuilder notaFiscal = new StringBuilder("Detelhamento valor locação :\n");
@@ -144,26 +165,98 @@ public class BoLocacao implements IBoLocacao {
 		}
 	}
 	
-	public void calcularValorLocacao(Locacao locacao) {
-		Float valorDiaria = 0f;
-		Float valorLocacao = 0f;
-		if(locacao.getReservaOrigem()!= null) {
-			valorDiaria =  locacao.getReservaOrigem().getCategoriaVeiculo().getValorDiaria();
-			if(locacao.getTipoLocacao() == TipoLocacao.KM_LIVRE)
-				valorLocacao += locacao.getReservaOrigem().getCategoriaVeiculo().getValorLivre();
-		}else {
-			valorDiaria =  locacao.getVeiculo().getCategoriaVeiculo().getValorDiaria();
-			if(locacao.getTipoLocacao() == TipoLocacao.KM_LIVRE) 
-				valorLocacao +=  locacao.getVeiculo().getCategoriaVeiculo().getValorLivre();
-		}
-		//valor do período
-		valorLocacao += valorDiaria * Duration.between(locacao.getDataRetirada(),locacao.getDataDevolucao()).toDays();// dias
-		Long horasAposTerminoPrevistoDiaria = Duration.between(locacao.getDataRetirada(),locacao.getDataDevolucao()).toHours() % 24;
-		if(horasAposTerminoPrevistoDiaria >0)
-			valorLocacao += (horasAposTerminoPrevistoDiaria <=4) ?  valorDiaria/4 : valorDiaria; //horas
-		locacao.setValorDiaria(valorLocacao);
-	}
 	
+	public Object[] calcularValorLocacaoDetalhamento(Locacao locacao, int novaQuilometragem, LocalDateTime dataDevulucaoAtt, Boolean abastecer , Boolean limpeza) throws BoException {
+		try {
+			StringBuilder notaFiscal = new StringBuilder();
+			Float valorDiaria = 0f;
+			Float valorLocacao = 0f;
+			Float valorKm = 0f;
+			long quilometrosRodados = novaQuilometragem - locacao.getVeiculo().getQuilometragem(); 
+			
+			if(locacao.getReservaOrigem()!= null) {
+				valorDiaria =  locacao.getReservaOrigem().getCategoriaVeiculo().getValorDiaria();
+				notaFiscal.append(
+						  "- Locação feita a partir de reserva valor"
+						+ "\npor diaria e taxas por tipo de Locação"
+						+ "\nserão definidos pela categoria reservada:"
+						+ "\n\t- Valor por Diaria = "+valorDiaria);
+				
+				if(locacao.getTipoLocacao() == TipoLocacao.KM_LIVRE) {
+					valorKm = locacao.getReservaOrigem().getCategoriaVeiculo().getValorLivre();
+					valorLocacao += valorKm;
+					notaFiscal.append("\n\tTaxa Km Livre = "+valorKm);
+				}else {
+					valorKm = locacao.getReservaOrigem().getCategoriaVeiculo().getValorKm();
+					float valorKmRodados = quilometrosRodados * valorKm;
+					notaFiscal.append(
+							  "\n\t- Taxa Km Contole(Por unidade de quilometro"
+							+ "\n\t  rodado) = "+valorKm+", foram rodados "+quilometrosRodados
+							+ "\n\t  totalizando = "+valorKmRodados);
+					valorKm = valorKmRodados;
+				}
+			}else {
+				valorDiaria =  locacao.getVeiculo().getCategoriaVeiculo().getValorDiaria();
+				notaFiscal.append(  
+						  "- Locação não iniciada a partir de reserva"
+						+ "\nvalor por diaria e taxas por tipo de Locação"
+						+ "\nserão definidos pela categoria do veículo locado:"
+						+ "\n\t- Valor por Diaria = "+valorDiaria);
+				if(locacao.getTipoLocacao() == TipoLocacao.KM_LIVRE) {
+					valorKm = locacao.getVeiculo().getCategoriaVeiculo().getValorLivre();
+					valorLocacao += valorKm;
+					notaFiscal.append("\n\t- Taxa Km Livre = "+valorKm);
+				}else{
+					valorKm = locacao.getVeiculo().getCategoriaVeiculo().getValorKm();
+					float valorKmRodados = quilometrosRodados * valorKm;
+					notaFiscal.append(
+							  "\n\t- Taxa Km Contole(Por unidade de quilometro"
+							+ "\n\t  rodado) = "+valorKm+", foram rodados "+quilometrosRodados
+							+ "\n\t  totalizando = "+valorKmRodados);
+					valorKm = valorKmRodados;
+				}
+			}
+			
+			Long dias = Duration.between(locacao.getDataRetirada(),dataDevulucaoAtt).toDays();
+			Long horasAposTerminoPrevistoDiaria = Duration.between(locacao.getDataRetirada(),dataDevulucaoAtt).toHours() % 24;
+			Float valorTotalDiarias = valorDiaria * dias;
+			Float valorHoras = 0f;
+			notaFiscal.append("\n- Período de locacao de "+dias+" dias e "+horasAposTerminoPrevistoDiaria+" horas"
+							 +"\n\t- Valor por dias de diaria = "+valorTotalDiarias);
+			if(horasAposTerminoPrevistoDiaria >0)
+				if(horasAposTerminoPrevistoDiaria <=4) {
+					notaFiscal.append(
+							  "\n\t- Valor horas restantes é 1/4 valor de"
+							+ "\n\t  diaria = "+valorDiaria/4);
+					valorHoras = valorDiaria/4; 
+				}else {
+					notaFiscal.append("\n\t- Valor horas restantes é mais uma diaria = "+valorDiaria);
+					valorHoras = valorDiaria;
+				}
+			valorLocacao = valorHoras + valorTotalDiarias + valorKm;
+			Float taxaLimpeza = 0f;
+			Float taxaAbastecer = 0f;
+			if(limpeza || abastecer) {
+				notaFiscal.append("\n- Taxas referêntes a manutenção de veículo");
+				if(limpeza) {
+					taxaLimpeza = valorLocacao * 0.02f;
+					notaFiscal.append("\n\t- Limpesa = "+taxaLimpeza);
+				}if(abastecer) {
+					taxaAbastecer = valorLocacao * 0.03f;
+					notaFiscal.append("\n\t- Abastecimento = "+taxaAbastecer);
+				}
+			}
+			valorLocacao += taxaLimpeza + taxaAbastecer;
+			notaFiscal.append(
+					 "\n- Valor total de locação ="+valorLocacao
+					+"\n- Valor inicial pago ="+ locacao.getValorPago()
+					+"\n- Valor Restante = "+(valorLocacao - locacao.getValorPago()));
+			return new Object[]{valorLocacao,notaFiscal.toString()};
+		}catch (NullPointerException e) {
+			throw new BoException("É necessário tipo, hora de retirada/devolução da locação "
+					+ "como também reserva ou veículo selecionado para calculo de valor de locação");
+		}
+	}
 	private void validarLocacao(Locacao locacao) throws BoException{
 		if(locacao.getCliente() != null && locacao.getVeiculo() != null && locacao.getFuncionario()!= null
 				&& locacao.getTipoLocacao() !=null &&  locacao.getDataRetirada() != null && locacao.getDataDevolucao() != null) 

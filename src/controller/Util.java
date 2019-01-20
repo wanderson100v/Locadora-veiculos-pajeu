@@ -14,16 +14,42 @@ import entidade.Cliente;
 import entidade.Filial;
 import entidade.Fisico;
 import entidade.Funcionario;
+import entidade.Locacao;
 import entidade.Veiculo;
 import excecoes.BoException;
 import excecoes.DaoException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Alert.AlertType;
 import view.Alerta;
 
 public class Util {
 
+	public static LocalDateTime gerarHorario(DatePicker datePicker , ComboBox<Integer> comboBox) {
+		LocalDateTime dataTime = null;
+		if(datePicker.getValue() != null && comboBox.getValue() != null) {
+			LocalDate data = datePicker.getValue();
+			Integer hora = comboBox.getValue();
+			dataTime = LocalDateTime.of(data.getYear(),data.getMonthValue(),data.getDayOfMonth(),hora,0);
+		}
+		return dataTime;
+	}
+	
+	public static void exibirFinalizarLocacaoDialogo(Locacao locacao) {
+		try {
+			Alert alerta = new Alert(AlertType.NONE);
+			FinalizarLocacaoController finalizarLocacaoController;
+			finalizarLocacaoController = (FinalizarLocacaoController) DaoRes.getInstance().carregarControllerFXML("FinalizarLocacaoDialogo");
+			finalizarLocacaoController.paremetrizadoPor(locacao);
+			alerta.setDialogPane(finalizarLocacaoController.getFinalizarLocacaoDialogo());
+			alerta.showAndWait();
+		} catch (DaoException e) {
+			Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+		}
+	}
+	
 	public static Filial selecionarFilialEmDialogo() {
 		Filial filialSelecionada = null;
 		try {

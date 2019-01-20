@@ -1,16 +1,12 @@
 package business;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import dao.DaoManutencao;
 import dao.IDaoManutencao;
 import entidade.Manutencao;
-import enumeracoes.EstadoManutencao;
-import enumeracoes.TipoManutencao;
 import excecoes.BoException;
 import excecoes.DaoException;
-import sql.ConnectionFactory;
 
 public class BoManutencao implements IBoManutencao {
 	private IDaoManutencao daoManutencao = new DaoManutencao();
@@ -22,21 +18,6 @@ public class BoManutencao implements IBoManutencao {
 		if(instance == null)
 			instance = new BoManutencao();
 		return instance;
-	}
-	
-	public static void main(String[] args) {
-		try {
-			ConnectionFactory.setUser("w12745141422","123456");
-			Manutencao m = new Manutencao();
-			m.setCusto(10.0f);
-			m.setEstadoManutencao(EstadoManutencao.PENDENTE);
-			m.setDataHoraInicio(LocalDateTime.now());
-			m.setTipoManuntencao(TipoManutencao.LIMPEZA);
-			m.setVeiculo(BoAutomovel.getInstance().buscarID(new Long(105)));
-			getInstance().cadastrarEditar(m);
-		} catch (BoException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	@Override

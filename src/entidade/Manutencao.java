@@ -27,6 +27,15 @@ public class Manutencao extends Entidade{
 	@JoinColumn(nullable = false)
 	private Veiculo veiculo;
 	
+	public Manutencao(LocalDateTime dataHoraInicio, TipoManutencao tipoManuntencao, EstadoManutencao estadoManutencao,
+			Float custo, Veiculo veiculo) {
+		super();
+		this.dataHoraInicio = dataHoraInicio;
+		this.tipoManuntencao = tipoManuntencao;
+		this.estadoManutencao = estadoManutencao;
+		this.custo = custo;
+		this.veiculo = veiculo;
+	}
 
 	public EstadoManutencao getEstadoManutencao() {
 		return estadoManutencao;
