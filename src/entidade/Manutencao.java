@@ -37,6 +37,8 @@ public class Manutencao extends Entidade{
 		this.veiculo = veiculo;
 	}
 
+	public Manutencao() {}
+
 	public EstadoManutencao getEstadoManutencao() {
 		return estadoManutencao;
 	}

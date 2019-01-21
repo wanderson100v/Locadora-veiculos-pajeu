@@ -111,9 +111,10 @@ public class SelecionarVeiculoController {
 							veiculoTbl.getItems().setAll(boVeiculo.buscarVeiculosDisponivel(filial.getId(), categoriaVeiculo.getId(), pesquisaFld.getText().trim()));
 						else if(filial != null) 
 							veiculoTbl.getItems().setAll(boVeiculo.buscarVeiculosDisponivel(filial.getId(), pesquisaFld.getText().trim()));
-						//else 
-							// busca por busca
-					} catch (BoException e) {
+						else
+							veiculoTbl.getItems().setAll(boVeiculo.buscaPorBuscaAbrangente(pesquisaFld.getText().trim()));
+				
+		    		} catch (BoException e) {
 						e.printStackTrace();
 					}
 		    	}
@@ -130,8 +131,8 @@ public class SelecionarVeiculoController {
 					veiculoTbl.getItems().setAll(boVeiculo.buscarVeiculosDisponivel(filial.getId(), categoriaVeiculo.getId(), pesquisaFld.getText().trim()));
 				else if(filial != null) 
 					veiculoTbl.getItems().setAll(boVeiculo.buscarVeiculosDisponivel(categoriaVeiculo.getId(),pesquisaFld.getText().trim()));
-				//else 
-					// busca por busca
+				else 
+					veiculoTbl.getItems().setAll(boVeiculo.buscaPorBuscaAbrangente(pesquisaFld.getText().trim()));
 				
 				alerta.imprimirMsg("Busca concluída","Foram econtrados "+veiculoTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 			} catch (BoException e) {
@@ -160,7 +161,8 @@ public class SelecionarVeiculoController {
     }
     
     public void paremetrizadoPor(Filial filial) {
-    	tituloLbl.setText("Selecione Veículo na filial "+filial.getNome());
+    	if(filial!= null)
+    		tituloLbl.setText("Selecione Veículo na filial "+filial.getNome());
     	this.filial = filial;
     }
 }

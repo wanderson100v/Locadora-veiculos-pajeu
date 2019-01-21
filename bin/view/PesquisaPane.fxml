@@ -6,8 +6,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Reflection?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -19,94 +21,88 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pesquisaPane" minHeight="550.0" minWidth="660.0" prefHeight="550.0" prefWidth="800.0" stylesheets="@folhaEstilo.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PesquisaController">
+<AnchorPane fx:id="pesquisaPane" stylesheets="@folhaEstilo.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PesquisaController">
    <children>
-      <GridPane prefHeight="550.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-         </rowConstraints>
+      <VBox layoutY="-2.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ScrollPane>
-               <content>
-                  <AnchorPane>
+            <FlowPane alignment="CENTER" minHeight="50.0" prefHeight="50.0">
+               <children>
+                  <Label text="Manipulação de Dados">
+                     <font>
+                        <Font name="Verdana" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </FlowPane>
+            <SplitPane fx:id="splitPane" dividerPositions="0.6010016694490818">
+               <items>
+                  <FlowPane alignment="CENTER">
                      <children>
-                        <GridPane fx:id="tabelaPane" alignment="CENTER" layoutX="51.0" layoutY="159.0" prefHeight="300.0" prefWidth="553.0">
+                        <GridPane vgap="10.0">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                            </columnConstraints>
                            <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" opacity="0.21" text="Selecione um filtro para pesquisa" textFill="WHITE" GridPane.halignment="CENTER">
-                                 <font>
-                                    <Font name="Verdana Italic" size="18.0" />
-                                 </font>
-                                 <effect>
-                                    <Reflection />
-                                 </effect>
-                              </Label>
-                           </children>
-                        </GridPane>
-                        <TextField fx:id="pesquisaFld" layoutX="104.0" layoutY="104.0" onAction="#actionHandle" prefHeight="23.0" prefWidth="289.0" promptText="Insira dado para pesquisa">
-                           <font>
-                              <Font name="Verdana" size="12.0" />
-                           </font>
-                        </TextField>
-                        <ComboBox fx:id="filtroBox" layoutX="407.0" layoutY="104.0" onAction="#actionHandle" prefWidth="150.0" promptText="Filtro" />
-                        <Label layoutX="226.0" layoutY="66.0" text="Manipulação de Dados">
-                           <font>
-                              <Font name="Verdana" size="18.0" />
-                           </font>
-                        </Label>
-                        <BorderPane fx:id="detalhesPane" layoutX="620.0" layoutY="39.0" prefHeight="490.0" prefWidth="600.0">
-                           <top>
-                              <VBox alignment="CENTER">
+                              <GridPane fx:id="tabelaPane" alignment="CENTER" minHeight="243.0" minWidth="500.0" vgap="10.0" GridPane.rowIndex="1">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                              </GridPane>
+                              <FlowPane alignment="CENTER_LEFT" hgap="10.0">
                                  <children>
-                                    <Label text="Detalhes">
+                                    <TextField fx:id="pesquisaFld" onAction="#actionHandle" prefHeight="23.0" prefWidth="289.0" promptText="Insira dado para pesquisa">
                                        <font>
-                                          <Font name="Verdana" size="18.0" />
+                                          <Font name="Verdana" size="12.0" />
                                        </font>
-                                    </Label>
-                                    <Separator prefWidth="200.0" />
-                                 </children>
-                              </VBox>
-                           </top>
-                           <center>
-                              <ScrollPane fx:id="detalhesScroll" cache="true" BorderPane.alignment="CENTER" />
-                           </center>
-                           <left>
-                              <FlowPane alignment="CENTER" prefHeight="510.0" prefWidth="41.0" BorderPane.alignment="CENTER">
-                                 <children>
-                                    <Button fx:id="detalhesBtn" mnemonicParsing="false" onAction="#actionHandle" styleClass="button-com-ico">
-                                       <graphic>
-                                          <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../res/icones/info-ico.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Button>
+                                    </TextField>
+                                    <ComboBox fx:id="filtroBox" onAction="#actionHandle" prefWidth="150.0" promptText="Filtro" />
                                  </children>
                               </FlowPane>
-                           </left>
-                           <bottom>
-                              <VBox BorderPane.alignment="CENTER">
-                                 <children>
-                                    <Separator prefWidth="200.0" />
-                                    <ButtonBar fx:id="acoesBar" prefHeight="40.0" prefWidth="200.0" />
-                                 </children>
-                              </VBox>
-                           </bottom>
-                        </BorderPane>
+                              <Button fx:id="detalhesBtn" mnemonicParsing="false" onAction="#actionHandle" styleClass="button-com-ico" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                                 <graphic>
+                                    <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../res/icones/info-ico.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </GridPane>
                      </children>
-                  </AnchorPane>
-               </content>
-            </ScrollPane>
+                  </FlowPane>
+                  <TabPane fx:id="detalhesTabPane" prefHeight="550.0">
+                     <tabs>
+                        <Tab fx:id="detablesTab" text="Detalhes">
+                           <content>
+                              <BorderPane>
+                                 <center>
+                                    <ScrollPane fx:id="detalhesScroll" cache="true" BorderPane.alignment="CENTER" />
+                                 </center>
+                                 <bottom>
+                                    <VBox BorderPane.alignment="CENTER">
+                                       <children>
+                                          <Separator prefWidth="200.0" />
+                                          <ButtonBar fx:id="acoesBar" prefHeight="40.0" />
+                                       </children>
+                                    </VBox>
+                                 </bottom>
+                              </BorderPane>
+                           </content>
+                        </Tab>
+                     </tabs>
+                  </TabPane>
+               </items>
+            </SplitPane>
          </children>
-      </GridPane>
+      </VBox>
    </children>
 </AnchorPane>

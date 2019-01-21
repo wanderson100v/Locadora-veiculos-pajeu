@@ -9,9 +9,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import view.Alerta;
@@ -25,7 +29,7 @@ public class PesquisaController {
     private GridPane tabelaPane;
 
     @FXML
-    private BorderPane detalhesPane;
+    private Tab detablesTab;
 
     @FXML
     private ScrollPane detalhesScroll;
@@ -35,29 +39,23 @@ public class PesquisaController {
 
     @FXML
     private TextField pesquisaFld;
+    
+    @FXML
+    private TabPane detalhesTabPane;
 
+    @FXML
+    private SplitPane splitPane;
+    
     @FXML
     private ComboBox<String> filtroBox;
     
     @FXML
     private ButtonBar acoesBar;
-
-    private TranslateTransition transition;
-    
-    private boolean detalhesAtivo = false;
     
     private Alerta alerta = Alerta.getInstance();
     
     private HashMap<String,CRUDController<?>> controladores = new HashMap<>();
     
-    @FXML
-    void initialize() {
-    		
-		transition = new TranslateTransition();
-		transition.setNode(detalhesPane);
-		transition.setDuration(new Duration(1000));
-			
-    }
     
 	@FXML
     void actionHandle(ActionEvent e) {
@@ -83,19 +81,10 @@ public class PesquisaController {
 			
     	}
     	else if(e.getSource() == detalhesBtn) {
-    		if(!detalhesAtivo) {
-    			if(pesquisaPane.getWidth() < detalhesPane.getWidth() + tabelaPane.getWidth()) { 
-    				transition.setFromX(0);
-    				transition.setToX(-(detalhesPane.getWidth() + tabelaPane.getWidth() - pesquisaPane.getWidth() +30));
-	    			detalhesAtivo = true;
-	    			transition.play();
-    			}
-    		}else {
-    			transition.setFromX(transition.getToX());
-    			transition.setToX(0);
-    			detalhesAtivo = false;
-    			transition.play();
+    		if(!detalhesTabPane.getTabs().contains(detablesTab)) {
+    			detalhesTabPane.getTabs().add(detablesTab);
     		}
+    		splitPane.setDividerPositions(0.6);
     	}
     }
 	

@@ -40,11 +40,13 @@ public class HomeController implements IFuncionarioObservadores{
     		ClienteFisicoController clienteFisicoController = (ClienteFisicoController) daoRes.carregarControllerFXML("ClienteFisicoPane");
     		CaminhonetaCargaController caminhonetaCargaController = (CaminhonetaCargaController) daoRes.carregarControllerFXML("CaminhonetaCargaPane");
     		AutomovelController automovelController = (AutomovelController) daoRes.carregarControllerFXML("AutomovelPane");
+    		ManutencaoController manutencaoController = (ManutencaoController) daoRes.carregarControllerFXML("ManutencaoPane");
     		
     		pesquisaController.getControladores().put("Juridico",clienteJuridicoController);
     		pesquisaController.getControladores().put("Fisico", clienteFisicoController);
     		pesquisaController.getControladores().put("Caminhoneta Carga", caminhonetaCargaController);
     		pesquisaController.getControladores().put("Automóvel", automovelController);
+    		pesquisaController.getControladores().put("Manutenção", manutencaoController);
 			
 			pesquisaController.getFiltroBox().getItems().addAll(pesquisaController.getControladores().keySet());
 			
