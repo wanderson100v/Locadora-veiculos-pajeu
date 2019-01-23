@@ -1,7 +1,7 @@
 package enumeracoes;
 
 public enum TipoAcionamentoEmbreagem {
-	MANUAL("Manual"),HIDRAULICO("Hidr·ulico");
+	MANUAL("Manual"),HIDRAULICO("Hidr√°ulico");
 	
 	private String value;
 	

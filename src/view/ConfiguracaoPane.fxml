@@ -68,6 +68,18 @@
                   </ImageView>
                </graphic>
           </Tab>
+           <Tab text="Hístorico">
+            <content>
+              <fx:include fx:id="logPane" source="LogPane.fxml" />
+            </content>
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../res/icones/user-ico.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+          </Tab>
         </tabs>
       </TabPane>
    </center>

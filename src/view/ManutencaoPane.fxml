@@ -22,6 +22,7 @@
       <TableView fx:id="entidadeTabela" onMouseClicked="#mouseClikHandle" prefHeight="330.0" prefWidth="600.0">
          <columns>
             <TableColumn fx:id="tipoCln" prefWidth="75.0" text="Tipo" />
+            <TableColumn fx:id="veiculoCln" prefWidth="75.0" text="Veículo" />
             <TableColumn fx:id="custoCln" prefWidth="75.0" text="Custo" />
             <TableColumn fx:id="estadoCln" prefWidth="75.0" text="Estado" />
             <TableColumn fx:id="inicioDateCln" prefWidth="75.0" text="Data Inicio" />

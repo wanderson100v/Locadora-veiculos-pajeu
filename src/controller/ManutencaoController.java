@@ -37,6 +37,9 @@ public class ManutencaoController extends CRUDController<Manutencao>{
 
     @FXML
     private TableColumn<Manutencao, LocalDateTime> inicioDateCln;
+    
+    @FXML
+    private TableColumn<Manutencao, Veiculo> veiculoCln;
 
     @FXML
     private VBox entidadePane;
@@ -91,6 +94,7 @@ public class ManutencaoController extends CRUDController<Manutencao>{
      	custoCln.setCellValueFactory(new PropertyValueFactory<>("custo"));
      	estadoCln.setCellValueFactory(new PropertyValueFactory<>("estadoManutencao"));
      	inicioDateCln.setCellValueFactory(new PropertyValueFactory<>("dataHoraInicio"));
+     	veiculoCln.setCellValueFactory(new PropertyValueFactory<>("veiculo"));
     }
 
 	@Override

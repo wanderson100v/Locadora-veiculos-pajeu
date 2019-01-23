@@ -2,6 +2,7 @@ package controller;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.function.UnaryOperator;
 
 import banco.ReservaPendente;
 import business.BoFuncionario;
@@ -25,7 +26,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.Alert.AlertType;
 import sql.ConnectionFactory;
 import view.Alerta;
@@ -105,16 +108,13 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
     private TextField veiculoFld;
     
     @FXML
-    private Button calcularValBtn;
-
-    @FXML
-    private TextField valLocacaoFld;
-
-    @FXML
     private TextField valPagoFld;
 
     @FXML
     private TextField trocoFld;
+    
+    @FXML
+    private TextArea detalhesArea;
 
     @FXML
     private Button selectVeiculoBtn;
@@ -122,7 +122,6 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
     private Locacao locacao = new Locacao();
     private Funcionario funcionario;
     private IBoLocacao boLocacao = BoLocacao.getInstance();
-    
     
     @FXML
     void initialize() {
@@ -134,20 +133,29 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
     	tipoLocacaoBox.getItems().addAll(TipoLocacao.values());
     	selectReservaBtn.setDisable(true);
     	selectFuncionarioBtn.setDisable(true);
-    	valPagoFld.setOnAction((e)->{
-    		if(!valLocacaoFld.getText().isEmpty()) {
-    			trocoFld.setText(Float.parseFloat(valLocacaoFld.getText()) - Float.parseFloat(valPagoFld.getText())+"");
-    			locacao.setValorPago(Float.parseFloat(valPagoFld.getText()));
-    		}
-    	});
+    	
+    	valPagoFld.setTextFormatter(new TextFormatter<UnaryOperator<TextFormatter.Change>>(change -> 
+    		{
+    		if(locacao.getValorDiaria() != null) 
+    			if(!valPagoFld.getText().trim().isEmpty() && !change.getControlNewText().isEmpty() ) {
+    				Float valorPago = Float.parseFloat(change.getControlNewText());
+    				Float valorTroco = locacao.getValorDiaria() - valorPago;
+    				trocoFld.setText(valorTroco+"");
+    				locacao.setValorPago(valorPago);
+    				popularDescricao();
+    			}
+    		return change;
+    		})
+    	);
     	
     }
     
 	@FXML
     void buttonHandle(ActionEvent event) {
-    	Button btn = (Button) event.getSource();
+    	Object fonte = event.getSource();
+    	popularDescricao();
     	try {
-    		if(btn == selectClienteBtn) 
+    		if(fonte == selectClienteBtn) 
     		{
     			Cliente cliente = Util.selecionarClienteEmDialogo();
 	    		if(cliente!= null) {
@@ -159,7 +167,7 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
 					veiculoFld.clear();
 				}
     		}
-    		else if(btn == selectMotoristaBtn) 
+    		else if(fonte == selectMotoristaBtn) 
     		{
 	    		if(entregaDate.getValue() != null) {
 	    			Fisico motorista = Util.selecionarMotoristaValidoEmDialogo(entregaDate.getValue());
@@ -171,7 +179,7 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
 	    			Alerta.getInstance().imprimirMsg("Alerta","É necessário selecionar a data de retirada para em seguida selecionar motoristas validos até o fim do período de locação", AlertType.WARNING);
 	    			
     		}
-    		else if(btn == selectReservaBtn) 
+    		else if(fonte == selectReservaBtn) 
     		{
     			if(locacao.getCliente() != null && locacao.getFilialRetirada()!= null) 
     			{
@@ -188,7 +196,7 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
 	    			Alerta.getInstance().imprimirMsg("Alerta","É necessário selecionar um cliente e filial de retirada antes de "
 	    					+ "selecionar reserva para aproveitamento na locação", AlertType.WARNING);
     		}
-    		else if(btn == selectVeiculoBtn) 
+    		else if(fonte == selectVeiculoBtn) 
     		{
     			Veiculo veiculo = null;
     			if(aproveitarReservaCk.isSelected())
@@ -207,7 +215,7 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
     				veiculoFld.setText(veiculo.toString());
     			}
     		}
-    		else if(btn == selectFuncionarioBtn) 
+    		else if(fonte == selectFuncionarioBtn) 
     		{
 	    		Funcionario funcionario = Util.selecionarFucnionarioEmDialogo();
 	    		if(funcionario!= null) {
@@ -215,7 +223,7 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
 					locacao.setFuncionario(funcionario);
 				}
 	    	}
-    		else if(btn == selectFilialRetiBtn) 
+    		else if(fonte == selectFilialRetiBtn) 
     		{
 				Filial filialRetirada = Util.selecionarFilialEmDialogo();
 	    		if(filialRetirada!= null) {
@@ -223,7 +231,7 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
 					locacao.setFilialRetirada(filialRetirada);
 				}
 	    	}
-    		else if(btn == selectFilialDevoBtn) 
+    		else if(fonte == selectFilialDevoBtn) 
     		{
 				Filial filialDevolucao = Util.selecionarFilialEmDialogo();
 	    		if(filialDevolucao!= null) {
@@ -231,14 +239,7 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
 					locacao.setFilialEntrega(filialDevolucao);
 				}
 	    	}
-    		else if(btn == calcularValBtn) 
-    		{
-				pegarDadosTela();
-    			Object[] tupla = boLocacao.calcularValorLocacaoDetalhamento(locacao);
-				valLocacaoFld.setText(tupla[0]+"");
-				Alerta.getInstance().imprimirMsg("Detalhes",tupla[1]+"", AlertType.INFORMATION);
-    		}
-    		else if(btn == locarBtn) {
+    		else if(fonte == locarBtn) {
     			try{
     				pegarDadosTela();
 		    		boLocacao.cadastrarEditar(locacao);
@@ -352,13 +353,25 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
 		locacao.setTipoLocacao(tipoLocacaoBox.getValue());
     }
     
+	
+	public void popularDescricao() {
+		try {
+			pegarDadosTela();
+			Object[] tupla;
+			tupla = boLocacao.calcularValorLocacaoDetalhamento(locacao);
+			locacao.setValorDiaria((float)tupla[0]);
+			detalhesArea.setText((String) tupla[1]);
+			System.out.println("sucesso");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
     
     private void limparCampos() {
     	clienteFld.clear();
     	motoristaFld.clear();
     	reservaFld.clear();
     	veiculoFld.clear();
-    	valLocacaoFld.clear();
     	valPagoFld.clear();
     	trocoFld.clear();
     	funcionarioFld.setText(funcionarioFld.toString());

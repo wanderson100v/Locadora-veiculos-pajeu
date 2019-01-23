@@ -29,7 +29,6 @@ public class App extends Application{
 		App.stage = stage;
 		try {
 			stage.setTitle("Locadora Veiculos Pajeú");
-			
 			Pane loginPane = daoRes.carregarPaneFXML(Tela.LOGIN);
 			Pane homePane =  daoRes.carregarPaneFXML(Tela.HOME);
 			Pane configPane = daoRes.carregarPaneFXML(Tela.CONFIG);
@@ -44,8 +43,8 @@ public class App extends Application{
 			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 			e.printStackTrace();
 		}
+		
 	}
-	
 	public static void iniTelaLogin() {
 		stage.setScene(loginScene);
 		stage.setMaximized(false);

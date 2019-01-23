@@ -70,7 +70,8 @@ public class Util {
 				if(!f.getName().equals("serialVersionUID") && !Collection.class.isAssignableFrom(f.getType()) ) {
 					if(Entidade.class.isAssignableFrom(f.getType())) {
 						joins.append(" inner join "+alias+"."+f.getName()+" as "+f.getType().getSimpleName().toLowerCase()+" ");
-						conteudo.append(gerarHqlBuscaParcil(f.getType(), f.getType().getSimpleName().toLowerCase()));
+						conteudo.append(" or ( "+alias+"."+f.getName()+ "!= null and upper(concat(''"+gerarHqlBuscaParcil(f.getType(), 
+								f.getType().getSimpleName().toLowerCase())+")) like upper(:busca))");
 					}else
 						conteudo.append(","+alias+"."+f.getName());
 				}

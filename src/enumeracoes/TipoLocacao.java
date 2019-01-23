@@ -1,7 +1,7 @@
 package enumeracoes;
 
 public enum TipoLocacao {
-	KM_LIVRE("Kilometro livre"),KM_CONTROLE("Kilometro Controlado");
+	KM_LIVRE("Quilômetro livre"),KM_CONTROLE("Quilômetro Controlado");
 	
 	private String value;
 

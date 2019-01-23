@@ -1,5 +1,6 @@
 package dao;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,8 +11,11 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.transform.Transformers;
 
 import entidade.Entidade;
+import enumeracoes.Tabela;
+import excecoes.BoException;
 import excecoes.DaoException;
 import sql.ConnectionFactory;
 
@@ -21,6 +25,35 @@ public abstract class Dao<T extends Entidade>{
 	
 	public Dao(Class<T> tipoDaClasse) {
 		this.tipoDaClasse = tipoDaClasse;
+	}
+	
+	@SuppressWarnings({ "deprecation", "unchecked" })
+	public static List<Map<String,Object>> buscarLog(LocalDate de , LocalDate ate, Tabela tabela) throws DaoException {
+		EntityManager em = null;
+		try {
+			em = ConnectionFactory.getConnection();
+			Session s = em.unwrap(Session.class);
+			List<Map<String,Object>> elementos = s.createSQLQuery("select * from log_"+tabela.getBackEnd()
+					+" where date(data_acao) between '"+de+"' and '"+ate+"'")
+					.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+			return elementos;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DaoException("ERRO AO BUSCAR HISTÓRICO NA TABELA "+tabela.toString().toUpperCase());
+		}finally {
+			em.close();
+		}
+	}
+	
+	
+	public static void main(String[] args) {
+		try {
+			ConnectionFactory.setUser("c987654321", "123456");
+			List<Map<String,Object>> dados = Dao.buscarLog(LocalDate.of(2019, 1, 22), LocalDate.now(),Tabela.MANUTENCAO);
+			System.out.println(dados);
+		} catch (DaoException | BoException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void cadastrar(T t) throws DaoException{

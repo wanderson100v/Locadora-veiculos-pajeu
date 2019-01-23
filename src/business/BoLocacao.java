@@ -40,7 +40,6 @@ public class BoLocacao implements IBoLocacao {
 				daoLocacao.editar(locacao);
 			}else {
 				validarLocacao(locacao);
-				calcularValorLocacao(locacao);
 				daoLocacao.cadastrar(locacao);
 				locacao.getVeiculo().setLocado(true);
 				boVeiculo.cadastrarEditar(locacao.getVeiculo());
@@ -100,71 +99,9 @@ public class BoLocacao implements IBoLocacao {
 		}
 	}
 	
-	public void calcularValorLocacao(Locacao locacao) {
-		Float valorDiaria = 0f;
-		Float valorLocacao = 0f;
-		if(locacao.getReservaOrigem()!= null) {
-			valorDiaria =  locacao.getReservaOrigem().getCategoriaVeiculo().getValorDiaria();
-			if(locacao.getTipoLocacao() == TipoLocacao.KM_LIVRE)
-				valorLocacao += locacao.getReservaOrigem().getCategoriaVeiculo().getValorLivre();
-		}else {
-			valorDiaria =  locacao.getVeiculo().getCategoriaVeiculo().getValorDiaria();
-			if(locacao.getTipoLocacao() == TipoLocacao.KM_LIVRE) 
-				valorLocacao +=  locacao.getVeiculo().getCategoriaVeiculo().getValorLivre();
-		}
-		//valor do período
-		valorLocacao += valorDiaria * Duration.between(locacao.getDataRetirada(),locacao.getDataDevolucao()).toDays();// dias
-		Long horasAposTerminoPrevistoDiaria = Duration.between(locacao.getDataRetirada(),locacao.getDataDevolucao()).toHours() % 24;
-		if(horasAposTerminoPrevistoDiaria >0)
-			valorLocacao += (horasAposTerminoPrevistoDiaria <=4) ?  valorDiaria/4 : valorDiaria; //horas
-		locacao.setValorDiaria(valorLocacao);
-	}
-	
-	
 	public Object[] calcularValorLocacaoDetalhamento(Locacao locacao) throws BoException {
-		try {
-			StringBuilder notaFiscal = new StringBuilder("Detelhamento valor locação :\n");
-			Float valorDiaria = 0f;
-			Float valorLocacao = 0f;
-			Float valorKmLivre = 0f;
-			if(locacao.getReservaOrigem()!= null) {
-				valorDiaria =  locacao.getReservaOrigem().getCategoriaVeiculo().getValorDiaria();
-				notaFiscal.append("\t*Valor por diaria= "+valorDiaria+"\n");
-				if(locacao.getTipoLocacao() == TipoLocacao.KM_LIVRE) {
-					valorKmLivre = locacao.getReservaOrigem().getCategoriaVeiculo().getValorLivre();
-					notaFiscal.append("\t*Valor KmLivre = "+valorKmLivre+"\n");
-				}
-			}else {
-				valorDiaria =  locacao.getVeiculo().getCategoriaVeiculo().getValorDiaria();
-				notaFiscal.append("\t*Valor por diaria= "+valorDiaria+"\n");
-				if(locacao.getTipoLocacao() == TipoLocacao.KM_LIVRE) {
-					valorKmLivre = locacao.getVeiculo().getCategoriaVeiculo().getValorLivre();
-					notaFiscal.append("\t*Valor KmLivre = "+valorKmLivre+"\n");
-				}
-			}
-			Long dias = Duration.between(locacao.getDataRetirada(),locacao.getDataDevolucao()).toDays();
-			Long horasAposTerminoPrevistoDiaria = Duration.between(locacao.getDataRetirada(),locacao.getDataDevolucao()).toHours() % 24;
-			Float valorTotalDiarias = valorDiaria * dias;
-			notaFiscal.append("\t-Período locacao "+dias+" dias e "+horasAposTerminoPrevistoDiaria+" horas-\n");
-			notaFiscal.append("\t*Valor por dias de diaria = "+valorTotalDiarias+"\n");
-			Float valorHoras = 0f;
-			if(horasAposTerminoPrevistoDiaria >0)
-				if(horasAposTerminoPrevistoDiaria <=4) {
-					notaFiscal.append("\t*Valor horas restantes é 1/4 valor de diaria = "+valorDiaria/4+"\n");
-					valorHoras = valorDiaria/4; 
-				}else {
-					notaFiscal.append("\t*Valor horas restantes é mais uma diaria = "+valorDiaria+"\n");
-					valorHoras = valorDiaria;
-				}
-			valorLocacao = valorHoras + valorTotalDiarias + valorKmLivre;
-			notaFiscal.append("Valor total de locação ="+valorLocacao);
-			return new Object[]{valorLocacao,notaFiscal.toString()};
-		}catch (NullPointerException e) {
-			throw new BoException("É necessário tipo, hora de retirada/devolução da locação "
-					+ "como também reserva ou veículo selecionado para calculo de valor de locação");
-		}
+		return calcularValorLocacaoDetalhamento(locacao,0,locacao.getDataDevolucao(),false, false);
 	}
-	
 	
 	public Object[] calcularValorLocacaoDetalhamento(Locacao locacao, int novaQuilometragem, LocalDateTime dataDevulucaoAtt, Boolean abastecer , Boolean limpeza) throws BoException {
 		try {
@@ -187,13 +124,15 @@ public class BoLocacao implements IBoLocacao {
 					valorLocacao += valorKm;
 					notaFiscal.append("\n\tTaxa Km Livre = "+valorKm);
 				}else {
-					valorKm = locacao.getReservaOrigem().getCategoriaVeiculo().getValorKm();
-					float valorKmRodados = quilometrosRodados * valorKm;
-					notaFiscal.append(
-							  "\n\t- Taxa Km Contole(Por unidade de quilometro"
-							+ "\n\t  rodado) = "+valorKm+", foram rodados "+quilometrosRodados
-							+ "\n\t  totalizando = "+valorKmRodados);
-					valorKm = valorKmRodados;
+					if(quilometrosRodados > 0) {
+						valorKm = locacao.getReservaOrigem().getCategoriaVeiculo().getValorKm();
+						float valorKmRodados = quilometrosRodados * valorKm;
+						notaFiscal.append(
+								  "\n\t- Taxa Km Contole(Por unidade de quilometro"
+								+ "\n\t  rodado) = "+valorKm+", foram rodados "+quilometrosRodados
+								+ "\n\t  totalizando = "+valorKmRodados);
+						valorKm = valorKmRodados;
+					}
 				}
 			}else {
 				valorDiaria =  locacao.getVeiculo().getCategoriaVeiculo().getValorDiaria();
@@ -207,13 +146,15 @@ public class BoLocacao implements IBoLocacao {
 					valorLocacao += valorKm;
 					notaFiscal.append("\n\t- Taxa Km Livre = "+valorKm);
 				}else{
-					valorKm = locacao.getVeiculo().getCategoriaVeiculo().getValorKm();
-					float valorKmRodados = quilometrosRodados * valorKm;
-					notaFiscal.append(
-							  "\n\t- Taxa Km Contole(Por unidade de quilometro"
-							+ "\n\t  rodado) = "+valorKm+", foram rodados "+quilometrosRodados
-							+ "\n\t  totalizando = "+valorKmRodados);
-					valorKm = valorKmRodados;
+					if(quilometrosRodados > 0) {
+						valorKm = locacao.getVeiculo().getCategoriaVeiculo().getValorKm();
+						float valorKmRodados = quilometrosRodados * valorKm;
+						notaFiscal.append(
+								  "\n\t- Taxa Km Contole(Por unidade de quilometro"
+								+ "\n\t  rodado) = "+valorKm+", foram rodados "+quilometrosRodados
+								+ "\n\t  totalizando = "+valorKmRodados);
+						valorKm = valorKmRodados;
+					}
 				}
 			}
 			
