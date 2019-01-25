@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 
-public class ConfiguracaoController implements IFuncionarioObservadores{
+public class ConfiguracaoController implements IObservadoresEntidade{
 
     @FXML
     private Tab dadosTab;
@@ -19,7 +19,7 @@ public class ConfiguracaoController implements IFuncionarioObservadores{
 
     @FXML
     void initialize() {
-    	FuncionarioObservavel.getIntance().getFuncionarioObservadores().add(this);
+    	ObservadorEntidade.getIntance().getEntidadeObservadores().add(this);
     	PesquisaController pesquisaController;
 		try {
 			pesquisaController = (PesquisaController) DaoRes.getInstance().carregarControllerFXML("PesquisaPane");

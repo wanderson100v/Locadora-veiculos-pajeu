@@ -58,12 +58,12 @@
           </Tab>
           <Tab text="Backup">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
+                  <fx:include fx:id="backupPane" source="BackupPane.fxml" />
+              </content>
                <graphic>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../res/icones/backup-ico.png" />
+                        <Image url="@../res/icones/reserva-ico.png" />
                      </image>
                   </ImageView>
                </graphic>

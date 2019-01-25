@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import view.Alerta;
 
-public class HomeController implements IFuncionarioObservadores{
+public class HomeController implements IObservadoresEntidade{
 
     @FXML
     private Button voltarBtn;
@@ -31,7 +31,7 @@ public class HomeController implements IFuncionarioObservadores{
     @FXML
     void initialize() {
     	try {
-    		FuncionarioObservavel.getIntance().getFuncionarioObservadores().add(this);
+    		ObservadorEntidade.getIntance().getEntidadeObservadores().add(this);
     		
 			PesquisaController pesquisaController = (PesquisaController) DaoRes.getInstance().carregarControllerFXML("PesquisaPane");
 			DaoRes daoRes = DaoRes.getInstance();
@@ -67,7 +67,7 @@ public class HomeController implements IFuncionarioObservadores{
     	if(event.getSource() == configBtn)
     		App.iniTelaConfig();
     	else if(event.getSource() == voltarBtn) {
-    		FuncionarioObservavel.getIntance().avisarOuvintes(null);
+    		ObservadorEntidade.getIntance().avisarOuvintes(null);
     		App.iniTelaLogin();
     	}
     }

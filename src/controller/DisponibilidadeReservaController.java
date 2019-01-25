@@ -28,7 +28,7 @@ import javafx.scene.layout.FlowPane;
 import sql.ConnectionFactory;
 import view.Alerta;
 
-public class DisponibilidadeReservaController implements IFuncionarioObservadores{
+public class DisponibilidadeReservaController implements IObservadoresEntidade{
 
 
     @FXML
@@ -101,7 +101,7 @@ public class DisponibilidadeReservaController implements IFuncionarioObservadore
     
     @FXML
     void initialize() {
-    	FuncionarioObservavel.getIntance().getFuncionarioObservadores().add(this);
+    	ObservadorEntidade.getIntance().getEntidadeObservadores().add(this);
     }
     
     @FXML

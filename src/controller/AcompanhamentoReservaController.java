@@ -26,7 +26,7 @@ import javafx.scene.layout.AnchorPane;
 import sql.ConnectionFactory;
 import view.Alerta;
 
-public class AcompanhamentoReservaController implements IFuncionarioObservadores{
+public class AcompanhamentoReservaController implements IObservadoresEntidade{
 
 	@FXML
     private AnchorPane acompanhamentoReservaPane;
@@ -80,7 +80,7 @@ public class AcompanhamentoReservaController implements IFuncionarioObservadores
     
     @FXML
     void initialize() {
-    	FuncionarioObservavel.getIntance().getFuncionarioObservadores().add(this);
+    	ObservadorEntidade.getIntance().getEntidadeObservadores().add(this);
     }
     
     @FXML

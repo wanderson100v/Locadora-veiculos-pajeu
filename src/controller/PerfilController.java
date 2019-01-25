@@ -19,7 +19,7 @@ import javafx.scene.layout.GridPane;
 import sql.ConnectionFactory;
 import view.Alerta;
 
-public class PerfilController implements IFuncionarioObservadores {
+public class PerfilController implements IObservadoresEntidade {
 
     @FXML
     private ResourceBundle resources;
@@ -62,7 +62,7 @@ public class PerfilController implements IFuncionarioObservadores {
     
     @FXML
     void initialize() {
-    	FuncionarioObservavel.getIntance().getFuncionarioObservadores().add(this);
+    	ObservadorEntidade.getIntance().getEntidadeObservadores().add(this);
     }
     
     @FXML

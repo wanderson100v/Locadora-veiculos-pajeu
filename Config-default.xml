@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ConfiguracoesDefault>
+  <ip>localhost</ip>
+  <localPgDump>C:\Program Files\PostgreSQL\9.4\bin\pg_dump.exe</localPgDump>
+  <localPgRestore>C:\Program Files\PostgreSQL\9.4\bin\pg_restore.exe</localPgRestore>
+  <localBackup>C:\Backup-PBD</localBackup>
+</ConfiguracoesDefault>

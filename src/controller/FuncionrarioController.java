@@ -23,7 +23,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import sql.ConnectionFactory;
 
-public class FuncionrarioController  extends CRUDController<Funcionario> implements IFuncionarioObservadores{
+public class FuncionrarioController  extends CRUDController<Funcionario> implements IObservadoresEntidade{
 
     @FXML
     private TableColumn<Funcionario, String> nomeCln;
@@ -76,7 +76,7 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
     @FXML
     void initialize() {
     	super.initialize();
-    	FuncionarioObservavel.getIntance().getFuncionarioObservadores().add(this);
+    	ObservadorEntidade.getIntance().getEntidadeObservadores().add(this);
     	
     	ToggleGroup toggleGroup = new ToggleGroup();
     	simAtivoRb.setToggleGroup(toggleGroup);

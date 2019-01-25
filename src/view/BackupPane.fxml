@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="controller.BackupController">
+   <children>
+      <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <TabPane tabClosingPolicy="UNAVAILABLE" tabMaxHeight="20.0" tabMaxWidth="80.0" tabMinHeight="20.0" tabMinWidth="80.0">
+               <tabs>
+                  <Tab text="Backup">
+                     <content>
+                        <BorderPane>
+                           <center>
+                              <FlowPane alignment="CENTER">
+                                 <children>
+                                    <VBox alignment="CENTER" spacing="10.0">
+                                       <children>
+                                          <FlowPane alignment="CENTER">
+                                             <children>
+                                                <GridPane hgap="10.0" prefHeight="120.0" prefWidth="291.0">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="201.0" minWidth="10.0" prefWidth="201.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="122.0" minWidth="10.0" prefWidth="54.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label text="Pasta de armazenamento" />
+                                                      <TextField fx:id="pastaBackupFld" editable="false" GridPane.rowIndex="1" />
+                                                      <Button fx:id="selectPastaBackupBtn" mnemonicParsing="false" onAction="#backupHandle" text="Selecionar" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <Label text="Nome do arquivo" GridPane.rowIndex="2" />
+                                                      <TextField fx:id="nomeArqBackupFld" GridPane.rowIndex="3" />
+                                                   </children>
+                                                </GridPane>
+                                             </children>
+                                          </FlowPane>
+                                          <TitledPane text="Detalhes">
+                                             <content>
+                                                <TextArea fx:id="detalheBackupArea" prefHeight="200.0" prefWidth="600.0" />
+                                             </content>
+                                          </TitledPane>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </FlowPane>
+                           </center>
+                           <bottom>
+                              <ButtonBar prefHeight="86.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+                                <buttons>
+                                  <Button fx:id="arquivarBtn" mnemonicParsing="false" onAction="#backupHandle" text="Arquivar" />
+                                </buttons>
+                                 <BorderPane.margin>
+                                    <Insets />
+                                 </BorderPane.margin>
+                                 <padding>
+                                    <Insets right="30.0" />
+                                 </padding>
+                              </ButtonBar>
+                           </bottom>
+                           <top>
+                              <FlowPane alignment="CENTER" maxHeight="50.0" minWidth="50.0" prefHeight="50.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label text="Armazerar dados do banco em arquivo de Backup">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </FlowPane>
+                           </top>
+                        </BorderPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Restauração">
+                     <content>
+                        <BorderPane>
+                           <center>
+                              <FlowPane alignment="CENTER">
+                                 <children>
+                                    <VBox alignment="CENTER" spacing="10.0">
+                                       <children>
+                                          <FlowPane alignment="CENTER">
+                                             <children>
+                                                <GridPane hgap="10.0" prefWidth="291.0">
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="201.0" minWidth="10.0" prefWidth="201.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="122.0" minWidth="10.0" prefWidth="54.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <Label text="Caminho para arquivo de Backup" />
+                                                      <TextField fx:id="arqRestauFld" editable="false" promptText="Local do arquivo para restauração" GridPane.rowIndex="1" />
+                                                      <Button fx:id="selectArqRestauBtn" mnemonicParsing="false" onAction="#restauracaoHandle" text="Selecionar" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                   </children>
+                                                </GridPane>
+                                             </children>
+                                          </FlowPane>
+                                          <TitledPane text="Detalhes">
+                                             <content>
+                                                <TextArea fx:id="detalheRestauArea" prefHeight="200.0" prefWidth="600.0" />
+                                             </content>
+                                          </TitledPane>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </FlowPane>
+                           </center>
+                           <bottom>
+                              <ButtonBar prefHeight="86.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+                                 <buttons>
+                                    <Button fx:id="restaurarBtn" mnemonicParsing="false" onAction="#restauracaoHandle" text="Restaurar" />
+                                 </buttons>
+                                 <BorderPane.margin>
+                                    <Insets />
+                                 </BorderPane.margin>
+                                 <padding>
+                                    <Insets right="30.0" />
+                                 </padding>
+                              </ButtonBar>
+                           </bottom>
+                           <top>
+                              <FlowPane alignment="CENTER" maxHeight="50.0" minWidth="50.0" prefHeight="50.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label alignment="CENTER" text="Restaurar Banco de Dados a partir de arquivo de backup">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </FlowPane>
+                           </top>
+                        </BorderPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Configurações">
+                     <content>
+                        <BorderPane>
+                           <center>
+                              <FlowPane alignment="CENTER">
+                                 <children>
+                                    <FlowPane alignment="CENTER">
+                                       <children>
+                                          <GridPane hgap="10.0" prefHeight="270.0" prefWidth="382.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="366.0" minWidth="10.0" prefWidth="300.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="122.0" minWidth="10.0" prefWidth="72.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label text="Local  padrão do arquivo de backup" />
+                                                <TextField fx:id="pastaDefaultBackupFld" editable="false" promptText="C:/Backup-PBD" GridPane.rowIndex="1" />
+                                                <Button fx:id="pastaDefaultBackupBtn" mnemonicParsing="false" onAction="#configuracoesHandle" text="Selecionar" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label text="IP de acesso ao banco" GridPane.rowIndex="6" />
+                                                <TextField fx:id="ipBancoFld" promptText="localhost" GridPane.rowIndex="7" />
+                                                <Label text="Localização pg_dump" GridPane.rowIndex="2" />
+                                                <Label text="Localização pg_restore" GridPane.rowIndex="4" />
+                                                <TextField fx:id="arqPgRestoreFld" editable="false" promptText="C:/Program Files/PostgreSQL/9.4/bin/pg_restore.exe" GridPane.rowIndex="5" />
+                                                <TextField fx:id="arqPgDumpFld" editable="false" promptText="C:/Program Files/PostgreSQL/9.4/bin/pg_dumpexe" GridPane.rowIndex="3" />
+                                                <Button fx:id="arqPgDumpBtn" mnemonicParsing="false" onAction="#configuracoesHandle" text="Selecionar" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Button fx:id="arqPgRestoreBtn" mnemonicParsing="false" onAction="#configuracoesHandle" text="Selecionar" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </FlowPane>
+                                 </children>
+                              </FlowPane>
+                           </center>
+                           <bottom>
+                              <ButtonBar prefHeight="86.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+                                 <buttons>
+                                    <Button fx:id="restauConfigBtn" mnemonicParsing="false" onAction="#configuracoesHandle" text="Restaurar Padrão" />
+                                    <Button fx:id="aplicConfigBtn" mnemonicParsing="false" onAction="#configuracoesHandle" text="Aplicar" />
+                                 </buttons>
+                                 <BorderPane.margin>
+                                    <Insets />
+                                 </BorderPane.margin>
+                                 <padding>
+                                    <Insets right="30.0" />
+                                 </padding>
+                              </ButtonBar>
+                           </bottom>
+                           <top>
+                              <FlowPane alignment="CENTER" maxHeight="50.0" minWidth="50.0" prefHeight="50.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label alignment="CENTER" text="Configurações de Backup">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </FlowPane>
+                           </top>
+                        </BorderPane>
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

@@ -176,7 +176,7 @@ public class AcompanhamentoController {
     
     public void buscaHandle(ActionEvent e) {
     	try {
-    		Button fonte = (Button) e.getSource();
+    		Object fonte = e.getSource();
 	    	if(fonte == buscarBtn) {
 	    		if(locacaoCk.isSelected() || reservaCk.isSelected()) 
 	    		{
@@ -250,7 +250,7 @@ public class AcompanhamentoController {
     		}
     		else if(e.getSource() == retiMinhaFilialCk) {
     			if(retiMinhaFilialCk.isSelected()) {
-	    			Filial filial = FuncionarioObservavel.getIntance().getFuncionario().getFilial();
+	    			Filial filial = ObservadorEntidade.getIntance().getFuncionario().getFilial();
 	    			if( filial != null) {
 	    				filialRetirada =filial;
 	    				dadosFilialRetiFld.setText(filialRetirada.toString());
@@ -264,7 +264,7 @@ public class AcompanhamentoController {
     		}
     		else if(e.getSource() == devuMinhaFilialCk) {
     			if(devuMinhaFilialCk.isSelected()) {
-	    			Filial filial = FuncionarioObservavel.getIntance().getFuncionario().getFilial();
+	    			Filial filial = ObservadorEntidade.getIntance().getFuncionario().getFilial();
 	    			if( filial != null) {
 	    				filialDevolucao =filial;
 	    				dadosFilialDevuFld.setText(filialDevolucao.toString());

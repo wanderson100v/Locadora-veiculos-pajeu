@@ -33,7 +33,7 @@ import javafx.scene.control.Alert.AlertType;
 import sql.ConnectionFactory;
 import view.Alerta;
 
-public class IniciarLocacaoController implements IFuncionarioObservadores {
+public class IniciarLocacaoController implements IObservadoresEntidade {
 
     @FXML
     private Button selectFuncionarioBtn;
@@ -125,7 +125,7 @@ public class IniciarLocacaoController implements IFuncionarioObservadores {
     
     @FXML
     void initialize() {
-    	FuncionarioObservavel.getIntance().getFuncionarioObservadores().add(this);
+    	ObservadorEntidade.getIntance().getEntidadeObservadores().add(this);
     	for(int i = 1 ; i <25 ; i++)
     		horaRetiradaBox.getItems().add(i);
     	horaDevolucaoBox.getItems().addAll(horaRetiradaBox.getItems());

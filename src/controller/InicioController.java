@@ -12,7 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class InicioController implements IFuncionarioObservadores {
+public class InicioController implements IObservadoresEntidade {
 
     @FXML
     private TableView<ReservaHoje> reservasHojeTbl;
@@ -40,7 +40,7 @@ public class InicioController implements IFuncionarioObservadores {
     
     @FXML
     void initialize() {
-    	FuncionarioObservavel.getIntance().getFuncionarioObservadores().add(this);
+    	ObservadorEntidade.getIntance().getEntidadeObservadores().add(this);
     	
     	horaCln.setCellValueFactory(new PropertyValueFactory<>("hora"));
         categoriaCln.setCellValueFactory(new PropertyValueFactory<>("tipo"));
