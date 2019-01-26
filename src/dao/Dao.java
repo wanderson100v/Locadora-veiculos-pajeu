@@ -138,10 +138,11 @@ public abstract class Dao<T extends Entidade>{
 			
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<T> buscaPorBuscaAbrangente(String busca) throws DaoException{
 		try {
 			em = ConnectionFactory.getConnection();
-			return em.createQuery(Util.gerarHqlBuscaAbrangente(tipoDaClasse, tipoDaClasse.getSimpleName().toLowerCase()), tipoDaClasse)
+			return em.createNativeQuery(Util.gerarHqlBuscaAbrangente(tipoDaClasse, tipoDaClasse.getSimpleName().toLowerCase()), tipoDaClasse)
 			.setParameter("busca","%"+busca+"%")
 			.getResultList();
 		} catch (Exception e) {
@@ -155,7 +156,7 @@ public abstract class Dao<T extends Entidade>{
 	public List<T> buscaPorBuscaAbrangente(String busca, Map<String, String> restricoes) throws DaoException{
 		try {
 			em = ConnectionFactory.getConnection();
-			return em.createQuery(Util.gerarHqlBuscaAbrangente(tipoDaClasse, restricoes), tipoDaClasse)
+			return em.createNativeQuery(Util.gerarHqlBuscaAbrangente(tipoDaClasse, restricoes), tipoDaClasse)
 			.setParameter("busca","%"+busca+"%")
 			.getResultList();
 		} catch (Exception e) {

@@ -1,12 +1,16 @@
 package dao;
 
 import entidade.Entidade;
+import entidade.Fisico;
 import entidade.Juridico;
+import entidade.Reserva;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.persistence.Entity;
 
 public class Util {
 	
@@ -22,79 +26,104 @@ public class Util {
 	public static String gerarHqlBuscaAbrangente(Class<? extends Entidade> entidade, Map<String,String> restricoes) {
 		
 		String alias = entidade.getSimpleName().toLowerCase();
-		StringBuilder capsula = new StringBuilder("select "+alias+" from "+entidade.getName()+" as "+alias+" ");
-		StringBuilder conteudo = new StringBuilder(" where ");
-		StringBuilder joins = new StringBuilder();
-		Class<?> current = entidade;
+		StringBuilder capsula = new StringBuilder(" SELECT  "+alias+".* ");
+		StringBuilder joins = new StringBuilder("\n FROM " +getNomeTabela(entidade)+" AS "+alias);
+		String entidadeBuscada = new String("\n ((UPPER(CONCAT('',"+alias+")) LIKE UPPER(:busca)) ");
+		StringBuilder entidadesAtributo = new StringBuilder();
+		StringBuilder restricoesBusca = new StringBuilder("\n WHERE ");
 		
 		for(Object restricao : restricoes.keySet()) 
-			conteudo.append(restricao + restricoes.get(restricao) + " and ");
-		conteudo.append(" upper(concat('' ");
+			restricoesBusca.append(restricao + restricoes.get(restricao) + "\n AND ");
 		
+		Class<?> current = entidade;
 		while(current.getSuperclass()!=null){
-			alias = entidade.getSimpleName().toLowerCase();
-		    for(Field  f : current.getDeclaredFields()) 
-				if(restricoes.get(alias + "." + f.getName()) == null && !f.getName().equals("serialVersionUID") && 
-					!Collection.class.isAssignableFrom(f.getType()) ) 
-				{
-					if(Entidade.class.isAssignableFrom(f.getType())) 
-					{
-						joins.append(" inner join "+alias+"."+f.getName()+" as "+f.getName()+" ");
-						if(restricoes.get(f.getName()+".id") == null)
-							conteudo.append(gerarHqlBuscaParcil(f.getType(),f.getName()));
-					}else
-						conteudo.append(","+alias+"."+f.getName());
+			for(Field  f : current.getDeclaredFields()) {
+				if(restricoes.get(f.getName()+".id") == null && Entidade.class.isAssignableFrom(f.getType())) {
+					String aliasAtributo = f.getName();
+					joins.append("\n LEFT JOIN "+getNomeTabela(f.getType())+" AS "+aliasAtributo
+							+" ON ("+alias+"."+f.getName()+"_id ="+aliasAtributo+".id)");
+					entidadesAtributo.append("\n OR (UPPER(CONCAT('',"+aliasAtributo+")) LIKE UPPER(:busca))");
 				}
+			}
 		    current = current.getSuperclass();
+		    if(current == Entidade.class)
+		    	break;
+		    String generalizacao = getNomeTabela(current);
+		    String aliasGene= generalizacao.toLowerCase();
+		    capsula.append(", "+aliasGene+".*");
+			joins.append("\n INNER JOIN "+generalizacao+" as "+aliasGene+ " ON ("+alias+".id ="+aliasGene+".id)");
+			entidadesAtributo.append("\n OR (UPPER(CONCAT('',"+aliasGene+")) LIKE UPPER(:busca))");
+			alias = aliasGene;
 		}
-		capsula.append(joins).append(conteudo).append(")) like upper(:busca) ");
 		
-		return capsula.toString();
+		return capsula.append(joins)
+				.append(restricoesBusca)
+				.append(entidadeBuscada)
+				.append(entidadesAtributo)
+				.append(")").toString();
 	}
 	
 	public static void main(String[] args) {
 		Map<String,String> restricoes = new HashMap<>();
 		restricoes.put("juridico.ativo","= true");
 		restricoes.put("endereco.id","= 1");
-		
 		System.out.println(gerarHqlBuscaAbrangente(Juridico.class,restricoes));
 	}
 	
 	public static String gerarHqlBuscaAbrangente(Class<? extends Entidade> entidade, String alias) {
-		StringBuilder capsula = new StringBuilder("select "+alias+" from "+entidade.getName()+" as "+alias+" ");
-		StringBuilder conteudo = new StringBuilder(" where upper(concat('' ");
-		StringBuilder joins = new StringBuilder();
+		
+		StringBuilder capsula = new StringBuilder(" SELECT  "+alias+".* ");
+		StringBuilder joins = new StringBuilder("\n FROM " +getNomeTabela(entidade)+" AS "+alias);
+		String entidadeBuscada = new String("\n WHERE ((UPPER(CONCAT('',"+alias+")) LIKE UPPER(:busca)) ");
+		StringBuilder entidadesAtributo = new StringBuilder();
+		
 		Class<?> current = entidade;
 		while(current.getSuperclass()!=null){
-		    for(Field  f : current.getDeclaredFields()) 
-				if(!f.getName().equals("serialVersionUID") && !Collection.class.isAssignableFrom(f.getType()) ) {
-					if(Entidade.class.isAssignableFrom(f.getType())) {
-						joins.append(" inner join "+alias+"."+f.getName()+" as "+f.getType().getSimpleName().toLowerCase()+" ");
-						conteudo.append(" or ( "+alias+"."+f.getName()+ "!= null and upper(concat(''"+gerarHqlBuscaParcil(f.getType(), 
-								f.getType().getSimpleName().toLowerCase())+")) like upper(:busca))");
-					}else
-						conteudo.append(","+alias+"."+f.getName());
+			for(Field  f : current.getDeclaredFields()) {
+				if(Entidade.class.isAssignableFrom(f.getType())) {
+					String aliasAtributo = f.getName();
+					joins.append("\n LEFT JOIN "+getNomeTabela(f.getType())+" AS "+aliasAtributo
+							+" ON ("+alias+"."+f.getName()+"_id ="+aliasAtributo+".id)");
+					entidadesAtributo.append("\n OR (UPPER(CONCAT('',"+aliasAtributo+")) LIKE UPPER(:busca))");
 				}
+			}
 		    current = current.getSuperclass();
+		    if(current == Entidade.class)
+		    	break;
+		    String generalizacao = getNomeTabela(current);
+		    String aliasGene= generalizacao.toLowerCase();
+		    capsula.append(", "+aliasGene+".*");
+			joins.append("\n INNER JOIN "+generalizacao+" as "+aliasGene+ " ON ("+alias+".id ="+aliasGene+".id)");
+			entidadesAtributo.append("\n OR (UPPER(CONCAT('',"+aliasGene+")) LIKE UPPER(:busca))");
+			alias = aliasGene;
 		}
-		return capsula.append(joins).append(conteudo).append(")) like upper(:busca)").toString();
+		
+		return capsula.append(joins)
+				.append(entidadeBuscada)
+				.append(entidadesAtributo)
+				.append(")").toString();
 	}
 	
 	public static String gerarHqlBusca(Class<? extends Entidade> entidade, String alias) {
-		StringBuilder sql = new StringBuilder("select "+alias+" from "+entidade.getName()+" as "+alias+" where upper(concat(''\n\t");
+		StringBuilder sql = new StringBuilder("SELECT "+alias+" FROM "+entidade.getName()
+				+" AS "+alias+" WHERE UPPER(CONCAT(''\n\t");
 		sql.append(gerarHqlBuscaParcil(entidade, alias));
-		return sql.append(")) like upper(:busca)").toString();
+		return sql.append(")) LIKE UPPER(:busca)").toString();
+	}
+	
+	private static String getNomeTabela(Class<?> entidade) {
+		if(Entidade.class.isAssignableFrom(entidade)){
+			String nomeTabela = entidade.getAnnotation(Entity.class).name();
+			if(nomeTabela.isEmpty())
+				nomeTabela = entidade.getSimpleName();
+			return nomeTabela;
+		}
+		return null;
 	}
 	
 	
 	private static String gerarHqlBuscaParcil(Class<?> entidade, String alias) {
-		StringBuilder sqlParcil = new StringBuilder();
-		    for(Field  f : entidade.getDeclaredFields()) 
-				if(!f.getName().equals("serialVersionUID") && !Collection.class.isAssignableFrom(f.getType()) 
-						&&!Entidade.class.isAssignableFrom(f.getType())) {
-					sqlParcil.append(","+alias+"."+f.getName());
-				}
-		return sqlParcil.toString();
+		return " OR (UPPER(CONCAT('',"+alias+")) LIKE UPPER(:busca))";
 	}
 	
 }

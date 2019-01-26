@@ -15,6 +15,13 @@ public abstract class Entidade implements Serializable{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idgen")
 	private Long id;
 
+	
+	public Entidade(Long id) {
+		super();
+		this.id = id;
+	}
+	public Entidade() {}
+
 	public Long getId() {
 		return id;
 	}

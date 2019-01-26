@@ -182,7 +182,7 @@ public class AcompanhamentoController {
 	    		{
 		    		if(reservaCk.isSelected()) {
 			    		Map<String, String> restricoes = new HashMap<>();
-			    		restricoes.put("reserva.estadoReserva", " = "+estadoReservaBox.getValue().ordinal());
+			    		restricoes.put("reserva.estado_reserva", " = "+estadoReservaBox.getValue().ordinal());
 						if(filialRetirada != null) 
 							restricoes.put("filial.id"," ="+filialRetirada.getId());
 						

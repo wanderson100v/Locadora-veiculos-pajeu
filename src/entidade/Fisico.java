@@ -35,7 +35,20 @@ public class Fisico extends Cliente {
 	@Column(nullable = false)
 	private Sexo sexo;
 	
+	public Fisico(Long id, boolean ativo, String nome, String codigo, String email, String telefone, Endereco endereco,
+			LocalDate dataNascimento, String cpf, LocalDate dataValidadeHabilitacao, String identificacaoMotorista,
+			String numeroHabilitacao, Sexo sexo) {
+		super(id, ativo, nome, codigo, email, telefone, endereco);
+		this.dataNascimento = dataNascimento;
+		this.cpf = cpf;
+		this.dataValidadeHabilitacao = dataValidadeHabilitacao;
+		this.identificacaoMotorista = identificacaoMotorista;
+		this.numeroHabilitacao = numeroHabilitacao;
+		this.sexo = sexo;
+	}
 	
+	public Fisico() {}
+
 	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}

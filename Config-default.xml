@@ -5,4 +5,5 @@
   <localPgDump>C:\Program Files\PostgreSQL\9.4\bin\pg_dump.exe</localPgDump>
   <localPgRestore>C:\Program Files\PostgreSQL\9.4\bin\pg_restore.exe</localPgRestore>
   <localBackup>C:\Backup-PBD</localBackup>
+  <userNameDefault>c987654321</userNameDefault>
 </ConfiguracoesDefault>

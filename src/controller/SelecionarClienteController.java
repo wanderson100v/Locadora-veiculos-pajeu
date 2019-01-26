@@ -1,16 +1,14 @@
 package controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import business.BoCliente;
-import business.IBoCliente;
+import business.BoFisico;
+import business.BoJuridico;
 import entidade.Cliente;
 import excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -23,12 +21,6 @@ import view.Alerta;
 public class SelecionarClienteController {
 
     @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
     private DialogPane selecionarClienteDialog;
 
     @FXML
@@ -36,7 +28,10 @@ public class SelecionarClienteController {
 
     @FXML
     private CheckBox buscaRapidaChk;
-
+    
+    @FXML
+    private ComboBox<String> tipoClienteBox;
+    
     @FXML
     private TableView<Cliente> clienteTbl;
 
@@ -48,11 +43,6 @@ public class SelecionarClienteController {
 
     @FXML
     private TableColumn<Cliente, String> emailCln;
-    
-    private IBoCliente boCliente = BoCliente.getInstance();
-
-    private Alerta alerta = Alerta.getInstance();
-
     		
     @FXML
     void initialize() {
@@ -60,15 +50,14 @@ public class SelecionarClienteController {
     	codigoCln.setCellValueFactory(new PropertyValueFactory<>("codigo"));
     	emailCln.setCellValueFactory(new PropertyValueFactory<>("email"));
     	
+    	tipoClienteBox.getItems().addAll("Físico","Jurídico");
+    	tipoClienteBox.setValue("Físico");
+    	
     	pesquisaFld.setOnKeyTyped(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
 				if(buscaRapidaChk.isSelected() && pesquisaFld.getText().trim().length() > 0) {
-		    		try {
-						clienteTbl.getItems().setAll(boCliente.buscaPorBuscaAbrangente(pesquisaFld.getText()));
-					} catch (BoException e) {
-						e.printStackTrace();
-					}
+		    		buscar(false);
 		    	}
 			}
 		});
@@ -78,13 +67,21 @@ public class SelecionarClienteController {
     @FXML
     void actionHandle(ActionEvent event) {
     	if(!buscaRapidaChk.isSelected()) {
-    		try {
-				clienteTbl.getItems().setAll(boCliente.buscaPorBuscaAbrangente(pesquisaFld.getText()));
-				alerta.imprimirMsg("Busca concluída","Foram econtrados "+clienteTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
-			} catch (BoException e) {
-				alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
-			}
+    		buscar(true);
     	}
+    }
+    
+    private void buscar(Boolean mostrarMsg)  {
+    	try {
+			if(tipoClienteBox.getValue().equals("Físico"))
+				clienteTbl.getItems().setAll(BoFisico.getInstance().buscaPorBuscaAbrangente(pesquisaFld.getText()));
+			else 
+				clienteTbl.getItems().setAll(BoJuridico.getInstance().buscaPorBuscaAbrangente(pesquisaFld.getText()));
+			if(mostrarMsg)
+				 Alerta.getInstance().imprimirMsg("Busca concluída","Foram econtrados "+clienteTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
+		} catch (BoException e) {
+			 Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+		}
     }
     
     public TableView<Cliente> getClienteTbl() {

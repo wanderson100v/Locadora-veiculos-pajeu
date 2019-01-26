@@ -4,7 +4,6 @@ import app.App;
 import business.BoFuncionario;
 import business.IBoFuncionario;
 import dao.DaoConfiguracaoDefault;
-import dao.DaoRes;
 import entidade.ConfiguracoesDefault;
 import enumeracoes.Cargo;
 import excecoes.BoException;
@@ -47,6 +46,7 @@ public class LoginController{
 			if(login!= null) {
 				loginField.setText(login);
 				lembrarLoginCk.setSelected(true);
+				senhaField.requestFocus();
 			}
     	} catch (Exception e) {
 			e.printStackTrace();
@@ -62,11 +62,14 @@ public class LoginController{
     		Cargo cargo = boFuncionario.requisitarGralDeAcesso(login);
     		ObservadorEntidade.getIntance().avisarOuvintes(cargo);
     		boFuncionario.utilizarGralAcesso(cargo);
-    		if(!lembrarLoginCk.isSelected())
+    		if(!lembrarLoginCk.isSelected()) {
     			login = null;
+    			loginField.clear();
+    		}
+    		senhaField.clear();
 			ObservadorEntidade.getIntance().getConfiguracoesDefault().setUserNameDefault(login);
     		DaoConfiguracaoDefault.getInstance().salvar(ObservadorEntidade.getIntance().getConfiguracoesDefault());
-			App.iniTelaMenu();
+    		App.iniTelaMenu();
 		} catch (BoException | DaoException e) {
 			alerta.imprimirMsg("Alerta", e.getMessage(),AlertType.WARNING);
 		}

@@ -35,7 +35,19 @@ public class Cliente extends Entidade{
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false)
 	private Endereco endereco;
+	
+	public Cliente(Long id, boolean ativo, String nome, String codigo, String email, String telefone,
+			Endereco endereco) {
+		super(id);
+		this.ativo = ativo;
+		this.nome = nome;
+		this.codigo = codigo;
+		this.email = email;
+		this.telefone = telefone;
+		this.endereco = endereco;
+	}
 
+	public Cliente() {}
 	
 	public String getEmail() {
 		return email;
