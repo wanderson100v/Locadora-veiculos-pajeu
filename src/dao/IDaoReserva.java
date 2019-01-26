@@ -50,12 +50,7 @@ public interface IDaoReserva extends IDao<Reserva>{
 				+ " (select count(*) from manutencao as m"
 				+ " where m.estado = 1" // manutenção em progresso
 				+ " and m.veiculo_id = v.id "
-				+ " and make_interval(hours \\:=" 
-					+ "((case"
-					+ " when m.tipo = 0 then c.horas_limpesa"
-					+ " when m.tipo = 1 then c.horas_revisao"
-					+ " else 0"
-					+ " end)\\:\\:int))" 
+				+ " and make_interval(hours \\:= m.custo_horas))" 
 				+ " + m.data_hora_inicio"  
 				+ " <= :horario )"
 				+ " = (select count(*) from manutencao as m"

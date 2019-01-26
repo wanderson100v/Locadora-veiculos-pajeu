@@ -78,4 +78,13 @@ public class BoManutencao implements IBoManutencao {
 		}
 	}
 
+	@Override
+	public int checarManutencao() throws BoException {
+		try {
+			return daoManutencao.checarManutencao();
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
 }

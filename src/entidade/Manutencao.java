@@ -23,17 +23,19 @@ public class Manutencao extends Entidade{
 	@Column(name = "estado", nullable = false)
 	private EstadoManutencao estadoManutencao;
 	private Float custo;
+	@Column(name = "custo_horas")
+	private int custoHoras;
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Veiculo veiculo;
 	
-	public Manutencao(LocalDateTime dataHoraInicio, TipoManutencao tipoManuntencao, EstadoManutencao estadoManutencao,
-			Float custo, Veiculo veiculo) {
-		super();
+	public Manutencao(LocalDateTime dataHoraInicio, TipoManutencao tipoManuntencao,
+			EstadoManutencao estadoManutencao, Float custo, int custoHoras, Veiculo veiculo) {
 		this.dataHoraInicio = dataHoraInicio;
 		this.tipoManuntencao = tipoManuntencao;
 		this.estadoManutencao = estadoManutencao;
 		this.custo = custo;
+		this.custoHoras = custoHoras;
 		this.veiculo = veiculo;
 	}
 
@@ -79,11 +81,14 @@ public class Manutencao extends Entidade{
 		this.tipoManuntencao = tipoManuntencao;
 	}
 
+	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((custo == null) ? 0 : custo.hashCode());
+		result = prime * result + custoHoras;
 		result = prime * result + ((dataHoraInicio == null) ? 0 : dataHoraInicio.hashCode());
 		result = prime * result + ((estadoManutencao == null) ? 0 : estadoManutencao.hashCode());
 		result = prime * result + ((tipoManuntencao == null) ? 0 : tipoManuntencao.hashCode());
@@ -97,13 +102,15 @@ public class Manutencao extends Entidade{
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (!(obj instanceof Manutencao))
+		if (getClass() != obj.getClass())
 			return false;
 		Manutencao other = (Manutencao) obj;
 		if (custo == null) {
 			if (other.custo != null)
 				return false;
 		} else if (!custo.equals(other.custo))
+			return false;
+		if (custoHoras != other.custoHoras)
 			return false;
 		if (dataHoraInicio == null) {
 			if (other.dataHoraInicio != null)
@@ -125,7 +132,7 @@ public class Manutencao extends Entidade{
 	@Override
 	public String toString() {
 		return "Manutencao [dataHoraInicio=" + dataHoraInicio + ", tipoManuntencao=" + tipoManuntencao
-				+ ", estadoManutencao=" + estadoManutencao + ", custo=" + custo + ", veiculo=" + veiculo + "]";
+				+ ", estadoManutencao=" + estadoManutencao + ", custo=" + custo + ", custoHoras=" + custoHoras
+				+ ", veiculo=" + veiculo + "]";
 	}
-	
 }

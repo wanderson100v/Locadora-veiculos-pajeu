@@ -80,6 +80,15 @@ public class FinalizarLocacaoController {
     private ComboBox<Integer> lpHoraBox;
 
     @FXML
+    private ComboBox<Integer> lpCustoHoraBox;
+    
+    @FXML
+    private ComboBox<Integer> rsCustoHoraBox;
+   
+    @FXML
+    private ComboBox<Integer> etCustoHoraBox;
+
+    @FXML
     private CheckBox lpAtualCk;
 
     @FXML
@@ -107,11 +116,17 @@ public class FinalizarLocacaoController {
 
     @FXML
     void initialize() {
-    	for(int i = 1; i < 25; i++)
+    	for(int i = 0; i < 24; i++)
     		devuHoraBox.getItems().add(i);
+    	lpCustoHoraBox.setItems(devuHoraBox.getItems());
+    	etCustoHoraBox.setItems(devuHoraBox.getItems());
+    	rsCustoHoraBox.setItems(devuHoraBox.getItems());
     	etHoraBox.setItems(devuHoraBox.getItems());
+    	etHoraBox.setValue(0);
     	lpHoraBox.setItems(devuHoraBox.getItems());
+    	lpHoraBox.setValue(2);
     	rsHoraBox.setItems(devuHoraBox.getItems());
+    	rsHoraBox.setValue(5);
     }
     
     @FXML
@@ -180,18 +195,18 @@ public class FinalizarLocacaoController {
 					if(etAtualCk.isSelected()) {
 						BoManutencao.getInstance().cadastrarEditar(new Manutencao((!etAtualCk.isSelected())? 
 								Util.gerarHorario(etDate, etHoraBox) : LocalDateTime.now() ,TipoManutencao.ABASTECIMENTO,
-								EstadoManutencao.PENDENTE,0f,locacao.getVeiculo()));
+								EstadoManutencao.PENDENTE,0f,etCustoHoraBox.getValue(),locacao.getVeiculo()));
 						sucessoFinalizacao.append("\n- Nova manutenção de abastecimento de combustível pendente");
 					}
 					if(lpCk.isSelected()) {
 						BoManutencao.getInstance().cadastrarEditar(new Manutencao((!lpAtualCk.isSelected())?
 								Util.gerarHorario(lpDate, lpHoraBox) : LocalDateTime.now(),TipoManutencao.LIMPEZA,
-								EstadoManutencao.PENDENTE,0f,locacao.getVeiculo()));
+								EstadoManutencao.PENDENTE,0f,lpCustoHoraBox.getValue(),locacao.getVeiculo()));
 						sucessoFinalizacao.append("\n- Nova manutenção de limpeza pendente");
 					}
 					if(!revisaoPane.isDisable()) {
 						BoManutencao.getInstance().cadastrarEditar(new Manutencao( Util.gerarHorario(rsDate, rsHoraBox)
-								,TipoManutencao.REVISAO,EstadoManutencao.PENDENTE, custoRevisao ,locacao.getVeiculo()));
+								,TipoManutencao.REVISAO,EstadoManutencao.PENDENTE, custoRevisao ,rsCustoHoraBox.getValue(),locacao.getVeiculo()));
 						sucessoFinalizacao.append("\n- Nova manutenção de revisão pendente");
 					}
 					Alerta.getInstance().imprimirMsg("Sucesso", "Locação Finalizada com exito"+sucessoFinalizacao.toString(), AlertType.INFORMATION);

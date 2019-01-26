@@ -58,6 +58,9 @@ public class ManutencaoController extends CRUDController<Manutencao>{
 
     @FXML
     private ComboBox<Integer> horaBox;
+    
+    @FXML
+    private ComboBox<Integer> horaCustoBox;
 
     @FXML
     private TextField dadosVeiculoFld;
@@ -86,8 +89,10 @@ public class ManutencaoController extends CRUDController<Manutencao>{
     @FXML
     void initialize() {
     	super.initialize();
-    	for(int i =1 ; i <25 ; i++)
+    	for(int i =0 ; i <24 ; i++)
     		horaBox.getItems().add(i);
+    	horaCustoBox.setItems(horaBox.getItems());
+    	horaCustoBox.setValue(0);
     	tipoBox.getItems().addAll(TipoManutencao.values());
      	estadoManutencaoBox.getItems().addAll(EstadoManutencao.values());
      	tipoCln.setCellValueFactory(new PropertyValueFactory<>("tipoManuntencao"));
@@ -103,7 +108,8 @@ public class ManutencaoController extends CRUDController<Manutencao>{
 			try {
 				if(btn == cadastrarBtn) {
 					BoManutencao.getInstance().cadastrarEditar(new Manutencao(Util.gerarHorario(inicioDate, horaBox)
-							, tipoBox.getValue(), estadoManutencaoBox.getValue(), Float.parseFloat(custoFld.getText()), veiculo));
+							, tipoBox.getValue(), estadoManutencaoBox.getValue(), Float.parseFloat(custoFld.getText()), 
+							horaCustoBox.getValue(),veiculo));
 					alerta.imprimirMsg("Sucesso ao cadastrar","Manutenção cadastrada com sucesso", AlertType.INFORMATION);
 					
 		    	}else if(btn == editarBtn){

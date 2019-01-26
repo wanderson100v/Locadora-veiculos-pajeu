@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.File;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Observable;
 import java.util.Observer;
@@ -62,7 +61,7 @@ public class BackupDialogoController implements Observer{
     void initialize() {
     	for(int i =0 ; i < 24 ; i++)
     		proximaHoraBox.getItems().add(i);
-    	int horasAteFinalDia = LocalDateTime.now().getHour() - 24;
+    	int horasAteFinalDia = 24 - LocalDateTime.now().getHour();
     	for(int i =horasAteFinalDia ; i < 24 ; i++)
     		adiarHoraBox.getItems().add(i);
     }

@@ -1,7 +1,10 @@
 package controller;
 
+import org.controlsfx.control.Notifications;
+
 import banco.ReservaHoje;
 import business.BoBackup;
+import business.BoManutencao;
 import business.BoReserva;
 import business.IBoReserva;
 import entidade.Backup;
@@ -10,6 +13,7 @@ import enumeracoes.EstadoRerserva;
 import excecoes.BoException;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -67,10 +71,18 @@ public class InicioController implements IObservadoresEntidade {
 									@Override
 									public void run() {
 										try {
+											//verificando necessidade de atualizações 
+											//para reserva
 											reservasHojeTbl.getItems().clear();
 											reservasHojeTbl.getItems().addAll(boReserva.buscarReservaHoje());
 											reservasHojeTbl.refresh();
-											
+											//para manutenção
+											int manutencaoFinalizada = BoManutencao.getInstance().checarManutencao();
+											if(manutencaoFinalizada >0)
+												Notifications.create().title("Manutenções finalizadas")
+												.text("Foram finalizadas "+manutencaoFinalizada+" manutenções de veículos")
+												.position(Pos.BOTTOM_RIGHT).showInformation();
+											//para backup
 											Backup backup = BoBackup.getInstance().checarBackup();
 											if(backup!= null) 
 												Util.exibirRealizarBackupEmDialogo(backup);
