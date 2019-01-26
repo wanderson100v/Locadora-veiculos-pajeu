@@ -1,15 +1,19 @@
 package controller;
 
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.Observable;
 import java.util.Observer;
 
 import app.App;
-import business.BoFuncionario;
+import business.BoBackup;
 import dao.DaoConfiguracaoDefault;
 import dao.DaoRes;
+import entidade.Backup;
 import entidade.ConfiguracoesDefault;
 import enumeracoes.Cargo;
+import enumeracoes.EstadoBackup;
+import excecoes.BoException;
 import excecoes.DaoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,6 +40,9 @@ public class BackupController implements Observer, IObservadoresEntidade {
 
     @FXML
     private TextArea detalheBackupArea;
+    
+    @FXML
+    private TextArea  descriBackupArea;
 
     @FXML
     private Button arquivarBtn;
@@ -126,11 +133,17 @@ public class BackupController implements Observer, IObservadoresEntidade {
 		    		restaurarcao = true;
 		    		DaoRes.getInstance().executarBackup(pastaBackupFld.getText(),nomeArqBackupFld.getText().trim(),
 							user[0], user[1],"restore");
+		    		Backup backup = new Backup();
+		    		backup.setAutor(user[0]);
+		    		backup.setDataOcorrencia(LocalDateTime.now());
+		    		backup.setEstado(EstadoBackup.REALIZADO);
+		    		backup.setDescricao(descriBackupArea.getText().trim());
+		    		BoBackup.getInstance().cadastrarEditar(backup);
 		    		Alerta.getInstance().imprimirMsg("Sucesso", "Restauração de banco finalizada com sucesso", AlertType.INFORMATION);
 				}else
 					Alerta.getInstance().imprimirMsg("Alerta", "É necessário selecionar arquivo antes de"
 							+ " restauração de backup", AlertType.WARNING);
-			} catch (DaoException e1) {
+			} catch (DaoException | BoException e1) {
 				Alerta.getInstance().imprimirMsg("Erro", e1.getMessage(), AlertType.ERROR);
 			}
     	}

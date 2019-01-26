@@ -1,8 +1,10 @@
 package controller;
 
 import banco.ReservaHoje;
+import business.BoBackup;
 import business.BoReserva;
 import business.IBoReserva;
+import entidade.Backup;
 import enumeracoes.Cargo;
 import enumeracoes.EstadoRerserva;
 import excecoes.BoException;
@@ -68,6 +70,10 @@ public class InicioController implements IObservadoresEntidade {
 											reservasHojeTbl.getItems().clear();
 											reservasHojeTbl.getItems().addAll(boReserva.buscarReservaHoje());
 											reservasHojeTbl.refresh();
+											
+											Backup backup = BoBackup.getInstance().checarBackup();
+											if(backup!= null) 
+												Util.exibirRealizarBackupEmDialogo(backup);
 										} catch (BoException e) {
 											e.printStackTrace();
 										}
@@ -86,8 +92,4 @@ public class InicioController implements IObservadoresEntidade {
 			}
 		}
 	}
-    
-    
-    
-    
 }

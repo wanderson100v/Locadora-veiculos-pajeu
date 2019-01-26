@@ -9,6 +9,7 @@ import banco.ReservaPendente;
 import business.BoCategoriaVeiculo;
 import business.BoReserva;
 import dao.DaoRes;
+import entidade.Backup;
 import entidade.CategoriaVeiculo;
 import entidade.Cliente;
 import entidade.Filial;
@@ -45,6 +46,21 @@ public class Util {
 			finalizarLocacaoController.paremetrizadoPor(locacao);
 			alerta.setDialogPane(finalizarLocacaoController.getFinalizarLocacaoDialogo());
 			alerta.showAndWait();
+		} catch (DaoException e) {
+			Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+		}
+	}
+	
+	public static void exibirRealizarBackupEmDialogo(Backup backup) {
+		try {
+			Alert alerta = new Alert(AlertType.NONE);
+			BackupDialogoController backupDialogoController;
+			backupDialogoController = (BackupDialogoController) DaoRes.getInstance().carregarControllerFXML("BackupDialogo");
+			DaoRes.getInstance().addObserver(backupDialogoController);
+			backupDialogoController.paremetrizadoPor(backup);
+			alerta.setDialogPane(backupDialogoController.getBackupDialogo());
+			alerta.showAndWait();
+			DaoRes.getInstance().deleteObserver(backupDialogoController);
 		} catch (DaoException e) {
 			Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
 		}
