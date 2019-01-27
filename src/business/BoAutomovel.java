@@ -1,6 +1,7 @@
 package business;
 
 import java.util.List;
+import java.util.Map;
 
 import dao.DaoAutomovel;
 import dao.IDaoAutomovel;
@@ -88,4 +89,12 @@ public class BoAutomovel implements IBoAutomovel {
 		}
 	}
 
+	@Override
+	public List<Automovel> buscaPorBuscaAbrangente(String busca, Map<String, String> restricoes) throws BoException {
+		try {
+			return daoAutomovel.buscaPorBuscaAbrangente(busca, restricoes);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
 }

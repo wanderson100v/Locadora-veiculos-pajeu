@@ -1,6 +1,8 @@
 package business;
 
 import java.util.List;
+import java.util.Map;
+
 import dao.DaoCategoriaVeiculo;
 import dao.IDaoCategoriaVeiculo;
 import entidade.Automovel;
@@ -166,6 +168,15 @@ public class BoCategoriaVeiculo implements IBoCategoriaVeiculo{
 	public List<CategoriaVeiculo> buscaPorBuscaAbrangente(String busca) throws BoException {
 		try {
 			return daoCategoriaVeiculo.buscaPorBuscaAbrangente(busca);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+	
+	@Override
+	public List<CategoriaVeiculo> buscaPorBuscaAbrangente(String busca, Map<String, String> restricoes) throws BoException {
+		try {
+			return daoCategoriaVeiculo.buscaPorBuscaAbrangente(busca, restricoes);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

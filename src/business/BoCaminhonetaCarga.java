@@ -1,9 +1,11 @@
 package business;
 
 import java.util.List;
+import java.util.Map;
 
 import dao.DaoCaminhonetaCarga;
 import dao.IDaoCaminhonetaCarga;
+import entidade.Backup;
 import entidade.CaminhonetaCarga;
 import excecoes.BoException;
 import excecoes.DaoException;
@@ -82,6 +84,15 @@ public class BoCaminhonetaCarga implements IBoCaminhonetaCarga{
 	public List<CaminhonetaCarga> buscaPorBuscaAbrangente(String busca) throws BoException {
 		try {
 			return daoCaminhonetaCarga.buscaPorBuscaAbrangente(busca);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+	
+	@Override
+	public List<CaminhonetaCarga> buscaPorBuscaAbrangente(String busca, Map<String, String> restricoes) throws BoException {
+		try {
+			return daoCaminhonetaCarga.buscaPorBuscaAbrangente(busca, restricoes);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

@@ -13,4 +13,10 @@ public enum Sexo {
 		return value;
 	}
 	
+	public static Sexo getSexo(String sexoStr) {
+		for(Sexo sexo : values())
+			if(sexoStr.toLowerCase().equals(sexo.toString().toLowerCase()))
+				return sexo;
+		return null;
+	}
 }

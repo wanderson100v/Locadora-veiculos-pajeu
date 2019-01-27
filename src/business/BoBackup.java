@@ -3,6 +3,7 @@ package business;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import dao.DaoBackup;
 import dao.IDaoBackup;
@@ -84,6 +85,15 @@ public class BoBackup implements IBoBackup {
 		}
 	}
 	
+	@Override
+	public List<Backup> buscaPorBuscaAbrangente(String busca, Map<String, String> restricoes) throws BoException {
+		try {
+			return daoBackup.buscaPorBuscaAbrangente(busca, restricoes);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+	
 	public LocalDateTime adiarBackup(Backup backup, Integer horas) throws BoException {
 		backup.setEstado(EstadoBackup.ADIADO);
 		backup.setDataOcorrencia(backup.getDataOcorrencia().plusHours(horas));
@@ -112,4 +122,6 @@ public class BoBackup implements IBoBackup {
 			throw new BoException(e.getMessage());
 		}
 	}
+	
+	
 }

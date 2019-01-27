@@ -1,5 +1,6 @@
 package controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,11 +23,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import view.Alerta;
 
@@ -141,6 +144,55 @@ public class AcompanhamentoController {
     @FXML
     private Button selectFilialDevuBtn;
 
+
+    @FXML
+    private CheckBox funcionarioCk;
+
+    @FXML
+    private FlowPane funcionarioPane;
+
+    @FXML
+    private TextField funcionarioFld;
+
+    @FXML
+    private Button selectFuncioBtn;
+
+    @FXML
+    private CheckBox clienteCk;
+
+    @FXML
+    private CheckBox motoristaCk;
+
+    @FXML
+    private FlowPane motoristaPane;
+
+    @FXML
+    private TextField motoristaFld;
+
+    @FXML
+    private Button selectMotoristaBtn;
+    
+    @FXML
+    private FlowPane clientePane;
+
+    @FXML
+    private TextField clienteFld;
+
+    @FXML
+    private Button selectClienteBtn;
+    
+    @FXML
+    private GridPane periodoPane;
+    
+    @FXML
+    private DatePicker deDate;
+
+    @FXML
+    private DatePicker ateDate;
+
+    @FXML
+    private CheckBox periodoCk;
+    
     @FXML
     private CheckBox filialDevolucaoCk;
 
@@ -148,6 +200,9 @@ public class AcompanhamentoController {
     private CheckBox retiMinhaFilialCk;
 
     private Filial filialRetirada, filialDevolucao;
+    private Fisico motorista;
+    private Cliente cliente;
+    private Funcionario funcionario;
 
     @FXML
     void initialize() {
@@ -174,27 +229,52 @@ public class AcompanhamentoController {
     	estadoReservaBox.setValue(EstadoRerserva.PENDENTE);
     }
     
+    
+    public static void main(String[] args) {
+		System.out.println(LocalDate.now().toString());
+	}
     public void buscaHandle(ActionEvent e) {
     	try {
     		Object fonte = e.getSource();
 	    	if(fonte == buscarBtn) {
 	    		if(locacaoCk.isSelected() || reservaCk.isSelected()) 
 	    		{
-		    		if(reservaCk.isSelected()) {
+		    		Map<String,String> restricoesGerais = new HashMap<>();
+		    		if(clienteCk.isSelected() && cliente != null)
+		    			restricoesGerais.put("cliente.id","="+cliente.getId());
+	    			if(funcionarioCk.isSelected() && funcionario != null)
+	    				restricoesGerais.put("funcionario.id","="+funcionario.getId());
+	    			if(reservaCk.isSelected()) {
 			    		Map<String, String> restricoes = new HashMap<>();
 			    		restricoes.put("reserva.estado_reserva", " = "+estadoReservaBox.getValue().ordinal());
-						if(filialRetirada != null) 
+						restricoes.putAll(restricoesGerais);
+			    		if(filialRetirada != null) 
 							restricoes.put("filial.id"," ="+filialRetirada.getId());
-						
-			    		reservasTbl.getItems().setAll(BoReserva.getInstance().buscaPorBuscaAbrangente(buscarFld.getText().trim(), restricoes));
+			    		if(periodoCk.isSelected() && deDate.getValue() != null || ateDate.getValue()!= null) {
+			    			if(deDate.getValue() != null)
+		    					restricoes.put("date(reserva.data_retirada)"," >= '"+deDate.getValue()+"'");
+	    					if(ateDate.getValue()!=null)
+		    					restricoes.put("date(reserva.data_devolucao)"," <= '"+ateDate.getValue()+"'");
+			    		}
+	    				reservasTbl.getItems().setAll(BoReserva.getInstance().buscaPorBuscaAbrangente(buscarFld.getText().trim(), restricoes));
 					}
 					if(locacaoCk.isSelected()) {
 						Map<String, String> restricoes = new HashMap<>();
 						restricoes.put("locacao.finalizado", " = "+lFinalizadaCk.isSelected());
+						restricoes.putAll(restricoesGerais);
+						if(motorista!= null) 
+							restricoes.put("motorista.id"," ="+motorista.getId());
 						if(filialRetirada != null) 
 							restricoes.put("filialRetirada.id"," ="+filialRetirada.getId());
 						if(filialDevolucao != null) 
 							restricoes.put("filialEntrega.id"," ="+filialDevolucao.getId());
+						if(periodoCk.isSelected() && deDate.getValue() != null || ateDate.getValue()!= null) {
+		    				if(deDate.getValue() != null)
+		    					restricoes.put("date(locacao.data_retirada)"," >= '"+deDate.getValue()+"'");
+	    					if(ateDate.getValue()!=null)
+		    					restricoes.put("date(locacao.data_devolucao)"," <= '"+ateDate.getValue()+"'");
+		    			}
+		    					
 						locacaoTbl.getItems().setAll(BoLocacao.getInstance().buscaPorBuscaAbrangente(buscarFld.getText().trim(), restricoes));
 					}
 					
@@ -216,6 +296,22 @@ public class AcompanhamentoController {
     			if(filialDevolucao != null)
     				dadosFilialDevuFld.setText(filialDevolucao.toString());
     		}
+    		else if(fonte == selectMotoristaBtn) {
+    			motorista = Util.selecionarMotoristaValidoEmDialogo(LocalDate.now());
+    			if(motorista != null)
+    				motoristaFld.setText(motorista.toString());
+    		}
+    		else if(fonte == selectFuncioBtn) {
+    			funcionario = Util.selecionarFucnionarioEmDialogo();
+    			if(funcionario != null)
+    				funcionarioFld.setText(funcionario.toString());
+    		}
+    		else if(fonte == selectClienteBtn) {
+    			cliente = Util.selecionarClienteEmDialogo();
+    			if(cliente != null)
+    				clienteFld.setText(cliente.toString());
+    		}
+	    	
     	} catch (BoException e1) {
 			e1.printStackTrace();
 			Alerta.getInstance().imprimirMsg("Erro", e1.getMessage(), AlertType.ERROR);
@@ -228,7 +324,31 @@ public class AcompanhamentoController {
     			cancelarReservaBtn.setDisable(estadoReservaBox.getValue() != EstadoRerserva.PENDENTE);
     			reservasTbl.getItems().clear();
     		}
-    		else if(e.getSource() == lFinalizadaCk) {
+    		else if(e.getSource() == motoristaCk) {
+    			motoristaPane.setDisable(!motoristaCk.isSelected());
+    			if(!motoristaCk.isSelected()) {
+    				motoristaFld.clear();
+    				motorista = null;
+    			}
+    		}else if(e.getSource() == funcionarioCk) {
+    			funcionarioPane.setDisable(!funcionarioCk.isSelected());
+    			if(!funcionarioCk.isSelected()) {
+    				funcionarioFld.clear();
+    				funcionario = null;
+    			}
+    		}else if(e.getSource() == clienteCk) {
+    			clientePane.setDisable(!clienteCk.isSelected());
+    			if(!clienteCk.isSelected()) {
+    				clienteFld.clear();
+    				cliente = null;
+    			}
+    		}else if(e.getSource() == periodoCk) {
+    			periodoPane.setDisable(!periodoCk.isSelected());
+    			if(!periodoCk.isSelected()) {
+    				deDate.setValue(null);
+    				ateDate.setValue(null);
+    			}
+    		}else if(e.getSource() == lFinalizadaCk) {
 				finalizarLocacaoBnt.setDisable(lFinalizadaCk.isSelected());
 				locacaoTbl.getItems().clear();
     		}

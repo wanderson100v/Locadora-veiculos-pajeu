@@ -38,11 +38,12 @@ public class Util {
 		Class<?> current = entidade;
 		while(current.getSuperclass()!=null){
 			for(Field  f : current.getDeclaredFields()) {
-				if(restricoes.get(f.getName()+".id") == null && Entidade.class.isAssignableFrom(f.getType())) {
+				if(Entidade.class.isAssignableFrom(f.getType())) {
 					String aliasAtributo = f.getName();
 					joins.append("\n LEFT JOIN "+getNomeTabela(f.getType())+" AS "+aliasAtributo
 							+" ON ("+alias+"."+f.getName()+"_id ="+aliasAtributo+".id)");
-					entidadesAtributo.append("\n OR (UPPER(CONCAT('',"+aliasAtributo+")) LIKE UPPER(:busca))");
+					if(restricoes.get(f.getName()+".id") == null)
+						entidadesAtributo.append("\n OR (UPPER(CONCAT('',"+aliasAtributo+")) LIKE UPPER(:busca))");
 				}
 			}
 		    current = current.getSuperclass();
