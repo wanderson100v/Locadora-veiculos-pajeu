@@ -2,8 +2,6 @@ package controller;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 import business.BoLocacao;
 import business.BoReserva;
@@ -61,7 +59,7 @@ public class AcompanhamentoController {
     private CheckBox minhaFilialCk;
   
     @FXML
-    private ComboBox<EstadoRerserva> estadoReservaBox;
+    private ComboBox<String> estadoReservaBox;
     
     @FXML
     private TableView<Locacao> locacaoTbl;
@@ -144,7 +142,6 @@ public class AcompanhamentoController {
     @FXML
     private Button selectFilialDevuBtn;
 
-
     @FXML
     private CheckBox funcionarioCk;
 
@@ -225,8 +222,10 @@ public class AcompanhamentoController {
     	lDataRetiCln.setCellValueFactory(new PropertyValueFactory<>("dataRetirada"));
     	lDataDevuCln.setCellValueFactory(new PropertyValueFactory<>("dataDevolucao"));
     	
-    	estadoReservaBox.getItems().addAll(EstadoRerserva.values());
-    	estadoReservaBox.setValue(EstadoRerserva.PENDENTE);
+    	estadoReservaBox.getItems().add("Todos");
+    	for(EstadoRerserva e : EstadoRerserva.values())
+    		estadoReservaBox.getItems().add(e.toString());
+    	estadoReservaBox.setValue("Todos");
     }
     
     
@@ -239,43 +238,29 @@ public class AcompanhamentoController {
 	    	if(fonte == buscarBtn) {
 	    		if(locacaoCk.isSelected() || reservaCk.isSelected()) 
 	    		{
-		    		Map<String,String> restricoesGerais = new HashMap<>();
-		    		if(clienteCk.isSelected() && cliente != null)
-		    			restricoesGerais.put("cliente.id","="+cliente.getId());
-	    			if(funcionarioCk.isSelected() && funcionario != null)
-	    				restricoesGerais.put("funcionario.id","="+funcionario.getId());
+	    			
 	    			if(reservaCk.isSelected()) {
-			    		Map<String, String> restricoes = new HashMap<>();
-			    		restricoes.put("reserva.estado_reserva", " = "+estadoReservaBox.getValue().ordinal());
-						restricoes.putAll(restricoesGerais);
-			    		if(filialRetirada != null) 
-							restricoes.put("filial.id"," ="+filialRetirada.getId());
-			    		if(periodoCk.isSelected() && deDate.getValue() != null || ateDate.getValue()!= null) {
-			    			if(deDate.getValue() != null)
-		    					restricoes.put("date(reserva.data_retirada)"," >= '"+deDate.getValue()+"'");
-	    					if(ateDate.getValue()!=null)
-		    					restricoes.put("date(reserva.data_devolucao)"," <= '"+ateDate.getValue()+"'");
-			    		}
-	    				reservasTbl.getItems().setAll(BoReserva.getInstance().buscaPorBuscaAbrangente(buscarFld.getText().trim(), restricoes));
+	    				Reserva reserva = new Reserva();
+		    			reserva.setCliente(cliente);
+	    				reserva.setFuncionario(funcionario);
+			    		if(!estadoReservaBox.getValue().equals("Todos"))
+			    			reserva.setEstadoReserva(EstadoRerserva.getEstadoReserva(estadoReservaBox.getValue()));
+			    		reserva.setFilial(filialRetirada);
+	    				reservasTbl.getItems().setAll(BoReserva.getInstance().buscaPorBuscaAbrangente(buscarFld.getText().trim(),reserva, deDate.getValue(), ateDate.getValue()));
 					}
 					if(locacaoCk.isSelected()) {
-						Map<String, String> restricoes = new HashMap<>();
-						restricoes.put("locacao.finalizado", " = "+lFinalizadaCk.isSelected());
-						restricoes.putAll(restricoesGerais);
-						if(motorista!= null) 
-							restricoes.put("motorista.id"," ="+motorista.getId());
-						if(filialRetirada != null) 
-							restricoes.put("filialRetirada.id"," ="+filialRetirada.getId());
-						if(filialDevolucao != null) 
-							restricoes.put("filialEntrega.id"," ="+filialDevolucao.getId());
-						if(periodoCk.isSelected() && deDate.getValue() != null || ateDate.getValue()!= null) {
-		    				if(deDate.getValue() != null)
-		    					restricoes.put("date(locacao.data_retirada)"," >= '"+deDate.getValue()+"'");
-	    					if(ateDate.getValue()!=null)
-		    					restricoes.put("date(locacao.data_devolucao)"," <= '"+ateDate.getValue()+"'");
-		    			}
-		    					
-						locacaoTbl.getItems().setAll(BoLocacao.getInstance().buscaPorBuscaAbrangente(buscarFld.getText().trim(), restricoes));
+						Locacao locacao = new Locacao();
+						Boolean finalizado = null;
+						if(!lFinalizadaCk.isIndeterminate())
+							finalizado =lFinalizadaCk.isSelected();
+						locacao.setFinalizado(finalizado);
+						locacao.setCliente(cliente);
+						locacao.setFuncionario(funcionario);
+						locacao.setMotorista(motorista);
+						locacao.setFilialEntrega(filialDevolucao);
+						locacao.setFilialRetirada(filialRetirada);
+						
+						locacaoTbl.getItems().setAll(BoLocacao.getInstance().buscaPorBuscaAbrangente(buscarFld.getText().trim(), locacao, deDate.getValue(), ateDate.getValue()));
 					}
 					
 					Alerta.getInstance().imprimirMsg("Sucesso", "Busca concluida. "
@@ -321,7 +306,7 @@ public class AcompanhamentoController {
     public void actionHandle(ActionEvent e) {
     	try {
     		if(e.getSource() == estadoReservaBox) {
-    			cancelarReservaBtn.setDisable(estadoReservaBox.getValue() != EstadoRerserva.PENDENTE);
+    			cancelarReservaBtn.setDisable(!estadoReservaBox.getValue().equals("Pendente"));
     			reservasTbl.getItems().clear();
     		}
     		else if(e.getSource() == motoristaCk) {

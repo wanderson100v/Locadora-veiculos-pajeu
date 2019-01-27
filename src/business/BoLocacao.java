@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
-import java.util.Map;
 
 import dao.DaoLocacao;
 import dao.IDaoLocacao;
@@ -264,11 +263,9 @@ public class BoLocacao implements IBoLocacao {
 		}
 	}
 	
-	
-	@Override
-	public List<Locacao> buscaPorBuscaAbrangente(String busca, Map<String, String> restricoes) throws BoException {
+	public List<Locacao> buscaPorBuscaAbrangente(String busca, Locacao locacao,LocalDate de , LocalDate ate) throws BoException {
 		try {
-			return daoLocacao.buscaPorBuscaAbrangente(busca, restricoes);
+			return daoLocacao.buscaPorBuscaAbrangente(busca, locacao, de , ate);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

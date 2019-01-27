@@ -1,7 +1,6 @@
 package business;
 
 import java.util.List;
-import java.util.Map;
 
 import dao.DaoFilial;
 import dao.IDaoFilial;
@@ -86,15 +85,4 @@ public class BoFilial implements IBoFilial{
 			throw new BoException(e.getMessage());
 		}
 	}
-	
-	@Override
-	public List<Filial> buscaPorBuscaAbrangente(String busca, Map<String, String> restricoes) throws BoException {
-		try {
-			return daoFilial.buscaPorBuscaAbrangente(busca, restricoes);
-		}catch (DaoException e) {
-			throw new BoException(e.getMessage());
-		}
-	}
-
-
 }

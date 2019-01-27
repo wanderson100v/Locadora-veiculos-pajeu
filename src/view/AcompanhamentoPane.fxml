@@ -137,19 +137,19 @@
                                                 </GridPane>
                                              </content>
                                           </TitledPane>
-                                          <TitledPane alignment="TOP_LEFT" text="Locação">
+                                          <TitledPane alignment="TOP_LEFT" expanded="false" text="Locação">
                                              <content>
                                                 <VBox>
                                                    <children>
                                                       <ButtonBar prefHeight="35.0">
                                                          <buttons>
-                                                            <CheckBox fx:id="lFinalizadaCk" mnemonicParsing="false" onAction="#actionHandle" text="Finalizadas" />
+                                                            <CheckBox fx:id="lFinalizadaCk" allowIndeterminate="true" mnemonicParsing="false" onAction="#actionHandle" text="Finalizadas" />
                                                          </buttons>
                                                          <padding>
                                                             <Insets right="10.0" />
                                                          </padding>
                                                       </ButtonBar>
-                                                      <TitledPane text="Motorista">
+                                                      <TitledPane expanded="false" text="Motorista">
                                                          <content>
                                                             <GridPane hgap="10.0">
                                                               <columnConstraints>

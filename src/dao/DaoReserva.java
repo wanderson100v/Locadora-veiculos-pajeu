@@ -1,7 +1,10 @@
 package dao;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -239,5 +242,35 @@ public class DaoReserva extends Dao<Reserva> implements IDaoReserva{
 		}finally {
 			em.close();
 		}
-	}	
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Reserva> buscaPorBuscaAbrangente(String busca, Reserva reserva,LocalDate de , LocalDate ate) throws DaoException {
+		try {
+			em = ConnectionFactory.getConnection();
+			
+			Map<String,String> restricoes = new HashMap<>();
+			if(reserva.getCliente()!= null)
+				restricoes.put("cliente.id","="+reserva.getCliente().getId());
+			if(reserva.getFuncionario() != null)
+				restricoes.put("funcionario.id","="+reserva.getFuncionario().getId());
+			if(reserva.getEstadoReserva() != null)
+				restricoes.put("reserva.estado_reserva", " = "+reserva.getEstadoReserva().ordinal());
+			if(reserva.getFilial()!= null) 
+				restricoes.put("filial.id"," ="+reserva.getFilial().getId());
+			if(de != null)
+				restricoes.put("date(locacao.data_retirada)"," >= '"+de+"'");
+			if(ate != null)
+				restricoes.put("date(locacao.data_devolucao)"," <= '"+ate+"'");
+			
+			return em.createNativeQuery(Util.gerarHqlBuscaAbrangente(Reserva.class, restricoes),Reserva.class)
+					.setParameter("busca","%"+busca+"%")
+					.getResultList();
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new DaoException("ERRO AO BUSCAR LOCAÇÕES ABRANGENTE RESTRITIVA");
+		}finally {
+			em.close();
+		}
+	}
 }

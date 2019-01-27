@@ -14,4 +14,12 @@ public enum EstadoRerserva {
 		return value;
 	}
 	
+	public static EstadoRerserva getEstadoReserva(String estadoNome) {
+		estadoNome = estadoNome.toLowerCase();
+		for(EstadoRerserva e : values())
+			if(estadoNome.equals(e.toString().toLowerCase()))
+				return e;
+		return null;
+	}
+	
 }

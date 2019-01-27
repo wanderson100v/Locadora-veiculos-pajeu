@@ -2,12 +2,10 @@ package business;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 import dao.DaoFisico;
 import dao.IDaoFisico;
 import entidade.Fisico;
-import entidade.Reserva;
 import excecoes.BoException;
 import excecoes.DaoException;
 import excecoes.ValidarException;
@@ -124,12 +122,4 @@ public class BoFisico implements IBoFisico{
 		}
 	}
 	
-	@Override
-	public List<Fisico> buscaPorBuscaAbrangente(String busca, Map<String, String> restricoes) throws BoException {
-		try {
-			return daoFisico.buscaPorBuscaAbrangente(busca, restricoes);
-		}catch (DaoException e) {
-			throw new BoException(e.getMessage());
-		}
-	}
 }

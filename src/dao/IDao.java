@@ -1,7 +1,6 @@
 package dao;
 
 import java.util.List;
-import java.util.Map;
 
 import entidade.Entidade;
 import excecoes.DaoException;
@@ -21,7 +20,5 @@ public interface IDao <T extends Entidade>{
 	public List<T> buscarPorExemplo(T exemploEntidade)throws DaoException;
 	
 	public List<T> buscaPorBuscaAbrangente(String busca) throws DaoException;
-	
-	public List<T> buscaPorBuscaAbrangente(String busca, Map<String, String> restricoes) throws DaoException;
 	
 }

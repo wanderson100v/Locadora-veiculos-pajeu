@@ -1,5 +1,6 @@
 package dao;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -122,4 +123,6 @@ public interface IDaoReserva extends IDao<Reserva>{
 	public List<ReservaDisponibilidade> buscarReservaDisponibilidade(Long filialId, LocalDateTime horario) throws DaoException;
 
 	public ReservaDisponibilidade buscarReservaDisponibilidade(Long categoriaVeiculoId, Long filialId,LocalDateTime horario) throws DaoException ;
+
+	public List<Reserva> buscaPorBuscaAbrangente(String busca, Reserva reserva,LocalDate de , LocalDate ate) throws DaoException;
 }

@@ -1,7 +1,6 @@
 package business;
 
 import java.util.List;
-import java.util.Map;
 
 import dao.DaoAcessorio;
 import dao.IDaoAcessorio;
@@ -124,14 +123,4 @@ public class BoAcessorio implements IBoAcessorio{
 			throw new BoException(e.getMessage());
 		}
 	}
-	
-	@Override
-	public List<Acessorio> buscaPorBuscaAbrangente(String busca, Map<String, String> restricoes) throws BoException {
-		try {
-			return daoAcessorio.buscaPorBuscaAbrangente(busca, restricoes);
-		}catch (DaoException e) {
-			throw new BoException(e.getMessage());
-		}
-	}
-
 }

@@ -1,7 +1,6 @@
 package business;
 
 import java.util.List;
-import java.util.Map;
 
 import dao.DaoJuridico;
 import dao.IDaoJuridico;
@@ -86,15 +85,6 @@ public class BoJuridico implements IBoJuridico {
 	public List<Juridico> buscaPorBuscaAbrangente(String busca) throws BoException {
 		try {
 			return daoJuridico.buscaPorBuscaAbrangente(busca);
-		}catch (DaoException e) {
-			throw new BoException(e.getMessage());
-		}
-	}
-	
-	@Override
-	public List<Juridico> buscaPorBuscaAbrangente(String busca, Map<String, String> restricoes) throws BoException {
-		try {
-			return daoJuridico.buscaPorBuscaAbrangente(busca, restricoes);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

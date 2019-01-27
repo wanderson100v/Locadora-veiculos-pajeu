@@ -1,7 +1,6 @@
 package business;
 
 import java.util.List;
-import java.util.Map;
 
 import dao.DaoManutencao;
 import dao.IDaoManutencao;
@@ -74,15 +73,6 @@ public class BoManutencao implements IBoManutencao {
 	public List<Manutencao> buscaPorBuscaAbrangente(String busca) throws BoException {
 		try {
 			return daoManutencao.buscaPorBuscaAbrangente(busca);
-		}catch (DaoException e) {
-			throw new BoException(e.getMessage());
-		}
-	}
-	
-	@Override
-	public List<Manutencao> buscaPorBuscaAbrangente(String busca, Map<String, String> restricoes) throws BoException {
-		try {
-			return daoManutencao.buscaPorBuscaAbrangente(busca, restricoes);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

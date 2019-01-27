@@ -3,7 +3,6 @@ package business;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 import dao.DaoBackup;
 import dao.IDaoBackup;
@@ -80,15 +79,6 @@ public class BoBackup implements IBoBackup {
 	public List<Backup> buscaPorBuscaAbrangente(String busca) throws BoException {
 		try {
 			return daoBackup.buscaPorBuscaAbrangente(busca);
-		}catch (DaoException e) {
-			throw new BoException(e.getMessage());
-		}
-	}
-	
-	@Override
-	public List<Backup> buscaPorBuscaAbrangente(String busca, Map<String, String> restricoes) throws BoException {
-		try {
-			return daoBackup.buscaPorBuscaAbrangente(busca, restricoes);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

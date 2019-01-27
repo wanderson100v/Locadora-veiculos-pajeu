@@ -35,7 +35,8 @@ public class Locacao extends Entidade {
 	private Float valorDiaria;
 	@Column(name = "valor_pago",nullable = false)
 	private float valorPago;
-	private boolean finalizado;
+	@Column(nullable = false)
+	private Boolean finalizado = false;
 	@OneToOne
 	private Reserva reservaOrigem;
 	@ManyToOne
@@ -82,12 +83,12 @@ public class Locacao extends Entidade {
 		this.motorista = motorista;
 	}
 
-	public boolean isFinalizado() {
+	public Boolean isFinalizado() {
 		return finalizado;
 	}
 	
 	
-	public void setFinalizado(boolean finalizado) {
+	public void setFinalizado(Boolean finalizado) {
 		this.finalizado = finalizado;
 	}
 
