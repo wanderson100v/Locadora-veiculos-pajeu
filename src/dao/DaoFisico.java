@@ -1,7 +1,9 @@
 package dao;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import entidade.Fisico;
 import excecoes.DaoException;
@@ -43,6 +45,26 @@ public class DaoFisico extends Dao<Fisico> implements IDaoFisico {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DaoException("ERRO AO BUSCAR MOTORISTAS VALIDOS");
+		}finally {
+			em.close();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Fisico> buscaPorBuscaAbrangente(String busca, Fisico fisico) throws DaoException {
+		try {
+			em = ConnectionFactory.getConnection();
+			Map<String,String> restricoes = new HashMap<>();
+			if(fisico.isAtivo()!= null)
+				restricoes.put("cliente.ativo","="+fisico.isAtivo());
+			if(fisico.getSexo() != null)
+				restricoes.put("fisico.sexo","="+fisico.getSexo().ordinal());
+			return em.createNativeQuery(Util.gerarHqlBuscaAbrangente(Fisico.class, restricoes),Fisico.class)
+					.setParameter("busca","%"+busca+"%")
+					.getResultList();
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new DaoException("ERRO AO BUSCAR CLIENTES FÍSICO DE FORMA ABRANGENTE RESTRITIVA");
 		}finally {
 			em.close();
 		}

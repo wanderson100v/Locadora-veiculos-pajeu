@@ -10,5 +10,6 @@ public interface IDaoFisico extends IDao<Fisico>{
 	
 	public List<Fisico> buscarMotoristasValidos(Fisico fisico, LocalDate dataSuperior) throws DaoException;
 	
+	public List<Fisico> buscaPorBuscaAbrangente(String busca, Fisico fisico) throws DaoException ;
 }
 

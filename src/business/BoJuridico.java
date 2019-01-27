@@ -89,5 +89,14 @@ public class BoJuridico implements IBoJuridico {
 			throw new BoException(e.getMessage());
 		}
 	}
+
+	@Override
+	public List<Juridico> buscaPorBuscaAbrangente(String busca, Juridico juridico) throws BoException {
+		try {
+			return daoJuridico.buscaPorBuscaAbrangente(busca,juridico);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
 	
 }

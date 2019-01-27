@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.HashMap;
-import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -12,12 +11,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.util.Duration;
 import view.Alerta;
 
 public class PesquisaController {
@@ -63,15 +59,10 @@ public class PesquisaController {
 		if (e.getSource() == pesquisaFld) {
     		
     		String busca = pesquisaFld.getText().trim();
-    		
-    		if(!busca.isEmpty())
-    			if(filtroBox.getValue() != null)
-    				controladores.get(filtroBox.getValue()).popularTabela(busca);
-    			else
-    				alerta.imprimirMsg("Busca invalida","Nenhum filtro selecionado",AlertType.WARNING);
-    		else 
-    			alerta.imprimirMsg("Busca invalida","O campo de busca não pode estar vazio",AlertType.WARNING);
-    		
+			if(filtroBox.getValue() != null)
+				controladores.get(filtroBox.getValue()).popularTabela(busca);
+			else
+				alerta.imprimirMsg("Busca invalida","Nenhum filtro selecionado",AlertType.WARNING);
 		}
     	else if(e.getSource() == filtroBox ) {
     			

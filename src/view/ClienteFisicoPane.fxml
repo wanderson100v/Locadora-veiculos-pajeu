@@ -3,14 +3,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -33,253 +34,273 @@
       </TableView>
       <VBox fx:id="entidadePane" prefWidth="505.0">
          <children>
-            <GridPane alignment="CENTER" hgap="10.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="388.0" minWidth="10.0" prefWidth="325.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="388.0" minWidth="10.0" prefWidth="325.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <Label text="Email" GridPane.rowIndex="7">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label text="Telefone" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </Label>
-                  <FlowPane alignment="CENTER" hgap="5.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+            <TitledPane expanded="false" text="Especificações de Busca">
+               <content>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="237.0" minWidth="10.0" prefWidth="152.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="331.0" minWidth="10.0" prefWidth="331.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
                      <children>
-                        <TextField fx:id="telPreFld" prefHeight="25.0" prefWidth="49.0">
-                           <font>
-                              <Font name="Verdana" size="12.0" />
-                           </font>
-                        </TextField>
-                        <TextField fx:id="telNumFld" prefHeight="25.0" prefWidth="183.0">
-                           <font>
-                              <Font name="Verdana" size="12.0" />
-                           </font>
-                        </TextField>
+                        <CheckBox fx:id="motoristaBuscaCk" mnemonicParsing="false" text="Apenas motoristas" />
+                        <CheckBox fx:id="ativoBuscaCk" allowIndeterminate="true" mnemonicParsing="false" selected="true" text="Ativo" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="sexoBuscaBox" prefWidth="150.0" promptText="Sexo de cliente" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Sexo" GridPane.columnIndex="1" />
                      </children>
-                  </FlowPane>
-                  <TextField fx:id="emailFld" GridPane.rowIndex="8">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </TextField>
-                  <GridPane hgap="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2">
+                  </GridPane>
+               </content>
+            </TitledPane>
+            <TitledPane text="Pessoa Física">
+               <content>
+                  <GridPane alignment="CENTER" hgap="10.0">
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="10.0" prefWidth="123.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="117.0" minWidth="10.0" prefWidth="115.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="388.0" minWidth="10.0" prefWidth="325.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="388.0" minWidth="10.0" prefWidth="325.0" />
                      </columnConstraints>
                      <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label text="Data Nascimento">
+                        <Label text="Email" GridPane.rowIndex="6">
                            <font>
                               <Font name="Verdana" size="12.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="nascimentoDate" GridPane.rowIndex="1" />
-                        <Label text="Sexo" GridPane.columnIndex="1">
+                        <Label text="Telefone" GridPane.columnIndex="1" GridPane.rowIndex="6">
                            <font>
                               <Font name="Verdana" size="12.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="sexoBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                     </children>
-                  </GridPane>
-                  <Label text="CPF" GridPane.rowIndex="3">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="cpfFld" prefHeight="25.0" prefWidth="269.0" GridPane.rowIndex="4">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </TextField>
-                  <Label text="Nome" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="nomeFld" GridPane.rowIndex="2">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </TextField>
-                  <Label text="Pessoa Física" GridPane.columnSpan="2" GridPane.halignment="CENTER">
-                     <font>
-                        <Font name="Verdana" size="14.0" />
-                     </font>
-                  </Label>
-                  <GridPane GridPane.rowIndex="9" GridPane.rowSpan="2">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="31.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <Label text="Ativo">
-                           <font>
-                              <Font name="Verdana" size="12.0" />
-                           </font></Label>
-                        <FlowPane alignment="CENTER_LEFT" hgap="10.0" prefHeight="36.0" prefWidth="97.0" GridPane.rowIndex="1">
+                        <FlowPane alignment="CENTER" hgap="5.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                            <children>
-                              <RadioButton fx:id="simAtivoRb" mnemonicParsing="false" selected="true" text="Sim">
+                              <TextField fx:id="telPreFld" prefHeight="25.0" prefWidth="49.0">
                                  <font>
                                     <Font name="Verdana" size="12.0" />
-                                 </font></RadioButton>
-                              <RadioButton fx:id="naoAtivoRb" mnemonicParsing="false" text="Não">
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="telNumFld" prefHeight="25.0" prefWidth="183.0">
                                  <font>
                                     <Font name="Verdana" size="12.0" />
-                                 </font></RadioButton>
+                                 </font>
+                              </TextField>
                            </children>
                         </FlowPane>
-                        <Label text="Código" GridPane.columnIndex="1">
-                           <font>
-                              <Font name="Verdana" size="12.0" />
-                           </font></Label>
-                        <TextField fx:id="codigoFld" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <font>
-                              <Font name="Verdana" size="12.0" />
-                           </font></TextField>
-                     </children>
-                  </GridPane>
-                  <Label text="Numero Identificacao Motorista" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label text="Numero Habilitação" GridPane.rowIndex="5">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="numIdentFld" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="numHFld" GridPane.rowIndex="6">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </TextField>
-                  <Label text="Validade Habilitacao" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </Label>
-                  <DatePicker fx:id="validadeDate" prefWidth="118.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-               </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" />
-               </padding>
-            </GridPane>
-            <Separator prefWidth="200.0" />
-            <GridPane alignment="CENTER" hgap="10.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="363.0" minWidth="10.0" prefWidth="358.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="363.0" minWidth="10.0" prefWidth="358.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" />
-               </padding>
-               <children>
-                  <Label text="Rua" GridPane.rowIndex="3" />
-                  <TextField fx:id="ruaFld" GridPane.rowIndex="4">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </TextField>
-                  <Label text="Bairro" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label text="Cidade" GridPane.rowIndex="5" />
-                  <TextField fx:id="bairroFld" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="cidadeFld" GridPane.rowIndex="6">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </TextField>
-                  <Label text="Estado" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <ComboBox fx:id="estadoBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <GridPane hgap="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="61.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="167.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <Label text="Número" GridPane.columnIndex="1">
-                           <font>
-                              <Font name="Verdana" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="numFld" prefHeight="25.0" prefWidth="166.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="emailFld" GridPane.rowIndex="7">
                            <font>
                               <Font name="Verdana" size="12.0" />
                            </font>
                         </TextField>
-                        <Button fx:id="gerarBtn" mnemonicParsing="false" onAction="#actionHandle" prefHeight="25.0" prefWidth="76.0" text="Gerar" GridPane.rowIndex="1">
+                        <GridPane hgap="10.0" GridPane.columnIndex="1" GridPane.rowSpan="2">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="10.0" prefWidth="123.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="117.0" minWidth="10.0" prefWidth="115.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="Data Nascimento">
+                                 <font>
+                                    <Font name="Verdana" size="12.0" />
+                                 </font>
+                              </Label>
+                              <DatePicker fx:id="nascimentoDate" GridPane.rowIndex="1" />
+                              <Label text="Sexo" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font name="Verdana" size="12.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="sexoBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                        <Label text="CPF" GridPane.rowIndex="2">
                            <font>
                               <Font name="Verdana" size="12.0" />
                            </font>
-                        </Button>
+                        </Label>
+                        <TextField fx:id="cpfFld" prefHeight="25.0" prefWidth="269.0" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="Verdana" size="12.0" />
+                           </font>
+                        </TextField>
+                        <Label text="Nome">
+                           <font>
+                              <Font name="Verdana" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="nomeFld" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Verdana" size="12.0" />
+                           </font>
+                        </TextField>
+                        <GridPane GridPane.rowIndex="8" GridPane.rowSpan="2">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="31.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="Ativo">
+                                 <font>
+                                    <Font name="Verdana" size="12.0" />
+                                 </font>
+                              </Label>
+                              <FlowPane alignment="CENTER_LEFT" hgap="10.0" prefHeight="36.0" prefWidth="97.0" GridPane.rowIndex="1">
+                                 <children>
+                                    <RadioButton fx:id="simAtivoRb" mnemonicParsing="false" selected="true" text="Sim">
+                                       <font>
+                                          <Font name="Verdana" size="12.0" />
+                                       </font>
+                                    </RadioButton>
+                                    <RadioButton fx:id="naoAtivoRb" mnemonicParsing="false" text="Não">
+                                       <font>
+                                          <Font name="Verdana" size="12.0" />
+                                       </font>
+                                    </RadioButton>
+                                 </children>
+                              </FlowPane>
+                              <Label text="Código" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font name="Verdana" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="codigoFld" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Verdana" size="12.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </GridPane>
+                        <Label text="Numero Identificacao Motorista" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Verdana" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Numero Habilitação" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="Verdana" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="numIdentFld" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="Verdana" size="12.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="numHFld" GridPane.rowIndex="5">
+                           <font>
+                              <Font name="Verdana" size="12.0" />
+                           </font>
+                        </TextField>
+                        <Label text="Validade Habilitacao" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="Verdana" size="12.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="validadeDate" prefWidth="118.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" />
+                     </padding>
+                  </GridPane>
+               </content>
+            </TitledPane>
+            <TitledPane text="Endereço">
+               <content>
+                  <GridPane alignment="CENTER" hgap="10.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="363.0" minWidth="10.0" prefWidth="358.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="363.0" minWidth="10.0" prefWidth="358.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" />
+                     </padding>
+                     <children>
+                        <Label text="Rua" GridPane.rowIndex="2" />
+                        <TextField fx:id="ruaFld" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="Verdana" size="12.0" />
+                           </font>
+                        </TextField>
+                        <Label text="Bairro" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Cidade" GridPane.rowIndex="4" />
+                        <TextField fx:id="bairroFld" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="Verdana" size="12.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="cidadeFld" GridPane.rowIndex="5">
+                           <font>
+                              <Font name="Verdana" size="12.0" />
+                           </font>
+                        </TextField>
+                        <Label text="Estado" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="estadoBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <GridPane hgap="10.0" GridPane.columnIndex="1" GridPane.rowSpan="2">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="61.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="167.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="Número" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font name="Verdana" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="numFld" prefHeight="25.0" prefWidth="166.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Verdana" size="12.0" />
+                                 </font>
+                              </TextField>
+                              <Button fx:id="gerarBtn" mnemonicParsing="false" onAction="#actionHandle" prefHeight="25.0" prefWidth="76.0" text="Gerar" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Verdana" size="12.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </GridPane>
+                        <Label text="CEP">
+                           <font>
+                              <Font name="Verdana" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="cepFld" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Verdana" size="12.0" />
+                           </font>
+                        </TextField>
                      </children>
                   </GridPane>
-                  <Label text="CEP" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="cepFld" GridPane.rowIndex="2">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </TextField>
-                  <Label text="Endereço" GridPane.columnSpan="2" GridPane.halignment="CENTER">
-                     <font>
-                        <Font name="Verdana" size="14.0" />
-                     </font>
-                  </Label>
-               </children>
-            </GridPane>
+               </content>
+            </TitledPane>
          </children>
       </VBox>
       <ButtonBar fx:id="acoesBar" prefHeight="40.0" prefWidth="200.0">

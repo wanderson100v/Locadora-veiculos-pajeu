@@ -121,5 +121,14 @@ public class BoFisico implements IBoFisico{
 			throw new BoException(e.getMessage());
 		}
 	}
+
+	@Override
+	public List<Fisico> buscaPorBuscaAbrangente(String busca, Fisico fisico) throws BoException {
+		try {
+			return daoFisico.buscaPorBuscaAbrangente(busca,fisico);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
 	
 }

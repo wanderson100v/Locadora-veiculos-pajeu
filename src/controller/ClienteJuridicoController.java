@@ -14,6 +14,7 @@ import excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -74,6 +75,9 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
 
     @FXML
     private TextField codigoFld;
+    
+    @FXML
+    private CheckBox ativoBuscaCk;
     
     @FXML
     private Button gerarBtn;
@@ -150,7 +154,11 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
     @Override
     void popularTabela(String busca) {
 		try {
-			List<Juridico> juridicos = boJuridico.buscaPorBuscaAbrangente(busca);
+			Juridico juridico = new Juridico();
+			if(!ativoBuscaCk.isIndeterminate())
+				juridico.setAtivo(ativoBuscaCk.isSelected());
+			
+			List<Juridico> juridicos = boJuridico.buscaPorBuscaAbrangente(busca,juridico);
 			entidadeTabela.getItems().setAll(juridicos);
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+juridicos.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {

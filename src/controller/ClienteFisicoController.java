@@ -2,7 +2,6 @@ package controller;
 
 
 import java.time.LocalDate;
-import java.util.List;
 
 import business.BoEndereco;
 import business.BoFisico;
@@ -17,6 +16,7 @@ import excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
@@ -101,6 +101,15 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
     @FXML
     private Button gerarBtn;
     
+    @FXML
+    private CheckBox motoristaBuscaCk;
+
+    @FXML
+    private CheckBox ativoBuscaCk;
+
+    @FXML
+    private ComboBox<String> sexoBuscaBox;
+    
     private IBoEndereco boEndereco = BoEndereco.getInstance();
 
     private Fisico fisico;
@@ -123,6 +132,11 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
     	
     	sexoBox.getItems().setAll(Sexo.values());
     	estadoBox.getItems().setAll(Estado.values());
+    	
+    	sexoBuscaBox.getItems().add("Todos");
+    	sexoBuscaBox.setValue("Todos");
+    	for(Sexo sexo : Sexo.values())
+    		sexoBuscaBox.getItems().add(sexo.toString());
     	
     	telPreFld.setTextFormatter(Mascara.getMascaraNumericoFlutuante());
     	telNumFld.setTextFormatter(Mascara.getMascaraNumericoInteiro());
@@ -207,9 +221,17 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
 	@Override
 	void popularTabela(String busca) {
 		try {
-			List<Fisico> fisicos = BoFisico.getInstance().buscaPorBuscaAbrangente(busca);
-			entidadeTabela.getItems().setAll(fisicos);
-			alerta.imprimirMsg("Busca concluída","Foram econtrados "+fisicos.size()+" resultado(s)",AlertType.INFORMATION);
+			if(motoristaBuscaCk.isSelected())
+				entidadeTabela.getItems().setAll(BoFisico.getInstance().buscarMotoristasValidos(LocalDate.now(),busca));
+			else {
+				Fisico fisico = new Fisico();
+				if(!ativoBuscaCk.isIndeterminate())
+					fisico.setAtivo(ativoBuscaCk.isSelected());
+				if(!sexoBuscaBox.getValue().equals("Todos"))
+					fisico.setSexo(Sexo.getSexo(sexoBuscaBox.getValue()));
+				entidadeTabela.getItems().setAll(BoFisico.getInstance().buscaPorBuscaAbrangente(busca,fisico));
+			}
+			alerta.imprimirMsg("Busca concluída","Foram econtrados "+entidadeTabela.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
 		}

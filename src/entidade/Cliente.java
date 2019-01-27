@@ -23,7 +23,8 @@ import javax.persistence.SequenceGenerator;
 public class Cliente extends Entidade{
 	
 	private static final long serialVersionUID = 1L;
-	private boolean ativo;
+	@Column(nullable = false)
+	private Boolean ativo;
 	@Column(length = 100 , nullable = false)
 	private String nome;
 	@Column(length = 50, unique = true)
@@ -65,11 +66,11 @@ public class Cliente extends Entidade{
 		this.telefone = telefone;
 	}
 
-	public void setAtivo(boolean ativo) {
+	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
 	}
 	
-	public boolean isAtivo() {
+	public Boolean isAtivo() {
 		return ativo;
 	}
 
