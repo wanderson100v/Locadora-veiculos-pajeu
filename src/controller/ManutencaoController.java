@@ -14,12 +14,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import view.Alerta;
 
@@ -82,9 +84,21 @@ public class ManutencaoController extends CRUDController<Manutencao>{
 
     @FXML
     private Button excluirBtn;
+  
+    @FXML
+    private CheckBox veiculoBuscaCk;
 
+    @FXML
+    private FlowPane veiculoBuscaPae;
+
+    @FXML
+    private TextField veiculoBuscaFFld;
+
+    @FXML
+    private Button selectVeiculoBuscaBtn;
+    
     private Manutencao manutencao;
-    private Veiculo veiculo;
+    private Veiculo veiculo, veiculoBusca;
     
     @FXML
     void initialize() {
@@ -139,9 +153,10 @@ public class ManutencaoController extends CRUDController<Manutencao>{
 	@Override
 	void popularTabela(String busca) {
 		try {
-			List<Manutencao> manutencoes = BoManutencao.getInstance().buscaPorBuscaAbrangente(busca);
+			Manutencao manutencao = new Manutencao();
+			manutencao.setVeiculo(veiculoBusca);
+			List<Manutencao> manutencoes = BoManutencao.getInstance().buscaPorBuscaAbrangente(busca,manutencao);
 			entidadeTabela.getItems().setAll(manutencoes);
-			entidadeTabela.refresh();
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+manutencoes.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
@@ -182,5 +197,18 @@ public class ManutencaoController extends CRUDController<Manutencao>{
     		manutencao.setVeiculo(Util.selecionarVeiculoEmDialogo(null));
     		dadosVeiculoFld.setText(veiculo.toString());
     	}
+    	else if(event.getSource() == selectVeiculoBuscaBtn) {
+    		veiculoBusca = Util.selecionarVeiculoEmDialogo(null);
+    		if(veiculoBusca != null)
+    			veiculoBuscaFFld.setText(veiculoBusca.toString());
+    	}
+    	else if(event.getSource() == veiculoBuscaCk) {
+    		veiculoBuscaPae.setDisable(!veiculoBuscaCk.isSelected());
+    		if(!veiculoBuscaCk.isSelected()) {
+    			veiculoBusca = null;
+    			veiculoBuscaFFld.clear();
+    		}
+    	}
+    	
     }
 }

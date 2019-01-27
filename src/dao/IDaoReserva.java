@@ -3,6 +3,7 @@ package dao;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import adapter.ReservaDisponibilidade;
 import banco.ReservaHoje;
@@ -125,4 +126,8 @@ public interface IDaoReserva extends IDao<Reserva>{
 	public ReservaDisponibilidade buscarReservaDisponibilidade(Long categoriaVeiculoId, Long filialId,LocalDateTime horario) throws DaoException ;
 
 	public List<Reserva> buscaPorBuscaAbrangente(String busca, Reserva reserva,LocalDate de , LocalDate ate) throws DaoException;
+
+	public List<Map<String, Object>> buscarReservasOrigemLocacaoFinalizada(LocalDate de , LocalDate ate, String agruparPor) throws DaoException;
+
+	public List<Map<String, Object>> buscarReservasImpedidas(LocalDate de , LocalDate ate) throws DaoException;
 }

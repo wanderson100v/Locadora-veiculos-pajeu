@@ -3,6 +3,7 @@ package business;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import adapter.ReservaDisponibilidade;
 import banco.ReservaHoje;
@@ -14,7 +15,6 @@ import entidade.CaminhonetaCarga;
 import entidade.CategoriaVeiculo;
 import entidade.Cliente;
 import entidade.Filial;
-import entidade.Locacao;
 import entidade.Reserva;
 import excecoes.BoException;
 import excecoes.DaoException;
@@ -195,6 +195,26 @@ public class BoReserva implements IBoReserva {
 	public List<Reserva> buscaPorBuscaAbrangente(String busca, Reserva reserva,LocalDate de , LocalDate ate) throws BoException{
 		try {
 			return daoReserva.buscaPorBuscaAbrangente(busca, reserva, de, ate);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<Map<String, Object>> buscarReservasOrigemLocacaoFinalizada(LocalDate de, LocalDate ate,
+			String agruparPor) throws BoException {
+		try {
+			return daoReserva.buscarReservasOrigemLocacaoFinalizada(de, ate, agruparPor);
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<Map<String, Object>> buscarReservasImpedidas(LocalDate de, LocalDate ate)
+			throws BoException {
+		try {
+			return daoReserva.buscarReservasImpedidas(de, ate);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

@@ -1,5 +1,7 @@
 package controller;
 
+import business.BoAutomovel;
+import business.BoCaminhonetaCarga;
 import business.BoVeiculo;
 import business.IBoVeiculo;
 import entidade.CategoriaVeiculo;
@@ -11,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -80,6 +83,9 @@ public class SelecionarVeiculoController {
     @FXML
     private TableColumn<Veiculo, String> portasCln;
     
+    @FXML
+    private ComboBox<String> tipoBox;
+    
     private IBoVeiculo boVeiculo = BoVeiculo.getInstance();
     private Alerta alerta = Alerta.getInstance();
     private CategoriaVeiculo categoriaVeiculo;
@@ -102,6 +108,8 @@ public class SelecionarVeiculoController {
 		passagCln.setCellValueFactory( new PropertyValueFactory<>("quantidadePassageiro"));
 		portasCln.setCellValueFactory( new PropertyValueFactory<>("quantidadePortas"));
 		
+		tipoBox.getItems().addAll("Automovel/Passageiro","Caminhoneta de carga");
+		
 		pesquisaFld.setOnKeyTyped(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
@@ -112,8 +120,10 @@ public class SelecionarVeiculoController {
 						else if(filial != null) 
 							veiculoTbl.getItems().setAll(boVeiculo.buscarVeiculosDisponivel(filial.getId(), pesquisaFld.getText().trim()));
 						else
-							veiculoTbl.getItems().setAll(boVeiculo.buscaPorBuscaAbrangente(pesquisaFld.getText().trim()));
-				
+							if(tipoBox.getValue().equals("Automovel/Passageiro"))
+								veiculoTbl.getItems().setAll(BoAutomovel.getInstance().buscaPorBuscaAbrangente(pesquisaFld.getText().trim()));
+							else
+								veiculoTbl.getItems().setAll(BoCaminhonetaCarga.getInstance().buscaPorBuscaAbrangente(pesquisaFld.getText().trim()));
 		    		} catch (BoException e) {
 						e.printStackTrace();
 					}
@@ -163,6 +173,8 @@ public class SelecionarVeiculoController {
     public void paremetrizadoPor(Filial filial) {
     	if(filial!= null)
     		tituloLbl.setText("Selecione Veículo na filial "+filial.getNome());
+    	else
+    		tipoBox.setVisible(true);
     	this.filial = filial;
     }
 }

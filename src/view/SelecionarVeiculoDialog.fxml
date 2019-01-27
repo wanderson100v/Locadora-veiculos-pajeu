@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.ButtonType?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -31,6 +32,7 @@
          <children>
             <FlowPane alignment="CENTER" hgap="10.0" prefHeight="39.0" prefWidth="500.0">
                <children>
+                  <ComboBox fx:id="tipoBox" prefWidth="150.0" visible="false" />
                   <TextField fx:id="pesquisaFld" alignment="CENTER" onAction="#actionHandle" prefHeight="25.0" prefWidth="188.0" promptText="Campo Para Busca" />
                   <CheckBox fx:id="buscaRapidaChk" mnemonicParsing="false" text="Busca Rápida" />
                </children>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FinanceiroController">
+   <top>
+      <FlowPane alignment="CENTER" hgap="10.0" maxHeight="50.0" minWidth="50.0" prefHeight="50.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Financeiro">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="financeiroBox" onAction="#actionHandle" prefWidth="150.0" />
+         </children>
+      </FlowPane>
+   </top>
+   <center>
+      <VBox BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="30.0" left="30.0" right="30.0" />
+         </BorderPane.margin>
+         <children>
+            <FlowPane alignment="CENTER" hgap="10.0" prefHeight="40.0" prefWidth="540.0" vgap="5.0">
+               <children>
+                  <Label text="De" />
+                  <DatePicker fx:id="deDate" prefWidth="120.0" promptText="dd/MM/yyyy" />
+                  <Label text="Até" />
+                  <DatePicker fx:id="ateDate" prefWidth="120.0" promptText="dd/MM/yyyy" />
+                  <Label text="Agrupar Por" />
+                  <ComboBox fx:id="groypByBox" prefHeight="25.0" prefWidth="132.0" />
+                  <Button fx:id="buscarBtn" mnemonicParsing="false" onAction="#actionHandle" text="Buscar" />
+               </children>
+            </FlowPane>
+            <GridPane prefHeight="268.0" prefWidth="540.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                <RowConstraints vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="descricaoLbl" text="Descrição" />
+                  <GridPane fx:id="tabelaPane" GridPane.rowIndex="1">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                  </GridPane>
+               </children>
+            </GridPane>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

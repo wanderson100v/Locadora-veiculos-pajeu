@@ -6,8 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+
+import org.hibernate.Session;
+import org.hibernate.transform.Transformers;
 
 import adapter.ReservaDisponibilidade;
 import banco.ReservaHoje;
@@ -269,6 +273,61 @@ public class DaoReserva extends Dao<Reserva> implements IDaoReserva{
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw new DaoException("ERRO AO BUSCAR LOCAÇÕES ABRANGENTE RESTRITIVA");
+		}finally {
+			em.close();
+		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	public List<Map<String, Object>> buscarReservasOrigemLocacaoFinalizada(LocalDate de , LocalDate ate, String agruparPor) throws DaoException{
+		EntityManager em = null;
+		try {
+			em = ConnectionFactory.getConnection();
+			Session s = em.unwrap(Session.class);
+			String sql = "";
+			if(agruparPor == null || (agruparPor != null && agruparPor.equals("Dia")))
+				sql = "select * from reserva_origem   "
+						+ " where devolucao between '"+de+"' and '"+ate+"'";
+			else 
+				sql = "select extract(year from devolucao) \\:\\: int as ano"
+						+ ", extract(month from devolucao) \\:\\: int as  mes"
+						+ ", sum(locacoes_geradas) as locacoes_geradas"
+						+ ", sum(valor_real) as valor_real"
+						+ ", sum(valor_pago) as valor_pago "
+						+ ", sum(restante) as restante"
+						+ " from reserva_origem"
+						+ " where devolucao between '"+de+"' and '"+ate+"'"
+						+ " group by ano , mes"
+						+ " order by ano , mes";
+			
+			@SuppressWarnings("unchecked")
+			List<Map<String,Object>> elementos = s.createSQLQuery(sql)
+					.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+			return elementos;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DaoException("ERRO AO GERAR RELATORIO FINANCEIRO DE LOCAÇÕES FINALIZADAS POR PÉRIODO");
+		}finally {
+			em.close();
+		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	public List<Map<String, Object>> buscarReservasImpedidas(LocalDate de , LocalDate ate) throws DaoException{
+		EntityManager em = null;
+		try {
+			em = ConnectionFactory.getConnection();
+			Session s = em.unwrap(Session.class);
+			String sql = "";
+			sql = "select * from reserva_impedida   "
+					+ " where date(planejada_devolucao) between '"+de+"' and '"+ate+"'";
+			@SuppressWarnings("unchecked")
+			List<Map<String,Object>> elementos = s.createSQLQuery(sql)
+					.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+			return elementos;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DaoException("ERRO AO GERAR RELATORIO FINANCEIRO DE LOCAÇÕES FINALIZADAS POR PÉRIODO");
 		}finally {
 			em.close();
 		}

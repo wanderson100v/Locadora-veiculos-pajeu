@@ -44,4 +44,21 @@ GRANT SELECT ON reserva_pendente TO gerente;
 GRANT SELECT ON reserva_pendente TO administrador;
 GRANT SELECT ON reserva_pendente TO atendente;
 
+GRANT SELECT ON locacoes_finalizada TO gerente;
+GRANT SELECT ON locacoes_finalizada TO administrador;
+GRANT SELECT ON locacoes_finalizada TO atendente;
+
+GRANT SELECT ON reserva_origem TO gerente;
+GRANT SELECT ON reserva_origem TO administrador;
+GRANT SELECT ON reserva_origem TO atendente;
+
+GRANT SELECT ON reserva_impedida TO gerente;
+GRANT SELECT ON reserva_impedida TO administrador;
+GRANT SELECT ON reserva_impedida TO atendente;
+
+
+
+
+
+
 

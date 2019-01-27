@@ -45,17 +45,6 @@ public abstract class Dao<T extends Entidade>{
 		}
 	}
 	
-	
-	public static void main(String[] args) {
-		try {
-			ConnectionFactory.setUser("c987654321", "123456");
-			List<Map<String,Object>> dados = Dao.buscarLog(LocalDate.of(2019, 1, 22), LocalDate.now(),Tabela.MANUTENCAO);
-			System.out.println(dados);
-		} catch (DaoException | BoException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void cadastrar(T t) throws DaoException{
 		
 		try{
@@ -153,6 +142,8 @@ public abstract class Dao<T extends Entidade>{
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Deprecated
 	public List<T> buscaPorBuscaAbrangente(String busca, Map<String, String> restricoes) throws DaoException{
 		try {
 			em = ConnectionFactory.getConnection();

@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -10,6 +11,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -33,90 +35,110 @@
       </TableView>
       <VBox fx:id="entidadePane" prefWidth="505.0">
          <children>
-            <GridPane alignment="CENTER" hgap="10.0" prefHeight="184.0" prefWidth="505.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="388.0" minWidth="10.0" prefWidth="95.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="388.0" minWidth="10.0" prefWidth="380.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <GridPane hgap="10.0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="135.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.0" minWidth="10.0" prefWidth="143.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="187.0" minWidth="10.0" prefWidth="187.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
+            <TitledPane text="Especificações de Busca">
+               <content>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
                      <children>
-                        <Label text="Valor de Custo" GridPane.columnIndex="1">
-                           <font>
-                              <Font name="Verdana" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label text="Estado" GridPane.columnIndex="2">
-                           <font>
-                              <Font name="Verdana" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="custoFld" prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <font>
-                              <Font name="Verdana" size="12.0" />
-                           </font>
-                        </TextField>
-                        <Label text="Tipo">
-                           <font>
-                              <Font name="Verdana" size="12.0" />
-                           </font>
-                        </Label>
-                        <ComboBox fx:id="tipoBox" prefWidth="130.0" GridPane.rowIndex="1" />
-                        <ComboBox fx:id="estadoManutencaoBox" prefWidth="130.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <CheckBox fx:id="veiculoBuscaCk" mnemonicParsing="false" onAction="#actionHandle" text="Véiculo" />
+                        <FlowPane fx:id="veiculoBuscaPae" disable="true" hgap="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                           <children>
+                              <TextField fx:id="veiculoBuscaFFld" editable="false" prefHeight="25.0" prefWidth="254.0" />
+                              <Button fx:id="selectVeiculoBuscaBtn" mnemonicParsing="false" onAction="#actionHandle" text="Selecionar" />
+                           </children>
+                        </FlowPane>
                      </children>
                   </GridPane>
-                  <Label text="Manutenção De Véiculo" GridPane.columnSpan="2" GridPane.halignment="CENTER">
-                     <font>
-                        <Font name="Verdana" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label text="Data e hora de inicio" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </Label>
-                  <FlowPane alignment="CENTER_LEFT" hgap="5.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               </content>
+            </TitledPane>
+            <TitledPane text="Manutenção De Véiculo">
+               <content>
+                  <GridPane alignment="CENTER" hgap="10.0" prefHeight="184.0" prefWidth="505.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="388.0" minWidth="10.0" prefWidth="95.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="388.0" minWidth="10.0" prefWidth="380.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
                      <children>
-                        <DatePicker fx:id="inicioDate" prefHeight="25.0" prefWidth="130.0" promptText="Data" />
-                        <ComboBox fx:id="horaBox" prefHeight="25.0" prefWidth="92.0" promptText="Hora" />
+                        <GridPane hgap="10.0" GridPane.columnSpan="2" GridPane.rowSpan="2">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="135.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.0" minWidth="10.0" prefWidth="143.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="187.0" minWidth="10.0" prefWidth="187.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="Valor de Custo" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font name="Verdana" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Estado" GridPane.columnIndex="2">
+                                 <font>
+                                    <Font name="Verdana" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="custoFld" prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Verdana" size="12.0" />
+                                 </font>
+                              </TextField>
+                              <Label text="Tipo">
+                                 <font>
+                                    <Font name="Verdana" size="12.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="tipoBox" prefWidth="130.0" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="estadoManutencaoBox" prefWidth="130.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                        <Label text="Data e hora de inicio" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Verdana" size="12.0" />
+                           </font>
+                        </Label>
+                        <FlowPane alignment="CENTER_LEFT" hgap="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <children>
+                              <DatePicker fx:id="inicioDate" prefHeight="25.0" prefWidth="130.0" promptText="Data" />
+                              <ComboBox fx:id="horaBox" prefHeight="25.0" prefWidth="92.0" promptText="Hora" />
+                           </children>
+                        </FlowPane>
+                        <Label text="Veículo" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="Verdana" size="12.0" />
+                           </font>
+                        </Label>
+                        <FlowPane hgap="5.0" GridPane.columnSpan="2" GridPane.rowIndex="5">
+                           <children>
+                              <TextField fx:id="dadosVeiculoFld" editable="false" prefHeight="25.0" prefWidth="261.0" />
+                              <Button fx:id="selectVeiculoBtn" mnemonicParsing="false" onAction="#actionHandle" text="Selecionar" />
+                           </children>
+                        </FlowPane>
+                        <Label text="Horas de Custo" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="horaCustoBox" prefWidth="150.0" GridPane.rowIndex="3" />
                      </children>
-                  </FlowPane>
-                  <Label text="Veículo" GridPane.rowIndex="5">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </Label>
-                  <FlowPane hgap="5.0" GridPane.columnSpan="2" GridPane.rowIndex="6">
-                     <children>
-                        <TextField fx:id="dadosVeiculoFld" editable="false" prefHeight="25.0" prefWidth="261.0" />
-                        <Button fx:id="selectVeiculoBtn" mnemonicParsing="false" onAction="#actionHandle" text="Selecionar" />
-                     </children>
-                  </FlowPane>
-                  <Label text="Horas de Custo" GridPane.rowIndex="3" />
-                  <ComboBox fx:id="horaCustoBox" prefWidth="150.0" GridPane.rowIndex="4" />
-               </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" />
-               </padding>
-            </GridPane>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" />
+                     </padding>
+                  </GridPane>
+               </content>
+            </TitledPane>
             <Separator prefWidth="200.0" />
          </children>
       </VBox>

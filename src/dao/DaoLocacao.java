@@ -6,7 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
+import org.hibernate.Session;
+import org.hibernate.transform.Transformers;
 
 import entidade.CategoriaVeiculo;
 import entidade.Filial;
@@ -71,5 +75,39 @@ public class DaoLocacao extends Dao<Locacao> implements  IDaoLocacao{
 			em.close();
 		}
 	}
-
+	
+	
+	@SuppressWarnings("deprecation")
+	public List<Map<String, Object>> buscarLocacoesFinalizadas(LocalDate de , LocalDate ate, String agruparPor) throws DaoException{
+		EntityManager em = null;
+		try {
+			em = ConnectionFactory.getConnection();
+			Session s = em.unwrap(Session.class);
+			String sql = "";
+			if(agruparPor == null || (agruparPor != null && agruparPor.equals("Dia")))
+				sql = "select * from locacoes_finalizada "
+						+ " where devolucao between '"+de+"' and '"+ate+"'";
+			else 
+				sql = "select extract(year from devolucao) \\:\\: int as ano"
+						+ ", extract(month from devolucao) \\:\\: int as  mes"
+						+ ", sum(locacoes) as locacoes"
+						+ ", sum(valor_real) as valor_real"
+						+ ", sum(valor_pago) as valor_pago "
+						+ ", sum(restante) as restante"
+						+ " from locacoes_finalizada"
+						+ " where devolucao between '"+de+"' and '"+ate+"'"
+						+ " group by ano , mes"
+						+ " order by ano , mes";
+			
+			@SuppressWarnings("unchecked")
+			List<Map<String,Object>> elementos = s.createSQLQuery(sql)
+					.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+			return elementos;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DaoException("ERRO AO GERAR RELATORIO FINANCEIRO DE LOCAÇÕES FINALIZADAS POR PÉRIODO");
+		}finally {
+			em.close();
+		}
+	}
 }
