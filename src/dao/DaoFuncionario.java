@@ -2,6 +2,7 @@ package dao;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import entidade.Funcionario;
@@ -92,15 +93,20 @@ public class DaoFuncionario  extends Dao<Funcionario> implements IDaoFuncionario
 	
 	public Funcionario buscaPorCpf(String cpf) throws DaoException {
 		try{
-			em = ConnectionFactory.getConnection();
-			return em.createQuery(
-					  " select f from Funcionario as f "
-					+ " where f.ativo = true "
-					+ " and upper(f.cpf) = upper(:cpf))", Funcionario.class)
-			.setParameter("cpf",cpf)
-			.getSingleResult();
+			try {
+				em = ConnectionFactory.getConnection();
+				return em.createQuery(
+						  " select f from Funcionario as f "
+						+ " where f.ativo = true "
+						+ " and upper(f.cpf) = upper(:cpf)", Funcionario.class)
+				.setParameter("cpf",cpf)
+				.getSingleResult();
+			}catch (NoResultException nre){
+				return null;
+			}
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 			throw new DaoException("ERRO AO BUSCAR FUNCIONÁRIO POR CPF");
 		}finally {
 			em.close();

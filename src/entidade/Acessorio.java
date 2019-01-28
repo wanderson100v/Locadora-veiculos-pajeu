@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(initialValue = 1,name = "idgen", sequenceName = "acessorio_seq")
+@SequenceGenerator(initialValue = 1,name = "idgen", sequenceName = "acessorio_seq", allocationSize =1)
 public class Acessorio extends Entidade {
 	
 	private static final long serialVersionUID = 1L;

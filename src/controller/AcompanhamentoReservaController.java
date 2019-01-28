@@ -155,8 +155,8 @@ public class AcompanhamentoReservaController implements IObservadoresEntidade{
 			if(funcionario != null) {
 				this.funcionario = funcionario;
 				if(funcionario.getFilial()!= null) {
-					minhaFilialRb.setSelected(true);
-					dadosFilialFld.setText(funcionario.getFilial().toString());
+					if(minhaFilialRb != null )minhaFilialRb.setSelected(true);
+					if(dadosFilialFld != null )dadosFilialFld.setText(funcionario.getFilial().toString());
 				}
 			}
 		} catch (BoException e) {

@@ -12,7 +12,7 @@ import javax.persistence.SequenceGenerator;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "cliente_seq")
+@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "cliente_seq", allocationSize =1)
 @NamedQuery(name = "cliente.buscaPorBusca" , 
 		query = "select c from Cliente as c"
 				+ " where c.ativo = true and ("

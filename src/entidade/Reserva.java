@@ -35,7 +35,7 @@ import enumeracoes.EstadoRerserva;
                     @ColumnResult ( name  =  "total_reserva",type = Integer.class),
                     @ColumnResult ( name  =  "total_veiculo",type = Integer.class ),
                     }))
-@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "reserva_seq")
+@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "reserva_seq", allocationSize =1)
 @NamedQuery(name = "reserva.totalDataRetirada", 
 	query = "select count(*) from Reserva r "
 			+ "where r.estadoReserva = 1 "

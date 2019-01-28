@@ -43,19 +43,18 @@ public class LoginController{
     
     private Alerta alerta = Alerta.getInstance();
     
-    
-    
-    
     @FXML
     void initialize() {
     	try {
     		carregandoPane.setVisible(false);
     		ConfiguracoesDefault  c = DaoConfiguracaoDefault.getInstance().carregar();
-			String login = c.getUserNameDefault();
-			if(login!= null) {
-				loginField.setText(login);
-				lembrarLoginCk.setSelected(true);
-				senhaField.requestFocus();
+			if(c!= null) {
+				String login = c.getUserNameDefault();
+				if(login!= null) {
+					loginField.setText(login);
+					lembrarLoginCk.setSelected(true);
+					senhaField.requestFocus();
+				}
 			}
     	} catch (Exception e) {
     		e.printStackTrace();
@@ -71,28 +70,33 @@ public class LoginController{
     		try {
 				ConnectionFactory.setUser(login,senha);
 				Cargo cargo = boFuncionario.requisitarGralDeAcesso(login);
-	    		ObservadorEntidade.getIntance().avisarOuvintes(cargo);
 	    		boFuncionario.utilizarGralAcesso(cargo);
+	    		
+	    		Platform.runLater(()-> 
+	    		{
+	    			ObservadorEntidade.getIntance().avisarOuvintes(cargo);
+	    			if(!lembrarLoginCk.isSelected()) {
+	        			loginField.clear();
+	        		}else
+	        			ObservadorEntidade.getIntance().getConfiguracoesDefault().setUserNameDefault(login);
+	        		senhaField.clear();
+	        		try {
+						DaoConfiguracaoDefault.getInstance().salvar(ObservadorEntidade.getIntance().getConfiguracoesDefault());
+						App.iniTelaMenu();
+	        		} catch (DaoException e) {
+	        			alerta.imprimirMsg("Alerta", e.getMessage(),AlertType.WARNING);
+						e.printStackTrace();
+					}
+	        		carregandoPane.setVisible(false);
+	    		});
     		} catch (BoException e) {
-    			Platform.runLater(()->alerta.imprimirMsg("Alerta", e.getMessage(),AlertType.WARNING));
+    			Platform.runLater(()->
+    			{
+	    			alerta.imprimirMsg("Alerta", e.getMessage(),AlertType.WARNING);
+	    			carregandoPane.setVisible(false);
+    			});
     			e.printStackTrace();
     		}
-    		Platform.runLater(()-> 
-    		{
-    			if(!lembrarLoginCk.isSelected()) {
-        			loginField.clear();
-        		}else
-        			ObservadorEntidade.getIntance().getConfiguracoesDefault().setUserNameDefault(login);
-        		senhaField.clear();
-        		try {
-					DaoConfiguracaoDefault.getInstance().salvar(ObservadorEntidade.getIntance().getConfiguracoesDefault());
-					App.iniTelaMenu();
-        		} catch (DaoException e) {
-        			alerta.imprimirMsg("Alerta", e.getMessage(),AlertType.WARNING);
-					e.printStackTrace();
-				}
-        		carregandoPane.setVisible(false);
-    		});
 		}).start();
     }
     

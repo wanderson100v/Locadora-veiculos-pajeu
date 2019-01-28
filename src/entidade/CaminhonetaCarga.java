@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import enumeracoes.TipoAcionamentoEmbreagem;
 
 @Entity(name = "caminhoneta_carga")
-//@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "caminhoneta_carga_seq")
 public class CaminhonetaCarga extends Veiculo {
 	
 	private static final long serialVersionUID = 1L;

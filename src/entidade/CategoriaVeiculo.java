@@ -16,7 +16,7 @@ import javax.persistence.SequenceGenerator;
 			+ " or c.horasRevisao = :horasRevisao"
 			+ " or c.horasLimpesa = :horasLimpesa"
 			+ " or c.valorDiaria = :valorDiaria")
-@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "categoria_veiculo_seq")
+@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "categoria_veiculo_seq", allocationSize =1)
 public class CategoriaVeiculo extends Entidade {
 	
 	private static final long serialVersionUID = 1L;

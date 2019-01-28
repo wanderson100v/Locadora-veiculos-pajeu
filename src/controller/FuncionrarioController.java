@@ -85,7 +85,6 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
     	nomeCln.setCellValueFactory( new PropertyValueFactory<>("nome"));
     	cpfCln.setCellValueFactory( new PropertyValueFactory<>("cpf"));
     	
-    	
     	nivelAcessoBox.getItems().addAll(Cargo.values());
     	
     	resertarSenhaBtn.setVisible(false);
@@ -143,7 +142,7 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
 			List<Funcionario> funcionarios = boFuncionario.buscaPorBuscaAbrangente(busca);
 			Funcionario instanciaRemover = null;
 			for(Funcionario f : funcionarios)
-				if(f.getCpf().equals(this.funcionario.getCpf()))
+				if(this.funcionario != null && f.getCpf().equals(this.funcionario.getCpf()))
 					instanciaRemover = f;
 			funcionarios.remove(instanciaRemover);
 			entidadeTabela.getItems().setAll(funcionarios);
@@ -219,6 +218,7 @@ public class FuncionrarioController  extends CRUDController<Funcionario> impleme
 		try {
 			cargoBox.getItems().clear();
 			if(cargo == Cargo.SU) {
+				System.out.println("Adicionado como super user todos os cargos");
 				cargoBox.getItems().addAll(Cargo.values());
 			}else if(cargo == Cargo.ADM) { 
 				cargoBox.getItems().addAll(Cargo.ADM,Cargo.AT);

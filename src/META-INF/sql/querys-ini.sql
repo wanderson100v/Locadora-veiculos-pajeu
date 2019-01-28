@@ -1,64 +1,25 @@
-﻿CREATE ROLE gerente SUPERUSER CREATEUSER;
 GRANT SELECT,UPDATE , DELETE, INSERT ON ALL TABLES IN SCHEMA public TO gerente;
-
-
-CREATE ROLE admin LOGIN PASSWORD 'admin' in group gerente;
-
-CREATE ROLE administrador CREATEUSER;
 GRANT SELECT, UPDATE , DELETE, INSERT ON ALL TABLES IN SCHEMA public TO administrador;
-
-
-CREATE ROLE atendente CREATEUSER;
 GRANT SELECT ON ALL TABLES IN SCHEMA public  TO atendente;
-GRANT UPDATE , DELETE ,INSERT ON locacao,reserva,endereco, cliente,fisico,juridico,
-	veiculo,automovel,caminhoneta_carga,manutencao,automovel_acessorio TO atendente;
+GRANT UPDATE , DELETE ,INSERT ON locacao,reserva,endereco, cliente,fisico,juridico,veiculo,automovel,caminhoneta_carga,manutencao,automovel_acessorio TO atendente;
 GRANT UPDATE ON funcionario TO atendente;
-
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO atendente;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO gerente;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO administrador;
-
+CREATE TRIGGER audit_acessorio_trigger BEFORE UPDATE OR DELETE ON acessorio FOR EACH ROW EXECUTE PROCEDURE audit_acessorio_func();
+CREATE TRIGGER audit_automovel_trigger BEFORE UPDATE OR DELETE ON automovel FOR EACH ROW EXECUTE PROCEDURE audit_automovel_func();
+CREATE TRIGGER audit_caminhoneta_carga_trigger BEFORE UPDATE OR DELETE ON caminhoneta_carga FOR EACH ROW EXECUTE PROCEDURE audit_caminhoneta_carga_func();
+CREATE TRIGGER audit_categoria_veiculo_trigger BEFORE UPDATE OR DELETE ON categoria_veiculo FOR EACH ROW EXECUTE PROCEDURE audit_categoria_veiculo_func();
+CREATE TRIGGER audit_cliente_trigger BEFORE UPDATE OR DELETE ON cliente FOR EACH ROW EXECUTE PROCEDURE audit_cliente_func();
+CREATE TRIGGER audit_endereco_trigger BEFORE UPDATE OR DELETE ON endereco FOR EACH ROW EXECUTE PROCEDURE audit_endereco_func();
+CREATE TRIGGER audit_filial_trigger BEFORE UPDATE OR DELETE ON filial FOR EACH ROW EXECUTE PROCEDURE audit_filial_func();
+CREATE TRIGGER audit_fisico_trigger BEFORE UPDATE OR DELETE ON fisico FOR EACH ROW EXECUTE PROCEDURE audit_fisico_func();
+CREATE TRIGGER audit_funcionario_trigger BEFORE UPDATE OR DELETE ON funcionario FOR EACH ROW EXECUTE PROCEDURE audit_funcionario_func(); 
+CREATE TRIGGER audit_juridico_trigger BEFORE UPDATE OR DELETE ON juridico FOR EACH ROW EXECUTE PROCEDURE audit_juridico_func();
+CREATE TRIGGER audit_locacao_trigger BEFORE UPDATE OR DELETE ON locacao FOR EACH ROW EXECUTE PROCEDURE audit_locacao_func();
+CREATE TRIGGER audit_manutencao_trigger BEFORE UPDATE OR DELETE ON manutencao FOR EACH ROW EXECUTE PROCEDURE audit_manutencao_func(); 
+CREATE TRIGGER audit_reserva_trigger BEFORE UPDATE OR DELETE ON reserva FOR EACH ROW EXECUTE PROCEDURE audit_reserva_func();
+CREATE TRIGGER audit_veiculo_trigger BEFORE UPDATE OR DELETE ON veiculo FOR EACH ROW EXECUTE PROCEDURE audit_veiculo_func();
 drop table reserva_hoje;
-
-create or replace view reserva_hoje 
-as select r.id, extract('hour'From r.data_retirada) as hora ,cat.tipo , r.estado_reserva, cli.nome as nome_cliente, f.nome as nome_filial
-from reserva as r inner join cliente as cli on(cli.id = r.cliente_id)
-inner join filial as f on(f.id = r.filial_id) 
-inner join categoria_veiculo as cat on(r.categoriaveiculo_id = cat.id)
-where DATE(r.data_retirada) = current_date order by hora ;
-
-create or replace view reserva_pendente as 
-select r.id ,c.tipo as tipo , fun.nome as nome_funcionario , cli.nome as nome_cliente, cli.codigo as codigo_cliente, cli.email , cli.telefone , r.data_retirada as retirada, r.data_devolucao as devolucao, fil.nome as nome_filial 
-from reserva as r 
-inner join funcionario as fun on (fun.id = r.funcionario_id)
-inner join cliente as cli on (cli.id = r.cliente_id)
-inner join categoria_veiculo as c on (c.id = r.categoriaveiculo_id)
-inner join filial as fil on (fil.id = r.filial_id)
-where r.estado_reserva = 1;
-
-GRANT SELECT ON reserva_hoje TO gerente;
-GRANT SELECT ON reserva_hoje TO administrador;
-GRANT SELECT ON reserva_hoje TO atendente;
-
-GRANT SELECT ON reserva_pendente TO gerente;
-GRANT SELECT ON reserva_pendente TO administrador;
-GRANT SELECT ON reserva_pendente TO atendente;
-
-GRANT SELECT ON locacoes_finalizada TO gerente;
-GRANT SELECT ON locacoes_finalizada TO administrador;
-GRANT SELECT ON locacoes_finalizada TO atendente;
-
-GRANT SELECT ON reserva_origem TO gerente;
-GRANT SELECT ON reserva_origem TO administrador;
-GRANT SELECT ON reserva_origem TO atendente;
-
-GRANT SELECT ON reserva_impedida TO gerente;
-GRANT SELECT ON reserva_impedida TO administrador;
-GRANT SELECT ON reserva_impedida TO atendente;
-
-
-
-
-
-
-
+drop table reserva_pendente;
+CREATE ROLE admin LOGIN PASSWORD 'admin' in group gerente;

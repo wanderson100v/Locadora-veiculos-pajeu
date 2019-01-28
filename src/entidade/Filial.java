@@ -9,7 +9,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "filial_seq")
+@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "filial_seq", allocationSize =1)
 @NamedQuery(name = "filial.buscaPorBusca" , 
 		query = "select f from Filial as f"
 				+ " inner join f.endereco as e"

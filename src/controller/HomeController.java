@@ -86,7 +86,7 @@ public class HomeController implements IObservadoresEntidade{
 				configBtn.setVisible(true);
 			Funcionario funcionario = ObservadorEntidade.getIntance().getFuncionario();
 			if(funcionario != null) {
-				descFunLbl.setText("Funcionário "+funcionario.getNome().substring(0,funcionario.getNome().indexOf(" "))
+				descFunLbl.setText(cargo+" "+((funcionario.getNome().contains(" "))? funcionario.getNome().substring(0,funcionario.getNome().indexOf(" ")) : funcionario.getNome())
 						+ ((funcionario.getFilial() != null)? " Da Filial"+funcionario.getFilial().getNome() : " Sem Filial"));
 			}
 		}

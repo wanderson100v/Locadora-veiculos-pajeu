@@ -140,7 +140,7 @@ public class SelecionarVeiculoController {
 				if(categoriaVeiculo != null && filial != null) 
 					veiculoTbl.getItems().setAll(boVeiculo.buscarVeiculosDisponivel(filial.getId(), categoriaVeiculo.getId(), pesquisaFld.getText().trim()));
 				else if(filial != null) 
-					veiculoTbl.getItems().setAll(boVeiculo.buscarVeiculosDisponivel(categoriaVeiculo.getId(),pesquisaFld.getText().trim()));
+					veiculoTbl.getItems().setAll(boVeiculo.buscarVeiculosDisponivel(filial.getId(),pesquisaFld.getText().trim()));
 				else 
 					veiculoTbl.getItems().setAll(boVeiculo.buscaPorBuscaAbrangente(pesquisaFld.getText().trim()));
 				

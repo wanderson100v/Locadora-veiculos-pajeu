@@ -9,7 +9,6 @@ import javax.persistence.NamedQuery;
 import enumeracoes.Sexo;
 
 @Entity
-//@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "fisico_seq")
 @NamedQuery(name = "fisico.buscaPorBusca" , 
 query = "select f from Fisico as f "
 		+ "where upper(f.codigo) like upper(:codigo)"

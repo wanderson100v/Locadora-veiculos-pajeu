@@ -40,6 +40,7 @@ public class ObservadorEntidade {
 			for(IObservadoresEntidade e :entidadeObservadores)
 				e.atualizar(cargo);
 		} catch (BoException| DaoException e) {
+			e.printStackTrace();
 			Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
 		}
 	}

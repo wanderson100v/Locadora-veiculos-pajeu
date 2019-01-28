@@ -14,7 +14,7 @@ import javax.persistence.SequenceGenerator;
 import enumeracoes.TipoLocacao;
 
 @Entity
-@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "locacao_seq")
+@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "locacao_seq", allocationSize =1)
 @NamedQuery(name = "locacao.totalPrevisaoEntrega", 
 	query = "select count(*) from Locacao l "
 			+ "where l.finalizado = false "

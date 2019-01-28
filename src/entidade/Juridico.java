@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQuery;
 
 @Entity
-//@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "juridico_seq")
 @NamedQuery(name = "juridico.buscaPorBusca" , 
 	query = "select j from Juridico as j "
 			+ "where upper(j.codigo) like upper(:codigo)"

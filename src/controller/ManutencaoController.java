@@ -97,7 +97,7 @@ public class ManutencaoController extends CRUDController<Manutencao>{
     @FXML
     private Button selectVeiculoBuscaBtn;
     
-    private Manutencao manutencao;
+    private Manutencao manutencao = new Manutencao();
     private Veiculo veiculo, veiculoBusca;
     
     @FXML
@@ -194,7 +194,7 @@ public class ManutencaoController extends CRUDController<Manutencao>{
 	@FXML
     void actionHandle(ActionEvent event) {
     	if(event.getSource() == selectVeiculoBtn) {
-    		manutencao.setVeiculo(Util.selecionarVeiculoEmDialogo(null));
+    		veiculo = Util.selecionarVeiculoEmDialogo(null);
     		dadosVeiculoFld.setText(veiculo.toString());
     	}
     	else if(event.getSource() == selectVeiculoBuscaBtn) {

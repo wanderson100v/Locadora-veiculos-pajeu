@@ -12,7 +12,7 @@ import enumeracoes.EstadoManutencao;
 import enumeracoes.TipoManutencao;
 
 @Entity
-@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "manutencao_seq")
+@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "manutencao_seq", allocationSize =1)
 public class Manutencao extends Entidade{
 	
 	private static final long serialVersionUID = 1L;
