@@ -121,7 +121,6 @@ public class BoLocacao implements IBoLocacao {
 				
 				if(locacao.getTipoLocacao() == TipoLocacao.KM_LIVRE) {
 					valorKm = locacao.getReservaOrigem().getCategoriaVeiculo().getValorLivre();
-					valorLocacao += valorKm;
 					notaFiscal.append("\n\tTaxa Km Livre = "+valorKm);
 				}else {
 					if(quilometrosRodados > 0) {
@@ -143,7 +142,6 @@ public class BoLocacao implements IBoLocacao {
 						+ "\n\t- Valor por Diaria = "+valorDiaria);
 				if(locacao.getTipoLocacao() == TipoLocacao.KM_LIVRE) {
 					valorKm = locacao.getVeiculo().getCategoriaVeiculo().getValorLivre();
-					valorLocacao += valorKm;
 					notaFiscal.append("\n\t- Taxa Km Livre = "+valorKm);
 				}else{
 					if(quilometrosRodados > 0) {

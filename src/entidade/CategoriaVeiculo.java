@@ -172,10 +172,8 @@ public class CategoriaVeiculo extends Entidade {
 
 	@Override
 	public String toString() {
-		return "CategoriaVeiculo [tipo=" + tipo + ", quilometragemRevisao=" + quilometragemRevisao + ", horasRevisao="
-				+ horasRevisao + ", horasLimpesa=" + horasLimpesa + ", valorDiaria=" + valorDiaria + ", descricao="
-				+ descricao + ", valorLivre=" + valorLivre + ", valorKm=" + valorKm + ", veiculoExemplo="
-				+ veiculoExemplo + "]";
+		return "Tipo " + tipo + ", Valor Diaria " + valorDiaria + ", Valor KMLivre=" 
+				+ valorLivre + ", Valor KMControle" + valorKm;
 	}
 	
 }

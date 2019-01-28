@@ -159,9 +159,9 @@ public abstract class Dao<T extends Entidade>{
 	}
 	
 	public List<T> buscarAll() throws DaoException {
-		EntityManager em = ConnectionFactory.getConnection();
 		List<T> t = new ArrayList<>();
-		try{
+		try {
+			em = ConnectionFactory.getConnection();
 			t =  em.createQuery("from entidade."+tipoDaClasse.getSimpleName()+" elemento",tipoDaClasse).getResultList();
 		}catch (Exception e) {
 			e.printStackTrace();

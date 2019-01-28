@@ -151,9 +151,7 @@ public class CaminhonetaCarga extends Veiculo {
 
 	@Override
 	public String toString() {
-		return "CaminhonetaCarga [desenpenho=" + desenpenho + ", potencia=" + potencia + ", distanciaEixos="
-				+ distanciaEixos + ", tipoAcionamentoEmbreagem=" + tipoAcionamentoEmbreagem + ", capacidadeCarga="
-				+ capacidadeCarga + ", capacidadeCombustivel=" + capacidadeCombustivel + "]";
+		return "CaminhonetaCarga : "+super.toString();
 	}
 		
 }

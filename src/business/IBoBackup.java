@@ -13,4 +13,6 @@ public interface IBoBackup extends IBussines<Backup>{
 	
 	public Backup checarBackup() throws BoException;
 	
+	public Boolean existeBackupPendente() throws BoException;
+	
 }

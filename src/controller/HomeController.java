@@ -2,12 +2,14 @@ package controller;
 
 import app.App;
 import dao.DaoRes;
+import entidade.Funcionario;
 import enumeracoes.Cargo;
 import excecoes.DaoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import view.Alerta;
 
@@ -24,7 +26,10 @@ public class HomeController implements IObservadoresEntidade{
     
     @FXML
     private Tab locacaoTab;
-
+    
+    @FXML
+    private Label descFunLbl;
+    
     @FXML
     private Button configBtn;
 
@@ -74,11 +79,17 @@ public class HomeController implements IObservadoresEntidade{
 
 	@Override
 	public void atualizar(Cargo cargo) {
-		if(cargo != null)
+		if(cargo != null) {
 			if(cargo == Cargo.AT) 
 				configBtn.setVisible(false);
 			else 
 				configBtn.setVisible(true);
+			Funcionario funcionario = ObservadorEntidade.getIntance().getFuncionario();
+			if(funcionario != null) {
+				descFunLbl.setText("Funcionário "+funcionario.getNome().substring(0,funcionario.getNome().indexOf(" "))
+						+ ((funcionario.getFilial() != null)? " Da Filial"+funcionario.getFilial().getNome() : " Sem Filial"));
+			}
+		}
 			
 	}
 }

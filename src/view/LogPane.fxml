@@ -5,7 +5,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
@@ -13,10 +12,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HistoricoController">
-   <children>
-      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<BorderPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HistoricoController">
+   <center>
+      <GridPane maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="800.0" BorderPane.alignment="TOP_CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
@@ -36,7 +34,7 @@
             </FlowPane>
             <BorderPane GridPane.rowIndex="1">
                <center>
-                  <GridPane>
+                  <GridPane prefHeight="411.0" prefWidth="600.0" vgap="30.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" />
                     </columnConstraints>
@@ -55,16 +53,22 @@
                               <Button fx:id="buscarBtn" mnemonicParsing="false" onAction="#actionHandle" text="Buscar" />
                            </children>
                         </FlowPane>
-                        <FlowPane fx:id="tablePane" alignment="CENTER" style="-fx-background-color: ;" GridPane.rowIndex="1">
+                        <GridPane fx:id="tablePane" alignment="TOP_CENTER" prefWidth="540.0" style="-: cyan;" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets bottom="30.0" left="30.0" right="30.0" />
                            </GridPane.margin>
-                        </FlowPane>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
                      </children>
                   </GridPane>
                </center>
             </BorderPane>
          </children>
       </GridPane>
-   </children>
-</AnchorPane>
+   </center>
+</BorderPane>

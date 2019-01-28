@@ -1,9 +1,13 @@
 package controller;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+
 
 import app.App;
 import business.BoBackup;
@@ -19,6 +23,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
@@ -29,7 +36,8 @@ import view.Alerta;
 
 public class BackupController implements Observer, IObservadoresEntidade {
 
-    @FXML
+	
+	@FXML
     private TextField pastaBackupFld;
 
     @FXML
@@ -86,6 +94,17 @@ public class BackupController implements Observer, IObservadoresEntidade {
     @FXML
     private Button aplicConfigBtn;
 
+    @FXML
+    private DatePicker agendDate;
+
+    @FXML
+    private ComboBox<Integer> agendHoraBox;
+
+    @FXML
+    private ListView<Backup> bakupLv;
+
+    @FXML
+    private Button agendarBtn;
     
     private boolean restaurarcao;
     @FXML
@@ -93,6 +112,20 @@ public class BackupController implements Observer, IObservadoresEntidade {
     	ObservadorEntidade.getIntance().getEntidadeObservadores().add(this);
     	DaoRes.getInstance().addObserver(this);
     	detalheBackupArea.positionCaret(detalheBackupArea.getLength());
+    	agendDate.setValue(LocalDate.now());
+    	for(int i =0 ; i < 24 ; i++)
+    		agendHoraBox.getItems().add(i);
+    	agendHoraBox.setValue(LocalTime.now().plusHours(1).getHour());
+    }
+    
+    private void popularListViewBackup() {
+    	try {
+    		List<Backup> backupHistory = BoBackup.getInstance().buscarAll();
+    		if(backupHistory != null && !backupHistory.isEmpty())
+    			bakupLv.getItems().setAll(backupHistory);
+		} catch (BoException e) {
+			e.printStackTrace();
+		}
     }
     
     public void backupHandle(ActionEvent e) {
@@ -108,10 +141,25 @@ public class BackupController implements Observer, IObservadoresEntidade {
 				restaurarcao = false;
 	    		DaoRes.getInstance().executarBackup(pastaBackupFld.getText(),nomeArqBackupFld.getText().trim(),
 						user[0], user[1],"backup");
-				
+	    		Alerta.getInstance().imprimirMsg("Sucesso", "Backup realizado com sucesso", AlertType.INFORMATION);
 			} catch (DaoException e1) {
 				Alerta.getInstance().imprimirMsg("Erro", e1.getMessage(), AlertType.ERROR);
 			}
+    	}else if(e.getSource() == agendarBtn) {
+    		String[] user = ConnectionFactory.getUser();
+    		Backup backup = new Backup();
+    		backup.setAutor(user[0]);
+    		backup.setDataOcorrencia(Util.gerarHorario(agendDate, agendHoraBox));
+    		backup.setEstado(EstadoBackup.PENDENTE);
+    		backup.setDescricao("");
+    		try {
+				BoBackup.getInstance().cadastrarEditar(backup);
+				popularListViewBackup();
+				Alerta.getInstance().imprimirMsg("Sucesso", "Backup agendado com sucesso", AlertType.INFORMATION);
+			} catch (BoException e1) {
+				Alerta.getInstance().imprimirMsg("Erro", e1.getMessage(), AlertType.ERROR);
+			}
+    		
     	}
     }
     
@@ -200,6 +248,7 @@ public class BackupController implements Observer, IObservadoresEntidade {
 	@Override
 	public void atualizar(Cargo cargo) {
 		atualizarTela();
+		popularListViewBackup();
 	}
 	
 	private void atualizarTela() {

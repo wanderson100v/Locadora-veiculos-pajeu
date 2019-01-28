@@ -22,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import view.Mascara;
 
 public class ClienteJuridicoController extends CRUDController<Juridico> {
 
@@ -99,6 +100,9 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
     	nomeCln.setCellValueFactory( new PropertyValueFactory<>("nome"));
     	cnpjCln.setCellValueFactory( new PropertyValueFactory<>("cnpj"));
     	estadoBox.getItems().setAll(Estado.values());
+    	
+    	telPreFld.setTextFormatter(Mascara.getMascaraNumericoFlutuante());
+    	telNumFld.setTextFormatter(Mascara.getMascaraNumericoInteiro());
     }
     
     
@@ -118,7 +122,7 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
 	    		juridico.setCnpj(cnpjFld.getText());
 	    		juridico.setInscricaoEstadual(inscicaoEstadualFld.getText());
 	    		juridico.setEmail(emailFld.getText());
-	    		juridico.setTelefone(telNumFld.getText());
+	    		juridico.setEmail(telPreFld.getText()+"-"+telNumFld.getText());
 	    		if(simAtivoRb.isSelected())
 	    			juridico.setAtivo(true);
 	    		else
@@ -173,7 +177,10 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
 		cnpjFld.setText(juridico.getCnpj());
 		inscicaoEstadualFld.setText(juridico.getInscricaoEstadual());
 		emailFld.setText(juridico.getEmail());
-		telNumFld.setText(juridico.getTelefone());
+		if(juridico.getTelefone() != null && juridico.getTelefone().length() >0) {
+			telPreFld.setText(juridico.getTelefone().substring(0,juridico.getTelefone().indexOf("-")));
+			telNumFld.setText(juridico.getTelefone().substring(juridico.getTelefone().indexOf("-")+1));
+		}
 		codigoFld.setText(juridico.getCodigo());
 		simAtivoRb.setSelected(juridico.isAtivo());
 		numFld.setText(juridico.getEndereco().getNumero());

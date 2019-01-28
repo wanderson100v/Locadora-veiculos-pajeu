@@ -93,21 +93,32 @@ public class BoBackup implements IBoBackup {
 
 	public void finalizarBackup(Backup backup, Integer horaBackupAmanha) throws BoException {
 		backup.setEstado(EstadoBackup.REALIZADO);
-		Backup backupAmanha = new Backup();
-		backupAmanha.setAutor(backup.getAutor());
-		backupAmanha.setDescricao("");
-		backupAmanha.setEstado(EstadoBackup.PENDENTE);
-		LocalDate amanha = LocalDate.now().plusDays(1);
-		backupAmanha.setDataOcorrencia(LocalDateTime.of(amanha.getYear()
-				,amanha.getMonthValue(),amanha.getDayOfMonth(),horaBackupAmanha,0));
-		cadastrarEditar(backupAmanha);
 		cadastrarEditar(backup);
+		if(horaBackupAmanha!= null) {
+			Backup backupAmanha = new Backup();
+			backupAmanha.setAutor(backup.getAutor());
+			backupAmanha.setDescricao("");
+			backupAmanha.setEstado(EstadoBackup.PENDENTE);
+			LocalDate amanha = LocalDate.now().plusDays(1);
+			backupAmanha.setDataOcorrencia(LocalDateTime.of(amanha.getYear()
+					,amanha.getMonthValue(),amanha.getDayOfMonth(),horaBackupAmanha,0));
+			cadastrarEditar(backupAmanha);
+		}
 	}
 
 	@Override
 	public Backup checarBackup() throws BoException {
 		try {
 			return daoBackup.checarBackup();
+		}catch (DaoException e) {
+			throw new BoException(e.getMessage());
+		}
+	}
+
+	@Override
+	public Boolean existeBackupPendente() throws BoException {
+		try {
+			return daoBackup.existeBackupPendente();
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

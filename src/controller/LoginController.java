@@ -1,5 +1,6 @@
 package controller;
 
+
 import app.App;
 import business.BoFuncionario;
 import business.IBoFuncionario;
@@ -8,6 +9,7 @@ import entidade.ConfiguracoesDefault;
 import enumeracoes.Cargo;
 import excecoes.BoException;
 import excecoes.DaoException;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -15,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.FlowPane;
 import sql.ConnectionFactory;
 import view.Alerta;
 
@@ -31,6 +34,9 @@ public class LoginController{
     private Button loginBtn;
     
     @FXML
+    private FlowPane  carregandoPane;
+    
+    @FXML
     private CheckBox  lembrarLoginCk;
     
     IBoFuncionario boFuncionario = BoFuncionario.getInstance();
@@ -38,10 +44,13 @@ public class LoginController{
     private Alerta alerta = Alerta.getInstance();
     
     
+    
+    
     @FXML
     void initialize() {
     	try {
-			ConfiguracoesDefault  c = DaoConfiguracaoDefault.getInstance().carregar();
+    		carregandoPane.setVisible(false);
+    		ConfiguracoesDefault  c = DaoConfiguracaoDefault.getInstance().carregar();
 			String login = c.getUserNameDefault();
 			if(login!= null) {
 				loginField.setText(login);
@@ -49,31 +58,42 @@ public class LoginController{
 				senhaField.requestFocus();
 			}
     	} catch (Exception e) {
-			e.printStackTrace();
+    		e.printStackTrace();
 		}
     }
     
     @FXML
     void eventHandler(ActionEvent event) {
-		try {
-			String login = loginField.getText();
-			String senha = senhaField.getText();
-    		ConnectionFactory.setUser(login,senha);
-    		Cargo cargo = boFuncionario.requisitarGralDeAcesso(login);
-    		ObservadorEntidade.getIntance().avisarOuvintes(cargo);
-    		boFuncionario.utilizarGralAcesso(cargo);
-    		if(!lembrarLoginCk.isSelected()) {
-    			login = null;
-    			loginField.clear();
+		carregandoPane.setVisible(true);
+		final String login = loginField.getText();
+		final String senha = senhaField.getText();
+		new Thread(()-> {
+    		try {
+				ConnectionFactory.setUser(login,senha);
+				Cargo cargo = boFuncionario.requisitarGralDeAcesso(login);
+	    		ObservadorEntidade.getIntance().avisarOuvintes(cargo);
+	    		boFuncionario.utilizarGralAcesso(cargo);
+    		} catch (BoException e) {
+    			Platform.runLater(()->alerta.imprimirMsg("Alerta", e.getMessage(),AlertType.WARNING));
+    			e.printStackTrace();
     		}
-    		senhaField.clear();
-			ObservadorEntidade.getIntance().getConfiguracoesDefault().setUserNameDefault(login);
-    		DaoConfiguracaoDefault.getInstance().salvar(ObservadorEntidade.getIntance().getConfiguracoesDefault());
-    		App.iniTelaMenu();
-		} catch (BoException | DaoException e) {
-			alerta.imprimirMsg("Alerta", e.getMessage(),AlertType.WARNING);
-		}
-    		
+    		Platform.runLater(()-> 
+    		{
+    			if(!lembrarLoginCk.isSelected()) {
+        			loginField.clear();
+        		}else
+        			ObservadorEntidade.getIntance().getConfiguracoesDefault().setUserNameDefault(login);
+        		senhaField.clear();
+        		try {
+					DaoConfiguracaoDefault.getInstance().salvar(ObservadorEntidade.getIntance().getConfiguracoesDefault());
+					App.iniTelaMenu();
+        		} catch (DaoException e) {
+        			alerta.imprimirMsg("Alerta", e.getMessage(),AlertType.WARNING);
+					e.printStackTrace();
+				}
+        		carregandoPane.setVisible(false);
+    		});
+		}).start();
     }
     
     

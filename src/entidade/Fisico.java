@@ -149,9 +149,7 @@ public class Fisico extends Cliente {
 
 	@Override
 	public String toString() {
-		return "Fisico [dataNascimento=" + dataNascimento + ", cpf=" + cpf + ", dataValidadeHabilitacao="
-				+ dataValidadeHabilitacao + ", identificacaoMotorista=" + identificacaoMotorista
-				+ ", numeroHabilitacao=" + numeroHabilitacao + ", sexo=" + sexo + "]";
+		return super.toString()+ ", CPF "+cpf;
 	}
 	
 }

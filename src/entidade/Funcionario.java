@@ -98,9 +98,6 @@ public class Funcionario extends Entidade{
 
 	@Override
 	public String toString() {
-		return "Funcionario [nome=" + nome + ", cpf=" + cpf + ", ativo=" + ativo + "]";
+		return "Nome " + nome + ", CPF " + cpf + ", Ativo " + ((ativo)? "Sim": "Não");
 	}
-
-	
-
 }

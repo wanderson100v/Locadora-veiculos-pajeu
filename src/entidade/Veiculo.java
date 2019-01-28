@@ -338,13 +338,8 @@ public class Veiculo extends Entidade {
 
 	@Override
 	public String toString() {
-		return "Veiculo [locado=" + locado + ", ativo=" + ativo + ", placa=" + placa + ", cor=" + cor + ", modelo="
-				+ modelo + ", fabricante=" + fabricante + ", numeroChassi=" + numeroChassi + ", numeroMotor="
-				+ numeroMotor + ", torqueMotor=" + torqueMotor + ", tipoCombustivel=" + tipoCombustivel
-				+ ", quilometragem=" + quilometragem + ", anoFabricante=" + anoFabricante + ", anoModelo=" + anoModelo
-				+ ", quantidadePortas=" + quantidadePortas + ", quantidadePassageiro=" + quantidadePassageiro
-				+ ", categoriaVeiculo=" + categoriaVeiculo + ", filial=" + filial + "]";
+		return "Placa " + placa +", NumeroChassi " + numeroChassi+ ", Categoria " 
+				+ categoriaVeiculo.getTipo();
 	}
-  
 	
 }

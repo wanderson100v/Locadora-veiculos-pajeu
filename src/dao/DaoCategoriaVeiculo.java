@@ -20,7 +20,7 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 	public List<CategoriaVeiculo> categorizarCaminhonetaCarga(CaminhonetaCarga caminhonetaCarga) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
-			TypedQuery<CategoriaVeiculo> query= em.createNamedQuery(SELECIONAR_CATEGORIA_CAMINHONETA_CARGA.replace('?','<'),CategoriaVeiculo.class);
+			TypedQuery<CategoriaVeiculo> query= em.createQuery(SELECIONAR_CATEGORIA_CAMINHONETA_CARGA.replace('?','<'),CategoriaVeiculo.class);
 			query.setParameter("potencia",caminhonetaCarga.getPotencia());
 			query.setParameter("desenpenho",caminhonetaCarga.getDesenpenho());
 			query.setParameter("capacidadeCarga",caminhonetaCarga.getCapacidadeCarga());

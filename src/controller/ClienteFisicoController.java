@@ -156,7 +156,7 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
 	    		fisico.setIdentificacaoMotorista(numIdentFld.getText());
 	    		fisico.setDataValidadeHabilitacao(validadeDate.getValue());
 	    		fisico.setEmail(emailFld.getText());
-	    		fisico.setTelefone(telNumFld.getText());
+	    		fisico.setEmail(telPreFld.getText()+"-"+telNumFld.getText());
 	    		if(simAtivoRb.isSelected())
 	    			fisico.setAtivo(true);
 	    		else
@@ -177,6 +177,8 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
 				
 	    	}else if(btn == editarBtn){
 	    		
+	    		int pre = Integer.parseInt(telPreFld.getText().trim());
+	    		int num = Integer.parseInt(telNumFld.getText().trim());
 	    		fisico.setNome(nomeFld.getText());
 	    		fisico.setCpf(cpfFld.getText());
 	    		fisico.setDataNascimento(nascimentoDate.getValue());
@@ -184,7 +186,8 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
 	    		fisico.setNumeroHabilitacao(numHFld.getText());
 	    		fisico.setIdentificacaoMotorista(numIdentFld.getText());
 	    		fisico.setDataValidadeHabilitacao(validadeDate.getValue());
-	    		fisico.setEmail(emailFld.getText());
+	    		fisico.setEmail(pre+"-"+num);
+	    		
 	    		fisico.setTelefone(telNumFld.getText());
 	    		if(simAtivoRb.isSelected())
 	    			fisico.setAtivo(true);
@@ -215,6 +218,8 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
 	    	}
     	} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+		} catch (NumberFormatException e) {
+			alerta.imprimirMsg("Alerta","Um ou mais campos númericos com entrada invalida", AlertType.ERROR);
 		}
 		
 	}
@@ -249,7 +254,10 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
 		numIdentFld.setText(fisico.getIdentificacaoMotorista());
 		validadeDate.setValue(fisico.getDataValidadeHabilitacao());
 		emailFld.setText(fisico.getEmail());
-		telNumFld.setText(fisico.getTelefone());
+		if(fisico.getTelefone() != null && fisico.getTelefone().length() >0) {
+			telPreFld.setText(fisico.getTelefone().substring(0,fisico.getTelefone().indexOf("-")));
+			telNumFld.setText(fisico.getTelefone().substring(fisico.getTelefone().indexOf("-")+1));
+		}
 		codigoFld.setText(fisico.getCodigo());
 		if(fisico.isAtivo())
 			simAtivoRb.setSelected(true);

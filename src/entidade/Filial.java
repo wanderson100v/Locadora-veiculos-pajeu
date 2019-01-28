@@ -91,11 +91,6 @@ public class Filial extends Entidade {
 
 	@Override
 	public String toString() {
-		return "nome=" + nome + ", endereco=" + endereco +", ativo=" + ativo ;
+		return "Nome " + nome + ", Endereco: " + endereco;
 	}	
-	
-	
-	
-	
-	
 }

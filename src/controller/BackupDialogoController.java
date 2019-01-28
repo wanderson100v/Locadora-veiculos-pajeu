@@ -64,6 +64,12 @@ public class BackupDialogoController implements Observer{
     	int horasAteFinalDia = 24 - LocalDateTime.now().getHour();
     	for(int i =horasAteFinalDia ; i < 24 ; i++)
     		adiarHoraBox.getItems().add(i);
+    	try {
+			if(!BoBackup.getInstance().existeBackupPendente())
+				proximaHoraBox.setVisible(false);
+		} catch (BoException e) {
+			e.printStackTrace();
+		}
     }
     
     @FXML
@@ -90,7 +96,7 @@ public class BackupDialogoController implements Observer{
 	    			pastaBackupFld.setText(selectDirectory.toString());;
 	    	}else if(fonte == arquivarBtn) {
 	    		try {
-		    		if(!pastaBackupFld.getText().isEmpty() && proximaHoraBox.getValue() != null) {
+		    		if(!pastaBackupFld.getText().isEmpty() && (proximaHoraBox.isVisible() && proximaHoraBox.getValue() != null)) {
 			    		String[] user = ConnectionFactory.getUser();
 			    		detalhesArea.clear();
 			    		DaoRes.getInstance().executarBackup(pastaBackupFld.getText(),nomeArqFld.getText().trim(),

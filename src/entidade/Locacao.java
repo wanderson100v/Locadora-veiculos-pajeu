@@ -262,6 +262,5 @@ public class Locacao extends Entidade {
 				+ ", filialRetirada=" + filialRetirada + ", funcionario=" + funcionario + ", filialEntrega="
 				+ filialEntrega + ", motorista=" + motorista + "]";
 	}
-
 	
 }

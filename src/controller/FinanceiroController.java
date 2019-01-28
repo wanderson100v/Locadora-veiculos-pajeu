@@ -51,6 +51,7 @@ public class FinanceiroController {
     			,"Reservas Origens de Locação","Reservas Incompletadas");
     	groypByBox.getItems().addAll("Dia","Mês");
     	groypByBox.setValue("Dia");
+    	descricaoLbl.setText("");
     }
     
     @FXML

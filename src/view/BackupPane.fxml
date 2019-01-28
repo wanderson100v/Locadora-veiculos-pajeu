@@ -3,7 +3,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
@@ -24,6 +27,66 @@
          <center>
             <TabPane tabClosingPolicy="UNAVAILABLE" tabMaxHeight="20.0" tabMaxWidth="80.0" tabMinHeight="20.0" tabMinWidth="80.0">
                <tabs>
+               <Tab text="Agendamento">
+                     <content>
+                     <BorderPane>
+                           <center>
+                              <FlowPane alignment="CENTER">
+                                 <children>
+                                    <VBox alignment="CENTER" spacing="10.0">
+                                       <children>
+                                          <FlowPane alignment="CENTER" prefHeight="84.0" prefWidth="691.0">
+                                             <children>
+                                                <GridPane hgap="10.0" prefHeight="60.0" prefWidth="271.0">
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="201.0" minWidth="10.0" prefWidth="182.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="122.0" minWidth="10.0" prefWidth="99.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <Label text="´Data e hora para ocorrencia" />
+                                                      <DatePicker fx:id="agendDate" editable="false" GridPane.rowIndex="1" />
+                                                      <ComboBox fx:id="agendHoraBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                   </children>
+                                                </GridPane>
+                                             </children>
+                                          </FlowPane>
+                                          <ListView fx:id="bakupLv" prefHeight="280.0" prefWidth="691.0" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </FlowPane>
+                           </center>
+                           <bottom>
+                              <ButtonBar prefHeight="86.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+                                 <buttons>
+                                    <Button fx:id="agendarBtn" mnemonicParsing="false" onAction="#backupHandle" text="Agendar" />
+                                 </buttons>
+                                 <BorderPane.margin>
+                                    <Insets />
+                                 </BorderPane.margin>
+                                 <padding>
+                                    <Insets right="30.0" />
+                                 </padding>
+                              </ButtonBar>
+                           </bottom>
+                           <top>
+                              <FlowPane alignment="CENTER" maxHeight="50.0" minWidth="50.0" prefHeight="50.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label alignment="CENTER" text="Agendar Backup">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </FlowPane>
+                           </top>
+                        </BorderPane>
+                  	</content>
+                  </Tab>
                   <Tab text="Backup">
                      <content>
                         <BorderPane>
@@ -54,7 +117,7 @@
                                                       <Label text="Nome do arquivo" GridPane.columnIndex="2" />
                                                       <TextField fx:id="nomeArqBackupFld" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                                       <TextArea fx:id="descriBackupArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="3" GridPane.rowSpan="2" />
-                                                      <Label fx:id="Descrição" text="Detalhes" GridPane.rowIndex="2" />
+                                                      <Label text="Detalhes" GridPane.rowIndex="2" />
                                                    </children>
                                                 </GridPane>
                                              </children>

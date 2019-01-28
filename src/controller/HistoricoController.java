@@ -20,6 +20,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import view.Alerta;
 
 public class HistoricoController {
@@ -34,7 +35,7 @@ public class HistoricoController {
     private Button buscarBtn;
 
     @FXML
-    private FlowPane tablePane;
+    private GridPane tablePane;
     
     @FXML
     private ComboBox<Tabela> tabelaBox;
@@ -53,8 +54,9 @@ public class HistoricoController {
     		List<Map<String,Object>> dados = Dao.buscarLog(deDate.getValue(), ateDate.getValue(),tabelaBox.getValue());
 			if(!dados.isEmpty()) {
 	    		TableView<Map<String,Object>> tv = openDatabase(dados.get(0));
-	    		tablePane.getChildren().setAll(tv);
 	    		tv.getItems().setAll(dados);
+	    		tablePane.getChildren().clear();
+	    		tablePane.getChildren().add(tv);
 	    		Alerta.getInstance().imprimirMsg("Sucesso","Foi encontrado "+dados.size()+" registros", AlertType.WARNING);
     		}else
     			Alerta.getInstance().imprimirMsg("Alerta","Nenhum registro para o período", AlertType.WARNING);
@@ -66,12 +68,13 @@ public class HistoricoController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static TableView<Map<String,Object>> openDatabase(Map<String,Object> data){
 	    TableView<Map<String,Object>> tableView = new TableView<>();
-	    Set<String> nomeColunas = data.keySet();
+	    tableView.setMaxWidth(1000);
+	    tableView.setLayoutX(30);
 	    List<String> primeirasColunas = new ArrayList<>();
 	    Collections.addAll(primeirasColunas, "data_acao","autor","alteracao","id");
-	    nomeColunas.removeAll(primeirasColunas);
-	    primeirasColunas.addAll(nomeColunas);
-	    
+	    for(String e : data.keySet())
+	    	if(!primeirasColunas.contains(e))
+	    		primeirasColunas.add(e);
 	    for (String nomeColuna: primeirasColunas) {
 	        TableColumn<Map<String, Object>, Object> tableColumn = new TableColumn<>(nomeColuna);
 	        tableColumn.setCellValueFactory(new MapValueFactory(nomeColuna));

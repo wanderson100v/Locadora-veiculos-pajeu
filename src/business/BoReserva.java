@@ -39,8 +39,11 @@ public class BoReserva implements IBoReserva {
 			if(entidade.getId() != null)
 				daoReserva.editar(entidade);
 			else {
-				validarConcorrenciaReserva(entidade);
-				daoReserva.cadastrar(entidade);
+				if(disponibilidadeCategoriaEmFilial(entidade.getCategoriaVeiculo().getId(), entidade.getFilial().getId(),entidade.getDataRetirada()))
+					daoReserva.cadastrar(entidade);
+				else
+					throw new BoException("Não há veiculos disponiveis para o horario, "
+							+ "categoria de veículo e filial definidos");
 			}
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
@@ -83,6 +86,8 @@ public class BoReserva implements IBoReserva {
 		}
 	}
 	
+	@SuppressWarnings("unused")
+	@Deprecated
 	private void validarConcorrenciaReserva(Reserva reserva)throws BoException {
 		long totalPrevistoLocacao = boLocacao.totalLocacoePrevisaoEntrega(reserva.getFilial(),reserva.getCategoriaVeiculo(),reserva.getDataRetirada());
 		long totalDisponivel = boVeiculo.totalVeiculoDisponivel(reserva.getFilial(),reserva.getCategoriaVeiculo());

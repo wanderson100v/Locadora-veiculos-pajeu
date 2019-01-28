@@ -196,6 +196,12 @@ public class AcompanhamentoController {
     @FXML
     private CheckBox retiMinhaFilialCk;
 
+    @FXML
+    private Button excluirLocacaoBtn;
+
+    @FXML
+    private Button exluirReservaBtn;
+
     private Filial filialRetirada, filialDevolucao;
     private Fisico motorista;
     private Cliente cliente;
@@ -402,6 +408,18 @@ public class AcompanhamentoController {
     			}else
     				Alerta.getInstance().imprimirMsg("Alerta", "Não há nenhuma locação pendente seleciona na tabela", AlertType.WARNING);
     			
+    		}else if(e.getSource() == excluirLocacaoBtn) {
+    			Locacao locacaoSelecionada = locacaoTbl.getSelectionModel().getSelectedItem();
+    			if(locacaoSelecionada != null && Alerta.getInstance()
+    					.imprimirMsgConfirmacao("Realmente deseja exluir a Locação com o cliente: "+cliente+" ? ")) {
+    				BoLocacao.getInstance().excluir(locacaoSelecionada);
+    			}
+    		}else if(e.getSource() == exluirReservaBtn) {
+    			Reserva reservaSelecionada = reservasTbl.getSelectionModel().getSelectedItem();
+    			if(reservaSelecionada != null && Alerta.getInstance()
+    					.imprimirMsgConfirmacao("Realmente deseja exluir a Reserva com o cliente: "+cliente+" ? ")) {
+    				BoReserva.getInstance().excluir(reservaSelecionada);
+    			}
     		}
 			
     	} catch (BoException e1) {

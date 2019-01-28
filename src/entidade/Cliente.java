@@ -152,11 +152,7 @@ public class Cliente extends Entidade{
 
 	@Override
 	public String toString() {
-		return "Cliente [ativo=" + ativo + ", nome=" + nome + ", codigo=" + codigo + ", email=" + email + ", telefone="
-				+ telefone + ", endereco=" + endereco + "]";
+		return "Nome " + nome + ", Código " + codigo;
 	}
-	
-	
-	
 	
 }

@@ -24,7 +24,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AcompanhamentoController">
    <center>
-      <SplitPane dividerPositions="0.65" BorderPane.alignment="CENTER">
+      <SplitPane dividerPositions="0.75" BorderPane.alignment="CENTER">
          <items>
             <ScrollPane fitToHeight="true" fitToWidth="true">
                <content>
@@ -99,15 +99,15 @@
                   </AnchorPane>
                </content>
             </ScrollPane>
-            <VBox minWidth="292.0" prefHeight="545.0" prefWidth="292.0">
+            <VBox minWidth="350.0" prefHeight="545.0" prefWidth="292.0">
                <children>
-                  <TitledPane prefHeight="474.0" prefWidth="365.0" text="Especificações de Busca">
+                  <TitledPane prefWidth="350.0" text="Especificações de Busca">
                      <content>
-                        <VBox>
+                        <VBox prefWidth="348.0">
                            <children>
-                              <ScrollPane>
+                              <ScrollPane fitToWidth="true" minWidth="300.0">
                                  <content>
-                                    <VBox>
+                                    <VBox minWidth="300.0">
                                        <children>
                                           <TitledPane alignment="TOP_LEFT" text="Gerais">
                                              <content>
@@ -320,16 +320,38 @@
                         </VBox>
                      </content>
                   </TitledPane>
-                  <TitledPane alignment="TOP_LEFT" text="Ações Para Elemento Selecionado na(s) Tabela(s)">
+                  <TitledPane alignment="TOP_LEFT" minHeight="180.0" prefWidth="350.0" text="Ações Para Elemento Selecionado na(s) Tabela(s)">
                      <content>
-                        <VBox prefHeight="28.0" prefWidth="402.0">
+                        <VBox>
                            <children>
-                              <ButtonBar prefWidth="200.0">
-                                <buttons>
-                                  <Button fx:id="cancelarReservaBtn" mnemonicParsing="false" onAction="#actionHandle" text="Cancelar Reserva" />
-                                    <Button fx:id="finalizarLocacaoBnt" mnemonicParsing="false" onAction="#actionHandle" text="Finalizar Locação" />
-                                </buttons>
-                              </ButtonBar>
+                              <ScrollPane fitToWidth="true" minWidth="300.0">
+                                 <content>
+                                    <VBox minWidth="300.0" prefWidth="313.0">
+                                       <children>
+                                          <TitledPane text="Locação">
+                                             <content>
+                                                <ButtonBar prefHeight="40.0" prefWidth="200.0">
+                                                  <buttons>
+                                                      <Button fx:id="finalizarLocacaoBnt" mnemonicParsing="false" onAction="#actionHandle" text="Finalizar" />
+                                                      <Button fx:id="excluirLocacaoBtn" mnemonicParsing="false" onAction="#actionHandle" text="Exluir" />
+                                                  </buttons>
+                                                </ButtonBar>
+                                             </content>
+                                          </TitledPane>
+                                          <TitledPane text="Reserva">
+                                             <content>
+                                                <ButtonBar prefHeight="40.0">
+                                                  <buttons>
+                                                    <Button fx:id="cancelarReservaBtn" mnemonicParsing="false" onAction="#actionHandle" text="Cancelar " />
+                                                      <Button fx:id="exluirReservaBtn" mnemonicParsing="false" onAction="#actionHandle" text="Excluir" />
+                                                  </buttons>
+                                                </ButtonBar>
+                                             </content>
+                                          </TitledPane>
+                                       </children>
+                                    </VBox>
+                                 </content>
+                              </ScrollPane>
                            </children>
                         </VBox>
                      </content>

@@ -122,9 +122,7 @@ public class Endereco extends Entidade {
 
 	@Override
 	public String toString() {
-		return "Endereco [rua=" + rua + ", bairro=" + bairro + ", cidade=" + cidade + ", estado=" + estado + ", numero="
-				+ numero + ", cep=" + cep + "]";
+		return "CEP "+ cep +", Número "+ numero +", Rua " + rua;
 	}
-
 	
 }

@@ -131,8 +131,8 @@ public class Manutencao extends Entidade{
 
 	@Override
 	public String toString() {
-		return "Manutencao [dataHoraInicio=" + dataHoraInicio + ", tipoManuntencao=" + tipoManuntencao
-				+ ", estadoManutencao=" + estadoManutencao + ", custo=" + custo + ", custoHoras=" + custoHoras
-				+ ", veiculo=" + veiculo + "]";
+		return "Tipo " + tipoManuntencao+" Data de Inicio " + dataHoraInicio 
+				+ ", Estado " + estadoManutencao + ", Custo em Valor " + custo + ", Custo em Horas=" + custoHoras
+				+ ", veiculo: " + veiculo;
 	}
 }
