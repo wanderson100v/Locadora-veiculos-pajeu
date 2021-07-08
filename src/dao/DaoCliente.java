@@ -1,15 +1,10 @@
 package dao;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.TypedQuery;
 
-import org.hibernate.Session;
-import org.hibernate.transform.Transformers;
-
 import entidade.Cliente;
-import excecoes.BoException;
 import excecoes.DaoException;
 import sql.ConnectionFactory;
 

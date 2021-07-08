@@ -1,3 +1,4 @@
+/META-INF/
 /adapter/
 /app/
 /banco/
@@ -7,6 +8,6 @@
 /entidade/
 /enumeracoes/
 /excecoes/
+/res/
 /sql/
 /view/
-/META-INF/

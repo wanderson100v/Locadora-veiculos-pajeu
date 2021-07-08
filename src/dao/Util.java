@@ -1,16 +1,13 @@
 package dao;
 
-import entidade.Entidade;
-import entidade.Fisico;
-import entidade.Juridico;
-import entidade.Reserva;
-
 import java.lang.reflect.Field;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.Entity;
+
+import entidade.Entidade;
+import entidade.Juridico;
 
 public class Util {
 	

@@ -15,7 +15,6 @@ import org.hibernate.transform.Transformers;
 
 import entidade.Entidade;
 import enumeracoes.Tabela;
-import excecoes.BoException;
 import excecoes.DaoException;
 import sql.ConnectionFactory;
 

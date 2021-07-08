@@ -20,10 +20,10 @@ import entidade.Veiculo;
 import excecoes.BoException;
 import excecoes.DaoException;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Alert.AlertType;
 import view.Alerta;
 
 public class Util {
