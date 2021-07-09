@@ -1,14 +1,14 @@
 package controller;
 
 import app.App;
-import dao.DaoRes;
-import entidade.Funcionario;
-import enumeracoes.Cargo;
-import excecoes.DaoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
+import mode.enumeracoes.Cargo;
+import model.dao.DaoRes;
+import model.entidade.Funcionario;
+import model.excecoes.DaoException;
 
 public class ConfiguracaoController implements IObservadorFuncionario{
 

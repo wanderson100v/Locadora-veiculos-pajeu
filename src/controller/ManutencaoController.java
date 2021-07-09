@@ -3,13 +3,7 @@ package controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import business.BoManutencao;
-import entidade.Entidade;
-import entidade.Manutencao;
-import entidade.Veiculo;
-import enumeracoes.EstadoManutencao;
-import enumeracoes.TipoManutencao;
-import excecoes.BoException;
+import model.excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -23,6 +17,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import mode.business.BoManutencao;
+import mode.enumeracoes.EstadoManutencao;
+import mode.enumeracoes.TipoManutencao;
+import model.entidade.Entidade;
+import model.entidade.Manutencao;
+import model.entidade.Veiculo;
 import view.Alerta;
 
 public class ManutencaoController extends CRUDController<Manutencao>{

@@ -1,7 +1,7 @@
 package controller;
 
-import entidade.Funcionario;
-import enumeracoes.Cargo;
+import mode.enumeracoes.Cargo;
+import model.entidade.Funcionario;
 
 public interface IObservadorFuncionario {
 	

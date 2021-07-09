@@ -1,14 +1,6 @@
 package controller;
 
-import business.BoAutomovel;
-import business.BoCaminhonetaCarga;
-import business.BoVeiculo;
-import business.IBoVeiculo;
-import entidade.CategoriaVeiculo;
-import entidade.Filial;
-import entidade.Veiculo;
-import enumeracoes.TipoCombustivel;
-import excecoes.BoException;
+import model.excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,6 +14,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import mode.business.BoAutomovel;
+import mode.business.BoCaminhonetaCarga;
+import mode.business.BoVeiculo;
+import mode.business.IBoVeiculo;
+import mode.enumeracoes.TipoCombustivel;
+import model.entidade.CategoriaVeiculo;
+import model.entidade.Filial;
+import model.entidade.Veiculo;
 import view.Alerta;
 
 public class SelecionarVeiculoController {

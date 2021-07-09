@@ -2,14 +2,7 @@ package controller;
 
 
 import app.App;
-import business.BoFuncionario;
-import business.IBoFuncionario;
-import dao.DaoConfiguracaoDefault;
-import entidade.ConfiguracoesDefault;
-import entidade.Funcionario;
-import enumeracoes.Cargo;
-import excecoes.BoException;
-import excecoes.DaoException;
+import model.excecoes.BoException;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +12,13 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
-import sql.ConnectionFactory;
+import mode.business.BoFuncionario;
+import mode.business.IBoFuncionario;
+import mode.enumeracoes.Cargo;
+import model.dao.DaoConfiguracaoDefault;
+import model.entidade.ConfiguracoesDefault;
+import model.entidade.Funcionario;
+import model.sql.ConnectionFactory;
 import view.Alerta;
 
 public class LoginController{

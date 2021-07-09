@@ -1,9 +1,6 @@
 package controller;
 
-import business.BoCategoriaVeiculo;
-import business.IBoCategoriaVeiculo;
-import entidade.CategoriaVeiculo;
-import excecoes.BoException;
+import model.excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,6 +12,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import mode.business.BoCategoriaVeiculo;
+import mode.business.IBoCategoriaVeiculo;
+import model.entidade.CategoriaVeiculo;
 import view.Alerta;
 
 public class SelecionarCategoriaVeiculoController {

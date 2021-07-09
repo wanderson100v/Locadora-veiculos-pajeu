@@ -1,6 +1,5 @@
 package controller;
 
-import entidade.Entidade;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,6 +7,7 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import model.entidade.Entidade;
 import view.Alerta;
 
 public abstract class CRUDController<T extends Entidade> {

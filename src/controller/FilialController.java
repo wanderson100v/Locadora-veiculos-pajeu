@@ -2,15 +2,7 @@ package controller;
 
 import java.util.List;
 
-import business.BoEndereco;
-import business.BoFilial;
-import business.IBoEndereco;
-import business.IBoFilial;
-import entidade.Endereco;
-import entidade.Entidade;
-import entidade.Filial;
-import enumeracoes.Estado;
-import excecoes.BoException;
+import model.excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -21,6 +13,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import mode.business.BoEndereco;
+import mode.business.BoFilial;
+import mode.business.IBoEndereco;
+import mode.business.IBoFilial;
+import mode.enumeracoes.Estado;
+import model.entidade.Endereco;
+import model.entidade.Entidade;
+import model.entidade.Filial;
 
 public class FilialController extends CRUDController<Filial> {
 

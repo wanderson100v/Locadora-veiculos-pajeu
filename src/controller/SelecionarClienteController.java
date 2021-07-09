@@ -1,9 +1,6 @@
 package controller;
 
-import business.BoFisico;
-import business.BoJuridico;
-import entidade.Cliente;
-import excecoes.BoException;
+import model.excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,6 +13,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import mode.business.BoFisico;
+import mode.business.BoJuridico;
+import model.entidade.Cliente;
 import view.Alerta;
 
 public class SelecionarClienteController {

@@ -3,14 +3,7 @@ package controller;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import adapter.ReservaDisponibilidade;
-import business.BoFuncionario;
-import business.BoReserva;
-import business.IBoReserva;
-import entidade.Filial;
-import entidade.Funcionario;
-import enumeracoes.Cargo;
-import excecoes.BoException;
+import model.excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -25,7 +18,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
-import sql.ConnectionFactory;
+import mode.business.BoReserva;
+import mode.business.IBoReserva;
+import mode.enumeracoes.Cargo;
+import model.adapter.ReservaDisponibilidade;
+import model.entidade.Filial;
+import model.entidade.Funcionario;
 import view.Alerta;
 
 public class DisponibilidadeReservaController implements IObservadorFuncionario{

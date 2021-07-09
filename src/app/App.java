@@ -1,9 +1,5 @@
 package app;
 
-import dao.DaoRes;
-import dao.IDaoRes;
-import enumeracoes.Tela;
-import excecoes.DaoException;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -11,6 +7,10 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import mode.enumeracoes.Tela;
+import model.dao.DaoRes;
+import model.dao.IDaoRes;
+import model.excecoes.DaoException;
 
 public class App extends Application{
 	

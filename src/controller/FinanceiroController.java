@@ -5,9 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import business.BoLocacao;
-import business.BoReserva;
-import excecoes.BoException;
+import model.excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -19,6 +17,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.layout.GridPane;
+import mode.business.BoLocacao;
+import mode.business.BoReserva;
 import view.Alerta;
 
 public class FinanceiroController {

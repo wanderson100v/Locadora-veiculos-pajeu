@@ -2,13 +2,7 @@ package controller;
 
 import java.util.List;
 
-import business.BoFuncionario;
-import business.IBoFuncionario;
-import entidade.Entidade;
-import entidade.Filial;
-import entidade.Funcionario;
-import enumeracoes.Cargo;
-import excecoes.BoException;
+import model.excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -21,7 +15,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
-import sql.ConnectionFactory;
+import mode.business.BoFuncionario;
+import mode.business.IBoFuncionario;
+import mode.enumeracoes.Cargo;
+import model.entidade.Entidade;
+import model.entidade.Filial;
+import model.entidade.Funcionario;
 
 public class FuncionarioController  extends CRUDController<Funcionario> implements IObservadorFuncionario{
 

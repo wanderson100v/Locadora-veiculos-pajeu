@@ -4,23 +4,23 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import adapter.ReservaDisponibilidade;
-import banco.ReservaPendente;
-import business.BoCategoriaVeiculo;
-import business.BoReserva;
-import dao.DaoRes;
-import entidade.Backup;
-import entidade.CategoriaVeiculo;
-import entidade.Cliente;
-import entidade.Filial;
-import entidade.Fisico;
-import entidade.Funcionario;
-import entidade.Locacao;
-import entidade.Veiculo;
-import excecoes.BoException;
-import excecoes.DaoException;
+import model.excecoes.BoException;
+import model.excecoes.DaoException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import mode.business.BoCategoriaVeiculo;
+import mode.business.BoReserva;
+import model.adapter.ReservaDisponibilidade;
+import model.banco.ReservaPendente;
+import model.dao.DaoRes;
+import model.entidade.Backup;
+import model.entidade.CategoriaVeiculo;
+import model.entidade.Cliente;
+import model.entidade.Filial;
+import model.entidade.Fisico;
+import model.entidade.Funcionario;
+import model.entidade.Locacao;
+import model.entidade.Veiculo;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -51,6 +51,7 @@ public class Util {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static void exibirRealizarBackupEmDialogo(Backup backup) {
 		try {
 			Alert alerta = new Alert(AlertType.NONE);

@@ -2,11 +2,6 @@ package controller;
 
 import java.util.List;
 
-import business.BoAcessorio;
-import business.IBoAcessorio;
-import entidade.Acessorio;
-import entidade.Entidade;
-import excecoes.BoException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -15,6 +10,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import mode.business.BoAcessorio;
+import mode.business.IBoAcessorio;
+import model.entidade.Acessorio;
+import model.entidade.Entidade;
+import model.excecoes.BoException;
 
 public class AcessorioController extends CRUDController<Acessorio>{
 

@@ -6,11 +6,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import app.App;
-import business.BoBackup;
-import dao.DaoRes;
-import entidade.Backup;
-import excecoes.BoException;
-import excecoes.DaoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -20,9 +15,15 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
-import sql.ConnectionFactory;
+import mode.business.BoBackup;
+import model.dao.DaoRes;
+import model.entidade.Backup;
+import model.excecoes.BoException;
+import model.excecoes.DaoException;
+import model.sql.ConnectionFactory;
 import view.Alerta;
 
+@SuppressWarnings("deprecation")
 public class BackupDialogoController implements Observer{
 
 	@FXML 

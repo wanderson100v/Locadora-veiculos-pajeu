@@ -3,14 +3,6 @@ package controller;
 import java.time.LocalDate;
 import java.util.List;
 
-import business.BoCaminhonetaCarga;
-import business.IBoCaminhonetaCarga;
-import entidade.CaminhonetaCarga;
-import entidade.Entidade;
-import entidade.Filial;
-import enumeracoes.TipoAcionamentoEmbreagem;
-import enumeracoes.TipoCombustivel;
-import excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -21,6 +13,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import mode.business.BoCaminhonetaCarga;
+import mode.business.IBoCaminhonetaCarga;
+import mode.enumeracoes.TipoAcionamentoEmbreagem;
+import mode.enumeracoes.TipoCombustivel;
+import model.entidade.CaminhonetaCarga;
+import model.entidade.Entidade;
+import model.entidade.Filial;
+import model.excecoes.BoException;
 import view.Mascara;
 
 public class CaminhonetaCargaController extends CRUDController<CaminhonetaCarga> {

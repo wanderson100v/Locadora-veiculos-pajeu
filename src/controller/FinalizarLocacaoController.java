@@ -3,13 +3,7 @@ package controller;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import business.BoLocacao;
-import business.BoManutencao;
-import entidade.Locacao;
-import entidade.Manutencao;
-import enumeracoes.EstadoManutencao;
-import enumeracoes.TipoManutencao;
-import excecoes.BoException;
+import model.excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -21,6 +15,12 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import mode.business.BoLocacao;
+import mode.business.BoManutencao;
+import mode.enumeracoes.EstadoManutencao;
+import mode.enumeracoes.TipoManutencao;
+import model.entidade.Locacao;
+import model.entidade.Manutencao;
 import view.Alerta;
 
 public class FinalizarLocacaoController {

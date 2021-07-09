@@ -2,12 +2,12 @@ package controller;
 
 import java.time.LocalDateTime;
 
-import banco.ReservaPendente;
 import javafx.fxml.FXML;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.banco.ReservaPendente;
 
 public class SelecionarReservaPendenteController {
 

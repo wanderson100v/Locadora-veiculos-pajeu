@@ -2,15 +2,6 @@ package controller;
 
 import java.util.List;
 
-import business.BoEndereco;
-import business.BoJuridico;
-import business.IBoEndereco;
-import business.IBoJuridico;
-import entidade.Endereco;
-import entidade.Entidade;
-import entidade.Juridico;
-import enumeracoes.Estado;
-import excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -22,6 +13,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import mode.business.BoEndereco;
+import mode.business.BoJuridico;
+import mode.business.IBoEndereco;
+import mode.business.IBoJuridico;
+import mode.enumeracoes.Estado;
+import model.entidade.Endereco;
+import model.entidade.Entidade;
+import model.entidade.Juridico;
+import model.excecoes.BoException;
 import view.Mascara;
 
 public class ClienteJuridicoController extends CRUDController<Juridico> {

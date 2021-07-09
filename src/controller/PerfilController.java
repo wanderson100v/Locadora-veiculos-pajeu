@@ -3,11 +3,7 @@ package controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import business.BoFuncionario;
-import business.IBoFuncionario;
-import entidade.Funcionario;
-import enumeracoes.Cargo;
-import excecoes.BoException;
+import model.excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -16,7 +12,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import sql.ConnectionFactory;
+import mode.business.BoFuncionario;
+import mode.business.IBoFuncionario;
+import mode.enumeracoes.Cargo;
+import model.entidade.Funcionario;
+import model.sql.ConnectionFactory;
 import view.Alerta;
 
 public class PerfilController implements IObservadorFuncionario {

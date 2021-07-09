@@ -1,10 +1,6 @@
 package controller;
 
-import business.BoFilial;
-import business.IBoFilial;
-import entidade.Endereco;
-import entidade.Filial;
-import excecoes.BoException;
+import model.excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,6 +12,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import mode.business.BoFilial;
+import mode.business.IBoFilial;
+import model.entidade.Endereco;
+import model.entidade.Filial;
 import view.Alerta;
 
 public class SelecionarFilialController {

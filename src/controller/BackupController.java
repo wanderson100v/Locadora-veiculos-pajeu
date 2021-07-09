@@ -9,17 +9,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import app.App;
-import business.BoBackup;
-import dao.DaoConfiguracaoDefault;
-import dao.DaoRes;
-import dao.IDaoConfiguracaoDefault;
-import entidade.Backup;
-import entidade.ConfiguracoesDefault;
-import entidade.Funcionario;
-import enumeracoes.Cargo;
-import enumeracoes.EstadoBackup;
-import excecoes.BoException;
-import excecoes.DaoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -32,9 +21,21 @@ import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import sql.ConnectionFactory;
+import mode.business.BoBackup;
+import mode.enumeracoes.Cargo;
+import mode.enumeracoes.EstadoBackup;
+import model.dao.DaoConfiguracaoDefault;
+import model.dao.DaoRes;
+import model.dao.IDaoConfiguracaoDefault;
+import model.entidade.Backup;
+import model.entidade.ConfiguracoesDefault;
+import model.entidade.Funcionario;
+import model.excecoes.BoException;
+import model.excecoes.DaoException;
+import model.sql.ConnectionFactory;
 import view.Alerta;
 
+@SuppressWarnings("deprecation")
 public class BackupController implements Observer, IObservadorFuncionario {
 
 	

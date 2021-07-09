@@ -3,16 +3,6 @@ package controller;
 
 import java.time.LocalDate;
 
-import business.BoEndereco;
-import business.BoFisico;
-import business.IBoEndereco;
-import business.IBoFisico;
-import entidade.Endereco;
-import entidade.Entidade;
-import entidade.Fisico;
-import enumeracoes.Estado;
-import enumeracoes.Sexo;
-import excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -25,6 +15,16 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import mode.business.BoEndereco;
+import mode.business.BoFisico;
+import mode.business.IBoEndereco;
+import mode.business.IBoFisico;
+import mode.enumeracoes.Estado;
+import mode.enumeracoes.Sexo;
+import model.entidade.Endereco;
+import model.entidade.Entidade;
+import model.entidade.Fisico;
+import model.excecoes.BoException;
 import view.Mascara;
 
 public class ClienteFisicoController extends CRUDController<Fisico> {

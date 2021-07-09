@@ -1,15 +1,15 @@
 package controller;
 
-import business.BoAcessorio;
-import business.IBoAcessorio;
-import entidade.Acessorio;
-import excecoes.BoException;
+import model.excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import mode.business.BoAcessorio;
+import mode.business.IBoAcessorio;
+import model.entidade.Acessorio;
 
 public class SelecionarAcessoriosController {
 

@@ -1,10 +1,7 @@
 package controller;
 
 
-import business.BoFuncionario;
-import business.IBoFuncionario;
-import entidade.Funcionario;
-import excecoes.BoException;
+import model.excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,6 +13,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import mode.business.BoFuncionario;
+import mode.business.IBoFuncionario;
+import model.entidade.Funcionario;
 import view.Alerta;
 
 public class SelecionarFuncionarioController {

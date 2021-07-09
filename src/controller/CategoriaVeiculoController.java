@@ -2,19 +2,6 @@ package controller;
 
 import java.util.List;
 
-import business.BoCategoriaVeiculo;
-import business.IBoCategoriaVeiculo;
-import entidade.Automovel;
-import entidade.CaminhonetaCarga;
-import entidade.CategoriaVeiculo;
-import entidade.Entidade;
-import enumeracoes.TamanhoVeiculo;
-import enumeracoes.TipoAcionamentoEmbreagem;
-import enumeracoes.TipoAirBag;
-import enumeracoes.TipoAutomovel;
-import enumeracoes.TipoCambio;
-import enumeracoes.TipoCombustivel;
-import excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -27,6 +14,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import mode.business.BoCategoriaVeiculo;
+import mode.business.IBoCategoriaVeiculo;
+import mode.enumeracoes.TamanhoVeiculo;
+import mode.enumeracoes.TipoAcionamentoEmbreagem;
+import mode.enumeracoes.TipoAirBag;
+import mode.enumeracoes.TipoAutomovel;
+import mode.enumeracoes.TipoCambio;
+import mode.enumeracoes.TipoCombustivel;
+import model.entidade.Automovel;
+import model.entidade.CaminhonetaCarga;
+import model.entidade.CategoriaVeiculo;
+import model.entidade.Entidade;
+import model.excecoes.BoException;
 
 public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo> {
 
