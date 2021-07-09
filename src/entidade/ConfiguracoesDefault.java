@@ -5,8 +5,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("ConfiguracoesDefault")
 public class ConfiguracoesDefault {
 	
-	private String ip,localPgDump,localPgRestore;
-	private String localBackup, userNameDefault;
+	private String ip, localPgDump, localPgRestore, localBackup, userNameDefault;
 	
 	public String getIp() {
 		return ip;

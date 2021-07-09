@@ -13,6 +13,7 @@ import entidade.Funcionario;
 import entidade.Locacao;
 import entidade.Reserva;
 import entidade.Veiculo;
+import enumeracoes.Cargo;
 import enumeracoes.EstadoRerserva;
 import enumeracoes.TipoLocacao;
 import excecoes.BoException;
@@ -31,7 +32,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import view.Alerta;
 
-public class AcompanhamentoController {
+public class AcompanhamentoController implements IObservadorFuncionario {
 
    
 	@FXML
@@ -209,6 +210,8 @@ public class AcompanhamentoController {
 
     @FXML
     void initialize() {
+    	
+    	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
     	rCateCln.setCellValueFactory(new PropertyValueFactory<>("categoriaVeiculo"));
     	rClieCln.setCellValueFactory(new PropertyValueFactory<>("cliente"));
     	rFuncCln.setCellValueFactory(new PropertyValueFactory<>("funcionario"));
@@ -234,10 +237,6 @@ public class AcompanhamentoController {
     	estadoReservaBox.setValue("Todos");
     }
     
-    
-    public static void main(String[] args) {
-		System.out.println(LocalDate.now().toString());
-	}
     public void buscaHandle(ActionEvent e) {
     	try {
     		Object fonte = e.getSource();
@@ -310,6 +309,9 @@ public class AcompanhamentoController {
     }
     
     public void actionHandle(ActionEvent e) {
+    	Filial filial = null;
+    	if(funcionario !=null)
+    		filial = funcionario.getFilial();
     	try {
     		if(e.getSource() == estadoReservaBox) {
     			cancelarReservaBtn.setDisable(!estadoReservaBox.getValue().equals("Pendente"));
@@ -361,7 +363,6 @@ public class AcompanhamentoController {
     		}
     		else if(e.getSource() == retiMinhaFilialCk) {
     			if(retiMinhaFilialCk.isSelected()) {
-	    			Filial filial = ObservadorEntidade.getIntance().getFuncionario().getFilial();
 	    			if( filial != null) {
 	    				filialRetirada =filial;
 	    				dadosFilialRetiFld.setText(filialRetirada.toString());
@@ -375,7 +376,6 @@ public class AcompanhamentoController {
     		}
     		else if(e.getSource() == devuMinhaFilialCk) {
     			if(devuMinhaFilialCk.isSelected()) {
-	    			Filial filial = ObservadorEntidade.getIntance().getFuncionario().getFilial();
 	    			if( filial != null) {
 	    				filialDevolucao =filial;
 	    				dadosFilialDevuFld.setText(filialDevolucao.toString());
@@ -427,4 +427,10 @@ public class AcompanhamentoController {
 			Alerta.getInstance().imprimirMsg("Erro", e1.getMessage(), AlertType.ERROR);
 		}
     }
+
+
+	@Override
+	public void atualizar(Funcionario funcionario, Cargo cargo) {
+		this.funcionario = funcionario;
+	}
 }

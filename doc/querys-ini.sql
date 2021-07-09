@@ -1,0 +1,30 @@
+GRANT SELECT, UPDATE, DELETE, INSERT ON ALL TABLES IN SCHEMA public TO gerente;
+GRANT SELECT, UPDATE, DELETE, INSERT ON ALL TABLES IN SCHEMA public TO administrador;
+GRANT SELECT ON ALL TABLES IN SCHEMA public  TO atendente;
+GRANT UPDATE, DELETE ,INSERT ON locacao, reserva, endereco , cliente, fisico, juridico, veiculo, automovel, caminhoneta_carga, manutencao,automovel_acessorio TO atendente;
+GRANT UPDATE ON funcionario TO atendente;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO atendente;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO gerente;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO administrador;
+CREATE TRIGGER audit_acessorio_trigger BEFORE UPDATE OR DELETE ON acessorio FOR EACH ROW EXECUTE PROCEDURE audit_acessorio_func();
+CREATE TRIGGER audit_automovel_trigger BEFORE UPDATE OR DELETE ON automovel FOR EACH ROW EXECUTE PROCEDURE audit_automovel_func();
+CREATE TRIGGER audit_caminhoneta_carga_trigger BEFORE UPDATE OR DELETE ON caminhoneta_carga FOR EACH ROW EXECUTE PROCEDURE audit_caminhoneta_carga_func();
+CREATE TRIGGER audit_categoria_veiculo_trigger BEFORE UPDATE OR DELETE ON categoria_veiculo FOR EACH ROW EXECUTE PROCEDURE audit_categoria_veiculo_func();
+CREATE TRIGGER audit_cliente_trigger BEFORE UPDATE OR DELETE ON cliente FOR EACH ROW EXECUTE PROCEDURE audit_cliente_func();
+CREATE TRIGGER audit_endereco_trigger BEFORE UPDATE OR DELETE ON endereco FOR EACH ROW EXECUTE PROCEDURE audit_endereco_func();
+CREATE TRIGGER audit_filial_trigger BEFORE UPDATE OR DELETE ON filial FOR EACH ROW EXECUTE PROCEDURE audit_filial_func();
+CREATE TRIGGER audit_fisico_trigger BEFORE UPDATE OR DELETE ON fisico FOR EACH ROW EXECUTE PROCEDURE audit_fisico_func();
+CREATE TRIGGER audit_funcionario_trigger BEFORE UPDATE OR DELETE ON funcionario FOR EACH ROW EXECUTE PROCEDURE audit_funcionario_func(); 
+CREATE TRIGGER audit_juridico_trigger BEFORE UPDATE OR DELETE ON juridico FOR EACH ROW EXECUTE PROCEDURE audit_juridico_func();
+CREATE TRIGGER audit_locacao_trigger BEFORE UPDATE OR DELETE ON locacao FOR EACH ROW EXECUTE PROCEDURE audit_locacao_func();
+CREATE TRIGGER audit_manutencao_trigger BEFORE UPDATE OR DELETE ON manutencao FOR EACH ROW EXECUTE PROCEDURE audit_manutencao_func(); 
+CREATE TRIGGER audit_reserva_trigger BEFORE UPDATE OR DELETE ON reserva FOR EACH ROW EXECUTE PROCEDURE audit_reserva_func();
+CREATE TRIGGER audit_veiculo_trigger BEFORE UPDATE OR DELETE ON veiculo FOR EACH ROW EXECUTE PROCEDURE audit_veiculo_func();
+DROP TABLE reserva_hoje;
+DROP TABLE reserva_pendente;
+
+INSERT INTO public.funcionario(
+	id, ativo, cpf, nome)
+	VALUES (1, True, 1234, 'admin');
+	
+CREATE ROLE a1234 LOGIN PASSWORD 'admin' IN ROLE administrador;

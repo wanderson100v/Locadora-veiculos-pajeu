@@ -6,6 +6,7 @@ import business.BoFuncionario;
 import business.IBoFuncionario;
 import dao.DaoConfiguracaoDefault;
 import entidade.ConfiguracoesDefault;
+import entidade.Funcionario;
 import enumeracoes.Cargo;
 import excecoes.BoException;
 import excecoes.DaoException;
@@ -71,23 +72,23 @@ public class LoginController{
 				ConnectionFactory.setUser(login,senha);
 				Cargo cargo = boFuncionario.requisitarGralDeAcesso(login);
 	    		boFuncionario.utilizarGralAcesso(cargo);
-	    		
 	    		Platform.runLater(()-> 
 	    		{
-	    			ObservadorEntidade.getIntance().avisarOuvintes(cargo);
-	    			if(!lembrarLoginCk.isSelected()) {
-	        			loginField.clear();
-	        		}else
-	        			ObservadorEntidade.getIntance().getConfiguracoesDefault().setUserNameDefault(login);
-	        		senhaField.clear();
-	        		try {
-						DaoConfiguracaoDefault.getInstance().salvar(ObservadorEntidade.getIntance().getConfiguracoesDefault());
-						App.iniTelaMenu();
-	        		} catch (DaoException e) {
-	        			alerta.imprimirMsg("Alerta", e.getMessage(),AlertType.WARNING);
+	    			
+					try {
+						Funcionario funcionario = BoFuncionario.getInstance().buscaPorLogin(login);
+						if(funcionario != null) {
+							FuncionarioObservavel.getIntance().avisarOuvintes(funcionario, cargo);
+							if(!lembrarLoginCk.isSelected())
+			        			loginField.clear();
+			        		senhaField.clear();
+							App.iniTelaMenu();
+						}else {
+							alerta.imprimirMsg("Alerta", "USUÁRIO NÃO EXISTENTE",AlertType.WARNING);
+						}
+					} catch (BoException e) {
 						e.printStackTrace();
 					}
-	        		carregandoPane.setVisible(false);
 	    		});
     		} catch (BoException e) {
     			Platform.runLater(()->
@@ -97,6 +98,7 @@ public class LoginController{
     			});
     			e.printStackTrace();
     		}
+    		carregandoPane.setVisible(false);
 		}).start();
     }
     

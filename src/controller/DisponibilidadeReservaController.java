@@ -28,7 +28,7 @@ import javafx.scene.layout.FlowPane;
 import sql.ConnectionFactory;
 import view.Alerta;
 
-public class DisponibilidadeReservaController implements IObservadoresEntidade{
+public class DisponibilidadeReservaController implements IObservadorFuncionario{
 
 
     @FXML
@@ -101,7 +101,7 @@ public class DisponibilidadeReservaController implements IObservadoresEntidade{
     
     @FXML
     void initialize() {
-    	ObservadorEntidade.getIntance().getEntidadeObservadores().add(this);
+    	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
     }
     
     @FXML
@@ -160,12 +160,10 @@ public class DisponibilidadeReservaController implements IObservadoresEntidade{
     }
     
 
-	public void atualizar(Cargo cargo) {
+	public void atualizar(Funcionario funcionario, Cargo cargo) {
 		try {
 			if(tipoCatCln != null && tipoCatCln.getCellValueFactory() == null)
 	    		fazerLigacao();
-			this.funcionario = null;
-			Funcionario funcionario = BoFuncionario.getInstance().buscaPorCpf(ConnectionFactory.getUser()[0].substring(1));
 			if(funcionario != null) {
 				this.funcionario = funcionario;
 				if(funcionario.getFilial()!= null) {

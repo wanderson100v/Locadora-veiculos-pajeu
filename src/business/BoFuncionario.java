@@ -84,9 +84,9 @@ public class BoFuncionario implements IBoFuncionario {
 	}
 	
 	@Override
-	public Funcionario buscaPorCpf(String cpf) throws BoException {
+	public Funcionario buscaPorLogin(String login) throws BoException {
 		try {
-			return daoFuncionario.buscaPorCpf(cpf);
+			return daoFuncionario.buscaPorCpf(login.substring(1));
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

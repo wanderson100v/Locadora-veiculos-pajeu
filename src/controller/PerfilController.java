@@ -19,7 +19,7 @@ import javafx.scene.layout.GridPane;
 import sql.ConnectionFactory;
 import view.Alerta;
 
-public class PerfilController implements IObservadoresEntidade {
+public class PerfilController implements IObservadorFuncionario {
 
     @FXML
     private ResourceBundle resources;
@@ -62,7 +62,7 @@ public class PerfilController implements IObservadoresEntidade {
     
     @FXML
     void initialize() {
-    	ObservadorEntidade.getIntance().getEntidadeObservadores().add(this);
+    	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
     }
     
     @FXML
@@ -90,18 +90,11 @@ public class PerfilController implements IObservadoresEntidade {
     	}
     }
 
-	public void atualizar(Cargo cargo) {
-		try {
-			System.out.println("chamado");
-			this.funcionario = null;
-			Funcionario funcionario = BoFuncionario.getInstance().buscaPorCpf(ConnectionFactory.getUser()[0].substring(1));
-			if(funcionario != null) {
-				this.funcionario = funcionario;
-				nomeFld.setText(funcionario.getNome());
-				cpfFld.setText(funcionario.getCpf());
-			}
-		} catch (BoException e) {
-			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+	public void atualizar(Funcionario funcionario, Cargo cargo) {
+		this.funcionario = funcionario;
+		if(funcionario != null) {
+			nomeFld.setText(funcionario.getNome());
+			cpfFld.setText(funcionario.getCpf());
 		}
 	}
 }

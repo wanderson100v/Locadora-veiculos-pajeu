@@ -3,7 +3,6 @@ package controller;
 import java.time.LocalDateTime;
 
 import banco.ReservaPendente;
-import business.BoFuncionario;
 import business.BoReserva;
 import business.IBoReserva;
 import entidade.Filial;
@@ -23,10 +22,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import sql.ConnectionFactory;
 import view.Alerta;
 
-public class AcompanhamentoReservaController implements IObservadoresEntidade{
+public class AcompanhamentoReservaController implements IObservadorFuncionario{
 
 	@FXML
     private AnchorPane acompanhamentoReservaPane;
@@ -80,7 +78,7 @@ public class AcompanhamentoReservaController implements IObservadoresEntidade{
     
     @FXML
     void initialize() {
-    	ObservadorEntidade.getIntance().getEntidadeObservadores().add(this);
+    	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
     }
     
     @FXML
@@ -146,22 +144,16 @@ public class AcompanhamentoReservaController implements IObservadoresEntidade{
     	}
     }
 
-	public void atualizar(Cargo cargo) {
-		try {
-			if(categoriaCln != null && categoriaCln.getCellValueFactory() == null)
-	    		fazerLigacao();
-			this.funcionario = null;
-			Funcionario funcionario = BoFuncionario.getInstance().buscaPorCpf(ConnectionFactory.getUser()[0].substring(1));
-			if(funcionario != null) {
-				this.funcionario = funcionario;
-				if(funcionario.getFilial()!= null) {
-					if(minhaFilialRb != null )minhaFilialRb.setSelected(true);
-					if(dadosFilialFld != null )dadosFilialFld.setText(funcionario.getFilial().toString());
-				}
+	public void atualizar(Funcionario funcionario, Cargo cargo) {
+		if(categoriaCln != null && categoriaCln.getCellValueFactory() == null)
+    		fazerLigacao();
+			this.funcionario = funcionario;
+			System.out.println(funcionario);
+			if(funcionario.getFilial() != null) {
+				if(minhaFilialRb != null ) minhaFilialRb.setSelected(true);
+				if(dadosFilialFld != null ) dadosFilialFld.setText(funcionario.getFilial().toString());
 			}
-		} catch (BoException e) {
-			Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
-		}
+	
 	}
 
 	private void fazerLigacao() {

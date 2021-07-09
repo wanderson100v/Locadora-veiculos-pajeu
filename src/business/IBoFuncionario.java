@@ -32,6 +32,6 @@ public interface IBoFuncionario {
 	
 	public List<Funcionario> buscarAll() throws BoException;
 	
-	public Funcionario buscaPorCpf(String cpf) throws BoException;
+	public Funcionario buscaPorLogin(String login) throws BoException;
 	
 }

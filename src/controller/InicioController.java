@@ -8,6 +8,7 @@ import business.BoManutencao;
 import business.BoReserva;
 import business.IBoReserva;
 import entidade.Backup;
+import entidade.Funcionario;
 import enumeracoes.Cargo;
 import enumeracoes.EstadoRerserva;
 import excecoes.BoException;
@@ -18,7 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class InicioController implements IObservadoresEntidade {
+public class InicioController implements IObservadorFuncionario {
 
     @FXML
     private TableView<ReservaHoje> reservasHojeTbl;
@@ -46,7 +47,7 @@ public class InicioController implements IObservadoresEntidade {
     
     @FXML
     void initialize() {
-    	ObservadorEntidade.getIntance().getEntidadeObservadores().add(this);
+    	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
     	
     	horaCln.setCellValueFactory(new PropertyValueFactory<>("hora"));
         categoriaCln.setCellValueFactory(new PropertyValueFactory<>("tipo"));
@@ -56,7 +57,7 @@ public class InicioController implements IObservadoresEntidade {
     }
 
 	@Override
-	public void atualizar(Cargo cargo) {
+	public void atualizar(Funcionario funcionario, Cargo cargo) {
 		if(cargo == null) {
 			rodando = false;
 			thread = null;

@@ -72,7 +72,7 @@ public class DaoReserva extends Dao<Reserva> implements IDaoReserva{
 	public List<ReservaPendente> buscarReservaPendente(Cliente cliente) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
-			TypedQuery<ReservaPendente> query = em.createNamedQuery(RESERVA_PENDENTE_POR_CLIENTE,ReservaPendente.class);
+			TypedQuery<ReservaPendente> query = em.createNamedQuery(RESERVA_PENDENTE_POR_CLIENTE, ReservaPendente.class);
 			query.setParameter("nome","%"+cliente.getNome()+"%");
 			query.setParameter("codigo","%"+cliente.getCodigo()+"%");
 			query.setParameter("telefone","%"+cliente.getTelefone()+"%");

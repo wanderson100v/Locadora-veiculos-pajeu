@@ -33,7 +33,7 @@ import javafx.scene.control.TextFormatter;
 import sql.ConnectionFactory;
 import view.Alerta;
 
-public class IniciarLocacaoController implements IObservadoresEntidade {
+public class IniciarLocacaoController implements IObservadorFuncionario {
 
     @FXML
     private Button selectFuncionarioBtn;
@@ -125,7 +125,7 @@ public class IniciarLocacaoController implements IObservadoresEntidade {
     
     @FXML
     void initialize() {
-    	ObservadorEntidade.getIntance().getEntidadeObservadores().add(this);
+    	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
     	for(int i = 1 ; i <25 ; i++)
     		horaRetiradaBox.getItems().add(i);
     	horaDevolucaoBox.getItems().addAll(horaRetiradaBox.getItems());
@@ -312,24 +312,16 @@ public class IniciarLocacaoController implements IObservadoresEntidade {
     	
     }
 
-    public void atualizar(Cargo cargo) {
-  		try {
-  			this.funcionario = null;
-  			Funcionario funcionario = BoFuncionario.getInstance().buscaPorCpf(ConnectionFactory.getUser()[0].substring(1));
-			if(funcionario != null) {
-				this.funcionario = funcionario;
-  				locacao.setFuncionario(funcionario);
-  				funcionarioFld.setText(funcionario.toString());
-  				if(funcionario.getFilial()!= null) {
-  					filialRetiFld.setText(funcionario.getFilial().toString());
-  					locacao.setFilialRetirada(funcionario.getFilial());
-  					outraFilialCk.setSelected(false);
-  				}else
-  					outraFilialCk.setSelected(true);
-  			}
-  		} catch (BoException e) {
-  			Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
-  		}
+    public void atualizar(Funcionario funcionario, Cargo cargo) {
+		this.funcionario = funcionario;
+		locacao.setFuncionario(funcionario);
+		funcionarioFld.setText(funcionario.toString());
+		if(funcionario.getFilial()!= null) {
+			filialRetiFld.setText(funcionario.getFilial().toString());
+			locacao.setFilialRetirada(funcionario.getFilial());
+			outraFilialCk.setSelected(false);
+		}else
+			outraFilialCk.setSelected(true);
   	}
     
     private void horaAtual() {

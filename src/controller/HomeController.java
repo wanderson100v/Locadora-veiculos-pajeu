@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import view.Alerta;
 
-public class HomeController implements IObservadoresEntidade{
+public class HomeController implements IObservadorFuncionario{
 
     @FXML
     private Button voltarBtn;
@@ -36,7 +36,7 @@ public class HomeController implements IObservadoresEntidade{
     @FXML
     void initialize() {
     	try {
-    		ObservadorEntidade.getIntance().getEntidadeObservadores().add(this);
+    		FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
     		
 			PesquisaController pesquisaController = (PesquisaController) DaoRes.getInstance().carregarControllerFXML("PesquisaPane");
 			DaoRes daoRes = DaoRes.getInstance();
@@ -72,19 +72,17 @@ public class HomeController implements IObservadoresEntidade{
     	if(event.getSource() == configBtn)
     		App.iniTelaConfig();
     	else if(event.getSource() == voltarBtn) {
-    		ObservadorEntidade.getIntance().avisarOuvintes(null);
     		App.iniTelaLogin();
     	}
     }
 
 	@Override
-	public void atualizar(Cargo cargo) {
+	public void atualizar(Funcionario funcionario, Cargo cargo) {
 		if(cargo != null) {
 			if(cargo == Cargo.AT) 
 				configBtn.setVisible(false);
 			else 
 				configBtn.setVisible(true);
-			Funcionario funcionario = ObservadorEntidade.getIntance().getFuncionario();
 			if(funcionario != null) {
 				descFunLbl.setText(cargo+" "+((funcionario.getNome().contains(" "))? funcionario.getNome().substring(0,funcionario.getNome().indexOf(" ")) : funcionario.getNome())
 						+ ((funcionario.getFilial() != null)? " Da Filial"+funcionario.getFilial().getNome() : " Sem Filial"));

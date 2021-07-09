@@ -12,8 +12,10 @@ import app.App;
 import business.BoBackup;
 import dao.DaoConfiguracaoDefault;
 import dao.DaoRes;
+import dao.IDaoConfiguracaoDefault;
 import entidade.Backup;
 import entidade.ConfiguracoesDefault;
+import entidade.Funcionario;
 import enumeracoes.Cargo;
 import enumeracoes.EstadoBackup;
 import excecoes.BoException;
@@ -33,7 +35,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import sql.ConnectionFactory;
 import view.Alerta;
 
-public class BackupController implements Observer, IObservadoresEntidade {
+public class BackupController implements Observer, IObservadorFuncionario {
 
 	
 	@FXML
@@ -106,10 +108,15 @@ public class BackupController implements Observer, IObservadoresEntidade {
     private Button agendarBtn;
     
     private boolean restaurarcao;
+    
+    private IDaoConfiguracaoDefault daoConfiguracaoDefault;
+    
+    
     @FXML
     void initialize() {
-    	ObservadorEntidade.getIntance().getEntidadeObservadores().add(this);
+    	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
     	DaoRes.getInstance().addObserver(this);
+    	daoConfiguracaoDefault = DaoConfiguracaoDefault.getInstance();
     	detalheBackupArea.positionCaret(detalheBackupArea.getLength());
     	agendDate.setValue(LocalDate.now());
     	for(int i =0 ; i < 24 ; i++)
@@ -166,11 +173,20 @@ public class BackupController implements Observer, IObservadoresEntidade {
     	if(e.getSource() == selectArqRestauBtn) {
     		FileChooser fileChooser = new FileChooser();
     	    fileChooser.setTitle("Open Resource File");
-    	    fileChooser.setInitialDirectory(new File(ObservadorEntidade.getIntance().getConfiguracoesDefault().getLocalBackup()));
-    	    fileChooser.getExtensionFilters().addAll( new ExtensionFilter("Arquivos de Backup", "*.backup"));
-    	    File selectedFile = fileChooser.showOpenDialog(App.stage);
+    	    ConfiguracoesDefault configuracoesDefault;
+			try {
+				configuracoesDefault = DaoConfiguracaoDefault.getInstance().carregar();
+				if(configuracoesDefault != null)
+					fileChooser.setInitialDirectory(new File(configuracoesDefault.getLocalBackup()));
+	    	   
+			} catch (DaoException e1) {
+				e1.printStackTrace();
+			}
+			fileChooser.getExtensionFilters().addAll( new ExtensionFilter("Arquivos de Backup", "*.backup"));
+			File selectedFile = fileChooser.showOpenDialog(App.stage);
     	    if(selectedFile!= null)
-    			arqRestauFld.setText(selectedFile.toString());;
+    			arqRestauFld.setText(selectedFile.toString());
+    	   
     	}
     	else if(e.getSource() == arquivarBtn) {
 	    	try {
@@ -230,7 +246,6 @@ public class BackupController implements Observer, IObservadoresEntidade {
 		    		configuracoesDefault.setLocalPgDump(arqPgDumpFld.getText());
 		    		configuracoesDefault.setLocalPgRestore(arqPgRestoreFld.getText());
 		    		DaoConfiguracaoDefault.getInstance().salvar(configuracoesDefault);
-		    		ObservadorEntidade.getIntance().setConfiguracoesDefault(configuracoesDefault);
 		    		atualizarTela();
 		    		Alerta.getInstance().imprimirMsg("Sucesso", "Novas configurações salvas com sucesso", AlertType.INFORMATION);
 				}else
@@ -245,22 +260,28 @@ public class BackupController implements Observer, IObservadoresEntidade {
     
 
 	@Override
-	public void atualizar(Cargo cargo) {
+	public void atualizar(Funcionario funcionario, Cargo cargo) {
 		atualizarTela();
 		popularListViewBackup();
 	}
 	
 	private void atualizarTela() {
-		ConfiguracoesDefault configuracoesDefault = ObservadorEntidade.getIntance().getConfiguracoesDefault();
-		if(configuracoesDefault != null) {
-			//tela config
-			pastaDefaultBackupFld.setText(configuracoesDefault.getLocalBackup());
-			arqPgDumpFld.setText(configuracoesDefault.getLocalPgDump());
-			arqPgRestoreFld.setText(configuracoesDefault.getLocalPgRestore());
-			ipBancoFld.setText(configuracoesDefault.getIp());
-			// tela bakcup
-			pastaBackupFld.setText(configuracoesDefault.getLocalBackup());
+		ConfiguracoesDefault configuracoesDefault;
+		try {
+			configuracoesDefault = daoConfiguracaoDefault.carregar();
+			if(configuracoesDefault != null) {
+				//tela config
+				pastaDefaultBackupFld.setText(configuracoesDefault.getLocalBackup());
+				arqPgDumpFld.setText(configuracoesDefault.getLocalPgDump());
+				arqPgRestoreFld.setText(configuracoesDefault.getLocalPgRestore());
+				ipBancoFld.setText(configuracoesDefault.getIp());
+				// tela bakcup
+				pastaBackupFld.setText(configuracoesDefault.getLocalBackup());
+			}
+		} catch (DaoException e) {
+			e.printStackTrace();
 		}
+	
 	}
 	
 	@Override
