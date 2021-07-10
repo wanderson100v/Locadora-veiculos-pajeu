@@ -2,7 +2,9 @@ package controller;
 
 import java.time.LocalDate;
 
+import model.FachadaModel;
 import model.excecoes.BoException;
+import model.vo.Fisico;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,9 +16,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import mode.business.BoFisico;
-import mode.business.IBoFisico;
-import model.entidade.Fisico;
 import view.Alerta;
 
 public class SelecionarMotoristaController {
@@ -48,13 +47,14 @@ public class SelecionarMotoristaController {
     @FXML
     private TableColumn<Fisico, String> habilitacaoCln;
     
-    private IBoFisico boFisico = BoFisico.getInstance();
     private Alerta alerta = Alerta.getInstance();
     private LocalDate dataSuperior;
     
-	
+  	private FachadaModel fachadaModel;
+    
     @FXML
     void initialize() {
+    	this.fachadaModel = FachadaModel.getInstance();
     	nomeCln.setCellValueFactory(new PropertyValueFactory<>("nome"));
     	codigoCln.setCellValueFactory(new PropertyValueFactory<>("codigo"));
     	validadeCln.setCellValueFactory(new PropertyValueFactory<>("dataValidadeHabilitacao"));
@@ -67,7 +67,7 @@ public class SelecionarMotoristaController {
 				if(buscaRapidaChk.isSelected() && pesquisaFld.getText().trim().length() > 0) {
 		    		try {
 						if(dataSuperior!= null)
-							motoristaTbl.getItems().setAll(boFisico.buscarMotoristasValidos(dataSuperior,pesquisaFld.getText().trim()));
+							motoristaTbl.getItems().setAll(fachadaModel.buscarMotoristasValidos(dataSuperior,pesquisaFld.getText().trim()));
 					} catch (BoException e) {
 						e.printStackTrace();
 					}
@@ -82,7 +82,7 @@ public class SelecionarMotoristaController {
     	if(!buscaRapidaChk.isSelected()) {
     		try {
     			if(dataSuperior!= null)
-					motoristaTbl.getItems().setAll(boFisico.buscarMotoristasValidos(dataSuperior,pesquisaFld.getText().trim()));
+					motoristaTbl.getItems().setAll(fachadaModel.buscarMotoristasValidos(dataSuperior,pesquisaFld.getText().trim()));
 				alerta.imprimirMsg("Busca concluída","Foram econtrados "+motoristaTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 			} catch (BoException e) {
 				alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);

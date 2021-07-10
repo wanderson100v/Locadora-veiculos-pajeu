@@ -15,12 +15,12 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
-import mode.business.BoBackup;
+import model.FachadaModel;
 import model.dao.DaoRes;
-import model.entidade.Backup;
+import model.dao.sql.ConnectionFactory;
 import model.excecoes.BoException;
 import model.excecoes.DaoException;
-import model.sql.ConnectionFactory;
+import model.vo.Backup;
 import view.Alerta;
 
 @SuppressWarnings("deprecation")
@@ -57,16 +57,19 @@ public class BackupDialogoController implements Observer{
     private TextArea detalhesArea;
     
     private Backup backup;
+    
+    private FachadaModel fachadaModel;
 
     @FXML
     void initialize() {
+    	this.fachadaModel = FachadaModel.getInstance();
     	for(int i =0 ; i < 24 ; i++)
     		proximaHoraBox.getItems().add(i);
     	int horasAteFinalDia = 24 - LocalDateTime.now().getHour();
     	for(int i =horasAteFinalDia ; i < 24 ; i++)
     		adiarHoraBox.getItems().add(i);
     	try {
-			if(!BoBackup.getInstance().existeBackupPendente())
+			if(!this.fachadaModel.existeBackupPendente())
 				proximaHoraBox.setVisible(false);
 		} catch (BoException e) {
 			e.printStackTrace();
@@ -81,7 +84,7 @@ public class BackupDialogoController implements Observer{
 	    	if(fonte == adiarConfirmarBtn) {
 	    		if(adiarHoraBox.getValue() != null && Alerta.getInstance()
 	    				.imprimirMsgConfirmacao("Realmente deseja ediar o backup em ")) {
-	    			LocalDateTime proximaDatahora = BoBackup.getInstance().adiarBackup(backup, adiarHoraBox.getValue());
+	    			LocalDateTime proximaDatahora = this.fachadaModel.adiarBackup(backup, adiarHoraBox.getValue());
 	    			Alerta.getInstance().imprimirMsg("Sucesso", "Backup adiado em "+adiarHoraBox.getValue()+ "novo horario - "+proximaDatahora, AlertType.INFORMATION);
 	    			adiarConfirmarBtn.setDisable(true);
 	    			arquivarBtn.setDisable(true);
@@ -102,7 +105,7 @@ public class BackupDialogoController implements Observer{
 			    		detalhesArea.clear();
 			    		DaoRes.getInstance().executarBackup(pastaBackupFld.getText(),nomeArqFld.getText().trim(),
 								user[0], user[1],"backup");
-			    		BoBackup.getInstance().finalizarBackup(backup, proximaHoraBox.getValue());
+			    		this.fachadaModel.finalizarBackup(backup, proximaHoraBox.getValue());
 			    		Alerta.getInstance().imprimirMsg("Sucesso", "Backup de banco finalizada com sucesso", AlertType.INFORMATION);
 			    		adiarConfirmarBtn.setDisable(true);
 		    			arquivarBtn.setDisable(true);

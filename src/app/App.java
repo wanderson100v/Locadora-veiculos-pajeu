@@ -7,9 +7,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import mode.enumeracoes.Tela;
 import model.dao.DaoRes;
 import model.dao.IDaoRes;
+import model.enumeracoes.Tela;
 import model.excecoes.DaoException;
 
 public class App extends Application{

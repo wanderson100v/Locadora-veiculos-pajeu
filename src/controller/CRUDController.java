@@ -7,7 +7,8 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import model.entidade.Entidade;
+import model.FachadaModel;
+import model.vo.Entidade;
 import view.Alerta;
 
 public abstract class CRUDController<T extends Entidade> {
@@ -36,8 +37,11 @@ public abstract class CRUDController<T extends Entidade> {
     
     protected Alerta alerta = Alerta.getInstance();
     
+    protected FachadaModel fachadaModel;
+    
     @FXML
     void initialize() {
+    	this.fachadaModel = FachadaModel.getInstance();
     	editarBtn.setDisable(true);
     	excluirBtn.setDisable(true);
     }

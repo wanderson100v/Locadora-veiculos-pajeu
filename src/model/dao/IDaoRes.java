@@ -2,9 +2,9 @@ package model.dao;
 
 import java.awt.image.BufferedImage;
 
+import model.enumeracoes.Tela;
 import model.excecoes.DaoException;
 import javafx.scene.layout.Pane;
-import mode.enumeracoes.Tela;
 
 public interface IDaoRes {
 	

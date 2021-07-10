@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import model.excecoes.BoException;
+import model.vo.Filial;
+import model.vo.Funcionario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -18,12 +20,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
-import mode.business.BoReserva;
-import mode.business.IBoReserva;
-import mode.enumeracoes.Cargo;
+import model.FachadaModel;
 import model.adapter.ReservaDisponibilidade;
-import model.entidade.Filial;
-import model.entidade.Funcionario;
+import model.enumeracoes.Cargo;
 import view.Alerta;
 
 public class DisponibilidadeReservaController implements IObservadorFuncionario{
@@ -92,14 +91,17 @@ public class DisponibilidadeReservaController implements IObservadorFuncionario{
     @FXML
     private Button selecionarFilialBtn;
     
-    private IBoReserva boReserva = BoReserva.getInstance();
     private Funcionario funcionario;
     private Filial outraFilial;
     private ToggleGroup toggleGroup;
     
+    private FachadaModel fachadaModel;
+    
     @FXML
     void initialize() {
+    	this.fachadaModel = FachadaModel.getInstance();
     	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
+    
     }
     
     @FXML
@@ -115,7 +117,7 @@ public class DisponibilidadeReservaController implements IObservadorFuncionario{
 	    				: LocalDateTime.of(dataDate.getValue().getYear(),dataDate.getValue().getMonthValue(),
 	    						dataDate.getValue().getDayOfMonth(),horaBox.getValue(),0);
     				Filial filial = (minhaFilialRb.isSelected()) ? funcionario.getFilial(): outraFilial;
-	    			disponiTbl.getItems().setAll(boReserva.buscarReservaDisponibilidade(filial.getId(),horario));
+	    			disponiTbl.getItems().setAll(fachadaModel.buscarReservaDisponibilidade(filial.getId(),horario));
 		    		Alerta.getInstance().imprimirMsg("Busca Concluida", disponiTbl.getItems().size()+" resultados",AlertType.INFORMATION);
 	    		}else
 	    			Alerta.getInstance().imprimirMsg("Alerta", "É necessário selecionar opção de busca para filial",AlertType.WARNING);
@@ -167,7 +169,7 @@ public class DisponibilidadeReservaController implements IObservadorFuncionario{
 				if(funcionario.getFilial()!= null) {
 					minhaFilialRb.setSelected(true);
 					dadosFilialFld.setText(funcionario.getFilial().toString());
-					disponiTbl.getItems().setAll(boReserva.buscarReservaDisponibilidade(funcionario.getFilial().getId(),LocalDateTime.now()));
+					disponiTbl.getItems().setAll(fachadaModel.buscarReservaDisponibilidade(funcionario.getFilial().getId(),LocalDateTime.now()));
 				}
 			}
 		} catch (BoException e) {

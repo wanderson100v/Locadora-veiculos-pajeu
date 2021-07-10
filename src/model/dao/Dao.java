@@ -13,12 +13,12 @@ import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.transform.Transformers;
 
-import mode.enumeracoes.Tabela;
-import model.entidade.Entidade;
+import model.dao.sql.ConnectionFactory;
+import model.enumeracoes.Tabela;
 import model.excecoes.DaoException;
-import model.sql.ConnectionFactory;
+import model.vo.Entidade;
 
-public abstract class Dao<T extends Entidade>{
+public abstract class Dao<T extends Entidade> implements IDao<T>{
 	private Class<T> tipoDaClasse;
 	protected EntityManager em;
 	
@@ -141,27 +141,11 @@ public abstract class Dao<T extends Entidade>{
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	@Deprecated
-	public List<T> buscaPorBuscaAbrangente(String busca, Map<String, String> restricoes) throws DaoException{
-		try {
-			em = ConnectionFactory.getConnection();
-			return em.createNativeQuery(Util.gerarHqlBuscaAbrangente(tipoDaClasse, restricoes), tipoDaClasse)
-			.setParameter("busca","%"+busca+"%")
-			.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new DaoException("ERRO AO BUSCAR "+tipoDaClasse.getSimpleName().toUpperCase()+" POR BUSCA ABRANGENTE- CONTATE ADM");
-		}finally {
-			em.close();
-		}
-	}
-	
 	public List<T> buscarAll() throws DaoException {
 		List<T> t = new ArrayList<>();
 		try {
 			em = ConnectionFactory.getConnection();
-			t =  em.createQuery("from entidade."+tipoDaClasse.getSimpleName()+" elemento",tipoDaClasse).getResultList();
+			t =  em.createQuery("from "+CAMINHO_CLASSE+tipoDaClasse.getSimpleName()+" elemento", tipoDaClasse).getResultList();
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw new DaoException("OCORREU UM ERRO AO BUSCAR TODOS "+tipoDaClasse.getSimpleName().toUpperCase()+", CONTATE O ADM.");

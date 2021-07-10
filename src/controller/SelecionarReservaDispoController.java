@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.FachadaModel;
 import model.adapter.ReservaDisponibilidade;
 import model.excecoes.BoException;
 import javafx.event.ActionEvent;
@@ -13,7 +14,6 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import mode.business.BoReserva;
 
 public class SelecionarReservaDispoController {
 
@@ -65,8 +65,11 @@ public class SelecionarReservaDispoController {
     
     private Long filialId;
     
+    private FachadaModel fachadaModel;
+    
     @FXML
     void initialize() {
+    	this.fachadaModel = FachadaModel.getInstance();
     	tipoCatCln.setCellValueFactory(new PropertyValueFactory<>("tipoCategoria"));
     	valorDiariaCatCln.setCellValueFactory(new PropertyValueFactory<>("valorDiariaCategoria"));
     	descricaoCatCln.setCellValueFactory(new PropertyValueFactory<>("descricaoCategoria"));
@@ -93,7 +96,7 @@ public class SelecionarReservaDispoController {
     			disponiTbl.getItems().setAll(reservasSuperiores);
     		}else {
     			try {
-    				disponiTbl.getItems().setAll(BoReserva.getInstance().buscarReservaDisponibilidade(filialId, LocalDateTime.now()));
+    				disponiTbl.getItems().setAll(fachadaModel.buscarReservaDisponibilidade(filialId, LocalDateTime.now()));
 				} catch (BoException e) {
 				}
     		}

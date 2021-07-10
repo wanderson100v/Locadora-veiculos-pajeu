@@ -3,7 +3,7 @@ package model.dao;
 import java.time.LocalDate;
 import java.util.List;
 import model.excecoes.DaoException;
-import model.entidade.Fisico;
+import model.vo.Fisico;
 
 public interface IDaoFisico extends IDao<Fisico>{
 	String BUSCA_POR_BUSCA = "fisico.buscaPorBusca";

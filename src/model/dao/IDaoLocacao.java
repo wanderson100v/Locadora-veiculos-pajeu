@@ -6,12 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 import model.excecoes.DaoException;
-import model.entidade.CategoriaVeiculo;
-import model.entidade.Filial;
-import model.entidade.Locacao;
+import model.vo.CategoriaVeiculo;
+import model.vo.Filial;
+import model.vo.Locacao;
 
 public interface IDaoLocacao extends IDao<Locacao>{
-	String TOTAL_PREVISAO_ENTREGA = "locacao.totalPrevisaoEntrega";
+	String TOTAL_PREVISAO_ENTREGA = "select count(*) from "+CAMINHO_CLASSE+"Locacao l "
+		+ "where l.finalizado = false "
+		+ "and l.filialEntrega = :filialEntrega "
+		+ "and l.veiculo.categoriaVeiculo = :categoria "
+		+ "and l.dataDevolucao <= :dataLimite";
 	
 	public long totalLocacoePrevisaoEntrega(Filial filialEntrega ,CategoriaVeiculo categoriaVeiculo ,LocalDateTime dataLimite)throws DaoException;
 

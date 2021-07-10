@@ -13,15 +13,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import mode.business.BoReserva;
-import mode.business.IBoReserva;
-import mode.enumeracoes.Cargo;
-import mode.enumeracoes.EstadoRerserva;
+import model.FachadaModel;
 import model.banco.ReservaPendente;
-import model.entidade.Filial;
-import model.entidade.Funcionario;
-import model.entidade.Reserva;
+import model.enumeracoes.Cargo;
+import model.enumeracoes.EstadoRerserva;
 import model.excecoes.BoException;
+import model.vo.Filial;
+import model.vo.Funcionario;
+import model.vo.Reserva;
 import view.Alerta;
 
 public class AcompanhamentoReservaController implements IObservadorFuncionario{
@@ -70,15 +69,17 @@ public class AcompanhamentoReservaController implements IObservadorFuncionario{
 
     @FXML
     private TextField dadosFilialFld;
-    
-    private IBoReserva boReserva = BoReserva.getInstance();
+   
     private Funcionario funcionario;
     private Filial outraFilial;
     private ToggleGroup toggleGroup;
     
+    private FachadaModel fachadaModel;
+    
     @FXML
     void initialize() {
     	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
+    	this.fachadaModel = FachadaModel.getInstance();
     }
     
     @FXML
@@ -88,11 +89,11 @@ public class AcompanhamentoReservaController implements IObservadorFuncionario{
 	    	if(fonte == buscarBtn) {
 	    		if(toggleGroup.getSelectedToggle()!= null) {
 		    		if(empresaRb.isSelected()) {
-		    			reservasTbl.getItems().setAll(boReserva.buscarReservaPendente(dadosClienteFld.getText()));
+		    			reservasTbl.getItems().setAll(fachadaModel.buscarReservaPendente(dadosClienteFld.getText()));
 		    		}else {
 		    			Filial filial = null;
 		    			filial = (minhaFilialRb.isSelected()) ? funcionario.getFilial(): outraFilial;
-		    			reservasTbl.getItems().setAll(boReserva.buscarReservaPendente(dadosClienteFld.getText(),filial));
+		    			reservasTbl.getItems().setAll(fachadaModel.buscarReservaPendente(dadosClienteFld.getText(),filial));
 		    		}
 		    		Alerta.getInstance().imprimirMsg("Busca Concluida", reservasTbl.getItems().size()+" resultados",AlertType.INFORMATION);
 	    		}else
@@ -103,10 +104,10 @@ public class AcompanhamentoReservaController implements IObservadorFuncionario{
 	    		ReservaPendente reservaPendente  = reservasTbl.getSelectionModel().getSelectedItem();
 	    		if(reservaPendente != null) {
 	    			if(Alerta.getInstance().imprimirMsgConfirmacao("Precione \"Ok\" para cancelar reserva com o cliente de código "+reservaPendente.getCodigoCliente())) {
-		    			Reserva reserva  = boReserva.buscarID(reservaPendente.getId());
+		    			Reserva reserva  = fachadaModel.buscarReservaPorID(reservaPendente.getId());
 		    			reserva.setEstadoReserva(EstadoRerserva.CANCELADO);
-		    			boReserva.cadastrarEditar(reserva);
-		    			reservasTbl.getItems().setAll(boReserva.buscarReservaPendente(dadosClienteFld.getText()));
+		    			fachadaModel.cadastrarEditarReserva(reserva);
+		    			reservasTbl.getItems().setAll(fachadaModel.buscarReservaPendente(dadosClienteFld.getText()));
 		    			Alerta.getInstance().imprimirMsg("Sucesso", "Reserva cancelada com sucesso ",AlertType.INFORMATION);
 	    			}
 	    		}else

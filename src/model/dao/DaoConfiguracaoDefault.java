@@ -11,7 +11,7 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.Dom4JDriver;
 
 import model.excecoes.DaoException;
-import model.entidade.ConfiguracoesDefault;
+import model.vo.ConfiguracoesDefault;
 
 public class DaoConfiguracaoDefault implements IDaoConfiguracaoDefault {
 	private XStream xStream;
@@ -38,7 +38,7 @@ public class DaoConfiguracaoDefault implements IDaoConfiguracaoDefault {
 			b.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new DaoException("ERRO AO SALVAR CONFIGURAÃ‡Ã•ES PADRÃƒO");
+			throw new DaoException("ERRO AO SALVAR CONFIGURAÇÕES PADRÕES");
 		}
 	}
 	@Override
@@ -47,7 +47,7 @@ public class DaoConfiguracaoDefault implements IDaoConfiguracaoDefault {
 			return (ConfiguracoesDefault) xStream.fromXML(new FileReader("Config-default.xml"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			throw new DaoException("ERRO AO CARREGAR CONFIGURAÃ‡Ã•ES PADRÃƒO");
+			throw new DaoException("ERRO AO CARREGAR CONFIGURAÇÕES PADRÕES");
 		}
 	}
 

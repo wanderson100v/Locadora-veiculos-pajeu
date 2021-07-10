@@ -1,6 +1,11 @@
 package controller;
 
+import model.FachadaModel;
+import model.enumeracoes.TipoCombustivel;
 import model.excecoes.BoException;
+import model.vo.CategoriaVeiculo;
+import model.vo.Filial;
+import model.vo.Veiculo;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,14 +19,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import mode.business.BoAutomovel;
-import mode.business.BoCaminhonetaCarga;
-import mode.business.BoVeiculo;
-import mode.business.IBoVeiculo;
-import mode.enumeracoes.TipoCombustivel;
-import model.entidade.CategoriaVeiculo;
-import model.entidade.Filial;
-import model.entidade.Veiculo;
 import view.Alerta;
 
 public class SelecionarVeiculoController {
@@ -86,13 +83,15 @@ public class SelecionarVeiculoController {
     @FXML
     private ComboBox<String> tipoBox;
     
-    private IBoVeiculo boVeiculo = BoVeiculo.getInstance();
     private Alerta alerta = Alerta.getInstance();
     private CategoriaVeiculo categoriaVeiculo;
     private Filial filial;
 
+    private FachadaModel fachadaModel;
+    
     @FXML
     void initialize() {
+    	this.fachadaModel = FachadaModel.getInstance();
     	placaCln.setCellValueFactory( new PropertyValueFactory<>("placa"));
 		numChassiCln.setCellValueFactory( new PropertyValueFactory<>("numeroChassi"));
 		numMotorCln.setCellValueFactory( new PropertyValueFactory<>("numeroMotor"));
@@ -116,14 +115,14 @@ public class SelecionarVeiculoController {
 				if(buscaRapidaChk.isSelected() && pesquisaFld.getText().trim().length() > 0) {
 		    		try {
 		    			if(categoriaVeiculo != null && filial != null) 
-							veiculoTbl.getItems().setAll(boVeiculo.buscarVeiculosDisponivel(filial.getId(), categoriaVeiculo.getId(), pesquisaFld.getText().trim()));
+							veiculoTbl.getItems().setAll(fachadaModel.buscarVeiculosDisponivel(filial.getId(), categoriaVeiculo.getId(), pesquisaFld.getText().trim()));
 						else if(filial != null) 
-							veiculoTbl.getItems().setAll(boVeiculo.buscarVeiculosDisponivel(filial.getId(), pesquisaFld.getText().trim()));
+							veiculoTbl.getItems().setAll(fachadaModel.buscarVeiculosDisponivel(filial.getId(), pesquisaFld.getText().trim()));
 						else
 							if(tipoBox.getValue().equals("Automovel/Passageiro"))
-								veiculoTbl.getItems().setAll(BoAutomovel.getInstance().buscaPorBuscaAbrangente(pesquisaFld.getText().trim()));
+								veiculoTbl.getItems().setAll(fachadaModel.buscarAutomoveis(pesquisaFld.getText().trim()));
 							else
-								veiculoTbl.getItems().setAll(BoCaminhonetaCarga.getInstance().buscaPorBuscaAbrangente(pesquisaFld.getText().trim()));
+								veiculoTbl.getItems().setAll(fachadaModel.buscarCaminhonetasCarga(pesquisaFld.getText().trim()));
 		    		} catch (BoException e) {
 						e.printStackTrace();
 					}
@@ -138,11 +137,11 @@ public class SelecionarVeiculoController {
     	if(!buscaRapidaChk.isSelected()) {
     		try {
 				if(categoriaVeiculo != null && filial != null) 
-					veiculoTbl.getItems().setAll(boVeiculo.buscarVeiculosDisponivel(filial.getId(), categoriaVeiculo.getId(), pesquisaFld.getText().trim()));
+					veiculoTbl.getItems().setAll(fachadaModel.buscarVeiculosDisponivel(filial.getId(), categoriaVeiculo.getId(), pesquisaFld.getText().trim()));
 				else if(filial != null) 
-					veiculoTbl.getItems().setAll(boVeiculo.buscarVeiculosDisponivel(filial.getId(),pesquisaFld.getText().trim()));
+					veiculoTbl.getItems().setAll(fachadaModel.buscarVeiculosDisponivel(filial.getId(),pesquisaFld.getText().trim()));
 				else 
-					veiculoTbl.getItems().setAll(boVeiculo.buscaPorBuscaAbrangente(pesquisaFld.getText().trim()));
+					veiculoTbl.getItems().setAll(fachadaModel.buscarVeiculos(pesquisaFld.getText().trim()));
 				
 				alerta.imprimirMsg("Busca concluída","Foram econtrados "+veiculoTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 			} catch (BoException e) {
@@ -161,7 +160,7 @@ public class SelecionarVeiculoController {
 	}
     
     public boolean paremetrizadoPor(CategoriaVeiculo categoriaVeiculo, Filial filial) throws BoException{
-		veiculoTbl.getItems().setAll(boVeiculo.buscarVeiculosDisponivel(filial.getId(), categoriaVeiculo.getId(),""));
+		veiculoTbl.getItems().setAll(fachadaModel.buscarVeiculosDisponivel(filial.getId(), categoriaVeiculo.getId(),""));
     	if(veiculoTbl.getItems().size() == 0)
     		return false;
 		tituloLbl.setText("Selecione Veículo para a categoria "+categoriaVeiculo.getTipo()+ "na filial "+filial.getNome());

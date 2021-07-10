@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import model.excecoes.DaoException;
-import model.entidade.Juridico;
-import model.sql.ConnectionFactory;
+import model.vo.Juridico;
+import model.dao.sql.ConnectionFactory;
 
 public class DaoJuridico extends Dao<Juridico> implements IDaoJuridico{
 

@@ -17,8 +17,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.layout.GridPane;
-import mode.enumeracoes.Tabela;
 import model.dao.Dao;
+import model.enumeracoes.Tabela;
 import view.Alerta;
 
 public class HistoricoController {

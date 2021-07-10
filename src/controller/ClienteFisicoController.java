@@ -15,16 +15,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
-import mode.business.BoEndereco;
-import mode.business.BoFisico;
-import mode.business.IBoEndereco;
-import mode.business.IBoFisico;
-import mode.enumeracoes.Estado;
-import mode.enumeracoes.Sexo;
-import model.entidade.Endereco;
-import model.entidade.Entidade;
-import model.entidade.Fisico;
+import model.enumeracoes.Estado;
+import model.enumeracoes.Sexo;
 import model.excecoes.BoException;
+import model.vo.Endereco;
+import model.vo.Entidade;
+import model.vo.Fisico;
 import view.Mascara;
 
 public class ClienteFisicoController extends CRUDController<Fisico> {
@@ -109,14 +105,8 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
 
     @FXML
     private ComboBox<String> sexoBuscaBox;
-    
-    private IBoEndereco boEndereco = BoEndereco.getInstance();
 
     private Fisico fisico;
-    
-    private IBoFisico boFisico = BoFisico.getInstance();
-    
-   
     
     @FXML
     void initialize() {
@@ -172,7 +162,7 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
 	    		
 	    		fisico.setEndereco(endereco);
 	    		
-				boFisico.cadastrarEditar(fisico);
+				fachadaModel.cadastrarEditarClienteFisico(fisico);
 				alerta.imprimirMsg("Sucesso ao cadastrar","Cliente Fisico cadastrado com sucesso", AlertType.INFORMATION);
 				
 	    	}else if(btn == editarBtn){
@@ -202,12 +192,12 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
 	    		endereco.setCidade(cidadeFld.getText());
 	    		endereco.setEstado(estadoBox.getValue());
 	    		
-	    		boFisico.cadastrarEditar(fisico);
+	    		fachadaModel.cadastrarEditarClienteFisico(fisico);
 	    		alerta.imprimirMsg("Sucesso ao editar","Cliente Fisico editado com sucesso", AlertType.INFORMATION);
 	    		
 	    	}else if(btn == excluirBtn){
 	    		
-	    		boFisico.excluir(fisico);
+	    		fachadaModel.excluirClienteFisico(fisico);
 	    		alerta.imprimirMsg("Sucesso ao exluir","Cliente Fisico exlcuido com sucesso", AlertType.INFORMATION);
 	    		limparCampos();
 	    	
@@ -227,14 +217,14 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
 	void popularTabela(String busca) {
 		try {
 			if(motoristaBuscaCk.isSelected())
-				entidadeTabela.getItems().setAll(BoFisico.getInstance().buscarMotoristasValidos(LocalDate.now(),busca));
+				entidadeTabela.getItems().setAll(fachadaModel.buscarMotoristasValidos(LocalDate.now(),busca));
 			else {
 				Fisico fisico = new Fisico();
 				if(!ativoBuscaCk.isIndeterminate())
 					fisico.setAtivo(ativoBuscaCk.isSelected());
 				if(!sexoBuscaBox.getValue().equals("Todos"))
 					fisico.setSexo(Sexo.getSexo(sexoBuscaBox.getValue()));
-				entidadeTabela.getItems().setAll(BoFisico.getInstance().buscaPorBuscaAbrangente(busca,fisico));
+				entidadeTabela.getItems().setAll(fachadaModel.buscarClientesFisicos(busca,fisico));
 			}
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+entidadeTabela.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
@@ -302,7 +292,7 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
     void actionHandle(ActionEvent event) {
 		try {
 			if(event.getSource() == gerarBtn) {
-				Endereco e  = boEndereco.gerarEndereco(cepFld.getText().trim());
+				Endereco e  = fachadaModel.gerarEndereco(cepFld.getText().trim());
 				ruaFld.setText(e.getRua());
 				bairroFld.setText(e.getBairro());
 				cidadeFld.setText(e.getCidade());

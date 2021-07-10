@@ -1,6 +1,9 @@
 package controller;
 
+import model.FachadaModel;
 import model.excecoes.BoException;
+import model.vo.Endereco;
+import model.vo.Filial;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,10 +15,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import mode.business.BoFilial;
-import mode.business.IBoFilial;
-import model.entidade.Endereco;
-import model.entidade.Filial;
 import view.Alerta;
 
 public class SelecionarFilialController {
@@ -38,13 +37,13 @@ public class SelecionarFilialController {
     @FXML
     private TableColumn<Filial, Endereco> enderecoCln;
     
-    private IBoFilial boFilial = BoFilial.getInstance();
-    
     private Alerta alerta = Alerta.getInstance();
     
-
+    private FachadaModel fachadaModel;
+    
     @FXML
     void initialize() {
+    	this.fachadaModel = FachadaModel.getInstance();
     	nomeCln.setCellValueFactory(new PropertyValueFactory<>("nome"));
     	enderecoCln.setCellValueFactory(new PropertyValueFactory<>("endereco"));
     	
@@ -53,7 +52,7 @@ public class SelecionarFilialController {
 			public void handle(KeyEvent event) {
 				if(buscaRapidaChk.isSelected() && pesquisaFld.getText().trim().length() > 0) {
 		    		try {
-						filialTbl.getItems().setAll(boFilial.buscaPorBuscaAbrangente(pesquisaFld.getText()));
+						filialTbl.getItems().setAll(fachadaModel.buscarFiliais(pesquisaFld.getText()));
 					} catch (BoException e) {
 						e.printStackTrace();
 					}
@@ -66,7 +65,7 @@ public class SelecionarFilialController {
     void actionHandle(ActionEvent event) {
     	if(!buscaRapidaChk.isSelected()) {
     		try {
-				filialTbl.getItems().setAll(boFilial.buscaPorBuscaAbrangente(pesquisaFld.getText()));
+				filialTbl.getItems().setAll(fachadaModel.buscarFiliais(pesquisaFld.getText()));
 				alerta.imprimirMsg("Busca concluída","Foram econtrados "+filialTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 			} catch (BoException e) {
 				alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);

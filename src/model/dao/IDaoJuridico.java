@@ -4,7 +4,7 @@ package model.dao;
 import java.util.List;
 
 import model.excecoes.DaoException;
-import model.entidade.Juridico;
+import model.vo.Juridico;
 
 public interface IDaoJuridico extends IDao<Juridico>{
 	

@@ -1,7 +1,7 @@
 package model.dao;
 
 
-import model.entidade.Acessorio;
+import model.vo.Acessorio;
 
 public class DaoAcessorio extends Dao<Acessorio> implements IDaoAcessorio {
 	

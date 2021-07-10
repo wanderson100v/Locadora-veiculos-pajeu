@@ -3,7 +3,7 @@ package model.dao;
 import java.util.List;
 
 import model.excecoes.DaoException;
-import model.entidade.Manutencao;
+import model.vo.Manutencao;
 
 public interface IDaoManutencao  extends IDao<Manutencao>{
 

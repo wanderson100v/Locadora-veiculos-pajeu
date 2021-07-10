@@ -13,10 +13,10 @@ import org.hibernate.Session;
 import org.hibernate.transform.Transformers;
 
 import model.excecoes.DaoException;
-import model.entidade.CategoriaVeiculo;
-import model.entidade.Filial;
-import model.entidade.Locacao;
-import model.sql.ConnectionFactory;
+import model.vo.CategoriaVeiculo;
+import model.vo.Filial;
+import model.vo.Locacao;
+import model.dao.sql.ConnectionFactory;
 
 public class DaoLocacao extends Dao<Locacao> implements  IDaoLocacao{
 
@@ -29,7 +29,7 @@ public class DaoLocacao extends Dao<Locacao> implements  IDaoLocacao{
 		long total = 0;
 		try {
 			em = ConnectionFactory.getConnection();
-			Query query = em.createNamedQuery(TOTAL_PREVISAO_ENTREGA);
+			Query query = em.createQuery(TOTAL_PREVISAO_ENTREGA);
 			query.setParameter("filialEntrega", filialEntrega);
 			query.setParameter("categoria", categoriaVeiculo);
 			query.setParameter("dataLimite", dataLimite);
@@ -105,7 +105,7 @@ public class DaoLocacao extends Dao<Locacao> implements  IDaoLocacao{
 			return elementos;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DaoException("ERRO AO GERAR RELATORIO FINANCEIRO DE LOCAÃ‡Ã•ES FINALIZADAS POR PÃ‰RIODO");
+			throw new DaoException("ERRO AO GERAR RELATORIO FINANCEIRO DE LOCAÇÕES FINALIZADAS POR PERÍODO");
 		}finally {
 			em.close();
 		}

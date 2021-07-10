@@ -16,20 +16,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
-import mode.business.BoLocacao;
-import mode.business.BoReserva;
-import mode.enumeracoes.Cargo;
-import mode.enumeracoes.EstadoRerserva;
-import mode.enumeracoes.TipoLocacao;
-import model.entidade.CategoriaVeiculo;
-import model.entidade.Cliente;
-import model.entidade.Filial;
-import model.entidade.Fisico;
-import model.entidade.Funcionario;
-import model.entidade.Locacao;
-import model.entidade.Reserva;
-import model.entidade.Veiculo;
+import model.FachadaModel;
+import model.enumeracoes.Cargo;
+import model.enumeracoes.EstadoRerserva;
+import model.enumeracoes.TipoLocacao;
 import model.excecoes.BoException;
+import model.vo.CategoriaVeiculo;
+import model.vo.Cliente;
+import model.vo.Filial;
+import model.vo.Fisico;
+import model.vo.Funcionario;
+import model.vo.Locacao;
+import model.vo.Reserva;
+import model.vo.Veiculo;
 import view.Alerta;
 
 public class AcompanhamentoController implements IObservadorFuncionario {
@@ -207,9 +206,12 @@ public class AcompanhamentoController implements IObservadorFuncionario {
     private Fisico motorista;
     private Cliente cliente;
     private Funcionario funcionario;
+    private FachadaModel fachadaModel;
 
     @FXML
     void initialize() {
+    	
+    	this.fachadaModel = FachadaModel.getInstance();
     	
     	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
     	rCateCln.setCellValueFactory(new PropertyValueFactory<>("categoriaVeiculo"));
@@ -251,7 +253,7 @@ public class AcompanhamentoController implements IObservadorFuncionario {
 			    		if(!estadoReservaBox.getValue().equals("Todos"))
 			    			reserva.setEstadoReserva(EstadoRerserva.getEstadoReserva(estadoReservaBox.getValue()));
 			    		reserva.setFilial(filialRetirada);
-	    				reservasTbl.getItems().setAll(BoReserva.getInstance().buscaPorBuscaAbrangente(buscarFld.getText().trim(),reserva, deDate.getValue(), ateDate.getValue()));
+	    				reservasTbl.getItems().setAll(fachadaModel.buscaReservas(buscarFld.getText().trim(),reserva, deDate.getValue(), ateDate.getValue()));
 					}
 					if(locacaoCk.isSelected()) {
 						Locacao locacao = new Locacao();
@@ -265,7 +267,7 @@ public class AcompanhamentoController implements IObservadorFuncionario {
 						locacao.setFilialEntrega(filialDevolucao);
 						locacao.setFilialRetirada(filialRetirada);
 						
-						locacaoTbl.getItems().setAll(BoLocacao.getInstance().buscaPorBuscaAbrangente(buscarFld.getText().trim(), locacao, deDate.getValue(), ateDate.getValue()));
+						locacaoTbl.getItems().setAll(fachadaModel.buscarLocacoes(buscarFld.getText().trim(), locacao, deDate.getValue(), ateDate.getValue()));
 					}
 					
 					Alerta.getInstance().imprimirMsg("Sucesso", "Busca concluida. "
@@ -393,7 +395,7 @@ public class AcompanhamentoController implements IObservadorFuncionario {
     			if(reservaSelecionada != null && Alerta.getInstance().imprimirMsgConfirmacao("Precione \"Ok\" para cancelar "
     					+ "reserva com o cliente "+ reservaSelecionada.getCliente())) {
     				reservaSelecionada.setEstadoReserva(EstadoRerserva.CANCELADO);
-	    			BoReserva.getInstance().cadastrarEditar(reservaSelecionada);
+	    			fachadaModel.cadastrarEditarReserva(reservaSelecionada);
 	    			reservasTbl.getItems().remove(reservaSelecionada);
 	    			Alerta.getInstance().imprimirMsg("Sucesso","Reserva cancelada com sucesso ",AlertType.INFORMATION);
     			}else
@@ -412,13 +414,13 @@ public class AcompanhamentoController implements IObservadorFuncionario {
     			Locacao locacaoSelecionada = locacaoTbl.getSelectionModel().getSelectedItem();
     			if(locacaoSelecionada != null && Alerta.getInstance()
     					.imprimirMsgConfirmacao("Realmente deseja exluir a Locação com o cliente: "+cliente+" ? ")) {
-    				BoLocacao.getInstance().excluir(locacaoSelecionada);
+    				fachadaModel.excluirLocacao(locacaoSelecionada);
     			}
     		}else if(e.getSource() == exluirReservaBtn) {
     			Reserva reservaSelecionada = reservasTbl.getSelectionModel().getSelectedItem();
     			if(reservaSelecionada != null && Alerta.getInstance()
     					.imprimirMsgConfirmacao("Realmente deseja exluir a Reserva com o cliente: "+cliente+" ? ")) {
-    				BoReserva.getInstance().excluir(reservaSelecionada);
+    				fachadaModel.excluirReserva(reservaSelecionada);
     			}
     		}
 			

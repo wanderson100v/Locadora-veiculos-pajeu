@@ -1,6 +1,6 @@
 package model.dao;
 
-import model.entidade.Automovel;
+import model.vo.Automovel;
 
 public class DaoAutomovel extends Dao<Automovel> implements IDaoAutomovel {
 

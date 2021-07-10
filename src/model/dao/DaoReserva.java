@@ -14,17 +14,17 @@ import org.hibernate.Session;
 import org.hibernate.transform.Transformers;
 
 import model.excecoes.DaoException;
-import mode.enumeracoes.TipoAutomovel;
+import model.vo.Automovel;
+import model.vo.CaminhonetaCarga;
+import model.vo.CategoriaVeiculo;
+import model.vo.Cliente;
+import model.vo.Filial;
+import model.vo.Reserva;
 import model.adapter.ReservaDisponibilidade;
 import model.banco.ReservaHoje;
 import model.banco.ReservaPendente;
-import model.entidade.Automovel;
-import model.entidade.CaminhonetaCarga;
-import model.entidade.CategoriaVeiculo;
-import model.entidade.Cliente;
-import model.entidade.Filial;
-import model.entidade.Reserva;
-import model.sql.ConnectionFactory;
+import model.dao.sql.ConnectionFactory;
+import model.enumeracoes.TipoAutomovel;
 
 public class DaoReserva extends Dao<Reserva> implements IDaoReserva{
 
@@ -57,7 +57,7 @@ public class DaoReserva extends Dao<Reserva> implements IDaoReserva{
 			em.getTransaction().begin();
 			em.createNativeQuery("update reserva set estado_reserva = 3 where estado_reserva = 1 and current_timestamp > (data_retirada + interval '1 hours')  ").executeUpdate();
 			em.getTransaction().commit();
-			TypedQuery<ReservaHoje> query = em.createQuery("select r from banco.ReservaHoje as r",ReservaHoje.class);
+			TypedQuery<ReservaHoje> query = em.createQuery("select r from model.banco.ReservaHoje as r",ReservaHoje.class);
 			return query.getResultList();
 		}catch (Exception e) {
 			em.getTransaction().rollback();

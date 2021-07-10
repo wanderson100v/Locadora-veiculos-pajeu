@@ -5,10 +5,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
-import mode.enumeracoes.Cargo;
 import model.dao.DaoRes;
-import model.entidade.Funcionario;
+import model.enumeracoes.Cargo;
 import model.excecoes.DaoException;
+import model.vo.Funcionario;
 
 public class ConfiguracaoController implements IObservadorFuncionario{
 

@@ -1,7 +1,7 @@
 package model.dao;
 
 import model.excecoes.DaoException;
-import model.entidade.Backup;
+import model.vo.Backup;
 
 public interface IDaoBackup extends IDao<Backup>{
 	

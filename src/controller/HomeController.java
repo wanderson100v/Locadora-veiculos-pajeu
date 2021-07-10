@@ -2,12 +2,12 @@ package controller;
 
 import app.App;
 import model.excecoes.DaoException;
+import model.vo.Funcionario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
-import mode.enumeracoes.Cargo;
 import model.dao.DaoRes;
-import model.entidade.Funcionario;
+import model.enumeracoes.Cargo;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;

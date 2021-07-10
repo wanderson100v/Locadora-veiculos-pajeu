@@ -6,19 +6,22 @@ import java.util.List;
 import java.util.Map;
 
 import model.excecoes.DaoException;
+import model.vo.Automovel;
+import model.vo.CaminhonetaCarga;
+import model.vo.CategoriaVeiculo;
+import model.vo.Cliente;
+import model.vo.Filial;
+import model.vo.Reserva;
 import model.adapter.ReservaDisponibilidade;
 import model.banco.ReservaHoje;
 import model.banco.ReservaPendente;
-import model.entidade.Automovel;
-import model.entidade.CaminhonetaCarga;
-import model.entidade.CategoriaVeiculo;
-import model.entidade.Cliente;
-import model.entidade.Filial;
-import model.entidade.Reserva;
 
 public interface IDaoReserva extends IDao<Reserva>{
 	
-	String TOTAL_DATA_RETIRADA = "reserva.totalDataRetirada";
+	String TOTAL_DATA_RETIRADA = "select count(*) from model.vo.Reserva r "
+			+ "where r.estadoReserva = 1 "
+			+ "and r.categoriaVeiculo = :categoriaVeiculo ";
+			//+ "and r.dataRetirada = :dataRetirada"
 	String TUDO_RESERVA_HOJE = "reservaHoje.buscarTudo";
 	String RESERVA_PENDENTE_POR_CLIENTE = "reservaPendente.buscarPorCliente";
 	String RESERVA_PENDENTE_POR_CLIENTE_FILIAL = "reservaPendente.buscarPorCliente_Filial";

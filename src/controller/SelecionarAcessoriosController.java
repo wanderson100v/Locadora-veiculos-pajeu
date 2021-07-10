@@ -1,15 +1,14 @@
 package controller;
 
+import model.FachadaModel;
 import model.excecoes.BoException;
+import model.vo.Acessorio;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
-import mode.business.BoAcessorio;
-import mode.business.IBoAcessorio;
-import model.entidade.Acessorio;
 
 public class SelecionarAcessoriosController {
 
@@ -28,14 +27,15 @@ public class SelecionarAcessoriosController {
     @FXML
     private Button remBtn;
     
-    private IBoAcessorio boAcessorio = BoAcessorio.getInstance();
+	private FachadaModel fachadaModel;
     
     @FXML
     void initialize() {
+    	this.fachadaModel = FachadaModel.getInstance();
     	try {
     		todosListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     		meusListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-    		todosListView.getItems().addAll(boAcessorio.buscarAll());
+    		todosListView.getItems().addAll(fachadaModel.buscarTodoAcessorios());
 		} catch (BoException e) {
 			e.printStackTrace();
 		}

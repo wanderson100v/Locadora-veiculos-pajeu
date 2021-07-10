@@ -13,11 +13,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 
+import model.enumeracoes.Tela;
 import model.excecoes.DaoException;
+import model.vo.ConfiguracoesDefault;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
-import mode.enumeracoes.Tela;
-import model.entidade.ConfiguracoesDefault;
 
 
 @SuppressWarnings("deprecation")
@@ -108,12 +108,11 @@ public class DaoRes extends Observable implements IDaoRes{
 	    }
 	 
 	    private List<String> getPgComands(File backupFilePath, String backupFileName, String userName, String type) throws DaoException {
-
 	    	
 	    	ConfiguracoesDefault configuracoesDefault = DaoConfiguracaoDefault.getInstance().carregar();
 	  
 	    	if(configuracoesDefault == null)
-	    		throw new DaoException("N√£o existe um arquivo de configura√ß√µes padr√µes");
+	    		throw new DaoException("N„o existe um arquivo de configuraÁ„o padr„o");
 	        ArrayList<String> commands = new ArrayList<>();
 	        switch (type) {
 	            case "backup":

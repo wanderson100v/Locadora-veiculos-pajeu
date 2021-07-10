@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import model.FachadaModel;
 import model.excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,8 +18,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.layout.GridPane;
-import mode.business.BoLocacao;
-import mode.business.BoReserva;
 import view.Alerta;
 
 public class FinanceiroController {
@@ -44,9 +43,12 @@ public class FinanceiroController {
 
     @FXML
     private ComboBox<String> groypByBox;
+    
+    private FachadaModel fachadaModel;
 
     @FXML
     void initialize() {
+    	this.fachadaModel = FachadaModel.getInstance();
     	financeiroBox.getItems().addAll("Locacões finalizadas"
     			,"Reservas Origens de Locação","Reservas Incompletadas");
     	groypByBox.getItems().addAll("Dia","Mês");
@@ -75,14 +77,14 @@ public class FinanceiroController {
     	    			Collections.addAll(nomesColunaOrganizado,"ano","mes");
     				
     				if(financeiroBox.getValue().equals("Locacões finalizadas")) {
-	    				registros = BoLocacao.getInstance().buscarLocacoesFinalizadas(deDate.getValue(), ateDate.getValue(), groypByBox.getValue());
+	    				registros = fachadaModel.buscarLocacoesFinalizadas(deDate.getValue(), ateDate.getValue(), groypByBox.getValue());
 	    				Collections.addAll(nomesColunaOrganizado,"locacoes","valor_real","valor_pago","restante");
 	    			}else {
-	    				registros = BoReserva.getInstance().buscarReservasOrigemLocacaoFinalizada(deDate.getValue(), ateDate.getValue(), groypByBox.getValue());
+	    				registros = fachadaModel.buscarReservasOrigemLocacaoFinalizada(deDate.getValue(), ateDate.getValue(), groypByBox.getValue());
 	    				Collections.addAll(nomesColunaOrganizado,"locacoes_geradas","valor_real","valor_pago","restante");
 	    			}
     			}else if(financeiroBox.getValue().equals("Reservas Incompletadas")) {
-    				registros = BoReserva.getInstance().buscarReservasImpedidas(deDate.getValue(), ateDate.getValue());
+    				registros = fachadaModel.buscarReservasImpedidas(deDate.getValue(), ateDate.getValue());
     				Collections.addAll(nomesColunaOrganizado,"codigo_cliente","potencial_perdido","estado","planejada_retirada","planejada_devolucao");
     			}
     			if(registros != null && !registros.isEmpty()) {

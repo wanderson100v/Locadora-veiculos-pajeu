@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import model.excecoes.DaoException;
-import model.entidade.Manutencao;
-import model.sql.ConnectionFactory;
+import model.vo.Manutencao;
+import model.dao.sql.ConnectionFactory;
 
 public class DaoManutencao extends Dao<Manutencao> implements IDaoManutencao{
 
@@ -27,7 +27,7 @@ public class DaoManutencao extends Dao<Manutencao> implements IDaoManutencao{
 		}catch (Exception e) {
 			em.getTransaction().rollback();
 			e.printStackTrace();
-			throw new DaoException("ERRO AO CHECAR MANUTENÃ‡Ã•OES");
+			throw new DaoException("ERRO AO CHECAR MANUTÇÕES");
 		}finally {
 			em.close();
 		}
@@ -48,7 +48,7 @@ public class DaoManutencao extends Dao<Manutencao> implements IDaoManutencao{
 					.getResultList();
 		}catch (Exception e) {
 			e.printStackTrace();
-			throw new DaoException("ERRO AO BUSCAR MANUTENÃ‡Ã•ES DE FORMAR ABRANGENTE RESTRITIVA");
+			throw new DaoException("ERRO AO BUSCAR MANUTENÇÕES DE FORMAR ABRANGENTE RESTRITIVA");
 		}finally {
 			em.close();
 		}

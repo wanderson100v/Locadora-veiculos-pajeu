@@ -3,9 +3,9 @@ package model.dao;
 import java.util.List;
 
 import model.excecoes.DaoException;
-import model.entidade.CategoriaVeiculo;
-import model.entidade.Filial;
-import model.entidade.Veiculo;
+import model.vo.CategoriaVeiculo;
+import model.vo.Filial;
+import model.vo.Veiculo;
 
 public interface IDaoVeiculo extends IDao<Veiculo>{
 	String TOTAL_DISPONIVEL = "veiculo.totalDisponivel";

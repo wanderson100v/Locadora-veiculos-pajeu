@@ -1,7 +1,9 @@
 package controller;
 
 
+import model.FachadaModel;
 import model.excecoes.BoException;
+import model.vo.Funcionario;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -13,9 +15,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import mode.business.BoFuncionario;
-import mode.business.IBoFuncionario;
-import model.entidade.Funcionario;
 import view.Alerta;
 
 public class SelecionarFuncionarioController {
@@ -38,12 +37,13 @@ public class SelecionarFuncionarioController {
     @FXML
     private TableColumn<Funcionario, String> cpfCln;
 
-    private IBoFuncionario boFuncionario = BoFuncionario.getInstance();
-    
     private Alerta alerta = Alerta.getInstance();
+    
+    private FachadaModel fachadaModel;
     
     @FXML
     void initialize() {
+    	this.fachadaModel = FachadaModel.getInstance();
     	nomeCln.setCellValueFactory(new PropertyValueFactory<>("nome"));
     	cpfCln.setCellValueFactory(new PropertyValueFactory<>("cpf"));
     	pesquisaFld.setOnKeyTyped(new EventHandler<KeyEvent>() {
@@ -51,7 +51,7 @@ public class SelecionarFuncionarioController {
 			public void handle(KeyEvent event) {
 				if(buscaRapidaChk.isSelected() && pesquisaFld.getText().trim().length() > 0) {
 		    		try {
-						funcionarioTbl.getItems().setAll(boFuncionario.buscaPorBuscaAbrangente(pesquisaFld.getText()));
+						funcionarioTbl.getItems().setAll(fachadaModel.buscarFuncionarios(pesquisaFld.getText()));
 					} catch (BoException e) {
 						e.printStackTrace();
 					}
@@ -64,7 +64,7 @@ public class SelecionarFuncionarioController {
     void actionHandle(ActionEvent event) {
     	if(!buscaRapidaChk.isSelected()) {
     		try {
-				funcionarioTbl.getItems().setAll(boFuncionario.buscaPorBuscaAbrangente(pesquisaFld.getText()));
+				funcionarioTbl.getItems().setAll(fachadaModel.buscarFuncionarios(pesquisaFld.getText()));
 				alerta.imprimirMsg("Busca concluída","Foram econtrados "+funcionarioTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 			} catch (BoException e) {
 				alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);

@@ -6,22 +6,20 @@ import java.util.function.UnaryOperator;
 
 import model.excecoes.BoException;
 import model.excecoes.ValidarException;
+import model.vo.Cliente;
+import model.vo.Filial;
+import model.vo.Fisico;
+import model.vo.Funcionario;
+import model.vo.Locacao;
+import model.vo.Reserva;
+import model.vo.Veiculo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
-import mode.business.BoLocacao;
-import mode.business.BoReserva;
-import mode.business.IBoLocacao;
-import mode.enumeracoes.Cargo;
-import mode.enumeracoes.TipoLocacao;
+import model.FachadaModel;
 import model.banco.ReservaPendente;
-import model.entidade.Cliente;
-import model.entidade.Filial;
-import model.entidade.Fisico;
-import model.entidade.Funcionario;
-import model.entidade.Locacao;
-import model.entidade.Reserva;
-import model.entidade.Veiculo;
+import model.enumeracoes.Cargo;
+import model.enumeracoes.TipoLocacao;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -119,10 +117,12 @@ public class IniciarLocacaoController implements IObservadorFuncionario {
 
     private Locacao locacao = new Locacao();
     private Funcionario funcionario;
-    private IBoLocacao boLocacao = BoLocacao.getInstance();
+    
+    private FachadaModel fachadaModel;
     
     @FXML
     void initialize() {
+    	fachadaModel = FachadaModel.getInstance();
     	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
     	for(int i = 1 ; i <25 ; i++)
     		horaRetiradaBox.getItems().add(i);
@@ -185,7 +185,7 @@ public class IniciarLocacaoController implements IObservadorFuncionario {
     						locacao.getFilialRetirada());
 		    		if(reservaPendente!= null) 
 		    		{
-		    			Reserva reserva  = BoReserva.getInstance().buscarID(reservaPendente.getId());
+		    			Reserva reserva  = fachadaModel.buscarReservaPorID(reservaPendente.getId());
 	    				reservaFld.setText(reserva.toString());
     					locacao.setReservaOrigem(reserva);
 		    		}
@@ -240,7 +240,7 @@ public class IniciarLocacaoController implements IObservadorFuncionario {
     		else if(fonte == locarBtn) {
     			try{
     				pegarDadosTela();
-		    		boLocacao.cadastrarEditar(locacao);
+		    		fachadaModel.cadastrarEditarLocacao(locacao);
 		    		Alerta.getInstance().imprimirMsg("Sucesso ao cadastrar","Locação iniciada com sucesso",AlertType.INFORMATION);
 		    		this.locacao = new Locacao();
 		    		limparCampos();
@@ -348,7 +348,7 @@ public class IniciarLocacaoController implements IObservadorFuncionario {
 		try {
 			pegarDadosTela();
 			Object[] tupla;
-			tupla = boLocacao.calcularValorLocacaoDetalhamento(locacao);
+			tupla = fachadaModel.calcularValorLocacaoDetalhamento(locacao);
 			locacao.setValorDiaria((float)tupla[0]);
 			detalhesArea.setText((String) tupla[1]);
 			System.out.println("sucesso");

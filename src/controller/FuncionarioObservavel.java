@@ -3,8 +3,8 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import mode.enumeracoes.Cargo;
-import model.entidade.Funcionario;
+import model.enumeracoes.Cargo;
+import model.vo.Funcionario;
 
 public class FuncionarioObservavel {
 	private static FuncionarioObservavel instance;

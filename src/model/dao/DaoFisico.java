@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import model.excecoes.DaoException;
-import model.entidade.Fisico;
-import model.sql.ConnectionFactory;
+import model.vo.Fisico;
+import model.dao.sql.ConnectionFactory;
 
 public class DaoFisico extends Dao<Fisico> implements IDaoFisico {
 	
@@ -64,7 +64,7 @@ public class DaoFisico extends Dao<Fisico> implements IDaoFisico {
 					.getResultList();
 		}catch (Exception e) {
 			e.printStackTrace();
-			throw new DaoException("ERRO AO BUSCAR CLIENTES FÃ?SICO DE FORMA ABRANGENTE RESTRITIVA");
+			throw new DaoException("ERRO AO BUSCAR CLIENTES FÍSICOS DE FORMA ABRANGENTE RESTRITIVA");
 		}finally {
 			em.close();
 		}

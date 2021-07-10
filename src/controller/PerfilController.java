@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import model.excecoes.BoException;
+import model.vo.Funcionario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -12,11 +13,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import mode.business.BoFuncionario;
-import mode.business.IBoFuncionario;
-import mode.enumeracoes.Cargo;
-import model.entidade.Funcionario;
-import model.sql.ConnectionFactory;
+import model.FachadaModel;
+import model.dao.sql.ConnectionFactory;
+import model.enumeracoes.Cargo;
 import view.Alerta;
 
 public class PerfilController implements IObservadorFuncionario {
@@ -54,14 +53,15 @@ public class PerfilController implements IObservadorFuncionario {
     @FXML
     private Button alterarSenhaBtn;
     
-    private IBoFuncionario  boFuncionario = BoFuncionario.getInstance();
-    
     private Alerta alerta = Alerta.getInstance();
     
     private Funcionario funcionario;
+
+    private FachadaModel fachadaModel;
     
     @FXML
     void initialize() {
+    	fachadaModel = FachadaModel.getInstance();
     	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
     }
     
@@ -74,7 +74,7 @@ public class PerfilController implements IObservadorFuncionario {
 		    		String senha = senhaFld.getText().trim();
 		    		if(senha.equals(conSenhaFld.getText())){
 						if(ConnectionFactory.getUser()[1].equals(senha)) {
-							boFuncionario.editaSenha(funcionario,novaSenhaFld.getText().trim());
+							fachadaModel.editaSenha(funcionario,novaSenhaFld.getText().trim());
 							novaSenhaFld.setText("");
 							conSenhaFld.setText("");
 							senhaFld.setText("");

@@ -6,21 +6,20 @@ import java.util.Optional;
 
 import model.excecoes.BoException;
 import model.excecoes.DaoException;
+import model.vo.Backup;
+import model.vo.CategoriaVeiculo;
+import model.vo.Cliente;
+import model.vo.Filial;
+import model.vo.Fisico;
+import model.vo.Funcionario;
+import model.vo.Locacao;
+import model.vo.Veiculo;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import mode.business.BoCategoriaVeiculo;
-import mode.business.BoReserva;
+import model.FachadaModel;
 import model.adapter.ReservaDisponibilidade;
 import model.banco.ReservaPendente;
 import model.dao.DaoRes;
-import model.entidade.Backup;
-import model.entidade.CategoriaVeiculo;
-import model.entidade.Cliente;
-import model.entidade.Filial;
-import model.entidade.Fisico;
-import model.entidade.Funcionario;
-import model.entidade.Locacao;
-import model.entidade.Veiculo;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -149,7 +148,7 @@ public class Util {
 			Alert alerta = new Alert(AlertType.NONE);
 			SelecionarReservaPendenteController selecionarReservaPendenteController;
 			selecionarReservaPendenteController = (SelecionarReservaPendenteController) DaoRes.getInstance().carregarControllerFXML("SelecionarReservaPendenteDialog");
-			selecionarReservaPendenteController.getReservasTbl().getItems().addAll(BoReserva.getInstance().buscarReservaPendente(cliente.getCodigo(), filial));
+			selecionarReservaPendenteController.getReservasTbl().getItems().addAll(FachadaModel.getInstance().buscarReservaPendente(cliente.getCodigo(), filial));
 			alerta.setDialogPane(selecionarReservaPendenteController.getSelecionarReservaDialog());
 			Optional<ButtonType> result = alerta.showAndWait();
 			if(result.isPresent() && result.get() == ButtonType.FINISH) {
@@ -170,7 +169,7 @@ public class Util {
 			Alert alerta = new Alert(AlertType.NONE);
 			SelecionarReservaDispoController selecionarReservaDispoController;
 			selecionarReservaDispoController = (SelecionarReservaDispoController) DaoRes.getInstance().carregarControllerFXML("SelecionarReservaDispoDialog");
-			selecionarReservaDispoController.getReservaDispoTbl().getItems().addAll(BoReserva.getInstance().reservaDisponibilidadeSuperior(categoriaVeiculo, filial.getId(), horario));
+			selecionarReservaDispoController.getReservaDispoTbl().getItems().addAll(FachadaModel.getInstance().reservaDisponibilidadeSuperior(categoriaVeiculo, filial.getId(), horario));
 			alerta.setDialogPane(selecionarReservaDispoController.getSelectReservaDispoDialog());
 			Optional<ButtonType> result = alerta.showAndWait();
 			if(result.isPresent() && result.get() == ButtonType.FINISH) {
@@ -204,7 +203,7 @@ public class Util {
 					+ "na categoria de veículo reservada. Deseja Selecionar Categoria Superior?")) 
 				{
 					ReservaDisponibilidade reservaDispoSuperior = selecionarReservaDispoSuperiorEmDialogo(categoriaVeiculo,filial,LocalDateTime.now());
-					selecionarVeiculoEmDialogo(BoCategoriaVeiculo.getInstance().buscarID(reservaDispoSuperior.getIdCategoria()), filial);
+					selecionarVeiculoEmDialogo(FachadaModel.getInstance().buscarCategoriaVeiculoPorId(reservaDispoSuperior.getIdCategoria()), filial);
 				}
 		} catch (DaoException | BoException e) {
 			Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);

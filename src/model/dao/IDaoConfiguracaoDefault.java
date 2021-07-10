@@ -1,7 +1,7 @@
 package model.dao;
 
 import model.excecoes.DaoException;
-import model.entidade.ConfiguracoesDefault;
+import model.vo.ConfiguracoesDefault;
 
 public interface IDaoConfiguracaoDefault {
 	

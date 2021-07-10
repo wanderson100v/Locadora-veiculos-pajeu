@@ -5,10 +5,10 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 
 import model.excecoes.DaoException;
-import model.entidade.Automovel;
-import model.entidade.CaminhonetaCarga;
-import model.entidade.CategoriaVeiculo;
-import model.sql.ConnectionFactory;
+import model.vo.Automovel;
+import model.vo.CaminhonetaCarga;
+import model.vo.CategoriaVeiculo;
+import model.dao.sql.ConnectionFactory;
 
 public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCategoriaVeiculo  {
 
@@ -16,8 +16,7 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 		super(CategoriaVeiculo.class);
 	}
 	
-	@Override
-	public List<CategoriaVeiculo> categorizarCaminhonetaCarga(CaminhonetaCarga caminhonetaCarga) throws DaoException {
+	public List<CategoriaVeiculo> buscarCategoriasCaminhonetaCarga(CaminhonetaCarga caminhonetaCarga) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
 			TypedQuery<CategoriaVeiculo> query= em.createQuery(SELECIONAR_CATEGORIA_CAMINHONETA_CARGA.replace('?','<'),CategoriaVeiculo.class);
@@ -28,7 +27,6 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 			query.setParameter("distanciaEixos",caminhonetaCarga.getDistanciaEixos());
 			query.setParameter("capacidadeCombustivel",caminhonetaCarga.getCapacidadeCombustivel());
 			query.setParameter("torqueMotor",caminhonetaCarga.getTorqueMotor());
-
 			return query.getResultList();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -38,8 +36,7 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 		}
 	}
 
-	@Override
-	public List<CategoriaVeiculo> categorizarCaminhonetaPassageiro(Automovel automovel) throws DaoException {
+	public List<CategoriaVeiculo> buscarCategoriasCaminhonetaPassageiro(Automovel automovel) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
 			TypedQuery<CategoriaVeiculo> query= em.createQuery(SELECIONAR_CAMINHONETA_PASSAGEIRO.replace('?','<'),CategoriaVeiculo.class);
@@ -59,8 +56,7 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 		}
 	}
 
-	@Override
-	public List<CategoriaVeiculo> categorizarAutomovelPequeno(Automovel automovel) throws DaoException {
+	public List<CategoriaVeiculo> buscarCategoriaAutomovelPequeno(Automovel automovel) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
 			TypedQuery<CategoriaVeiculo> query= em.createQuery(SELECIONAR_AUTOMOVEL_PEQUENO.replace('?','<'),CategoriaVeiculo.class);
@@ -69,7 +65,6 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 			query.setParameter("quantidadePortas",automovel.getQuantidadePortas());
 			query.setParameter("quantidadePassageiro",automovel.getQuantidadePassageiro());
 			query.setParameter("tipoCombustivel",automovel.getTipoCombustivel());
-			
 			return query.getResultList();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -79,7 +74,7 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 		}
 	}
 	
-	public List<CategoriaVeiculo> categoriasSuperiorCaminhonetaCarga(CaminhonetaCarga caminhonetaCarga) throws DaoException {
+	public List<CategoriaVeiculo> buscarCategoriasSuperiorCaminhonetaCarga(CaminhonetaCarga caminhonetaCarga) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
 			TypedQuery<CategoriaVeiculo> query= em.createQuery(SELECIONAR_CATEGORIA_CAMINHONETA_CARGA.replace('?','>'),CategoriaVeiculo.class);
@@ -90,7 +85,6 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 			query.setParameter("distanciaEixos",caminhonetaCarga.getDistanciaEixos());
 			query.setParameter("capacidadeCombustivel",caminhonetaCarga.getCapacidadeCombustivel());
 			query.setParameter("torqueMotor",caminhonetaCarga.getTorqueMotor());
-
 			return query.getResultList();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -100,7 +94,7 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 		}
 	}
 
-	public List<CategoriaVeiculo> categoriasSuperiorCaminhonetaPassageiro(Automovel automovel) throws DaoException {
+	public List<CategoriaVeiculo> buscarCategoriasSuperiorCaminhonetaPassageiro(Automovel automovel) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
 			TypedQuery<CategoriaVeiculo> query= em.createQuery(SELECIONAR_CAMINHONETA_PASSAGEIRO.replace('?','>'),CategoriaVeiculo.class);
@@ -110,7 +104,6 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 			query.setParameter("quantidadePortas",automovel.getQuantidadePortas());
 			query.setParameter("quantidadePassageiro",automovel.getQuantidadePassageiro());
 			query.setParameter("tipoCombustivel",automovel.getTipoCombustivel());
-			
 			return query.getResultList();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -120,7 +113,7 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 		}
 	}
 
-	public List<CategoriaVeiculo> categoriasSuperiorAutomovelPequeno(Automovel automovel) throws DaoException {
+	public List<CategoriaVeiculo> buscarCategoriasSuperiorAutomovelPequeno(Automovel automovel) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
 			TypedQuery<CategoriaVeiculo> query= em.createQuery(SELECIONAR_AUTOMOVEL_PEQUENO.replace('?','>'),CategoriaVeiculo.class);
@@ -129,7 +122,6 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 			query.setParameter("quantidadePortas",automovel.getQuantidadePortas());
 			query.setParameter("quantidadePassageiro",automovel.getQuantidadePassageiro());
 			query.setParameter("tipoCombustivel",automovel.getTipoCombustivel());
-			
 			return query.getResultList();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -139,12 +131,11 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 		}
 	}
 
-
 	@Override
 	public List<CategoriaVeiculo> buscaPorBusca(CategoriaVeiculo categoriaVeiculo) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
-			TypedQuery<CategoriaVeiculo> typedQuery = em.createNamedQuery(BUSCA_POR_BUSCA, CategoriaVeiculo.class);
+			TypedQuery<CategoriaVeiculo> typedQuery = em.createQuery(BUSCA_POR_BUSCA, CategoriaVeiculo.class);
 			typedQuery.setParameter("tipo","%"+categoriaVeiculo.getTipo()+"%");
 			typedQuery.setParameter("descricao","%"+categoriaVeiculo.getDescricao()+"%");
 			typedQuery.setParameter("quilometragemRevisao",categoriaVeiculo.getQuilometragemRevisao());

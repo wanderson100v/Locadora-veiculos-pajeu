@@ -2,7 +2,11 @@ package controller;
 
 import java.util.List;
 
+import model.enumeracoes.Cargo;
 import model.excecoes.BoException;
+import model.vo.Entidade;
+import model.vo.Filial;
+import model.vo.Funcionario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -15,12 +19,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
-import mode.business.BoFuncionario;
-import mode.business.IBoFuncionario;
-import mode.enumeracoes.Cargo;
-import model.entidade.Entidade;
-import model.entidade.Filial;
-import model.entidade.Funcionario;
 
 public class FuncionarioController  extends CRUDController<Funcionario> implements IObservadorFuncionario{
 
@@ -70,8 +68,8 @@ public class FuncionarioController  extends CRUDController<Funcionario> implemen
     private GridPane dadosAcessoPane;
 
     private Funcionario funcionario;
-    private IBoFuncionario boFuncionario = BoFuncionario.getInstance();
     private Filial filial;
+    
     @FXML
     void initialize() {
     	super.initialize();
@@ -106,27 +104,24 @@ public class FuncionarioController  extends CRUDController<Funcionario> implemen
 	    				funcionario.setFilial(filial);
 	    				this.filial = null;
 	    			}
-					boFuncionario.cadastrar(funcionario,senha,cargoBox.getValue());
+					fachadaModel.cadastrarFuncionario(funcionario,senha,cargoBox.getValue());
 					alerta.imprimirMsg("Sucesso ao cadastrar","Funcionario cadastrado com sucesso", AlertType.INFORMATION);
 				}else {
 					cadastrarBtn.setDisable(false);
 					alerta.imprimirMsg("Alerta", "As senhas informadas não correspondem", AlertType.WARNING);
 				}
     		}else if(btn == editarBtn) {
-				Funcionario funcionario = this.funcionario;
-    			String oldLogin = boFuncionario.gerarLogin(funcionario)
-;				funcionario.setAtivo(simAtivoRb.isSelected());
-    			funcionario.setNome(nomeFld.getText());
-    			funcionario.setCpf(cpfFld.getText());
-    			boFuncionario.editar(funcionario, oldLogin);
+				Funcionario novofuncionario = this.funcionario;
+				novofuncionario.setAtivo(simAtivoRb.isSelected());
+				novofuncionario.setNome(nomeFld.getText());
+				novofuncionario.setCpf(cpfFld.getText());
+    			fachadaModel.editarFuncionario( this.funcionario, novofuncionario);
 				alerta.imprimirMsg("Sucesso ao editado","Funcionário editado com sucesso", AlertType.INFORMATION);
 	    	}else if(btn == excluirBtn){
-	    		
-	    		boFuncionario.excluir(this.funcionario);
+	    		fachadaModel.excluirFuncionario(this.funcionario);
 	    		alerta.imprimirMsg("Sucesso ao exluir","Funcionário exlcuido com sucesso", 
 	    				AlertType.INFORMATION);
 	    		limparCampos();
-	    	
 	    	}else if(btn == limparBtn)
 	    		limparCampos();
 	    		
@@ -138,7 +133,7 @@ public class FuncionarioController  extends CRUDController<Funcionario> implemen
 	@Override
 	void popularTabela(String busca) {
 		try {
-			List<Funcionario> funcionarios = boFuncionario.buscaPorBuscaAbrangente(busca);
+			List<Funcionario> funcionarios = fachadaModel.buscarFuncionarios(busca);
 			Funcionario instanciaRemover = null;
 			for(Funcionario f : funcionarios)
 				if(this.funcionario != null && f.getCpf().equals(this.funcionario.getCpf()))
@@ -166,7 +161,7 @@ public class FuncionarioController  extends CRUDController<Funcionario> implemen
 		if(funcionario.getFilial()!= null)
 			filialFld.setText(funcionario.getFilial().toString());
 		try {
-			nivelAcessoBox.setValue(boFuncionario.requisitarGralDeAcesso(funcionario));
+			nivelAcessoBox.setValue(fachadaModel.requisitarGralDeAcesso(funcionario));
 		}catch (Exception e) {
 			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
 		}
@@ -201,10 +196,10 @@ public class FuncionarioController  extends CRUDController<Funcionario> implemen
 					this.filial = filial;
 				}
 			}else if(event.getSource() == resertarSenhaBtn) {
-				boFuncionario.resetarSenha(funcionario);
+				fachadaModel.resetarSenha(funcionario);
 				alerta.imprimirMsg("Sucesso ao editar", "Senha editada com sucesso",AlertType.INFORMATION);
 			}else if(event.getSource() == alterarNivelAcessoBtn) {
-				boFuncionario.alterarGralAcesso(funcionario, boFuncionario.requisitarGralDeAcesso(funcionario),nivelAcessoBox.getValue());
+				fachadaModel.alterarGralAcesso(funcionario, fachadaModel.requisitarGralDeAcesso(funcionario),nivelAcessoBox.getValue());
 				alerta.imprimirMsg("Sucesso ao editar", "Privilegios de acaesso alterados com sucesso",AlertType.INFORMATION);
 			}
 		} catch (BoException e) {

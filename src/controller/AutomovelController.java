@@ -17,20 +17,19 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
-import mode.business.BoAutomovel;
-import mode.business.IBoAutomovel;
-import mode.enumeracoes.TamanhoVeiculo;
-import mode.enumeracoes.TipoAirBag;
-import mode.enumeracoes.TipoAutomovel;
-import mode.enumeracoes.TipoCambio;
-import mode.enumeracoes.TipoCombustivel;
+import model.FachadaModel;
 import model.dao.DaoRes;
-import model.entidade.Acessorio;
-import model.entidade.Automovel;
-import model.entidade.Entidade;
-import model.entidade.Filial;
+import model.enumeracoes.TamanhoVeiculo;
+import model.enumeracoes.TipoAirBag;
+import model.enumeracoes.TipoAutomovel;
+import model.enumeracoes.TipoCambio;
+import model.enumeracoes.TipoCombustivel;
 import model.excecoes.BoException;
 import model.excecoes.DaoException;
+import model.vo.Acessorio;
+import model.vo.Automovel;
+import model.vo.Entidade;
+import model.vo.Filial;
 import view.Mascara;
 
 public class AutomovelController extends CRUDController<Automovel> {
@@ -135,11 +134,13 @@ public class AutomovelController extends CRUDController<Automovel> {
     
     private Filial filial;
     
-    private IBoAutomovel boAutomovel = BoAutomovel.getInstance();
+    private FachadaModel fachadaModel;
     
     @FXML
     void initialize() {
     	super.initialize();
+    	this.fachadaModel = FachadaModel.getInstance();
+    	
     	ToggleGroup toggleGroup = new ToggleGroup();
     	simAtivoRb.setToggleGroup(toggleGroup);
     	naoAtivoRb.setToggleGroup(toggleGroup);
@@ -207,16 +208,14 @@ public class AutomovelController extends CRUDController<Automovel> {
     			automovel.setTipoAirBag(airbagBox.getValue());
     			automovel.setAcessorios(aceTabela.getItems());
     			
-    			System.out.println(automovel.getFilial());
-    			
-				boAutomovel.cadastrarEditar(automovel);
+				fachadaModel.cadastrarEditarAutomovel(automovel);
 				alerta.imprimirMsg("Sucesso ao cadastrar","Automóvel"
 						+((automovel.equals(this.automovel))? "editado": "cadastrado") 
 						+" com sucesso", AlertType.INFORMATION);
 				
 	    	}else if(btn == excluirBtn){
 	    		
-	    		boAutomovel.excluir(this.automovel);
+	    		fachadaModel.excluirAutomovel(this.automovel);
 	    		alerta.imprimirMsg("Sucesso ao exluir","Automóvel exlcuido com sucesso", 
 	    				AlertType.INFORMATION);
 	    		limparCampos();
@@ -234,7 +233,7 @@ public class AutomovelController extends CRUDController<Automovel> {
 	@Override
 	void popularTabela(String busca) {
 		try {
-			List<Automovel> automoveis = boAutomovel.buscaPorBuscaAbrangente(busca);
+			List<Automovel> automoveis = fachadaModel.buscarAutomoveis(busca);
 			entidadeTabela.getItems().setAll(automoveis);
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+automoveis.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {

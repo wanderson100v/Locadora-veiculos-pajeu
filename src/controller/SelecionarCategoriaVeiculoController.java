@@ -1,6 +1,8 @@
 package controller;
 
+import model.FachadaModel;
 import model.excecoes.BoException;
+import model.vo.CategoriaVeiculo;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,9 +14,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import mode.business.BoCategoriaVeiculo;
-import mode.business.IBoCategoriaVeiculo;
-import model.entidade.CategoriaVeiculo;
 import view.Alerta;
 
 public class SelecionarCategoriaVeiculoController {
@@ -40,12 +39,13 @@ public class SelecionarCategoriaVeiculoController {
     @FXML
     private TableColumn<CategoriaVeiculo, String> descricaoCln;
 
-    private IBoCategoriaVeiculo boCategoriaVeiculo = BoCategoriaVeiculo.getInstance();
-    
     private Alerta alerta = Alerta.getInstance();
+    
+    private FachadaModel fachadaModel;
     
     @FXML
     void initialize() {
+    	this.fachadaModel = FachadaModel.getInstance();
     	tipoCln.setCellValueFactory( new PropertyValueFactory<>("tipo"));
     	valorCln.setCellValueFactory( new PropertyValueFactory<>("valorDiaria"));
     	descricaoCln.setCellValueFactory( new PropertyValueFactory<>("descricao"));
@@ -55,7 +55,7 @@ public class SelecionarCategoriaVeiculoController {
 			public void handle(KeyEvent event) {
 				if(buscaRapidaChk.isSelected() && pesquisaFld.getText().trim().length() > 0) {
 		    		try {
-						categoriaVeiculoTbl.getItems().setAll(boCategoriaVeiculo.buscaPorBuscaAbrangente(pesquisaFld.getText()));
+						categoriaVeiculoTbl.getItems().setAll(fachadaModel.buscarCategoriasVeiculo(pesquisaFld.getText()));
 					} catch (BoException e) {
 						e.printStackTrace();
 					}
@@ -68,7 +68,7 @@ public class SelecionarCategoriaVeiculoController {
     void actionHandle(ActionEvent event) {
     	if(!buscaRapidaChk.isSelected()) {
     		try {
-				categoriaVeiculoTbl.getItems().setAll(boCategoriaVeiculo.buscaPorBuscaAbrangente(pesquisaFld.getText()));
+				categoriaVeiculoTbl.getItems().setAll(fachadaModel.buscarCategoriasVeiculo(pesquisaFld.getText()));
 				alerta.imprimirMsg("Busca concluída","Foram econtrados "+categoriaVeiculoTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 			} catch (BoException e) {
 				alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);

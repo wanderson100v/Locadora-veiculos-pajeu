@@ -1,6 +1,6 @@
 package model.dao;
 
-import model.entidade.Endereco;
+import model.vo.Endereco;
 public class DaoEndereco extends Dao<Endereco> implements IDaoEndereco{
 
 	public DaoEndereco() {

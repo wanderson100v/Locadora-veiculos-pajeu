@@ -1,8 +1,8 @@
 package model.dao;
 
-import model.entidade.Backup;
+import model.dao.sql.ConnectionFactory;
 import model.excecoes.DaoException;
-import model.sql.ConnectionFactory;
+import model.vo.Backup;
 
 public class DaoBackup extends Dao<Backup> implements IDaoBackup{
 
@@ -13,7 +13,7 @@ public class DaoBackup extends Dao<Backup> implements IDaoBackup{
 	public Backup checarBackup() throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
-			return (Backup) em.createStoredProcedureQuery("checar_backup",Backup.class)
+			return (Backup) em.createStoredProcedureQuery("checar_backup", Backup.class)
 					.getSingleResult();
 		}catch (Exception e) {
 			e.printStackTrace();

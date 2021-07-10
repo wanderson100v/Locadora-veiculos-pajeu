@@ -3,7 +3,12 @@ package controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import model.enumeracoes.EstadoManutencao;
+import model.enumeracoes.TipoManutencao;
 import model.excecoes.BoException;
+import model.vo.Entidade;
+import model.vo.Manutencao;
+import model.vo.Veiculo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -17,12 +22,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-import mode.business.BoManutencao;
-import mode.enumeracoes.EstadoManutencao;
-import mode.enumeracoes.TipoManutencao;
-import model.entidade.Entidade;
-import model.entidade.Manutencao;
-import model.entidade.Veiculo;
 import view.Alerta;
 
 public class ManutencaoController extends CRUDController<Manutencao>{
@@ -121,7 +120,7 @@ public class ManutencaoController extends CRUDController<Manutencao>{
 		try {	
 			try {
 				if(btn == cadastrarBtn) {
-					BoManutencao.getInstance().cadastrarEditar(new Manutencao(Util.gerarHorario(inicioDate, horaBox)
+					fachadaModel.cadastrarEditarManutencao(new Manutencao(Util.gerarHorario(inicioDate, horaBox)
 							, tipoBox.getValue(), estadoManutencaoBox.getValue(), Float.parseFloat(custoFld.getText()), 
 							horaCustoBox.getValue(),veiculo));
 					alerta.imprimirMsg("Sucesso ao cadastrar","Manutenção cadastrada com sucesso", AlertType.INFORMATION);
@@ -132,14 +131,14 @@ public class ManutencaoController extends CRUDController<Manutencao>{
 		    		manutencao.setDataHoraInicio(Util.gerarHorario(inicioDate, horaBox));
 		    		manutencao.setEstadoManutencao(estadoManutencaoBox.getValue());
 		    		manutencao.setTipoManuntencao(tipoBox.getValue());
-		    		BoManutencao.getInstance().cadastrarEditar(manutencao);
+		    		fachadaModel.cadastrarEditarManutencao(manutencao);
 		    		alerta.imprimirMsg("Sucesso ao editar","Manutenção editado com sucesso", AlertType.INFORMATION);
 		    	}
 		    }catch (Exception e) {
 	    		Alerta.getInstance().imprimirMsg("Alerta", "Há um ou mais campos com entradas invalidas", AlertType.WARNING);
 	    	}	
 	    	 if(btn == excluirBtn){
-	    		BoManutencao.getInstance().excluir(manutencao);
+	    		fachadaModel.excluirManutencao(manutencao);
 	    		alerta.imprimirMsg("Sucesso ao exluir","Manutenção exlcuido com sucesso", AlertType.INFORMATION);
 	    		limparCampos();
 	    	}else if(btn == limparBtn){
@@ -155,7 +154,7 @@ public class ManutencaoController extends CRUDController<Manutencao>{
 		try {
 			Manutencao manutencao = new Manutencao();
 			manutencao.setVeiculo(veiculoBusca);
-			List<Manutencao> manutencoes = BoManutencao.getInstance().buscaPorBuscaAbrangente(busca,manutencao);
+			List<Manutencao> manutencoes = fachadaModel.buscarManutencoes(busca,manutencao);
 			entidadeTabela.getItems().setAll(manutencoes);
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+manutencoes.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {

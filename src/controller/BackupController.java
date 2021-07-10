@@ -21,18 +21,18 @@ import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import mode.business.BoBackup;
-import mode.enumeracoes.Cargo;
-import mode.enumeracoes.EstadoBackup;
+import model.FachadaModel;
 import model.dao.DaoConfiguracaoDefault;
 import model.dao.DaoRes;
 import model.dao.IDaoConfiguracaoDefault;
-import model.entidade.Backup;
-import model.entidade.ConfiguracoesDefault;
-import model.entidade.Funcionario;
+import model.dao.sql.ConnectionFactory;
+import model.enumeracoes.Cargo;
+import model.enumeracoes.EstadoBackup;
 import model.excecoes.BoException;
 import model.excecoes.DaoException;
-import model.sql.ConnectionFactory;
+import model.vo.Backup;
+import model.vo.ConfiguracoesDefault;
+import model.vo.Funcionario;
 import view.Alerta;
 
 @SuppressWarnings("deprecation")
@@ -112,11 +112,15 @@ public class BackupController implements Observer, IObservadorFuncionario {
     
     private IDaoConfiguracaoDefault daoConfiguracaoDefault;
     
+    private FachadaModel fachadaModel;
+    
     
     @FXML
     void initialize() {
     	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
     	DaoRes.getInstance().addObserver(this);
+    	this.fachadaModel = FachadaModel.getInstance();
+    	
     	daoConfiguracaoDefault = DaoConfiguracaoDefault.getInstance();
     	detalheBackupArea.positionCaret(detalheBackupArea.getLength());
     	agendDate.setValue(LocalDate.now());
@@ -127,7 +131,7 @@ public class BackupController implements Observer, IObservadorFuncionario {
     
     private void popularListViewBackup() {
     	try {
-    		List<Backup> backupHistory = BoBackup.getInstance().buscarAll();
+    		List<Backup> backupHistory = this.fachadaModel.buscarTodosBackups();
     		if(backupHistory != null && !backupHistory.isEmpty())
     			bakupLv.getItems().setAll(backupHistory);
 		} catch (BoException e) {
@@ -160,7 +164,7 @@ public class BackupController implements Observer, IObservadorFuncionario {
     		backup.setEstado(EstadoBackup.PENDENTE);
     		backup.setDescricao("");
     		try {
-				BoBackup.getInstance().cadastrarEditar(backup);
+				this.fachadaModel.cadastrarEditarBackup(backup);
 				popularListViewBackup();
 				Alerta.getInstance().imprimirMsg("Sucesso", "Backup agendado com sucesso", AlertType.INFORMATION);
 			} catch (BoException e1) {
@@ -202,7 +206,7 @@ public class BackupController implements Observer, IObservadorFuncionario {
 		    		backup.setDataOcorrencia(LocalDateTime.now());
 		    		backup.setEstado(EstadoBackup.REALIZADO);
 		    		backup.setDescricao(descriBackupArea.getText().trim());
-		    		BoBackup.getInstance().cadastrarEditar(backup);
+		    		this.fachadaModel.cadastrarEditarBackup(backup);
 		    		Alerta.getInstance().imprimirMsg("Sucesso", "Restauração de banco finalizada com sucesso", AlertType.INFORMATION);
 				}else
 					Alerta.getInstance().imprimirMsg("Alerta", "É necessário selecionar arquivo antes de"

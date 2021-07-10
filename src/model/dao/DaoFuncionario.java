@@ -6,9 +6,9 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import model.excecoes.DaoException;
-import mode.enumeracoes.Cargo;
-import model.entidade.Funcionario;
-import model.sql.ConnectionFactory;
+import model.vo.Funcionario;
+import model.dao.sql.ConnectionFactory;
+import model.enumeracoes.Cargo;
 
 public class DaoFuncionario  extends Dao<Funcionario> implements IDaoFuncionario{
 	
@@ -96,7 +96,7 @@ public class DaoFuncionario  extends Dao<Funcionario> implements IDaoFuncionario
 			try {
 				em = ConnectionFactory.getConnection();
 				return em.createQuery(
-						  " select f from Funcionario as f "
+						  " select f from "+CAMINHO_CLASSE+"Funcionario as f "
 						+ " where f.ativo = true "
 						+ " and upper(f.cpf) = upper(:cpf)", Funcionario.class)
 				.setParameter("cpf",cpf)

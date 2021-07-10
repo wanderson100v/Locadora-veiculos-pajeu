@@ -6,13 +6,13 @@ import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.Immutable;
 
-import mode.enumeracoes.EstadoRerserva;
-import model.entidade.Entidade;
+import model.enumeracoes.EstadoRerserva;
+import model.vo.Entidade;
 
 @Entity(name = "reserva_hoje")
 @SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "reserva_hoje_seq")
 @Immutable
-@NamedQuery(name = "reservaHoje.buscarTudo" , query = "select r from banco.ReservaHoje as r")
+@NamedQuery(name = "reservaHoje.buscarTudo" , query = "select r from model.banco.ReservaHoje as r")
 public class ReservaHoje extends Entidade{
 	
 	private static final long serialVersionUID = 1L;

@@ -5,27 +5,26 @@
              version="2.2">
 
     <persistence-unit name="banco" transaction-type="RESOURCE_LOCAL">
-    	<class>banco.ReservaHoje</class>
-    	<class>banco.ReservaPendente</class>
-    	<class>entidade.Acessorio</class>
-    	<class>entidade.Automovel</class>
-    	<class>entidade.Backup</class>
-    	<class>entidade.CaminhonetaCarga</class>
-    	<class>entidade.CategoriaVeiculo</class>
-    	<class>entidade.Cliente</class>
-    	<class>entidade.Endereco</class>
-    	<class>entidade.Entidade</class>
-    	<class>entidade.Filial</class>
-    	<class>entidade.Fisico</class>
-    	<class>entidade.Funcionario</class>
-    	<class>entidade.Juridico</class>
-    	<class>entidade.Locacao</class>
-    	<class>entidade.Manutencao</class>
-    	<class>entidade.Reserva</class>
-    	<class>entidade.Veiculo</class>
-    	<class>sql.LocalDataTimeConversor</class>
-    	<class>sql.LocalDateConversor</class>
-    	<shared-cache-mode>ALL</shared-cache-mode>
+    	<class>model.banco.ReservaHoje</class>
+    	<class>model.banco.ReservaPendente</class>
+    	<class>model.dao.sql.LocalDataTimeConversor</class>
+    	<class>model.dao.sql.LocalDateConversor</class>
+    	<class>model.vo.Acessorio</class>
+    	<class>model.vo.Automovel</class>
+    	<class>model.vo.Backup</class>
+    	<class>model.vo.CaminhonetaCarga</class>
+    	<class>model.vo.CategoriaVeiculo</class>
+    	<class>model.vo.Cliente</class>
+    	<class>model.vo.Endereco</class>
+    	<class>model.vo.Entidade</class>
+    	<class>model.vo.Filial</class>
+    	<class>model.vo.Fisico</class>
+    	<class>model.vo.Funcionario</class>
+    	<class>model.vo.Juridico</class>
+    	<class>model.vo.Locacao</class>
+    	<class>model.vo.Manutencao</class>
+    	<class>model.vo.Reserva</class>
+    	<class>model.vo.Veiculo</class>
    
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> <!-- DB Driver -->

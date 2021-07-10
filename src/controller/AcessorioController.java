@@ -10,11 +10,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
-import mode.business.BoAcessorio;
-import mode.business.IBoAcessorio;
-import model.entidade.Acessorio;
-import model.entidade.Entidade;
 import model.excecoes.BoException;
+import model.vo.Acessorio;
+import model.vo.Entidade;
 
 public class AcessorioController extends CRUDController<Acessorio>{
 
@@ -41,8 +39,6 @@ public class AcessorioController extends CRUDController<Acessorio>{
 
     private Acessorio acessorio;
     
-    private IBoAcessorio boAcessorio = BoAcessorio.getInstance();
-    
     @FXML
     void initialize() {
     	super.initialize();
@@ -66,14 +62,14 @@ public class AcessorioController extends CRUDController<Acessorio>{
     			acessorio.setValor(Float.parseFloat(valorFld.getText()));
     			acessorio.setDepreciado(simDepreciadoRb.isSelected());
     			
-    			boAcessorio.cadastrarEditar(acessorio);
+    			fachadaModel.cadastrarEditarAcessorio(acessorio);
 				alerta.imprimirMsg("Sucesso ao cadastrar","Acessório "
 						+((acessorio.equals(this.acessorio))? "editado": "cadastrado") 
 						+" com sucesso", AlertType.INFORMATION);
 				
 	    	}else if(btn == excluirBtn){
 	    		
-	    		boAcessorio.excluir(this.acessorio);
+	    		fachadaModel.excluirAcessorio(this.acessorio);
 	    		alerta.imprimirMsg("Sucesso ao exluir","Acessório exlcuido com sucesso", 
 	    				AlertType.INFORMATION);
 	    		limparCampos();
@@ -91,7 +87,7 @@ public class AcessorioController extends CRUDController<Acessorio>{
 	@Override
 	void popularTabela(String busca) {
 		try {
-			List<Acessorio> acessorios = boAcessorio.buscaPorBuscaAbrangente(busca);
+			List<Acessorio> acessorios = fachadaModel.buscarAcessorios(busca);
 			entidadeTabela.getItems().setAll(acessorios);
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+acessorios.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {

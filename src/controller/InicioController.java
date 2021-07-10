@@ -3,21 +3,18 @@ package controller;
 import org.controlsfx.control.Notifications;
 
 import model.excecoes.BoException;
+import model.vo.Backup;
+import model.vo.Funcionario;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import mode.business.BoBackup;
-import mode.business.BoManutencao;
-import mode.business.BoReserva;
-import mode.business.IBoReserva;
-import mode.enumeracoes.Cargo;
-import mode.enumeracoes.EstadoRerserva;
+import model.FachadaModel;
 import model.banco.ReservaHoje;
-import model.entidade.Backup;
-import model.entidade.Funcionario;
+import model.enumeracoes.Cargo;
+import model.enumeracoes.EstadoRerserva;
 
 public class InicioController implements IObservadorFuncionario {
 
@@ -39,14 +36,15 @@ public class InicioController implements IObservadorFuncionario {
     @FXML
     private TableColumn<ReservaHoje, String> filialCln;
 
-    private IBoReserva boReserva = BoReserva.getInstance();
-    
     private Thread thread;
     
     private boolean rodando = true;
     
+    private FachadaModel fachadaModel;
+    
     @FXML
     void initialize() {
+    	fachadaModel = FachadaModel.getInstance();
     	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
     	
     	horaCln.setCellValueFactory(new PropertyValueFactory<>("hora"));
@@ -75,16 +73,16 @@ public class InicioController implements IObservadorFuncionario {
 											//verificando necessidade de atualizações 
 											//para reserva
 											reservasHojeTbl.getItems().clear();
-											reservasHojeTbl.getItems().addAll(boReserva.buscarReservaHoje());
+											reservasHojeTbl.getItems().addAll(fachadaModel.buscarReservaHoje());
 											reservasHojeTbl.refresh();
 											//para manutenção
-											int manutencaoFinalizada = BoManutencao.getInstance().checarManutencao();
+											int manutencaoFinalizada = fachadaModel.checarManutencao();
 											if(manutencaoFinalizada >0)
 												Notifications.create().title("Manutenções finalizadas")
 												.text("Foram finalizadas "+manutencaoFinalizada+" manutenções de veículos")
 												.position(Pos.BOTTOM_RIGHT).showInformation();
 											//para backup
-											Backup backup = BoBackup.getInstance().checarBackup();
+											Backup backup = fachadaModel.checarBackup();
 											if(backup!= null) 
 												Util.exibirRealizarBackupEmDialogo(backup);
 										} catch (BoException e) {

@@ -13,18 +13,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
-import mode.business.BoCaminhonetaCarga;
-import mode.business.IBoCaminhonetaCarga;
-import mode.enumeracoes.TipoAcionamentoEmbreagem;
-import mode.enumeracoes.TipoCombustivel;
-import model.entidade.CaminhonetaCarga;
-import model.entidade.Entidade;
-import model.entidade.Filial;
+import model.enumeracoes.TipoAcionamentoEmbreagem;
+import model.enumeracoes.TipoCombustivel;
 import model.excecoes.BoException;
+import model.vo.CaminhonetaCarga;
+import model.vo.Entidade;
+import model.vo.Filial;
 import view.Mascara;
 
 public class CaminhonetaCargaController extends CRUDController<CaminhonetaCarga> {
-
 
     @FXML
     private TableColumn<CaminhonetaCarga, String> placaCln;
@@ -117,10 +114,10 @@ public class CaminhonetaCargaController extends CRUDController<CaminhonetaCarga>
     
     private Filial filial;
     
-    private IBoCaminhonetaCarga boCaminhonetaCarga = BoCaminhonetaCarga.getInstance();
     @FXML
     void initialize() {
     	super.initialize();
+    	
     	ToggleGroup toggleGroup = new ToggleGroup();
     	simAtivoRb.setToggleGroup(toggleGroup);
     	naoAtivoRb.setToggleGroup(toggleGroup);
@@ -188,14 +185,14 @@ public class CaminhonetaCargaController extends CRUDController<CaminhonetaCarga>
     			caminhonetaCarga.setCapacidadeCombustivel(Integer.parseInt(capCombustivelFld.getText()));
     			
     			
-				boCaminhonetaCarga.cadastrarEditar(caminhonetaCarga);
+				fachadaModel.cadastrarEditarCaminhonetaCarga(caminhonetaCarga);
 				alerta.imprimirMsg("Sucesso ao cadastrar","Caminhoneta de Carga "
 						+((caminhonetaCarga.equals(this.caminhonetaCarga))? "editada": "cadastrada") 
 						+" com sucesso", AlertType.INFORMATION);
 				
 	    	}else if(btn == excluirBtn){
 	    		
-	    		boCaminhonetaCarga.excluir(this.caminhonetaCarga);
+	    		fachadaModel.excluirCaminhonetaCarga(this.caminhonetaCarga);
 	    		alerta.imprimirMsg("Sucesso ao exluir","Caminhoneta de Carga exlcuida com sucesso", 
 	    				AlertType.INFORMATION);
 	    		limparCampos();
@@ -213,7 +210,7 @@ public class CaminhonetaCargaController extends CRUDController<CaminhonetaCarga>
 	@Override
 	void popularTabela(String busca) {
 		try {
-			List<CaminhonetaCarga> caminhonetaCargas = boCaminhonetaCarga.buscaPorBuscaAbrangente(busca);
+			List<CaminhonetaCarga> caminhonetaCargas = fachadaModel.buscarCaminhonetasCarga(busca);
 			entidadeTabela.getItems().setAll(caminhonetaCargas);
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+caminhonetaCargas.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {

@@ -10,21 +10,21 @@ import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.Immutable;
 
-import model.entidade.Entidade;
+import model.vo.Entidade;
 
 @Entity(name = "reserva_pendente")
 @SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "reserva_pendente_seq")
 @Immutable
 @NamedQueries({
 		@NamedQuery(name = "reservaPendente.buscarPorCliente" , 
-			query = "select r from banco.ReservaPendente as r "
+			query = "select r from model.banco.ReservaPendente as r "
 					+ " where upper(r.nomeCliente) like upper(:nome) "
 					+ " or upper(r.codigoCliente) like upper(:codigo)"
 					+ " or upper(r.telefone) like upper(:telefone) "
 					+ " or upper(r.email) like upper(:email)"
 					+ " order by retirada"),
 		@NamedQuery(name = "reservaPendente.buscarPorCliente_Filial" , 
-			query = "select r from banco.ReservaPendente as r "
+			query = "select r from model.banco.ReservaPendente as r "
 					+ " where r.filial_id = :filial_id"
 					+ " and (upper(r.nomeCliente) like upper(:nome) "
 					+ " or upper(r.codigoCliente) like upper(:codigo)"

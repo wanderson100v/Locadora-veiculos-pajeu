@@ -3,18 +3,17 @@ package controller;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import model.FachadaModel;
+import model.enumeracoes.EstadoRerserva;
 import model.excecoes.BoException;
+import model.vo.CategoriaVeiculo;
+import model.vo.Cliente;
+import model.vo.Filial;
+import model.vo.Funcionario;
+import model.vo.Reserva;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
-import mode.business.BoReserva;
-import mode.business.IBoReserva;
-import mode.enumeracoes.EstadoRerserva;
-import model.entidade.CategoriaVeiculo;
-import model.entidade.Cliente;
-import model.entidade.Filial;
-import model.entidade.Funcionario;
-import model.entidade.Reserva;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -63,11 +62,12 @@ public class IniciarReservaController {
     private TextField funcionarioFld;
     
     private Reserva reserva = new Reserva();
-    
-    private IBoReserva boReserva = BoReserva.getInstance();
+   
+    private FachadaModel fachadaModel;
     
     @FXML
     void initialize() {
+    	fachadaModel = FachadaModel.getInstance();
     	for(int i = 1 ; i <25 ; i++)
     		horaRetiradaBox.getItems().add(i);
     	horaDevolucaoBox.getItems().addAll(horaRetiradaBox.getItems());
@@ -109,7 +109,7 @@ public class IniciarReservaController {
 	    		LocalDate dataEntrega = entregaDate.getValue();
 	    		reserva.setDataRetirada(LocalDateTime.of(dataRetidada.getYear(), dataRetidada.getMonthValue(), dataRetidada.getDayOfMonth(), horaRetiradaBox.getValue(),0));
 	    		reserva.setDataDevolucao(LocalDateTime.of(dataEntrega.getYear(), dataEntrega.getMonthValue(), dataEntrega.getDayOfMonth(), horaDevolucaoBox.getValue(),0));
-	    		boReserva.cadastrarEditar(reserva);
+	    		fachadaModel.cadastrarEditarReserva(reserva);
 	    		Alerta.getInstance().imprimirMsg("Sucesso ao cadastrar","Reserva iniciada com sucesso",AlertType.INFORMATION);
 	    		this.reserva = new Reserva();
 	    		limparCampos();

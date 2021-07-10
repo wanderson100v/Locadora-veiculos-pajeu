@@ -3,9 +3,11 @@ package model.dao;
 import java.util.List;
 
 import model.excecoes.DaoException;
-import model.entidade.Entidade;
+import model.vo.Entidade;
 
 public interface IDao <T extends Entidade>{
+	
+	String CAMINHO_CLASSE = "model.vo.";
 	
 	public void cadastrar(T t) throws DaoException;
 	

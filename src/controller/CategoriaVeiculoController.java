@@ -14,19 +14,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import mode.business.BoCategoriaVeiculo;
-import mode.business.IBoCategoriaVeiculo;
-import mode.enumeracoes.TamanhoVeiculo;
-import mode.enumeracoes.TipoAcionamentoEmbreagem;
-import mode.enumeracoes.TipoAirBag;
-import mode.enumeracoes.TipoAutomovel;
-import mode.enumeracoes.TipoCambio;
-import mode.enumeracoes.TipoCombustivel;
-import model.entidade.Automovel;
-import model.entidade.CaminhonetaCarga;
-import model.entidade.CategoriaVeiculo;
-import model.entidade.Entidade;
+import model.enumeracoes.TamanhoVeiculo;
+import model.enumeracoes.TipoAcionamentoEmbreagem;
+import model.enumeracoes.TipoAirBag;
+import model.enumeracoes.TipoAutomovel;
+import model.enumeracoes.TipoCambio;
+import model.enumeracoes.TipoCombustivel;
 import model.excecoes.BoException;
+import model.vo.Automovel;
+import model.vo.CaminhonetaCarga;
+import model.vo.CategoriaVeiculo;
+import model.vo.Entidade;
 
 public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo> {
 
@@ -116,8 +114,6 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
     
     private CategoriaVeiculo categoriaVeiculo;
     
-    private IBoCategoriaVeiculo boCategoriaVeiculo = BoCategoriaVeiculo.getInstance();
-    
     @FXML
     void initialize() {
     	super.initialize();
@@ -191,14 +187,14 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
 					categoriaVeiculo.setQuilometragemRevisao(Integer.parseInt(quilometragemRevisaoFld.getText()));
 					categoriaVeiculo.setValorDiaria(Float.parseFloat(valorDiariaFld.getText()));
 					
-					boCategoriaVeiculo.cadastrarEditar(categoriaVeiculo);
+					fachadaModel.cadastrarEditarCategoriaVeiculo(categoriaVeiculo);
 					
 					alerta.imprimirMsg("Sucesso ao cadastrar","Categoria De Veículo"
 							+((categoriaVeiculo.equals(this.categoriaVeiculo))? "editada": "cadastrada") 
 							+" com sucesso", AlertType.INFORMATION);
 			}else if(btn == excluirBtn) {
 				
-				boCategoriaVeiculo.excluir(this.categoriaVeiculo);
+				fachadaModel.excluirCategoriaVeiculo(this.categoriaVeiculo);
 	    		alerta.imprimirMsg("Sucesso ao exluir","Categoria de Veículo excluida com sucesso", 
 	    				AlertType.INFORMATION);
 	    		limparCampos();
@@ -213,7 +209,7 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
 	@Override
 	void popularTabela(String busca) {
 		try {
-			List<CategoriaVeiculo> categoriasVeiculos = boCategoriaVeiculo.buscaPorBuscaAbrangente(busca);
+			List<CategoriaVeiculo> categoriasVeiculos = fachadaModel.buscarCategoriasVeiculo(busca);
 			entidadeTabela.getItems().setAll(categoriasVeiculos);
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+categoriasVeiculos.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {

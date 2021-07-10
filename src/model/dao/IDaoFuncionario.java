@@ -2,9 +2,9 @@ package model.dao;
 
 import java.util.List;
 
+import model.enumeracoes.Cargo;
 import model.excecoes.DaoException;
-import mode.enumeracoes.Cargo;
-import model.entidade.Funcionario;
+import model.vo.Funcionario;
 
 public interface IDaoFuncionario extends IDao<Funcionario>{
 	

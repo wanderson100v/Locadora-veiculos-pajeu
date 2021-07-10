@@ -13,15 +13,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
-import mode.business.BoEndereco;
-import mode.business.BoJuridico;
-import mode.business.IBoEndereco;
-import mode.business.IBoJuridico;
-import mode.enumeracoes.Estado;
-import model.entidade.Endereco;
-import model.entidade.Entidade;
-import model.entidade.Juridico;
+import model.enumeracoes.Estado;
 import model.excecoes.BoException;
+import model.vo.Endereco;
+import model.vo.Entidade;
+import model.vo.Juridico;
 import view.Mascara;
 
 public class ClienteJuridicoController extends CRUDController<Juridico> {
@@ -83,12 +79,7 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
     @FXML
     private Button gerarBtn;
     
-    private IBoEndereco boEndereco = BoEndereco.getInstance();
-    
-    
     private Juridico juridico;
-    
-    private IBoJuridico boJuridico = BoJuridico.getInstance();
     
     @FXML
     void initialize() {
@@ -136,12 +127,12 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
 	    		endereco.setCidade(cidadeFld.getText());
 	    		endereco.setEstado(estadoBox.getValue());
 	    		
-				boJuridico.cadastrarEditar(juridico);
+				fachadaModel.cadastrarEditarClienteJuridico(juridico);
 				alerta.imprimirMsg("Sucesso ao cadastrar","Cliente Jurídico "+((juridico.equals(this.juridico))? "editado": "cadastrado") +" com sucesso", AlertType.INFORMATION);
 				
 	    	}else if(btn == excluirBtn){
 	    		
-	    		boJuridico.excluir(juridico);
+	    		fachadaModel.excluirClienteJuridico(juridico);
 	    		alerta.imprimirMsg("Sucesso ao exluir","Cliente Jurídico exlcuido com sucesso", AlertType.INFORMATION);
 	    		limparCampos();
 	    	
@@ -162,7 +153,7 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
 			if(!ativoBuscaCk.isIndeterminate())
 				juridico.setAtivo(ativoBuscaCk.isSelected());
 			
-			List<Juridico> juridicos = boJuridico.buscaPorBuscaAbrangente(busca,juridico);
+			List<Juridico> juridicos = fachadaModel.buscarClientesJuridicos(busca,juridico);
 			entidadeTabela.getItems().setAll(juridicos);
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+juridicos.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
@@ -215,7 +206,7 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
     void actionHandle(ActionEvent event) {
 		try {
 			if(event.getSource() == gerarBtn) {
-				Endereco e  = boEndereco.gerarEndereco(cepFld.getText().trim());
+				Endereco e  = fachadaModel.gerarEndereco(cepFld.getText().trim());
 				ruaFld.setText(e.getRua());
 				bairroFld.setText(e.getBairro());
 				cidadeFld.setText(e.getCidade());

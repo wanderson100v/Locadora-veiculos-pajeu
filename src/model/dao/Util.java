@@ -6,11 +6,10 @@ import java.util.Map;
 
 import javax.persistence.Entity;
 
-import model.entidade.Entidade;
-import model.entidade.Juridico;
+import model.vo.Entidade;
+import model.vo.Juridico;
 
 public class Util {
-	
 	
 	/**
 	 * 
@@ -21,7 +20,6 @@ public class Util {
 	 * @return hql gerado
 	 */
 	public static String gerarHqlBuscaAbrangente(Class<? extends Entidade> entidade, Map<String,String> restricoes) {
-		
 		String alias = entidade.getSimpleName().toLowerCase();
 		StringBuilder capsula = new StringBuilder(" SELECT  "+alias+".* ");
 		StringBuilder joins = new StringBuilder("\n FROM " +getNomeTabela(entidade)+" AS "+alias);

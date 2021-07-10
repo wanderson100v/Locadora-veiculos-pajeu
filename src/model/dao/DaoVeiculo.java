@@ -7,10 +7,10 @@ import java.util.List;
 import javax.persistence.Query;
 
 import model.excecoes.DaoException;
-import model.entidade.CategoriaVeiculo;
-import model.entidade.Filial;
-import model.entidade.Veiculo;
-import model.sql.ConnectionFactory;
+import model.vo.CategoriaVeiculo;
+import model.vo.Filial;
+import model.vo.Veiculo;
+import model.dao.sql.ConnectionFactory;
 
 public class DaoVeiculo extends Dao<Veiculo> implements IDaoVeiculo {
 

@@ -3,6 +3,8 @@ package controller;
 
 import app.App;
 import model.excecoes.BoException;
+import model.vo.ConfiguracoesDefault;
+import model.vo.Funcionario;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,13 +14,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
-import mode.business.BoFuncionario;
-import mode.business.IBoFuncionario;
-import mode.enumeracoes.Cargo;
+import model.FachadaModel;
 import model.dao.DaoConfiguracaoDefault;
-import model.entidade.ConfiguracoesDefault;
-import model.entidade.Funcionario;
-import model.sql.ConnectionFactory;
+import model.dao.sql.ConnectionFactory;
+import model.enumeracoes.Cargo;
 import view.Alerta;
 
 public class LoginController{
@@ -39,12 +38,13 @@ public class LoginController{
     @FXML
     private CheckBox  lembrarLoginCk;
     
-    IBoFuncionario boFuncionario = BoFuncionario.getInstance();
-    
     private Alerta alerta = Alerta.getInstance();
+    
+    private FachadaModel fachadaModel;
     
     @FXML
     void initialize() {
+    	fachadaModel = FachadaModel.getInstance();
     	try {
     		carregandoPane.setVisible(false);
     		ConfiguracoesDefault  c = DaoConfiguracaoDefault.getInstance().carregar();
@@ -69,13 +69,13 @@ public class LoginController{
 		new Thread(()-> {
     		try {
 				ConnectionFactory.setUser(login,senha);
-				Cargo cargo = boFuncionario.requisitarGralDeAcesso(login);
-	    		boFuncionario.utilizarGralAcesso(cargo);
+				Cargo cargo = fachadaModel.requisitarGralDeAcesso(login);
+				fachadaModel.utilizarGralAcesso(cargo);
 	    		Platform.runLater(()-> 
 	    		{
 	    			
 					try {
-						Funcionario funcionario = BoFuncionario.getInstance().buscaPorLogin(login);
+						Funcionario funcionario = fachadaModel.buscaPorLogin(login);
 						if(funcionario != null) {
 							FuncionarioObservavel.getIntance().avisarOuvintes(funcionario, cargo);
 							if(!lembrarLoginCk.isSelected())

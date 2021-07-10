@@ -1,6 +1,8 @@
 package controller;
 
+import model.FachadaModel;
 import model.excecoes.BoException;
+import model.vo.Cliente;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -13,9 +15,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import mode.business.BoFisico;
-import mode.business.BoJuridico;
-import model.entidade.Cliente;
 import view.Alerta;
 
 public class SelecionarClienteController {
@@ -44,8 +43,11 @@ public class SelecionarClienteController {
     @FXML
     private TableColumn<Cliente, String> emailCln;
     		
+    private FachadaModel fachadaModel;
+    
     @FXML
     void initialize() {
+    	this.fachadaModel = FachadaModel.getInstance();
     	nomeCln.setCellValueFactory(new PropertyValueFactory<>("nome"));
     	codigoCln.setCellValueFactory(new PropertyValueFactory<>("codigo"));
     	emailCln.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -73,10 +75,10 @@ public class SelecionarClienteController {
     
     private void buscar(Boolean mostrarMsg)  {
     	try {
-			if(tipoClienteBox.getValue().equals("Físico"))
-				clienteTbl.getItems().setAll(BoFisico.getInstance().buscaPorBuscaAbrangente(pesquisaFld.getText()));
+			if(tipoClienteBox.getValue().equals("F�sico"))
+				clienteTbl.getItems().setAll(fachadaModel.buscarClientesFisicos(pesquisaFld.getText()));
 			else 
-				clienteTbl.getItems().setAll(BoJuridico.getInstance().buscaPorBuscaAbrangente(pesquisaFld.getText()));
+				clienteTbl.getItems().setAll(fachadaModel.buscarClientesJuridicos(pesquisaFld.getText()));
 			if(mostrarMsg)
 				 Alerta.getInstance().imprimirMsg("Busca concluída","Foram econtrados "+clienteTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {

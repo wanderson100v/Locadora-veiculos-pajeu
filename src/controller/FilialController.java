@@ -2,7 +2,11 @@ package controller;
 
 import java.util.List;
 
+import model.enumeracoes.Estado;
 import model.excecoes.BoException;
+import model.vo.Endereco;
+import model.vo.Entidade;
+import model.vo.Filial;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -13,14 +17,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
-import mode.business.BoEndereco;
-import mode.business.BoFilial;
-import mode.business.IBoEndereco;
-import mode.business.IBoFilial;
-import mode.enumeracoes.Estado;
-import model.entidade.Endereco;
-import model.entidade.Entidade;
-import model.entidade.Filial;
 
 public class FilialController extends CRUDController<Filial> {
 
@@ -58,11 +54,7 @@ public class FilialController extends CRUDController<Filial> {
     @FXML
     private Button gerarBtn;
     
-    private IBoEndereco boEndereco = BoEndereco.getInstance();
-
     private Filial filial;
-    
-    private IBoFilial boFilial = BoFilial.getInstance();
     
     @FXML
     void initialize() {
@@ -96,7 +88,7 @@ public class FilialController extends CRUDController<Filial> {
 	    		
 	    		filial.setEndereco(endereco);
 	    		
-				boFilial.cadastrarEditar(filial);
+				fachadaModel.cadastrarEditarFilial(filial);
 				alerta.imprimirMsg("Sucesso ao cadastrar","Filial cadastrada com sucesso", AlertType.INFORMATION);
 				
 	    	}else if(btn == editarBtn){
@@ -115,12 +107,12 @@ public class FilialController extends CRUDController<Filial> {
 	    		endereco.setCidade(cidadeFld.getText());
 	    		endereco.setEstado(estadoBox.getValue());
 	    		
-	    		boFilial.cadastrarEditar(filial);
+	    		fachadaModel.cadastrarEditarFilial(filial);
 	    		alerta.imprimirMsg("Sucesso ao editar","Filial editado com sucesso", AlertType.INFORMATION);
 	    		
 	    	}else if(btn == excluirBtn){
 	    		
-	    		boFilial.excluir(filial);
+	    		fachadaModel.excluirFilial(filial);
 	    		alerta.imprimirMsg("Sucesso ao exluir","Filial exlcuido com sucesso", AlertType.INFORMATION);
 	    		limparCampos();
 	    	
@@ -137,7 +129,7 @@ public class FilialController extends CRUDController<Filial> {
 	@Override
 	void popularTabela(String busca) {
 		try {
-			List<Filial> filiais = boFilial.buscaPorBuscaAbrangente(busca);
+			List<Filial> filiais = fachadaModel.buscarFiliais(busca);
 			entidadeTabela.getItems().setAll(filiais);
 			entidadeTabela.refresh();
 			alerta.imprimirMsg("Busca concluída","Foram econtrados "+filiais.size()+" resultado(s)",AlertType.INFORMATION);
@@ -184,7 +176,7 @@ public class FilialController extends CRUDController<Filial> {
     void actionHandle(ActionEvent event) {
 		try {
 			if(event.getSource() == gerarBtn) {
-				Endereco e  = boEndereco.gerarEndereco(cepFld.getText().trim());
+				Endereco e  = fachadaModel.gerarEndereco(cepFld.getText().trim());
 				ruaFld.setText(e.getRua());
 				bairroFld.setText(e.getBairro());
 				cidadeFld.setText(e.getCidade());
