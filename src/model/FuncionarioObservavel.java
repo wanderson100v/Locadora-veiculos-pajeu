@@ -1,4 +1,4 @@
-package controller;
+package model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +20,10 @@ public class FuncionarioObservavel {
 	
 	public void addObservadorFuncionario(IObservadorFuncionario observadorEntidade) {
 		this.entidadeObservadores.add(observadorEntidade);
+	}
+	
+	public void removerObservadorFuncionario(IObservadorFuncionario observadorEntidade) {
+		this.entidadeObservadores.remove(observadorEntidade);
 	}
 	
 	public void avisarOuvintes(Funcionario funcionario, Cargo cargo) {

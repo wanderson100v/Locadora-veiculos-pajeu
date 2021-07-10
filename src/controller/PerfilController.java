@@ -13,12 +13,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import model.FachadaModel;
 import model.dao.sql.ConnectionFactory;
 import model.enumeracoes.Cargo;
-import view.Alerta;
 
-public class PerfilController implements IObservadorFuncionario {
+public class PerfilController extends Controller {
 
     @FXML
     private ResourceBundle resources;
@@ -53,18 +51,8 @@ public class PerfilController implements IObservadorFuncionario {
     @FXML
     private Button alterarSenhaBtn;
     
-    private Alerta alerta = Alerta.getInstance();
-    
     private Funcionario funcionario;
 
-    private FachadaModel fachadaModel;
-    
-    @FXML
-    void initialize() {
-    	fachadaModel = FachadaModel.getInstance();
-    	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
-    }
-    
     @FXML
     void actionHandle(ActionEvent event) {
     	if(funcionario!= null) {

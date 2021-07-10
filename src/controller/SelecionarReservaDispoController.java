@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.FachadaModel;
 import model.adapter.ReservaDisponibilidade;
 import model.excecoes.BoException;
 import javafx.event.ActionEvent;
@@ -15,7 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class SelecionarReservaDispoController {
+public class SelecionarReservaDispoController extends ControllerAdapter{
 
     @FXML
     private DialogPane selectReservaDispoDialog;
@@ -65,11 +64,8 @@ public class SelecionarReservaDispoController {
     
     private Long filialId;
     
-    private FachadaModel fachadaModel;
-    
     @FXML
     void initialize() {
-    	this.fachadaModel = FachadaModel.getInstance();
     	tipoCatCln.setCellValueFactory(new PropertyValueFactory<>("tipoCategoria"));
     	valorDiariaCatCln.setCellValueFactory(new PropertyValueFactory<>("valorDiariaCategoria"));
     	descricaoCatCln.setCellValueFactory(new PropertyValueFactory<>("descricaoCategoria"));

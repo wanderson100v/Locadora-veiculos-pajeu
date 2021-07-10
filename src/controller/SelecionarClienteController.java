@@ -1,6 +1,5 @@
 package controller;
 
-import model.FachadaModel;
 import model.excecoes.BoException;
 import model.vo.Cliente;
 import javafx.event.ActionEvent;
@@ -17,7 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import view.Alerta;
 
-public class SelecionarClienteController {
+public class SelecionarClienteController extends ControllerAdapter{
 
     @FXML
     private DialogPane selecionarClienteDialog;
@@ -43,11 +42,8 @@ public class SelecionarClienteController {
     @FXML
     private TableColumn<Cliente, String> emailCln;
     		
-    private FachadaModel fachadaModel;
-    
     @FXML
     void initialize() {
-    	this.fachadaModel = FachadaModel.getInstance();
     	nomeCln.setCellValueFactory(new PropertyValueFactory<>("nome"));
     	codigoCln.setCellValueFactory(new PropertyValueFactory<>("codigo"));
     	emailCln.setCellValueFactory(new PropertyValueFactory<>("email"));

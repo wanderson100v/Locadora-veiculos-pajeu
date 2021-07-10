@@ -13,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import model.FachadaModel;
 import model.banco.ReservaPendente;
 import model.enumeracoes.Cargo;
 import model.enumeracoes.EstadoRerserva;
@@ -23,7 +22,7 @@ import model.vo.Funcionario;
 import model.vo.Reserva;
 import view.Alerta;
 
-public class AcompanhamentoReservaController implements IObservadorFuncionario{
+public class AcompanhamentoReservaController extends Controller{
 
 	@FXML
     private AnchorPane acompanhamentoReservaPane;
@@ -73,14 +72,6 @@ public class AcompanhamentoReservaController implements IObservadorFuncionario{
     private Funcionario funcionario;
     private Filial outraFilial;
     private ToggleGroup toggleGroup;
-    
-    private FachadaModel fachadaModel;
-    
-    @FXML
-    void initialize() {
-    	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
-    	this.fachadaModel = FachadaModel.getInstance();
-    }
     
     @FXML
     void actionHandle(ActionEvent event) {

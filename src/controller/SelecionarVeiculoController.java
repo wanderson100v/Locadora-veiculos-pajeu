@@ -1,6 +1,5 @@
 package controller;
 
-import model.FachadaModel;
 import model.enumeracoes.TipoCombustivel;
 import model.excecoes.BoException;
 import model.vo.CategoriaVeiculo;
@@ -19,9 +18,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import view.Alerta;
 
-public class SelecionarVeiculoController {
+public class SelecionarVeiculoController extends ControllerAdapter{
 
     @FXML
     private DialogPane selectVeiculoDialog;
@@ -83,15 +81,12 @@ public class SelecionarVeiculoController {
     @FXML
     private ComboBox<String> tipoBox;
     
-    private Alerta alerta = Alerta.getInstance();
     private CategoriaVeiculo categoriaVeiculo;
+    
     private Filial filial;
-
-    private FachadaModel fachadaModel;
     
     @FXML
     void initialize() {
-    	this.fachadaModel = FachadaModel.getInstance();
     	placaCln.setCellValueFactory( new PropertyValueFactory<>("placa"));
 		numChassiCln.setCellValueFactory( new PropertyValueFactory<>("numeroChassi"));
 		numMotorCln.setCellValueFactory( new PropertyValueFactory<>("numeroMotor"));
@@ -143,7 +138,7 @@ public class SelecionarVeiculoController {
 				else 
 					veiculoTbl.getItems().setAll(fachadaModel.buscarVeiculos(pesquisaFld.getText().trim()));
 				
-				alerta.imprimirMsg("Busca concluÃ­da","Foram econtrados "+veiculoTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
+				alerta.imprimirMsg("Busca concluída","Foram econtrados "+veiculoTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 			} catch (BoException e) {
 				alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
 			}
@@ -163,7 +158,7 @@ public class SelecionarVeiculoController {
 		veiculoTbl.getItems().setAll(fachadaModel.buscarVeiculosDisponivel(filial.getId(), categoriaVeiculo.getId(),""));
     	if(veiculoTbl.getItems().size() == 0)
     		return false;
-		tituloLbl.setText("Selecione VeÃ­culo para a categoria "+categoriaVeiculo.getTipo()+ "na filial "+filial.getNome());
+		tituloLbl.setText("Selecione veículo para a categoria "+categoriaVeiculo.getTipo()+ "na filial "+filial.getNome());
 		this.categoriaVeiculo = categoriaVeiculo;
     	this.filial = filial;
     	return true;
@@ -171,7 +166,7 @@ public class SelecionarVeiculoController {
     
     public void paremetrizadoPor(Filial filial) {
     	if(filial!= null)
-    		tituloLbl.setText("Selecione VeÃ­culo na filial "+filial.getNome());
+    		tituloLbl.setText("Selecione veículo na filial "+filial.getNome());
     	else
     		tipoBox.setVisible(true);
     	this.filial = filial;

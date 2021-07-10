@@ -2,7 +2,6 @@ package controller;
 
 import java.time.LocalDate;
 
-import model.FachadaModel;
 import model.excecoes.BoException;
 import model.vo.Fisico;
 import javafx.event.ActionEvent;
@@ -16,9 +15,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import view.Alerta;
 
-public class SelecionarMotoristaController {
+public class SelecionarMotoristaController extends ControllerAdapter{
 
     @FXML
     private DialogPane selecionarMotoristaDialog;
@@ -47,14 +45,10 @@ public class SelecionarMotoristaController {
     @FXML
     private TableColumn<Fisico, String> habilitacaoCln;
     
-    private Alerta alerta = Alerta.getInstance();
     private LocalDate dataSuperior;
-    
-  	private FachadaModel fachadaModel;
     
     @FXML
     void initialize() {
-    	this.fachadaModel = FachadaModel.getInstance();
     	nomeCln.setCellValueFactory(new PropertyValueFactory<>("nome"));
     	codigoCln.setCellValueFactory(new PropertyValueFactory<>("codigo"));
     	validadeCln.setCellValueFactory(new PropertyValueFactory<>("dataValidadeHabilitacao"));

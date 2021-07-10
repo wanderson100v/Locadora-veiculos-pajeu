@@ -1,8 +1,8 @@
 package controller;
 
-import app.App;
 import model.excecoes.DaoException;
 import model.vo.Funcionario;
+import app.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import view.Alerta;
 
-public class HomeController implements IObservadorFuncionario{
+public class HomeController extends Controller{
 
     @FXML
     private Button voltarBtn;
@@ -32,33 +32,15 @@ public class HomeController implements IObservadorFuncionario{
     
     @FXML
     private Button configBtn;
-
+    
     @FXML
     void initialize() {
     	try {
-    		FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
-    		
-			PesquisaController pesquisaController = (PesquisaController) DaoRes.getInstance().carregarControllerFXML("PesquisaPane");
-			DaoRes daoRes = DaoRes.getInstance();
-    		
-    		ClienteJuridicoController clienteJuridicoController = (ClienteJuridicoController) daoRes.carregarControllerFXML("ClienteJuridicoPane");
-    		ClienteFisicoController clienteFisicoController = (ClienteFisicoController) daoRes.carregarControllerFXML("ClienteFisicoPane");
-    		CaminhonetaCargaController caminhonetaCargaController = (CaminhonetaCargaController) daoRes.carregarControllerFXML("CaminhonetaCargaPane");
-    		AutomovelController automovelController = (AutomovelController) daoRes.carregarControllerFXML("AutomovelPane");
-    		ManutencaoController manutencaoController = (ManutencaoController) daoRes.carregarControllerFXML("ManutencaoPane");
-    		
-    		pesquisaController.getControladores().put("Juridico",clienteJuridicoController);
-    		pesquisaController.getControladores().put("Fisico", clienteFisicoController);
-    		pesquisaController.getControladores().put("Caminhoneta Carga", caminhonetaCargaController);
-    		pesquisaController.getControladores().put("Automóvel", automovelController);
-    		pesquisaController.getControladores().put("Manutenção", manutencaoController);
-			
-			pesquisaController.getFiltroBox().getItems().addAll(pesquisaController.getControladores().keySet());
-			
-			dadosTab.setContent(pesquisaController.getPesquisaPane());
+    		DaoRes daoRes = DaoRes.getInstance();
+    		PesquisaController pesquisaController = (PesquisaController) DaoRes.getInstance().carregarControllerFXML("PesquisaPane");
+    		dadosTab.setContent(pesquisaController.getPesquisaPane());
 			reservaTab.setContent(daoRes.carregarPaneFXML("ReservaTabPane"));
-			locacaoTab.setContent(daoRes.carregarPaneFXML("LocacaoTabPane"
-					+ ""));
+			locacaoTab.setContent(daoRes.carregarPaneFXML("LocacaoTabPane"));
 			
     	} catch (DaoException e) {
 			e.printStackTrace();

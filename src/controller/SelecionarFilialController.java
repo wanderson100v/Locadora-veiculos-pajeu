@@ -1,6 +1,5 @@
 package controller;
 
-import model.FachadaModel;
 import model.excecoes.BoException;
 import model.vo.Endereco;
 import model.vo.Filial;
@@ -15,9 +14,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import view.Alerta;
 
-public class SelecionarFilialController {
+public class SelecionarFilialController extends ControllerAdapter {
 
     @FXML
     private TextField pesquisaFld;
@@ -37,13 +35,8 @@ public class SelecionarFilialController {
     @FXML
     private TableColumn<Filial, Endereco> enderecoCln;
     
-    private Alerta alerta = Alerta.getInstance();
-    
-    private FachadaModel fachadaModel;
-    
     @FXML
     void initialize() {
-    	this.fachadaModel = FachadaModel.getInstance();
     	nomeCln.setCellValueFactory(new PropertyValueFactory<>("nome"));
     	enderecoCln.setCellValueFactory(new PropertyValueFactory<>("endereco"));
     	

@@ -28,7 +28,7 @@ public class App extends Application{
 	public void start(Stage stage) throws Exception {
 		App.stage = stage;
 		try {
-			stage.setTitle("Locadora Veiculos PajeÃº");
+			stage.setTitle("Locadora Veiculos Pajeú");
 			Pane loginPane = daoRes.carregarPaneFXML(Tela.LOGIN);
 			Pane homePane =  daoRes.carregarPaneFXML(Tela.HOME);
 			Pane configPane = daoRes.carregarPaneFXML(Tela.CONFIG);

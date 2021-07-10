@@ -17,7 +17,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.FachadaModel;
 import model.dao.DaoRes;
 import model.enumeracoes.TamanhoVeiculo;
 import model.enumeracoes.TipoAirBag;
@@ -134,12 +133,9 @@ public class AutomovelController extends CRUDController<Automovel> {
     
     private Filial filial;
     
-    private FachadaModel fachadaModel;
-    
     @FXML
     void initialize() {
     	super.initialize();
-    	this.fachadaModel = FachadaModel.getInstance();
     	
     	ToggleGroup toggleGroup = new ToggleGroup();
     	simAtivoRb.setToggleGroup(toggleGroup);

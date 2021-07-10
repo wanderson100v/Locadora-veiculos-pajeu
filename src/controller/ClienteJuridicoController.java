@@ -128,12 +128,12 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
 	    		endereco.setEstado(estadoBox.getValue());
 	    		
 				fachadaModel.cadastrarEditarClienteJuridico(juridico);
-				alerta.imprimirMsg("Sucesso ao cadastrar","Cliente JurÃ­dico "+((juridico.equals(this.juridico))? "editado": "cadastrado") +" com sucesso", AlertType.INFORMATION);
+				alerta.imprimirMsg("Sucesso ao cadastrar","Cliente jurídico "+((juridico.equals(this.juridico))? "editado": "cadastrado") +" com sucesso", AlertType.INFORMATION);
 				
 	    	}else if(btn == excluirBtn){
 	    		
 	    		fachadaModel.excluirClienteJuridico(juridico);
-	    		alerta.imprimirMsg("Sucesso ao exluir","Cliente JurÃ­dico exlcuido com sucesso", AlertType.INFORMATION);
+	    		alerta.imprimirMsg("Sucesso ao exluir","Cliente jurídico exlcuido com sucesso", AlertType.INFORMATION);
 	    		limparCampos();
 	    	
 	    	}else if(btn == limparBtn){
@@ -155,7 +155,7 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
 			
 			List<Juridico> juridicos = fachadaModel.buscarClientesJuridicos(busca,juridico);
 			entidadeTabela.getItems().setAll(juridicos);
-			alerta.imprimirMsg("Busca concluÃ­da","Foram econtrados "+juridicos.size()+" resultado(s)",AlertType.INFORMATION);
+			alerta.imprimirMsg("Busca concluída","Foram econtrados "+juridicos.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
 		}

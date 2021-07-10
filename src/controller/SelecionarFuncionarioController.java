@@ -1,7 +1,6 @@
 package controller;
 
 
-import model.FachadaModel;
 import model.excecoes.BoException;
 import model.vo.Funcionario;
 import javafx.event.ActionEvent;
@@ -15,9 +14,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import view.Alerta;
 
-public class SelecionarFuncionarioController {
+public class SelecionarFuncionarioController extends ControllerAdapter{
 
     @FXML
     private DialogPane selecionarFuncionarioDialog;
@@ -37,13 +35,8 @@ public class SelecionarFuncionarioController {
     @FXML
     private TableColumn<Funcionario, String> cpfCln;
 
-    private Alerta alerta = Alerta.getInstance();
-    
-    private FachadaModel fachadaModel;
-    
     @FXML
     void initialize() {
-    	this.fachadaModel = FachadaModel.getInstance();
     	nomeCln.setCellValueFactory(new PropertyValueFactory<>("nome"));
     	cpfCln.setCellValueFactory(new PropertyValueFactory<>("cpf"));
     	pesquisaFld.setOnKeyTyped(new EventHandler<KeyEvent>() {

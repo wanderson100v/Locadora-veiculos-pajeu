@@ -15,7 +15,6 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
-import model.FachadaModel;
 import model.dao.DaoRes;
 import model.dao.sql.ConnectionFactory;
 import model.excecoes.BoException;
@@ -24,7 +23,7 @@ import model.vo.Backup;
 import view.Alerta;
 
 @SuppressWarnings("deprecation")
-public class BackupDialogoController implements Observer{
+public class BackupDialogoController extends ControllerAdapter implements Observer{
 
 	@FXML 
 	private DialogPane backupDialogo;
@@ -58,11 +57,8 @@ public class BackupDialogoController implements Observer{
     
     private Backup backup;
     
-    private FachadaModel fachadaModel;
-
     @FXML
     void initialize() {
-    	this.fachadaModel = FachadaModel.getInstance();
     	for(int i =0 ; i < 24 ; i++)
     		proximaHoraBox.getItems().add(i);
     	int horasAteFinalDia = 24 - LocalDateTime.now().getHour();

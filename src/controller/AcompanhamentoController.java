@@ -16,7 +16,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
-import model.FachadaModel;
 import model.enumeracoes.Cargo;
 import model.enumeracoes.EstadoRerserva;
 import model.enumeracoes.TipoLocacao;
@@ -31,7 +30,7 @@ import model.vo.Reserva;
 import model.vo.Veiculo;
 import view.Alerta;
 
-public class AcompanhamentoController implements IObservadorFuncionario {
+public class AcompanhamentoController extends Controller {
 
    
 	@FXML
@@ -206,14 +205,9 @@ public class AcompanhamentoController implements IObservadorFuncionario {
     private Fisico motorista;
     private Cliente cliente;
     private Funcionario funcionario;
-    private FachadaModel fachadaModel;
-
     @FXML
     void initialize() {
     	
-    	this.fachadaModel = FachadaModel.getInstance();
-    	
-    	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
     	rCateCln.setCellValueFactory(new PropertyValueFactory<>("categoriaVeiculo"));
     	rClieCln.setCellValueFactory(new PropertyValueFactory<>("cliente"));
     	rFuncCln.setCellValueFactory(new PropertyValueFactory<>("funcionario"));

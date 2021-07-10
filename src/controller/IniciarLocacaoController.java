@@ -16,7 +16,6 @@ import model.vo.Veiculo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
-import model.FachadaModel;
 import model.banco.ReservaPendente;
 import model.enumeracoes.Cargo;
 import model.enumeracoes.TipoLocacao;
@@ -29,7 +28,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import view.Alerta;
 
-public class IniciarLocacaoController implements IObservadorFuncionario {
+public class IniciarLocacaoController extends Controller {
 
     @FXML
     private Button selectFuncionarioBtn;
@@ -118,12 +117,8 @@ public class IniciarLocacaoController implements IObservadorFuncionario {
     private Locacao locacao = new Locacao();
     private Funcionario funcionario;
     
-    private FachadaModel fachadaModel;
-    
     @FXML
     void initialize() {
-    	fachadaModel = FachadaModel.getInstance();
-    	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
     	for(int i = 1 ; i <25 ; i++)
     		horaRetiradaBox.getItems().add(i);
     	horaDevolucaoBox.getItems().addAll(horaRetiradaBox.getItems());

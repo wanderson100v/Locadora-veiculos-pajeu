@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import model.FachadaModel;
 import model.excecoes.BoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,7 +19,7 @@ import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.layout.GridPane;
 import view.Alerta;
 
-public class FinanceiroController {
+public class FinanceiroController extends ControllerAdapter{
 
 	@FXML
     private ComboBox<String> financeiroBox;
@@ -44,14 +43,10 @@ public class FinanceiroController {
     @FXML
     private ComboBox<String> groypByBox;
     
-    private FachadaModel fachadaModel;
-
-    @FXML
     void initialize() {
-    	this.fachadaModel = FachadaModel.getInstance();
-    	financeiroBox.getItems().addAll("LocacÃµes finalizadas"
-    			,"Reservas Origens de LocaÃ§Ã£o","Reservas Incompletadas");
-    	groypByBox.getItems().addAll("Dia","MÃªs");
+    	financeiroBox.getItems().addAll("Locações finalizadas"
+    			,"Reservas Origens de Locações","Reservas Incompletadas");
+    	groypByBox.getItems().addAll("Dia","Mês");
     	groypByBox.setValue("Dia");
     	descricaoLbl.setText("");
     }
@@ -69,8 +64,8 @@ public class FinanceiroController {
     			List<Map<String,Object>> registros = null;
     			TableView<Map<String,Object>> tv = null;
     			
-    			if(financeiroBox.getValue().equals("LocacÃµes finalizadas") 
-    					|| financeiroBox.getValue().equals("Reservas Origens de LocaÃ§Ã£o")) {
+    			if(financeiroBox.getValue().equals("Locações finalizadas") 
+    					|| financeiroBox.getValue().equals("Reservas Origens de Locação")) {
     				if(groypByBox.getValue().equals("Dia")) 
     	    			nomesColunaOrganizado.add("devolucao");
     	    		else
@@ -93,7 +88,7 @@ public class FinanceiroController {
 		    		tv.getItems().setAll(registros);
 		    		Alerta.getInstance().imprimirMsg("Sucesso","Foi encontrado "+registros.size()+" registros", AlertType.WARNING);
 	    		}else
-	    			Alerta.getInstance().imprimirMsg("Alerta","Nenhum registro para o perÃ­odo", AlertType.WARNING);
+	    			Alerta.getInstance().imprimirMsg("Alerta","Nenhum registro para o período", AlertType.WARNING);
     		}
     	}catch(BoException e) {
     		Alerta.getInstance().imprimirMsg("Alerta",e.getMessage(),AlertType.ERROR);

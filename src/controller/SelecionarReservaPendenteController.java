@@ -9,7 +9,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.banco.ReservaPendente;
 
-public class SelecionarReservaPendenteController {
+public class SelecionarReservaPendenteController{
 
     @FXML
     private DialogPane selecionarReservaDialog;

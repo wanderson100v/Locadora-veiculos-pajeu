@@ -26,7 +26,6 @@ import view.Alerta;
 
 public class ManutencaoController extends CRUDController<Manutencao>{
 
-
     @FXML
     private TableColumn<Manutencao, TipoManutencao> tipoCln;
 

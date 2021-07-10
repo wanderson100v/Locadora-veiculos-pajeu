@@ -3,7 +3,6 @@ package controller;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import model.FachadaModel;
 import model.enumeracoes.EstadoRerserva;
 import model.excecoes.BoException;
 import model.vo.CategoriaVeiculo;
@@ -20,7 +19,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import view.Alerta;
 
-public class IniciarReservaController {
+public class IniciarReservaController extends ControllerAdapter{
 
     @FXML
     private Button selectFuncionarioBtn;
@@ -63,11 +62,8 @@ public class IniciarReservaController {
     
     private Reserva reserva = new Reserva();
    
-    private FachadaModel fachadaModel;
-    
     @FXML
     void initialize() {
-    	fachadaModel = FachadaModel.getInstance();
     	for(int i = 1 ; i <25 ; i++)
     		horaRetiradaBox.getItems().add(i);
     	horaDevolucaoBox.getItems().addAll(horaRetiradaBox.getItems());

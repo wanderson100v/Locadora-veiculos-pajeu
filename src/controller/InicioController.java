@@ -11,12 +11,11 @@ import javafx.geometry.Pos;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.FachadaModel;
 import model.banco.ReservaHoje;
 import model.enumeracoes.Cargo;
 import model.enumeracoes.EstadoRerserva;
 
-public class InicioController implements IObservadorFuncionario {
+public class InicioController extends Controller{
 
     @FXML
     private TableView<ReservaHoje> reservasHojeTbl;
@@ -40,13 +39,8 @@ public class InicioController implements IObservadorFuncionario {
     
     private boolean rodando = true;
     
-    private FachadaModel fachadaModel;
-    
     @FXML
     void initialize() {
-    	fachadaModel = FachadaModel.getInstance();
-    	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
-    	
     	horaCln.setCellValueFactory(new PropertyValueFactory<>("hora"));
         categoriaCln.setCellValueFactory(new PropertyValueFactory<>("tipo"));
         estadoCln.setCellValueFactory(new PropertyValueFactory<>("estadoReserva"));
@@ -70,21 +64,9 @@ public class InicioController implements IObservadorFuncionario {
 									@Override
 									public void run() {
 										try {
-											//verificando necessidade de atualizaÃ§Ãµes 
-											//para reserva
-											reservasHojeTbl.getItems().clear();
-											reservasHojeTbl.getItems().addAll(fachadaModel.buscarReservaHoje());
-											reservasHojeTbl.refresh();
-											//para manutenÃ§Ã£o
-											int manutencaoFinalizada = fachadaModel.checarManutencao();
-											if(manutencaoFinalizada >0)
-												Notifications.create().title("ManutenÃ§Ãµes finalizadas")
-												.text("Foram finalizadas "+manutencaoFinalizada+" manutenÃ§Ãµes de veÃ­culos")
-												.position(Pos.BOTTOM_RIGHT).showInformation();
-											//para backup
-											Backup backup = fachadaModel.checarBackup();
-											if(backup!= null) 
-												Util.exibirRealizarBackupEmDialogo(backup);
+											atualizarTbl();
+											mostrarQuantidadeManutencoesFinalizadas();
+											checarNecessidadeBackup();
 										} catch (BoException e) {
 											e.printStackTrace();
 										}
@@ -102,5 +84,25 @@ public class InicioController implements IObservadorFuncionario {
 				thread.start();
 			}
 		}
+	}
+	
+	private void atualizarTbl() throws BoException{
+		reservasHojeTbl.getItems().clear();
+		reservasHojeTbl.getItems().addAll(fachadaModel.buscarReservaHoje());
+		reservasHojeTbl.refresh();
+	}
+	
+	private void mostrarQuantidadeManutencoesFinalizadas() throws BoException {
+		int manutencaoFinalizada = fachadaModel.checarManutencao();
+		if(manutencaoFinalizada >0)
+			Notifications.create().title("Manutenções finalizadas finalizadas")
+			.text("Foram finalizadas "+manutencaoFinalizada+" manutenções de veículos")
+			.position(Pos.BOTTOM_RIGHT).showInformation();
+	}
+	
+	public void checarNecessidadeBackup()  throws BoException{
+		Backup backup = fachadaModel.checarBackup();
+		if(backup!= null) 
+			Util.exibirRealizarBackupEmDialogo(backup);
 	}
 }

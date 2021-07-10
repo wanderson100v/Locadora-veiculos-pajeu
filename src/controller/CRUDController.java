@@ -7,11 +7,9 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import model.FachadaModel;
 import model.vo.Entidade;
-import view.Alerta;
 
-public abstract class CRUDController<T extends Entidade> {
+public abstract class CRUDController<T extends Entidade> extends ControllerAdapter {
 	
 	@FXML
     protected Button editarBtn;
@@ -34,14 +32,8 @@ public abstract class CRUDController<T extends Entidade> {
     @FXML
     protected TableView<T> entidadeTabela;
 
-    
-    protected Alerta alerta = Alerta.getInstance();
-    
-    protected FachadaModel fachadaModel;
-    
     @FXML
     void initialize() {
-    	this.fachadaModel = FachadaModel.getInstance();
     	editarBtn.setDisable(true);
     	excluirBtn.setDisable(true);
     }
@@ -80,10 +72,10 @@ public abstract class CRUDController<T extends Entidade> {
     }
     
     abstract void crudHandle(Button btn);
-
-    abstract void popularTabela(String busca);
     
     abstract void popularDescricao(Entidade entidade);
+
+    abstract void popularTabela(String busca);
     
     abstract void limparCampos();
     

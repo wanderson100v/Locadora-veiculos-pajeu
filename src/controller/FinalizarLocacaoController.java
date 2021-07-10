@@ -3,7 +3,6 @@ package controller;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import model.FachadaModel;
 import model.enumeracoes.EstadoManutencao;
 import model.enumeracoes.TipoManutencao;
 import model.excecoes.BoException;
@@ -22,7 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import view.Alerta;
 
-public class FinalizarLocacaoController {
+public class FinalizarLocacaoController extends ControllerAdapter{
 
 	@FXML
 	private CheckBox etCk;
@@ -113,11 +112,8 @@ public class FinalizarLocacaoController {
 
 	private Locacao locacao;
 
-	private FachadaModel fachadaModel;
-
 	@FXML
     void initialize() {
-    	this.fachadaModel = FachadaModel.getInstance();
     	for(int i = 0; i < 24; i++)
     		devuHoraBox.getItems().add(i);
     	lpCustoHoraBox.setItems(devuHoraBox.getItems());

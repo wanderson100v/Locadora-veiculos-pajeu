@@ -20,12 +20,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
-import model.FachadaModel;
 import model.adapter.ReservaDisponibilidade;
 import model.enumeracoes.Cargo;
 import view.Alerta;
 
-public class DisponibilidadeReservaController implements IObservadorFuncionario{
+public class DisponibilidadeReservaController extends Controller{
 
 
     @FXML
@@ -94,15 +93,6 @@ public class DisponibilidadeReservaController implements IObservadorFuncionario{
     private Funcionario funcionario;
     private Filial outraFilial;
     private ToggleGroup toggleGroup;
-    
-    private FachadaModel fachadaModel;
-    
-    @FXML
-    void initialize() {
-    	this.fachadaModel = FachadaModel.getInstance();
-    	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
-    
-    }
     
     @FXML
     void actionHandle(ActionEvent event) {

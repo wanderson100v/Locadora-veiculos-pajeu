@@ -36,7 +36,7 @@ import model.vo.Funcionario;
 import view.Alerta;
 
 @SuppressWarnings("deprecation")
-public class BackupController implements Observer, IObservadorFuncionario {
+public class BackupController extends Controller implements Observer{
 
 	
 	@FXML
@@ -117,7 +117,6 @@ public class BackupController implements Observer, IObservadorFuncionario {
     
     @FXML
     void initialize() {
-    	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
     	DaoRes.getInstance().addObserver(this);
     	this.fachadaModel = FachadaModel.getInstance();
     	

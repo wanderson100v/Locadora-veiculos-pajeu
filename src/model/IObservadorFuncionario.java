@@ -1,4 +1,4 @@
-package controller;
+package model;
 
 import model.enumeracoes.Cargo;
 import model.vo.Funcionario;

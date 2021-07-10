@@ -1,10 +1,10 @@
 package controller;
 
 
-import app.App;
 import model.excecoes.BoException;
 import model.vo.ConfiguracoesDefault;
 import model.vo.Funcionario;
+import app.App;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,15 +14,13 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
-import model.FachadaModel;
+import model.FuncionarioObservavel;
 import model.dao.DaoConfiguracaoDefault;
 import model.dao.sql.ConnectionFactory;
 import model.enumeracoes.Cargo;
-import view.Alerta;
 
-public class LoginController{
+public class LoginController extends ControllerAdapter{
 
-	
 	@FXML
 	private TextField loginField;
 
@@ -38,13 +36,8 @@ public class LoginController{
     @FXML
     private CheckBox  lembrarLoginCk;
     
-    private Alerta alerta = Alerta.getInstance();
-    
-    private FachadaModel fachadaModel;
-    
     @FXML
     void initialize() {
-    	fachadaModel = FachadaModel.getInstance();
     	try {
     		carregandoPane.setVisible(false);
     		ConfiguracoesDefault  c = DaoConfiguracaoDefault.getInstance().carregar();

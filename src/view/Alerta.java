@@ -32,7 +32,7 @@ public class Alerta extends Alert {
 	
 	public boolean imprimirMsgConfirmacao(String contentText) {
 		
-		setTitle("ConfirmaÃ§Ã£o");
+		setTitle("Confirmação");
 		setContentText(contentText);
 		setAlertType(AlertType.CONFIRMATION);
 		Optional<ButtonType> btn = showAndWait();
@@ -46,7 +46,5 @@ public class Alerta extends Alert {
 		setAlertType(AlertType.NONE);
 		getButtonTypes().add(ButtonType.NEXT);
 	}
-	public static void main(String[] args) {
-		Alerta.getInstance().imprimir();
-	}
+	
 }
