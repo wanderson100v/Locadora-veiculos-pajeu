@@ -130,7 +130,7 @@ public class DaoRes extends Observable implements IDaoRes{
 	                commands.add("-f"); //output file or directory name
 	                commands.add(backupFilePath + File.separator + backupFileName);
 	                commands.add("-d"); //database name
-	                commands.add("PBD");
+	                commands.add("LocadoraPajeu");
 	                System.out.println(commands);
 	                break;
 	            case "restore":
@@ -142,7 +142,7 @@ public class DaoRes extends Observable implements IDaoRes{
 	                commands.add("-U");
 	                commands.add(userName);
 	                commands.add("-d");
-	                commands.add("PBD");
+	                commands.add("LocadoraPajeu");
 	                commands.add("-v");
 	                commands.add(backupFilePath.toString());
 	                break;

@@ -86,9 +86,12 @@ public class LoginController extends ControllerAdapter{
 					carregandoPane.setVisible(false);
 	    		});
     		} catch (BoException e) {
-    			alerta.imprimirMsg("Alerta", e.getMessage(),AlertType.WARNING);
-    			e.printStackTrace();
-    			carregandoPane.setVisible(false);
+    			Platform.runLater(()-> 
+	    		{
+	    			alerta.imprimirMsg("Alerta", e.getMessage(),AlertType.WARNING);
+	    			e.printStackTrace();
+	    			carregandoPane.setVisible(false);
+	    		});
     		}
 		}).start();
     }
