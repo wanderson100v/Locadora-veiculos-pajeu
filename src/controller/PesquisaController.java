@@ -14,7 +14,6 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import model.dao.DaoRes;
 import model.enumeracoes.Cargo;
@@ -24,13 +23,10 @@ import model.vo.Funcionario;
 public class PesquisaController extends Controller{
 
     @FXML
-    private AnchorPane pesquisaPane;
-    
-    @FXML
     private GridPane tabelaPane;
 
     @FXML
-    private Tab detablesTab;
+    private Tab detablesTab; 
 
     @FXML
     private ScrollPane detalhesScroll;
@@ -42,10 +38,13 @@ public class PesquisaController extends Controller{
     private TextField pesquisaFld;
     
     @FXML
+    private Button pesquisaBtn; 
+    
+    @FXML
     private TabPane detalhesTabPane;
 
     @FXML
-    private SplitPane splitPane;
+    private SplitPane splitPanePesquisa;
     
     @FXML
     private ComboBox<String> filtroBox;
@@ -54,13 +53,13 @@ public class PesquisaController extends Controller{
     private ButtonBar acoesBar;
     
     private HashMap<String,CRUDController<?>> controladores = new HashMap<>();
-   
+    
 	@FXML
     void actionHandle(ActionEvent e) {
     	String chaveControlador = filtroBox.getValue();
-		if (e.getSource() == pesquisaFld) {
+		if (e.getSource() == pesquisaFld || e.getSource() == pesquisaBtn) {
     		String busca = pesquisaFld.getText().trim();
-			if(chaveControlador != null)
+    		if(chaveControlador != null)
 				controladores.get(chaveControlador).popularTabela(busca);
 			else
 				alerta.imprimirMsg("Busca invalida","Nenhum filtro selecionado",AlertType.WARNING);
@@ -76,13 +75,13 @@ public class PesquisaController extends Controller{
     		if(!detalhesTabPane.getTabs().contains(detablesTab)) {
     			detalhesTabPane.getTabs().add(detablesTab);
     		}
-    		splitPane.setDividerPositions(0.6);
+    		splitPanePesquisa.setDividerPositions(0.6);
     	}
     }
 	
 	
-	public AnchorPane getPesquisaPane() {
-		return pesquisaPane;
+	public SplitPane getPesquisaPane() {
+		return splitPanePesquisa;
 	}
 
 	@Override
@@ -124,6 +123,42 @@ public class PesquisaController extends Controller{
 				e.printStackTrace();
 			}
 		});
+	}
+	
+	
+	public MementoBusca createMementoBusca() {
+		String busca = pesquisaFld.getText();
+		String filtroSelecionado = filtroBox.getSelectionModel().getSelectedItem();
+		return new MementoBusca(busca,filtroSelecionado);
+	}
+	
+	public void setMemento(MementoBusca memento) {
+		String busca = memento.getBusca();
+		String filtroSelecionado = memento.getFiltroSelecionado();
+		pesquisaFld.setText(busca);
+		filtroBox.getSelectionModel().select(filtroSelecionado);
+	}
+	
+	
+	public class MementoBusca {
+		
+		private final String busca;
+	    
+		final String  filtroSelecionado;
+		
+		public MementoBusca(String busca, String filtroSelecionado) {
+			this.busca = busca;
+			this.filtroSelecionado = filtroSelecionado;
+		}
+		
+		private String getBusca() {
+			return busca;
+		}
+		
+		private String getFiltroSelecionado() {
+			return filtroSelecionado;
+		}
+
 	}
 	
 }

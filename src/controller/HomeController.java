@@ -2,6 +2,8 @@ package controller;
 
 import model.excecoes.DaoException;
 import model.vo.Funcionario;
+
+
 import app.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,12 +38,10 @@ public class HomeController extends Controller{
     @FXML
     void initialize() {
     	try {
+    		
     		DaoRes daoRes = DaoRes.getInstance();
-    		PesquisaController pesquisaController = (PesquisaController) DaoRes.getInstance().carregarControllerFXML("PesquisaPane");
-    		dadosTab.setContent(pesquisaController.getPesquisaPane());
 			reservaTab.setContent(daoRes.carregarPaneFXML("ReservaTabPane"));
 			locacaoTab.setContent(daoRes.carregarPaneFXML("LocacaoTabPane"));
-			
     	} catch (DaoException e) {
 			e.printStackTrace();
 			Alerta.getInstance().imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);

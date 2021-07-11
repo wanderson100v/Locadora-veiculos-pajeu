@@ -2,8 +2,7 @@
 
 <ConfiguracoesDefault>
   <ip>localhost</ip>
-  <localPgDump>C:\Program Files\PostgreSQL\9.4\bin\pg_dump.exe</localPgDump>
-  <localPgRestore>C:\Program Files\PostgreSQL\9.4\bin\pg_restore.exe</localPgRestore>
-  <localBackup>C:\Users\ragnar\Desktop</localBackup>
-  <userNameDefault>admin</userNameDefault>
+  <localPgDump>C:\Program Files\PostgreSQL\13\bin\pg_dump.exe</localPgDump>
+  <localPgRestore>C:\Program Files\PostgreSQL\13\bin\pg_restore.exe</localPgRestore>
+  <localBackup>C:\</localBackup>
 </ConfiguracoesDefault>
