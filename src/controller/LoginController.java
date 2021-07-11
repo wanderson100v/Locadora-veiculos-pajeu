@@ -2,6 +2,7 @@ package controller;
 
 
 import model.excecoes.BoException;
+import model.excecoes.DaoException;
 import model.vo.ConfiguracoesDefault;
 import model.vo.Funcionario;
 import app.App;
@@ -36,13 +37,15 @@ public class LoginController extends ControllerAdapter{
     @FXML
     private CheckBox  lembrarLoginCk;
     
+    private ConfiguracoesDefault configuracoesDefault;
+    
     @FXML
     void initialize() {
     	try {
     		carregandoPane.setVisible(false);
-    		ConfiguracoesDefault  c = DaoConfiguracaoDefault.getInstance().carregar();
-			if(c!= null) {
-				String login = c.getUserNameDefault();
+    		this.configuracoesDefault = DaoConfiguracaoDefault.getInstance().carregar();
+			if(configuracoesDefault!= null) {
+				String login = configuracoesDefault.getUserNameDefault();
 				if(login!= null) {
 					loginField.setText(login);
 					lembrarLoginCk.setSelected(true);
@@ -60,19 +63,17 @@ public class LoginController extends ControllerAdapter{
 		final String login = loginField.getText();
 		final String senha = senhaField.getText();
 		new Thread(()-> {
-    		try {
+			try {
 				ConnectionFactory.setUser(login,senha);
 				Cargo cargo = fachadaModel.requisitarGralDeAcesso(login);
 				fachadaModel.utilizarGralAcesso(cargo);
-	    		Platform.runLater(()-> 
-	    		{
-	    			
+				Platform.runLater(()-> 
+		    		{
 					try {
 						Funcionario funcionario = fachadaModel.buscaPorLogin(login);
 						if(funcionario != null) {
 							FuncionarioObservavel.getIntance().avisarOuvintes(funcionario, cargo);
-							if(!lembrarLoginCk.isSelected())
-			        			loginField.clear();
+							lembrarLogin(login);
 			        		senhaField.clear();
 							App.iniTelaMenu();
 						}else {
@@ -80,20 +81,30 @@ public class LoginController extends ControllerAdapter{
 						}
 					} catch (BoException e) {
 						e.printStackTrace();
+						carregandoPane.setVisible(false);
 					}
+					carregandoPane.setVisible(false);
 	    		});
     		} catch (BoException e) {
-    			Platform.runLater(()->
-    			{
-	    			alerta.imprimirMsg("Alerta", e.getMessage(),AlertType.WARNING);
-	    			carregandoPane.setVisible(false);
-    			});
+    			alerta.imprimirMsg("Alerta", e.getMessage(),AlertType.WARNING);
     			e.printStackTrace();
+    			carregandoPane.setVisible(false);
     		}
-    		carregandoPane.setVisible(false);
 		}).start();
     }
     
-    
+    private void lembrarLogin(String login) {
+    	if(!lembrarLoginCk.isSelected()) {
+			loginField.clear();
+			this.configuracoesDefault.setUserNameDefault(null);
+		}else {
+			this.configuracoesDefault.setUserNameDefault(login);
+		}
+    	try {
+			DaoConfiguracaoDefault.getInstance().salvar(configuracoesDefault);
+		} catch (DaoException e) {
+			alerta.imprimirMsg("Alerta", "Não foi possível mudar o estado de lembrança de login",AlertType.WARNING);
+		}
+    }
 
 }

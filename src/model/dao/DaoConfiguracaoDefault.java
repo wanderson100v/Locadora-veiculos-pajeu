@@ -14,7 +14,9 @@ import model.excecoes.DaoException;
 import model.vo.ConfiguracoesDefault;
 
 public class DaoConfiguracaoDefault implements IDaoConfiguracaoDefault {
+	
 	private XStream xStream;
+	
 	public static IDaoConfiguracaoDefault instance;
 	
 	private DaoConfiguracaoDefault() {
