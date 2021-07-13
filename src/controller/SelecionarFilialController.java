@@ -59,7 +59,7 @@ public class SelecionarFilialController extends ControllerAdapter {
     	if(!buscaRapidaChk.isSelected()) {
     		try {
 				filialTbl.getItems().setAll(fachadaModel.buscarFiliais(pesquisaFld.getText()));
-				alerta.imprimirMsg("Busca concluÃ­da","Foram econtrados "+filialTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
+				alerta.imprimirMsg("Busca concluída","Foram econtrados "+filialTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 			} catch (BoException e) {
 				alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
 			}

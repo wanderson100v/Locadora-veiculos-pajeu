@@ -7,7 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "funcionario_seq", allocationSize =1)
+@SequenceGenerator(initialValue = 2, name = "idgen", sequenceName = "funcionario_seq", allocationSize =1)
 public class Funcionario extends Entidade{
 	
 	private static final long serialVersionUID = 1L;

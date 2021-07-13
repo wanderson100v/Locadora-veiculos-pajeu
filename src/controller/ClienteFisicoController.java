@@ -209,7 +209,7 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
     	} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
 		} catch (NumberFormatException e) {
-			alerta.imprimirMsg("Alerta","Um ou mais campos nÃºmericos com entrada invalida", AlertType.ERROR);
+			alerta.imprimirMsg("Alerta","Um ou mais campos númericos não são números válidos", AlertType.ERROR);
 		}
 		
 	}
@@ -226,7 +226,7 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
 					fisico.setSexo(Sexo.getSexo(sexoBuscaBox.getValue()));
 				entidadeTabela.getItems().setAll(fachadaModel.buscarClientesFisicos(busca,fisico));
 			}
-			alerta.imprimirMsg("Busca concluÃ­da","Foram econtrados "+entidadeTabela.getItems().size()+" resultado(s)",AlertType.INFORMATION);
+			alerta.imprimirMsg("Busca concluída","Foram econtrados "+entidadeTabela.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
 		}

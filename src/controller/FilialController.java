@@ -132,7 +132,7 @@ public class FilialController extends CRUDController<Filial> {
 			List<Filial> filiais = fachadaModel.buscarFiliais(busca);
 			entidadeTabela.getItems().setAll(filiais);
 			entidadeTabela.refresh();
-			alerta.imprimirMsg("Busca concluÃ­da","Foram econtrados "+filiais.size()+" resultado(s)",AlertType.INFORMATION);
+			alerta.imprimirMsg("Busca concluída","Foram econtrados "+filiais.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
 		}

@@ -85,8 +85,7 @@ public class BackupDialogoController extends ControllerAdapter implements Observ
 	    			adiarConfirmarBtn.setDisable(true);
 	    			arquivarBtn.setDisable(true);
 	    		}else
-	    			Alerta.getInstance().imprimirMsg("Alerta", "Para adiar backup √© necess√°rio"
-	    					+ " informar quantidade de horas",AlertType.WARNING);
+	    			Alerta.getInstance().imprimirMsg("Alerta", "Informe a quantidade de horas que deseja adiar o backup",AlertType.WARNING);
 	    		
 	    	}else if(fonte ==selectPastaBtn) {
 	    		DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -106,8 +105,7 @@ public class BackupDialogoController extends ControllerAdapter implements Observ
 			    		adiarConfirmarBtn.setDisable(true);
 		    			arquivarBtn.setDisable(true);
 		    		}else
-						Alerta.getInstance().imprimirMsg("Alerta", "√â necess√°rio selecionar pasta e informar hora do backup de amanh√£ antes de realizar"
-								+ " de backup", AlertType.WARNING);
+						Alerta.getInstance().imprimirMsg("Alerta", "… necess·rio selecionar pasta e informar hora do backup de amanh„ antes da realizaÁ„o de backup", AlertType.WARNING);
 				} catch (DaoException e1) {
 					Alerta.getInstance().imprimirMsg("Erro", e1.getMessage(), AlertType.ERROR);
 				}

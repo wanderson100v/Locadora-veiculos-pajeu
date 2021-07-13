@@ -19,13 +19,17 @@ public class BoFuncionario extends Bo<Funcionario> implements IBoFuncionario {
 	}
 	
 	@Override
-	public void cadastrar(Funcionario funcionario, String senha, Cargo cargo) throws BoException {
+	public void cadastrar(Funcionario funcionario, String senha, String confirmacaoSenha, Cargo cargo) throws BoException {
 		try {
-			validarAcesso(senha,cargo);
+			validarAcesso(senha, confirmacaoSenha ,cargo);
 			daoFuncionario.cadastrar(funcionario,gerarLogin(funcionario), senha, cargo);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}
+	}
+	
+	protected void exluirEntidade(Funcionario funcionario) throws DaoException {
+		daoFuncionario.excluir(funcionario, gerarLogin(funcionario));
 	}
 	
 	@Override
@@ -34,9 +38,11 @@ public class BoFuncionario extends Bo<Funcionario> implements IBoFuncionario {
 	}
 	
 	
-	public void editar(Funcionario funcionario, String oldLogin)throws BoException{
+	public void editar(Funcionario antigofuncionario, Funcionario novoFuncionario)throws BoException{
 		try {
-			daoFuncionario.editar(funcionario, oldLogin, gerarLogin(funcionario));
+			String loginAntigo = gerarLogin(antigofuncionario);
+			String novoLogin = gerarLogin(novoFuncionario);
+			daoFuncionario.editar(novoFuncionario, loginAntigo, novoLogin);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}
@@ -109,8 +115,10 @@ public class BoFuncionario extends Bo<Funcionario> implements IBoFuncionario {
 		return Character.toLowerCase(funcionario.getNome().charAt(0))+funcionario.getCpf();
 	}
 	
-	private void validarAcesso(String senha, Cargo cargo) throws BoException {
+	private void validarAcesso(String senha, String confirmacaoSenha, Cargo cargo) throws BoException {
 		StringBuilder erro = new StringBuilder();
+		if(!senha.equals(confirmacaoSenha))
+			erro.append("A senha e a confirmação infromada não correspondem\n");
 		if(senha.length() <6 || senha.length() >11)
 			erro.append("A senha informada deve ter tamanho maior que 5 e menor que 12\n");
 		if(cargo == null)

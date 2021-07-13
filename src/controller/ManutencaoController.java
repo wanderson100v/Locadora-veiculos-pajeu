@@ -122,7 +122,7 @@ public class ManutencaoController extends CRUDController<Manutencao>{
 					fachadaModel.cadastrarEditarManutencao(new Manutencao(Util.gerarHorario(inicioDate, horaBox)
 							, tipoBox.getValue(), estadoManutencaoBox.getValue(), Float.parseFloat(custoFld.getText()), 
 							horaCustoBox.getValue(),veiculo));
-					alerta.imprimirMsg("Sucesso ao cadastrar","ManutenÃ§Ã£o cadastrada com sucesso", AlertType.INFORMATION);
+					alerta.imprimirMsg("Sucesso ao cadastrar","Manutenção cadastrada com sucesso", AlertType.INFORMATION);
 					
 		    	}else if(btn == editarBtn){
 		    		
@@ -131,14 +131,14 @@ public class ManutencaoController extends CRUDController<Manutencao>{
 		    		manutencao.setEstadoManutencao(estadoManutencaoBox.getValue());
 		    		manutencao.setTipoManuntencao(tipoBox.getValue());
 		    		fachadaModel.cadastrarEditarManutencao(manutencao);
-		    		alerta.imprimirMsg("Sucesso ao editar","ManutenÃ§Ã£o editado com sucesso", AlertType.INFORMATION);
+		    		alerta.imprimirMsg("Sucesso ao editar","Manutenção editado com sucesso", AlertType.INFORMATION);
 		    	}
 		    }catch (Exception e) {
-	    		Alerta.getInstance().imprimirMsg("Alerta", "HÃ¡ um ou mais campos com entradas invalidas", AlertType.WARNING);
+	    		Alerta.getInstance().imprimirMsg("Alerta", "Há um ou mais campos com entradas invalidas", AlertType.WARNING);
 	    	}	
 	    	 if(btn == excluirBtn){
 	    		fachadaModel.excluirManutencao(manutencao);
-	    		alerta.imprimirMsg("Sucesso ao exluir","ManutenÃ§Ã£o exlcuido com sucesso", AlertType.INFORMATION);
+	    		alerta.imprimirMsg("Sucesso ao exluir", "Manutenção exlcuido com sucesso", AlertType.INFORMATION);
 	    		limparCampos();
 	    	}else if(btn == limparBtn){
 	    		limparCampos();
@@ -155,7 +155,7 @@ public class ManutencaoController extends CRUDController<Manutencao>{
 			manutencao.setVeiculo(veiculoBusca);
 			List<Manutencao> manutencoes = fachadaModel.buscarManutencoes(busca,manutencao);
 			entidadeTabela.getItems().setAll(manutencoes);
-			alerta.imprimirMsg("Busca concluÃ­da","Foram econtrados "+manutencoes.size()+" resultado(s)",AlertType.INFORMATION);
+			alerta.imprimirMsg("Busca concluída","Foram econtrados "+manutencoes.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
 		}

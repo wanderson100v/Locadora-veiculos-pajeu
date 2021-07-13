@@ -41,7 +41,6 @@ public abstract class CRUDController<T extends Entidade> extends ControllerAdapt
     @FXML
     void crudHandle(ActionEvent e) {
     	Button button = (Button)e.getSource();
-    	crudHandle(button);
     	if(button == editarBtn) {
     		cadastrarBtn.setDisable(true);
     	}else if(button == excluirBtn) {
@@ -57,7 +56,7 @@ public abstract class CRUDController<T extends Entidade> extends ControllerAdapt
 			excluirBtn.setDisable(true);
 			editarBtn.setDisable(true);
 		}
-    	
+    	crudHandle(button);
     }
 
     @FXML

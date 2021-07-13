@@ -15,6 +15,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import model.FuncionarioObservavel;
 import model.dao.DaoRes;
 import model.enumeracoes.Cargo;
 import model.excecoes.DaoException;
@@ -54,6 +55,42 @@ public class PesquisaController extends Controller{
     
     private HashMap<String,CRUDController<?>> controladores = new HashMap<>();
     
+    ClienteJuridicoController clienteJuridicoController;
+    
+	ClienteFisicoController clienteFisicoController;
+	
+	CaminhonetaCargaController caminhonetaCargaController;
+	
+	AutomovelController automovelController;
+	
+	ManutencaoController manutencaoController;
+	
+	FilialController filialController;
+	
+	AcessorioController acessorioController;
+	
+	CategoriaVeiculoController categoriaVeiculoController;
+	
+	FuncionarioController funcionrarioController;
+    
+    @FXML
+    void initialize() {
+    	try {
+	    	DaoRes daoRes = DaoRes.getInstance();
+			this.clienteJuridicoController = (ClienteJuridicoController) daoRes.carregarControllerFXML("ClienteJuridicoPane");
+			this.clienteFisicoController = (ClienteFisicoController) daoRes.carregarControllerFXML("ClienteFisicoPane");
+			this.caminhonetaCargaController = (CaminhonetaCargaController) daoRes.carregarControllerFXML("CaminhonetaCargaPane");
+			this.automovelController = (AutomovelController) daoRes.carregarControllerFXML("AutomovelPane");
+			this.manutencaoController = (ManutencaoController) daoRes.carregarControllerFXML("ManutencaoPane");
+			this.filialController = (FilialController) daoRes.carregarControllerFXML("FilialPane");
+			this.acessorioController = (AcessorioController) daoRes.carregarControllerFXML("AcessorioPane");
+			this.categoriaVeiculoController = (CategoriaVeiculoController) daoRes.carregarControllerFXML("CategoriaVeiculoPane");
+			this.funcionrarioController = (FuncionarioController) daoRes.carregarControllerFXML("FuncionarioPane");
+		} catch (DaoException e) {
+			e.printStackTrace();
+		}
+	}
+    
 	@FXML
     void actionHandle(ActionEvent e) {
     	String chaveControlador = filtroBox.getValue();
@@ -92,36 +129,19 @@ public class PesquisaController extends Controller{
 	
 	public void addControladores(Cargo cargo) {
 		Platform.runLater(()->{
-			try {
-				DaoRes daoRes = DaoRes.getInstance();
-				controladores.clear();
-				
-				ClienteJuridicoController clienteJuridicoController = (ClienteJuridicoController) daoRes.carregarControllerFXML("ClienteJuridicoPane");
-				ClienteFisicoController clienteFisicoController = (ClienteFisicoController) daoRes.carregarControllerFXML("ClienteFisicoPane");
-				CaminhonetaCargaController caminhonetaCargaController = (CaminhonetaCargaController) daoRes.carregarControllerFXML("CaminhonetaCargaPane");
-				AutomovelController automovelController = (AutomovelController) daoRes.carregarControllerFXML("AutomovelPane");
-				ManutencaoController manutencaoController = (ManutencaoController) daoRes.carregarControllerFXML("ManutencaoPane");
-				
-				controladores.put("Clientes júridicos",clienteJuridicoController);
-				controladores.put("Clientes físicos", clienteFisicoController);
-				controladores.put("Caminhoneta Carga", caminhonetaCargaController);
-				controladores.put("Automóvel", automovelController);
-				controladores.put("Manutenção", manutencaoController);
-				
-				if(cargo != Cargo.AT) {
-					FilialController filialController = (FilialController) daoRes.carregarControllerFXML("FilialPane");
-					AcessorioController acessorioController = (AcessorioController) daoRes.carregarControllerFXML("AcessorioPane");
-					CategoriaVeiculoController categoriaVeiculoController = (CategoriaVeiculoController) daoRes.carregarControllerFXML("CategoriaVeiculoPane");
-					FuncionarioController funcionrarioController = (FuncionarioController) daoRes.carregarControllerFXML("FuncionarioPane");
-					controladores.put("Filiais", filialController);
-					controladores.put("Acessórios", acessorioController);
-					controladores.put("Categória de Véiculos", categoriaVeiculoController);
-					controladores.put("Funcionários", funcionrarioController);
-				}
-				filtroBox.getItems().addAll(controladores.keySet());
-			} catch (DaoException e) {
-				e.printStackTrace();
+			controladores.clear();
+			controladores.put("Clientes júridicos",clienteJuridicoController);
+			controladores.put("Clientes físicos", clienteFisicoController);
+			controladores.put("Caminhoneta Carga", caminhonetaCargaController);
+			controladores.put("Automóvel", automovelController);
+			controladores.put("Manutenção", manutencaoController);
+			if(cargo != Cargo.AT) {
+				controladores.put("Filiais", filialController);
+				controladores.put("Acessórios", acessorioController);
+				controladores.put("Categória de Véiculos", categoriaVeiculoController);
+				controladores.put("Funcionários", funcionrarioController);
 			}
+			filtroBox.getItems().addAll(controladores.keySet());
 		});
 	}
 	

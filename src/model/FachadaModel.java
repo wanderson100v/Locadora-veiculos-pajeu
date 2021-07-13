@@ -358,8 +358,8 @@ public class FachadaModel {
 	}
 	
 	//--Funcionário
-	public void cadastrarFuncionario(Funcionario funcionario ,String senha, Cargo cargo) throws BoException{
-		iboFuncionario.cadastrar(funcionario, senha, cargo);
+	public void cadastrarFuncionario(Funcionario funcionario ,String senha, String confirmacaoSenha, Cargo cargo) throws BoException{
+		iboFuncionario.cadastrar(funcionario, senha, confirmacaoSenha, cargo);
 	}
 	
 	public void editaSenha(Funcionario funcionario, String novaSenha) throws BoException{
@@ -370,9 +370,8 @@ public class FachadaModel {
 		iboFuncionario.excluir(funcionario);
 	}
 	
-	public void editarFuncionario(Funcionario antigofuncionario, Funcionario novoFuncionario )throws BoException{
-		String loginAntigo = iboFuncionario.gerarLogin(antigofuncionario);
-		iboFuncionario.editar(novoFuncionario, loginAntigo);
+	public void editarFuncionario(Funcionario antigofuncionario, Funcionario novoFuncionario)throws BoException{
+		iboFuncionario.editar(antigofuncionario, novoFuncionario);
 	}
 	
 	public List<Funcionario> buscarFuncionarios(String busca) throws BoException{

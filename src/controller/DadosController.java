@@ -15,7 +15,7 @@ import model.dao.DaoRes;
 import model.excecoes.DaoException;
 import view.Alerta;
 
-public class DadosController {
+public class DadosController{
 
     @FXML
     private Button voltarPesquisaBtn;
@@ -30,7 +30,7 @@ public class DadosController {
 	
 	@FXML
 	private SplitPane splitPanePesquisa;
-	    
+	
     @FXML
     void initialize() {
     	try {

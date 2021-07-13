@@ -134,8 +134,7 @@ public class FinalizarLocacaoController extends ControllerAdapter{
 			try {
 				revisaoPane.setDisable(Float.parseFloat(novaQuiloFld.getText().trim()) < locacao.getVeiculo()
 						.getCategoriaVeiculo().getQuilometragemRevisao());
-			} catch (NumberFormatException ex) {
-			}
+			} catch (NumberFormatException ex) {}
 
 			if (e.getSource() == devuAtualCk)
 				devuHorarioCustomPane.setDisable(devuAtualCk.isSelected());
@@ -151,19 +150,18 @@ public class FinalizarLocacaoController extends ControllerAdapter{
 				StringBuilder errosEmTela = new StringBuilder();
 
 				if (!devuAtualCk.isSelected() && (davuDate.getValue() == null || devuHoraBox.getValue() == null))
-					errosEmTela.append("- Ã‰ nescessÃ¡rio informar a data e hora de devoluÃ§Ã£o de locaÃ§Ã£o\n");
+					errosEmTela.append("- É necessário informar a data e hora de devolução do veículo locado\n");
 				if (etCk.isSelected()
 						&& (!etAtualCk.isSelected() && (etDate.getValue() == null || etHoraBox.getValue() == null)))
 					errosEmTela.append(
-							"- Abastecimento para veÃ­culo selecionado, Ã© necessÃ¡rio tambÃ©m definir data e hora para execuÃ§Ã£o\n");
+							"- Abastecimento para veóculo selecionado, desta forma, é necessário definir data e hora para a execução do abastecimento\n");
 				if (lpCk.isSelected()
 						&& (!lpAtualCk.isSelected() && (lpDate.getValue() == null || lpHoraBox.getValue() == null)))
 					errosEmTela.append(
-							"- Limpeza para veÃ­culo selecionada, Ã© necessÃ¡rio tambÃ©m definir data e hora para execuÃ§Ã£o\n");
+							"- Limpeza para veículo selecionada, É necessário também, definir data e hora para a execuçaõ da limpeza\n");
 				if (!revisaoPane.isDisable() && (rsDate.getValue() == null || rsHoraBox.getValue() == null
 						|| rsCustoFld.getText().trim().isEmpty()))
-					errosEmTela.append("- A nova quilometragem do vÃ©iculo requer a definiÃ§Ã£o de dados para revsÃ£o,"
-							+ " Ã© necessÃ¡rio definir data e hora como tambÃ©m o custo que a filial ira gastar na revisÃ£o\n");
+					errosEmTela.append("- A nova quilometragem do veíuclo atualizada requer o agendamento de uma revisão\n");
 
 				int quilometragem = 0;
 				float valorPago = 0f;
@@ -203,7 +201,7 @@ public class FinalizarLocacaoController extends ControllerAdapter{
 											: LocalDateTime.now(),
 									TipoManutencao.ABASTECIMENTO, EstadoManutencao.PENDENTE, 0f,
 									etCustoHoraBox.getValue(), locacao.getVeiculo()));
-					sucessoFinalizacao.append("\n- Nova manutenÃ§Ã£o de abastecimento de combustÃ­vel pendente");
+					sucessoFinalizacao.append("\n- Nova manutenção de abastecimento de combistível pendente");
 				}
 				if (lpCk.isSelected()) {
 					fachadaModel.cadastrarEditarManutencao(
@@ -212,17 +210,17 @@ public class FinalizarLocacaoController extends ControllerAdapter{
 											: LocalDateTime.now(),
 									TipoManutencao.LIMPEZA, EstadoManutencao.PENDENTE, 0f, lpCustoHoraBox.getValue(),
 									locacao.getVeiculo()));
-					sucessoFinalizacao.append("\n- Nova manutenÃ§Ã£o de limpeza pendente");
+					sucessoFinalizacao.append("\n- Nova manutenção de limpeza pendente");
 				}
 				if (!revisaoPane.isDisable()) {
 					fachadaModel.cadastrarEditarManutencao(
 							new Manutencao(Util.gerarHorario(rsDate, rsHoraBox),
 									TipoManutencao.REVISAO, EstadoManutencao.PENDENTE, custoRevisao,
 									rsCustoHoraBox.getValue(), locacao.getVeiculo()));
-					sucessoFinalizacao.append("\n- Nova manutenÃ§Ã£o de revisÃ£o pendente");
+					sucessoFinalizacao.append("\n- Nova manutenção de revisão pendente");
 				}
 				Alerta.getInstance().imprimirMsg("Sucesso",
-						"LocaÃ§Ã£o Finalizada com exito" + sucessoFinalizacao.toString(), AlertType.INFORMATION);
+						"Locação finalizada com exito" + sucessoFinalizacao.toString(), AlertType.INFORMATION);
 				finalizarBtn.setDisable(true);
 			}
 		} catch (BoException ex) {
@@ -243,9 +241,9 @@ public class FinalizarLocacaoController extends ControllerAdapter{
 							devuHoraBox.getValue(), 0);
 				} else
 					horarioDevu = LocalDateTime.now();
-				String detales = (String) fachadaModel.calcularValorLocacaoDetalhamento(locacao,
+				String detalhes = (String) fachadaModel.calcularValorLocacaoDetalhamento(locacao,
 						Integer.parseInt(novaQuiloFld.getText()), horarioDevu, etCk.isSelected(), lpCk.isSelected())[1];
-				detalhesArea.setText(detales);
+				detalhesArea.setText(detalhes);
 			}
 		} catch (NumberFormatException e) {
 			Alerta.getInstance().imprimirMsg("Alerta", "Deve ser informada uma quilometragem de valor inteiro",

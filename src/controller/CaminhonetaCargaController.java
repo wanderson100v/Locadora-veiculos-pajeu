@@ -212,7 +212,7 @@ public class CaminhonetaCargaController extends CRUDController<CaminhonetaCarga>
 		try {
 			List<CaminhonetaCarga> caminhonetaCargas = fachadaModel.buscarCaminhonetasCarga(busca);
 			entidadeTabela.getItems().setAll(caminhonetaCargas);
-			alerta.imprimirMsg("Busca concluÃ­da","Foram econtrados "+caminhonetaCargas.size()+" resultado(s)",AlertType.INFORMATION);
+			alerta.imprimirMsg("Busca conclúida","Foram econtrados "+caminhonetaCargas.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
 		}
@@ -247,7 +247,7 @@ public class CaminhonetaCargaController extends CRUDController<CaminhonetaCarga>
 		
 		if(caminhonetaCarga.getFilial() != null)
 			filialFld.setText(caminhonetaCarga.getFilial().toString());
-		alerta.imprimirMsg("Categoria do VÃ©iculo",caminhonetaCarga.getCategoriaVeiculo().toString(), AlertType.INFORMATION);
+		alerta.imprimirMsg("Categoria do veículo",caminhonetaCarga.getCategoriaVeiculo().toString(), AlertType.INFORMATION);
 		
 	}
 

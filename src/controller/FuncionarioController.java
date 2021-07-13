@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 
+import model.FuncionarioObservavel;
 import model.enumeracoes.Cargo;
 import model.excecoes.BoException;
 import model.vo.Entidade;
@@ -67,12 +68,16 @@ public class FuncionarioController  extends CRUDController<Funcionario> {
     @FXML
     private GridPane dadosAcessoPane;
 
-    private Funcionario funcionario;
+    private Funcionario funcionarioAuxCRUD;
+    
+    private Funcionario funcionarioLogado;
+    
     private Filial filial;
     
     @FXML
     void initialize() {
     	super.initialize();
+    	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
     	ToggleGroup toggleGroup = new ToggleGroup();
     	simAtivoRb.setToggleGroup(toggleGroup);
     	naoAtivoRb.setToggleGroup(toggleGroup);
@@ -89,44 +94,66 @@ public class FuncionarioController  extends CRUDController<Funcionario> {
 
 	@Override
 	void crudHandle(Button btn) {
-		try {	
-    		if(btn == cadastrarBtn) {
-    			Funcionario funcionario = new Funcionario();
-				String senha = senhaFld.getText().trim();
-				
-				if(senha.equals(conSenhaFld.getText())){
-	    			funcionario.setAtivo(simAtivoRb.isSelected());
-	    			funcionario.setNome(nomeFld.getText());
-	    			funcionario.setCpf(cpfFld.getText());
-	    			if(filial!= null) {
-	    				funcionario.setFilial(filial);
-	    				this.filial = null;
-	    			}
-					fachadaModel.cadastrarFuncionario(funcionario,senha,cargoBox.getValue());
-					alerta.imprimirMsg("Sucesso ao cadastrar","Funcionario cadastrado com sucesso", AlertType.INFORMATION);
-				}else {
-					cadastrarBtn.setDisable(false);
-					alerta.imprimirMsg("Alerta", "As senhas informadas n√£o correspondem", AlertType.WARNING);
-				}
-    		}else if(btn == editarBtn) {
-				Funcionario novofuncionario = this.funcionario;
-				novofuncionario.setAtivo(simAtivoRb.isSelected());
-				novofuncionario.setNome(nomeFld.getText());
-				novofuncionario.setCpf(cpfFld.getText());
-    			fachadaModel.editarFuncionario( this.funcionario, novofuncionario);
-				alerta.imprimirMsg("Sucesso ao editado","Funcion√°rio editado com sucesso", AlertType.INFORMATION);
-	    	}else if(btn == excluirBtn){
-	    		fachadaModel.excluirFuncionario(this.funcionario);
-	    		alerta.imprimirMsg("Sucesso ao exluir","Funcion√°rio exlcuido com sucesso", 
-	    				AlertType.INFORMATION);
-	    		limparCampos();
-	    	}else if(btn == limparBtn)
-	    		limparCampos();
-	    		
-    	} catch (BoException e) {
+		if(btn == cadastrarBtn) 
+			cadastrarFuncionario();
+		else if(btn == editarBtn) 
+			editarFuncionario();
+    	else if(btn == excluirBtn)
+    		excluirFuncionario();
+    	else if(btn == limparBtn)
+    		limparCampos();
+	}
+    		
+    private void cadastrarFuncionario() {
+    	Funcionario funcionario = new Funcionario();
+		String senha = senhaFld.getText().trim();
+		String confirmacaoSenha = conSenhaFld.getText().trim();
+			funcionario.setAtivo(simAtivoRb.isSelected());
+			funcionario.setNome(nomeFld.getText().trim());
+			funcionario.setCpf(cpfFld.getText().trim());
+			if(filial!= null) {
+				funcionario.setFilial(filial);
+				this.filial = null;
+			}
+		try {
+			fachadaModel.cadastrarFuncionario(funcionario,senha, confirmacaoSenha, cargoBox.getValue());
+			alerta.imprimirMsg("Sucesso ao cadastrar","Funcionario cadastrado com sucesso", AlertType.INFORMATION);
+			entidadeTabela.getItems().add(funcionario);
+		} catch (BoException e) {
+			cadastrarBtn.setDisable(false);
 			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
 		}
-	}
+    }
+    
+    private void editarFuncionario() {
+    	Funcionario novofuncionario = new Funcionario();
+    	novofuncionario.setId(this.funcionarioAuxCRUD.getId());
+		novofuncionario.setAtivo(simAtivoRb.isSelected());
+		novofuncionario.setNome(nomeFld.getText());
+		novofuncionario.setCpf(cpfFld.getText());
+		try {
+			fachadaModel.editarFuncionario(this.funcionarioAuxCRUD, novofuncionario);
+			alerta.imprimirMsg("Sucesso ao editado","Funcion·rio editado com sucesso", AlertType.INFORMATION);
+			entidadeTabela.getItems().remove(funcionarioAuxCRUD);
+			entidadeTabela.getItems().add(novofuncionario);
+			funcionarioAuxCRUD = novofuncionario;
+		} catch (BoException e) {
+			editarBtn.setDisable(false);
+			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+		}
+    }
+    
+    private void excluirFuncionario() {
+    	try {
+			fachadaModel.excluirFuncionario(this.funcionarioAuxCRUD);
+			alerta.imprimirMsg("Sucesso ao exluir","Funcion·rio exlcuido com sucesso", AlertType.INFORMATION);
+			entidadeTabela.getItems().remove(funcionarioAuxCRUD);
+			limparCampos();
+		} catch (BoException e) {
+			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+			excluirBtn.setDisable(false);
+		}
+    }
 
 	@Override
 	void popularTabela(String busca) {
@@ -134,11 +161,11 @@ public class FuncionarioController  extends CRUDController<Funcionario> {
 			List<Funcionario> funcionarios = fachadaModel.buscarFuncionarios(busca);
 			Funcionario instanciaRemover = null;
 			for(Funcionario f : funcionarios)
-				if(this.funcionario != null && f.getCpf().equals(this.funcionario.getCpf()))
+				if(this.funcionarioLogado != null && f.getCpf().equals(this.funcionarioLogado.getCpf()))
 					instanciaRemover = f;
 			funcionarios.remove(instanciaRemover);
 			entidadeTabela.getItems().setAll(funcionarios);
-			alerta.imprimirMsg("Busca conclu√≠da","Foram econtrados "+funcionarios.size()+" resultado(s)",AlertType.INFORMATION);
+			alerta.imprimirMsg("Busca concluÌda","Foram econtrados "+funcionarios.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
 		}
@@ -146,20 +173,20 @@ public class FuncionarioController  extends CRUDController<Funcionario> {
 
 	@Override
 	void popularDescricao(Entidade entidade) {
-		this.funcionario = (Funcionario) entidade;
+		this.funcionarioAuxCRUD = (Funcionario) entidade;
 		dadosAcessoPane.setVisible(false);
 		resertarSenhaBtn.setVisible(true);
-		simAtivoRb.setSelected(funcionario.isAtivo());
-		cpfFld.setText(funcionario.getCpf());
-		nomeFld.setText(funcionario.getNome());
+		simAtivoRb.setSelected(funcionarioAuxCRUD.isAtivo());
+		cpfFld.setText(funcionarioAuxCRUD.getCpf());
+		nomeFld.setText(funcionarioAuxCRUD.getNome());
 		senhaFld.clear();
 		conSenhaFld.clear();
 		nivelAcessoBox.setVisible(true);
 		alterarNivelAcessoBtn.setVisible(true);
-		if(funcionario.getFilial()!= null)
-			filialFld.setText(funcionario.getFilial().toString());
+		if(funcionarioAuxCRUD.getFilial()!= null)
+			filialFld.setText(funcionarioAuxCRUD.getFilial().toString());
 		try {
-			nivelAcessoBox.setValue(fachadaModel.requisitarGralDeAcesso(funcionario));
+			nivelAcessoBox.setValue(fachadaModel.requisitarGralDeAcesso(funcionarioAuxCRUD));
 		}catch (Exception e) {
 			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
 		}
@@ -167,7 +194,7 @@ public class FuncionarioController  extends CRUDController<Funcionario> {
 
 	@Override
 	void limparCampos() {
-		this.funcionario = null;
+		this.funcionarioAuxCRUD = null;
 		this.filial = null;
 		filialFld.clear();
 		dadosAcessoPane.setVisible(true);
@@ -194,11 +221,11 @@ public class FuncionarioController  extends CRUDController<Funcionario> {
 					this.filial = filial;
 				}
 			}else if(event.getSource() == resertarSenhaBtn) {
-				fachadaModel.resetarSenha(funcionario);
+				fachadaModel.resetarSenha(funcionarioAuxCRUD);
 				alerta.imprimirMsg("Sucesso ao editar", "Senha editada com sucesso",AlertType.INFORMATION);
 			}else if(event.getSource() == alterarNivelAcessoBtn) {
-				fachadaModel.alterarGralAcesso(funcionario, fachadaModel.requisitarGralDeAcesso(funcionario),nivelAcessoBox.getValue());
-				alerta.imprimirMsg("Sucesso ao editar", "Privilegios de acaesso alterados com sucesso",AlertType.INFORMATION);
+				fachadaModel.alterarGralAcesso(funcionarioAuxCRUD, fachadaModel.requisitarGralDeAcesso(funcionarioAuxCRUD),nivelAcessoBox.getValue());
+				alerta.imprimirMsg("Sucesso ao editar", "Privilegios de acesso ao sistema foram alterados com sucesso",AlertType.INFORMATION);
 			}
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
@@ -210,13 +237,13 @@ public class FuncionarioController  extends CRUDController<Funcionario> {
 		try {
 			cargoBox.getItems().clear();
 			if(cargo == Cargo.SU) {
-				System.out.println("Adicionado como super user todos os cargos");
 				cargoBox.getItems().addAll(Cargo.values());
 			}else if(cargo == Cargo.ADM) { 
 				cargoBox.getItems().addAll(Cargo.ADM,Cargo.AT);
 			}
 			if(funcionario != null) 
-				this.funcionario = funcionario;
+				this.funcionarioLogado = funcionario;
+			cargoBox.getSelectionModel().select(0);
 		}catch(Exception e) {
 			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();

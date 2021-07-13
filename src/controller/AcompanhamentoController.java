@@ -266,10 +266,10 @@ public class AcompanhamentoController extends Controller {
 					
 					Alerta.getInstance().imprimirMsg("Sucesso", "Busca concluida. "
 							+ ((reservaCk.isSelected())? reservasTbl.getItems().size()+" Reservas, " : "") 
-							+ ((locacaoCk.isSelected())? locacaoTbl.getItems().size()+" Loca√ß√µes, ":"")+ "econtradas"
+							+ ((locacaoCk.isSelected())? locacaoTbl.getItems().size()+" LocaÁıes, ":"")+ "econtradas"
 							, AlertType.INFORMATION);
 				}else {
-					Alerta.getInstance().imprimirMsg("Alerta", "√â necess√°rio espeficicar busca para reserva e ou locacao", AlertType.WARNING);
+					Alerta.getInstance().imprimirMsg("Alerta", "… necess·rio espeficicar busca para reserva e ou locacao", AlertType.WARNING);
 				}
 	    		
     		}else if(fonte == selectFilialRetiBtn) {
@@ -364,7 +364,7 @@ public class AcompanhamentoController extends Controller {
 	    				dadosFilialRetiFld.setText(filialRetirada.toString());
 	    			}else {
 	    				retiMinhaFilialCk.setSelected(false);
-	    				Alerta.getInstance().imprimirMsg("Alerta", "O Funcion√°rio logado n√£o esta relacionado a nenhuma filial",
+	    				Alerta.getInstance().imprimirMsg("Alerta", "O funcion·rio logado n„o est· relacionado a nenhuma filial",
 	    						AlertType.WARNING);
 	    			}
     			}
@@ -377,7 +377,7 @@ public class AcompanhamentoController extends Controller {
 	    				dadosFilialDevuFld.setText(filialDevolucao.toString());
 	    			}else {
 	    				devuMinhaFilialCk.setSelected(false);
-	    				Alerta.getInstance().imprimirMsg("Alerta", "O Funcion√°rio logado n√£o esta relacionado a nenhuma filial",
+	    				Alerta.getInstance().imprimirMsg("Alerta", "O funcion·rio logado n„o est· relacionado a nenhuma filial",
 	    						AlertType.WARNING);
 	    			}
     			}
@@ -393,7 +393,7 @@ public class AcompanhamentoController extends Controller {
 	    			reservasTbl.getItems().remove(reservaSelecionada);
 	    			Alerta.getInstance().imprimirMsg("Sucesso","Reserva cancelada com sucesso ",AlertType.INFORMATION);
     			}else
-    				Alerta.getInstance().imprimirMsg("Alerta", "N√£o h√° nenhuma reserva pendente seleciona na tabela", AlertType.WARNING);
+    				Alerta.getInstance().imprimirMsg("Alerta", "N„o h· nenhuma reserva pendente seleciona na tabela", AlertType.WARNING);
     		}
     		else if(e.getSource() == finalizarLocacaoBnt) 
     		{
@@ -402,12 +402,12 @@ public class AcompanhamentoController extends Controller {
     					+ "finalizar locacao com o cliente "+ locacaoSelecionada.getCliente())) {
     				Util.exibirFinalizarLocacaoDialogo(locacaoSelecionada);
     			}else
-    				Alerta.getInstance().imprimirMsg("Alerta", "N√£o h√° nenhuma loca√ß√£o pendente seleciona na tabela", AlertType.WARNING);
+    				Alerta.getInstance().imprimirMsg("Alerta", "N„o h· nenhuma locaÁ„o pendente seleciona na tabela", AlertType.WARNING);
     			
     		}else if(e.getSource() == excluirLocacaoBtn) {
     			Locacao locacaoSelecionada = locacaoTbl.getSelectionModel().getSelectedItem();
     			if(locacaoSelecionada != null && Alerta.getInstance()
-    					.imprimirMsgConfirmacao("Realmente deseja exluir a Loca√ß√£o com o cliente: "+cliente+" ? ")) {
+    					.imprimirMsgConfirmacao("Realmente deseja exluir a locaÁ„o com o cliente: "+cliente+" ? ")) {
     				fachadaModel.excluirLocacao(locacaoSelecionada);
     			}
     		}else if(e.getSource() == exluirReservaBtn) {

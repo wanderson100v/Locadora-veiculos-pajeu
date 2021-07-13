@@ -117,7 +117,7 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
     @FXML
     void initialize() {
     	super.initialize();
-    	tipoVeiculoBox.getItems().addAll("Caminhoneta Carga", "Caminhoneta Passageiro", "Autom贸vel Comum");
+    	tipoVeiculoBox.getItems().addAll("Caminhoneta Carga", "Caminhoneta Passageiro", "Autom髒el Comum");
     	
     	tipoCln.setCellValueFactory( new PropertyValueFactory<>("tipo"));
     	valorCln.setCellValueFactory( new PropertyValueFactory<>("valorDiaria"));
@@ -189,13 +189,13 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
 					
 					fachadaModel.cadastrarEditarCategoriaVeiculo(categoriaVeiculo);
 					
-					alerta.imprimirMsg("Sucesso ao cadastrar","Categoria De Ve铆culo"
+					alerta.imprimirMsg("Sucesso ao cadastrar","Categoria de ve韈ulo"
 							+((categoriaVeiculo.equals(this.categoriaVeiculo))? "editada": "cadastrada") 
 							+" com sucesso", AlertType.INFORMATION);
 			}else if(btn == excluirBtn) {
 				
 				fachadaModel.excluirCategoriaVeiculo(this.categoriaVeiculo);
-	    		alerta.imprimirMsg("Sucesso ao exluir","Categoria de Ve铆culo excluida com sucesso", 
+	    		alerta.imprimirMsg("Sucesso ao exluir","Categoria de ve韈ulo excluida com sucesso", 
 	    				AlertType.INFORMATION);
 	    		limparCampos();
 			
@@ -211,7 +211,7 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
 		try {
 			List<CategoriaVeiculo> categoriasVeiculos = fachadaModel.buscarCategoriasVeiculo(busca);
 			entidadeTabela.getItems().setAll(categoriasVeiculos);
-			alerta.imprimirMsg("Busca conclu铆da","Foram econtrados "+categoriasVeiculos.size()+" resultado(s)",AlertType.INFORMATION);
+			alerta.imprimirMsg("Busca conclu韉a","Foram econtrados "+categoriasVeiculos.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
 		}
@@ -239,7 +239,7 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
 				airbagPane.setVisible(true);
 				airbagBox.setValue(automovel.getTipoAirBag());
 			}else {
-				tipoVeiculoBox.setValue("Autom贸vel Comum");
+				tipoVeiculoBox.setValue("Autom髒el Comum");
 				airbagPane.setVisible(false);
 			}
 			tamanhoBox.setValue(automovel.getTamanhoVeiculo());
@@ -298,7 +298,7 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
 					airbagPane.setVisible(true);
 					tipoVeiculoPane.getChildren().clear();
 					tipoVeiculoPane.getChildren().setAll(automovelPane);
-				}else if(tipoVeiculoBox.getValue().equals("Autom贸vel Comum")) {
+				}else if(tipoVeiculoBox.getValue().equals("Autom髒el Comum")) {
 					automovelLbl.setText("Autom贸vel Comum de Parametro");
 					airbagPane.setVisible(false);
 					tipoVeiculoPane.getChildren().clear();

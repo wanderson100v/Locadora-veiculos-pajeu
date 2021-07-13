@@ -88,13 +88,13 @@ public class AcompanhamentoReservaController extends Controller{
 		    		}
 		    		Alerta.getInstance().imprimirMsg("Busca Concluida", reservasTbl.getItems().size()+" resultados",AlertType.INFORMATION);
 	    		}else
-	    			Alerta.getInstance().imprimirMsg("Alerta", "√â necess√°rio selecionar op√ß√£o de busca para filial",AlertType.WARNING);
+	    			Alerta.getInstance().imprimirMsg("Alerta", "… necess·rio selecionar uma opÁ„o de busca para filial",AlertType.WARNING);
 	    	
 	    	}else if(fonte == cancelarReservaBtn) {
 	    		
 	    		ReservaPendente reservaPendente  = reservasTbl.getSelectionModel().getSelectedItem();
 	    		if(reservaPendente != null) {
-	    			if(Alerta.getInstance().imprimirMsgConfirmacao("Precione \"Ok\" para cancelar reserva com o cliente de c√≥digo "+reservaPendente.getCodigoCliente())) {
+	    			if(Alerta.getInstance().imprimirMsgConfirmacao("Precione \"Ok\" para cancelar reserva com o cliente de cÛdigo "+reservaPendente.getCodigoCliente())) {
 		    			Reserva reserva  = fachadaModel.buscarReservaPorID(reservaPendente.getId());
 		    			reserva.setEstadoReserva(EstadoRerserva.CANCELADO);
 		    			fachadaModel.cadastrarEditarReserva(reserva);
@@ -102,7 +102,7 @@ public class AcompanhamentoReservaController extends Controller{
 		    			Alerta.getInstance().imprimirMsg("Sucesso", "Reserva cancelada com sucesso ",AlertType.INFORMATION);
 	    			}
 	    		}else
-	    			Alerta.getInstance().imprimirMsg("Alerta", "N√£o h√° reserva selecionada na tabela",AlertType.WARNING);
+	    			Alerta.getInstance().imprimirMsg("Alerta", "N„o h· reserva selecionada na tabela",AlertType.WARNING);
 	    	
 	    	}else if(fonte == outraFilialRb) {
 	    		
@@ -127,7 +127,7 @@ public class AcompanhamentoReservaController extends Controller{
 	    		else {
 	    			dadosFilialFld.clear();
 	    			minhaFilialRb.setSelected(false);
-	    			Alerta.getInstance().imprimirMsg("Alerta", "Funcion√°rio n√£o esta relacionado a nenhuma filial",AlertType.WARNING);
+	    			Alerta.getInstance().imprimirMsg("Alerta", "O Funcion·rio n„o esta relacionado a nenhuma filial",AlertType.WARNING);
 	    		}
 	    	
 	    	}

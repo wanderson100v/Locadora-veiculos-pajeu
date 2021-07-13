@@ -63,14 +63,14 @@ public class AcessorioController extends CRUDController<Acessorio>{
     			acessorio.setDepreciado(simDepreciadoRb.isSelected());
     			
     			fachadaModel.cadastrarEditarAcessorio(acessorio);
-				alerta.imprimirMsg("Sucesso ao cadastrar","AcessÃ³rio "
+				alerta.imprimirMsg("Sucesso ao cadastrar","Acessório "
 						+((acessorio.equals(this.acessorio))? "editado": "cadastrado") 
 						+" com sucesso", AlertType.INFORMATION);
 				
 	    	}else if(btn == excluirBtn){
 	    		
 	    		fachadaModel.excluirAcessorio(this.acessorio);
-	    		alerta.imprimirMsg("Sucesso ao exluir","AcessÃ³rio exlcuido com sucesso", 
+	    		alerta.imprimirMsg("Sucesso ao exluir","Acessório exlcuido com sucesso", 
 	    				AlertType.INFORMATION);
 	    		limparCampos();
 	    	
@@ -89,7 +89,7 @@ public class AcessorioController extends CRUDController<Acessorio>{
 		try {
 			List<Acessorio> acessorios = fachadaModel.buscarAcessorios(busca);
 			entidadeTabela.getItems().setAll(acessorios);
-			alerta.imprimirMsg("Busca concluÃ­da","Foram econtrados "+acessorios.size()+" resultado(s)",AlertType.INFORMATION);
+			alerta.imprimirMsg("Busca concúida","Foram econtrados "+acessorios.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
 		}

@@ -70,7 +70,7 @@ public class PerfilController extends Controller {
 						}else
 							alerta.imprimirMsg("Alerta", "Senha incorreta", AlertType.WARNING);
 					}else 
-						alerta.imprimirMsg("Alerta", "As senhas informadas n√£o correspondem", AlertType.WARNING);
+						alerta.imprimirMsg("Alerta", "As senhas informadas n„o correspondem", AlertType.WARNING);
 		    	}
 	    	} catch (BoException e) {
 				alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);

@@ -5,7 +5,12 @@ import model.vo.Funcionario;
 
 public class FuncionarioObservavel {
 	private static FuncionarioObservavel instance;
-	private ListaDuplamenteEncadeada<IObservadorFuncionario> observadoresFuncionario = new ListaDuplamenteEncadeada<IObservadorFuncionario>();
+	
+	private ListaDuplamenteEncadeada<IObservadorFuncionario> observadoresFuncionario = new ListaDuplamenteEncadeada<>();
+	
+	private Cargo cargo;
+	
+	private Funcionario funcionario;
 	
 	private FuncionarioObservavel() {}
 	
@@ -23,7 +28,13 @@ public class FuncionarioObservavel {
 		this.observadoresFuncionario.removerItem(observadorEntidade);
 	}
 	
+	public void avisarOuvintes() {
+		avisarOuvintes(funcionario, cargo);
+	}
+	
 	public void avisarOuvintes(Funcionario funcionario, Cargo cargo) {
+		this.cargo = cargo;
+		this.funcionario = funcionario;
 		if(observadoresFuncionario.isVasia())
 			return;
 		IteradorListaEncadeada<IObservadorFuncionario> iterador = new IteradorListaEncadeada<IObservadorFuncionario>(observadoresFuncionario);

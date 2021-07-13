@@ -48,8 +48,8 @@ public class SelecionarClienteController extends ControllerAdapter{
     	codigoCln.setCellValueFactory(new PropertyValueFactory<>("codigo"));
     	emailCln.setCellValueFactory(new PropertyValueFactory<>("email"));
     	
-    	tipoClienteBox.getItems().addAll("FÃ­sico","JurÃ­dico");
-    	tipoClienteBox.setValue("FÃ­sico");
+    	tipoClienteBox.getItems().addAll("Físico","Jurídico");
+    	tipoClienteBox.setValue("Físico");
     	
     	pesquisaFld.setOnKeyTyped(new EventHandler<KeyEvent>() {
 			@Override
@@ -76,7 +76,7 @@ public class SelecionarClienteController extends ControllerAdapter{
 			else 
 				clienteTbl.getItems().setAll(fachadaModel.buscarClientesJuridicos(pesquisaFld.getText()));
 			if(mostrarMsg)
-				 Alerta.getInstance().imprimirMsg("Busca concluÃ­da","Foram econtrados "+clienteTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
+				 Alerta.getInstance().imprimirMsg("Busca concluída","Foram econtrados "+clienteTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			 Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
 		}

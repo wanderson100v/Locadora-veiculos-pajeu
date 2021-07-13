@@ -72,10 +72,10 @@ public class LoginController extends ControllerAdapter{
 					try {
 						Funcionario funcionario = fachadaModel.buscaPorLogin(login);
 						if(funcionario != null) {
-							FuncionarioObservavel.getIntance().avisarOuvintes(funcionario, cargo);
 							lembrarLogin(login);
 			        		senhaField.clear();
 							App.iniTelaMenu();
+							FuncionarioObservavel.getIntance().avisarOuvintes(funcionario, cargo);
 						}else {
 							alerta.imprimirMsg("Alerta", "USUÁRIO NÃO EXISTENTE",AlertType.WARNING);
 						}

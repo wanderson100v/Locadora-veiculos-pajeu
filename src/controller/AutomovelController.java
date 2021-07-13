@@ -205,22 +205,19 @@ public class AutomovelController extends CRUDController<Automovel> {
     			automovel.setAcessorios(aceTabela.getItems());
     			
 				fachadaModel.cadastrarEditarAutomovel(automovel);
-				alerta.imprimirMsg("Sucesso ao cadastrar","AutomÃ³vel"
+				alerta.imprimirMsg("Sucesso ao cadastrar","Automóvel"
 						+((automovel.equals(this.automovel))? "editado": "cadastrado") 
 						+" com sucesso", AlertType.INFORMATION);
 				
 	    	}else if(btn == excluirBtn){
 	    		
 	    		fachadaModel.excluirAutomovel(this.automovel);
-	    		alerta.imprimirMsg("Sucesso ao exluir","AutomÃ³vel exlcuido com sucesso", 
+	    		alerta.imprimirMsg("Sucesso ao exluir","Automóvel exlcuido com sucesso", 
 	    				AlertType.INFORMATION);
 	    		limparCampos();
 	    	
-	    	}else if(btn == limparBtn){
-	    		
+	    	}else if(btn == limparBtn)
 	    		limparCampos();
-	    		
-	    	}
     	} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
 		}
@@ -231,7 +228,7 @@ public class AutomovelController extends CRUDController<Automovel> {
 		try {
 			List<Automovel> automoveis = fachadaModel.buscarAutomoveis(busca);
 			entidadeTabela.getItems().setAll(automoveis);
-			alerta.imprimirMsg("Busca concluÃ­da","Foram econtrados "+automoveis.size()+" resultado(s)",AlertType.INFORMATION);
+			alerta.imprimirMsg("Busca concluída","Foram econtrados "+automoveis.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
 		}
@@ -264,7 +261,7 @@ public class AutomovelController extends CRUDController<Automovel> {
 		aceTabela.getItems().setAll(automovel.getAcessorios());
 		if(automovel.getFilial() != null)
 			filialFld.setText(automovel.getFilial().toString());
-		alerta.imprimirMsg("Categoria do VÃ©iculo",automovel.getCategoriaVeiculo().toString(), AlertType.INFORMATION);
+		alerta.imprimirMsg("Categoria do veículo",automovel.getCategoriaVeiculo().toString(), AlertType.INFORMATION);
 	}
 
 	@Override
