@@ -173,62 +173,52 @@ public class AutomovelController extends CRUDController<Automovel> {
     	quilometragemFld.setTextFormatter(Mascara.getMascaraNumericoInteiro());
     }
     
+
 	@Override
-	void crudHandle(Button btn) {
-		try {	
-    		if(btn == cadastrarBtn || btn == editarBtn) {
-    			Automovel automovel = (btn == cadastrarBtn)? 
-    					new Automovel() :this.automovel;
-    			
-    			
-    			automovel.setAtivo(simAtivoRb.isSelected());
-    			automovel.setLocado(simLocadoRb.isSelected());
-    			automovel.setPlaca(placaFld.getText().trim());
-    			automovel.setCor(corFld.getText().trim());
-    			automovel.setModelo(modeloFld.getText().trim());
-    			automovel.setFabricante(fabricanteFld.getText().trim());
-    			automovel.setNumeroChassi(numChassiFld.getText().trim());
-    			automovel.setNumeroMotor(numMotorFld.getText().trim());
-    			automovel.setTorqueMotor(Float.parseFloat(torqueMotorFld.getText()));
-    			automovel.setTipoCombustivel(combustivelBox.getValue());
-    			automovel.setQuilometragem(Integer.parseInt(quilometragemFld.getText()));
-    			automovel.setAnoFabricante(anoFabricacaoBox.getValue());
-    			automovel.setAnoModelo(anoModeloBox.getValue());
-    			automovel.setQuantidadePortas(portasBox.getValue());
-    			automovel.setQuantidadePassageiro(passageirosBox.getValue());
-    			automovel.setFilial(filial);
-    			
-    			automovel.setTipoCambio(cambioBox.getValue());
-    			automovel.setTipoAutomovel(automovelBox.getValue());
-    			automovel.setTamanhoVeiculo(tamanhoBox.getValue());
-    			automovel.setTipoAirBag(airbagBox.getValue());
-    			automovel.setAcessorios(aceTabela.getItems());
-    			
-				fachadaModel.cadastrarEditarAutomovel(automovel);
-				alerta.imprimirMsg("Sucesso ao cadastrar","Automóvel"
-						+((automovel.equals(this.automovel))? "editado": "cadastrado") 
-						+" com sucesso", AlertType.INFORMATION);
-				
-	    	}else if(btn == excluirBtn){
-	    		
-	    		fachadaModel.excluirAutomovel(this.automovel);
-	    		alerta.imprimirMsg("Sucesso ao exluir","Automóvel exlcuido com sucesso", 
-	    				AlertType.INFORMATION);
-	    		limparCampos();
-	    	
-	    	}else if(btn == limparBtn)
-	    		limparCampos();
-    	} catch (BoException e) {
-			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
-		}
+	protected void cadastrarEditar(Boolean cadastrar,  String opcao) throws BoException {
+		Automovel automovel = (cadastrar) ? 
+				new Automovel() : this.automovel;
+		
+		automovel.setAtivo(simAtivoRb.isSelected());
+		automovel.setLocado(simLocadoRb.isSelected());
+		automovel.setPlaca(placaFld.getText().trim());
+		automovel.setCor(corFld.getText().trim());
+		automovel.setModelo(modeloFld.getText().trim());
+		automovel.setFabricante(fabricanteFld.getText().trim());
+		automovel.setNumeroChassi(numChassiFld.getText().trim());
+		automovel.setNumeroMotor(numMotorFld.getText().trim());
+		automovel.setTorqueMotor(Float.parseFloat(torqueMotorFld.getText()));
+		automovel.setTipoCombustivel(combustivelBox.getValue());
+		automovel.setQuilometragem(Integer.parseInt(quilometragemFld.getText()));
+		automovel.setAnoFabricante(anoFabricacaoBox.getValue());
+		automovel.setAnoModelo(anoModeloBox.getValue());
+		automovel.setQuantidadePortas(portasBox.getValue());
+		automovel.setQuantidadePassageiro(passageirosBox.getValue());
+		automovel.setFilial(filial);
+		
+		automovel.setTipoCambio(cambioBox.getValue());
+		automovel.setTipoAutomovel(automovelBox.getValue());
+		automovel.setTamanhoVeiculo(tamanhoBox.getValue());
+		automovel.setTipoAirBag(airbagBox.getValue());
+		automovel.setAcessorios(aceTabela.getItems());
+		
+		fachadaModel.cadastrarEditarAutomovel(automovel);
+		alerta.imprimirMsg("Sucesso","AutomÃ³vel "+opcao+" com sucesso", AlertType.INFORMATION);
+		
 	}
 
+	@Override
+	protected void excluir() throws BoException {
+		fachadaModel.excluirAutomovel(this.automovel);
+		alerta.imprimirMsg("Sucesso ao exluir","AutomÃ³vel exlcuido com sucesso", 
+				AlertType.INFORMATION);
+	}
 	@Override
 	void popularTabela(String busca) {
 		try {
 			List<Automovel> automoveis = fachadaModel.buscarAutomoveis(busca);
 			entidadeTabela.getItems().setAll(automoveis);
-			alerta.imprimirMsg("Busca concluída","Foram econtrados "+automoveis.size()+" resultado(s)",AlertType.INFORMATION);
+			alerta.imprimirMsg("Busca concluÃ­da","Foram econtrados "+automoveis.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
 		}
@@ -261,7 +251,7 @@ public class AutomovelController extends CRUDController<Automovel> {
 		aceTabela.getItems().setAll(automovel.getAcessorios());
 		if(automovel.getFilial() != null)
 			filialFld.setText(automovel.getFilial().toString());
-		alerta.imprimirMsg("Categoria do veículo",automovel.getCategoriaVeiculo().toString(), AlertType.INFORMATION);
+		alerta.imprimirMsg("Categoria do veÃ­culo",automovel.getCategoriaVeiculo().toString(), AlertType.INFORMATION);
 	}
 
 	@Override
@@ -319,4 +309,5 @@ public class AutomovelController extends CRUDController<Automovel> {
 			alerta.imprimirMsg("Erro", e.getMessage(), AlertType.ERROR);
 		}
     }
+
 }

@@ -2,7 +2,7 @@ package model.enumeracoes;
 
 public enum EstadoBackup {
 	
-	PENDENTE("Pendente"),ADIADO("Adiado"),NAO_RELIZADO("Não Realizado"),REALIZADO("Realizado");
+	PENDENTE("Pendente"),ADIADO("Adiado"),NAO_RELIZADO("NÃ£o Realizado"),REALIZADO("Realizado");
 	
 	private String value;
 

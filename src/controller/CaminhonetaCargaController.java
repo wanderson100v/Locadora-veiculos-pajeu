@@ -154,57 +154,43 @@ public class CaminhonetaCargaController extends CRUDController<CaminhonetaCarga>
     }
     
 	@Override
-	void crudHandle(Button btn) {
-		try {	
-    		if(btn == cadastrarBtn || btn == editarBtn) {
-    			CaminhonetaCarga caminhonetaCarga = (btn == cadastrarBtn)? 
-    					new CaminhonetaCarga() :this.caminhonetaCarga;
-    			
-    			caminhonetaCarga.setAtivo(simAtivoRb.isSelected());
-    			caminhonetaCarga.setLocado(simLocadoRb.isSelected());
-    			caminhonetaCarga.setPlaca(placaFld.getText().trim());
-    			caminhonetaCarga.setCor(corFld.getText().trim());
-    			caminhonetaCarga.setModelo(modeloFld.getText().trim());
-    			caminhonetaCarga.setFabricante(fabricanteFld.getText().trim());
-    			caminhonetaCarga.setNumeroChassi(numChassiFld.getText().trim());
-    			caminhonetaCarga.setNumeroMotor(numMotorFld.getText().trim());
-    			caminhonetaCarga.setTorqueMotor(Float.parseFloat(torqueMotorFld.getText()));
-    			caminhonetaCarga.setTipoCombustivel(combustivelBox.getValue());
-    			caminhonetaCarga.setQuilometragem(Integer.parseInt(quilometragemFld.getText()));
-    			caminhonetaCarga.setAnoFabricante(anoFabricacaoBox.getValue());
-    			caminhonetaCarga.setAnoModelo(anoModeloBox.getValue());
-    			caminhonetaCarga.setQuantidadePortas(portasBox.getValue());
-    			caminhonetaCarga.setQuantidadePassageiro(passageirosBox.getValue());
-    			caminhonetaCarga.setFilial(filial);
-    			
-    			caminhonetaCarga.setDesenpenho(Float.parseFloat(desempenhoFld.getText()));
-    			caminhonetaCarga.setPotencia(Float.parseFloat(potenciaFld.getText()));
-    			caminhonetaCarga.setDistanciaEixos(Float.parseFloat(disEixosFld.getText()));
-    			caminhonetaCarga.setTipoAcionamentoEmbreagem(aciEmbreagemBox.getValue());
-    			caminhonetaCarga.setCapacidadeCarga(Integer.parseInt(capCargaFld.getText()));
-    			caminhonetaCarga.setCapacidadeCombustivel(Integer.parseInt(capCombustivelFld.getText()));
-    			
-    			
-				fachadaModel.cadastrarEditarCaminhonetaCarga(caminhonetaCarga);
-				alerta.imprimirMsg("Sucesso ao cadastrar","Caminhoneta de Carga "
-						+((caminhonetaCarga.equals(this.caminhonetaCarga))? "editada": "cadastrada") 
-						+" com sucesso", AlertType.INFORMATION);
-				
-	    	}else if(btn == excluirBtn){
-	    		
-	    		fachadaModel.excluirCaminhonetaCarga(this.caminhonetaCarga);
-	    		alerta.imprimirMsg("Sucesso ao exluir","Caminhoneta de Carga exlcuida com sucesso", 
-	    				AlertType.INFORMATION);
-	    		limparCampos();
-	    	
-	    	}else if(btn == limparBtn){
-	    		
-	    		limparCampos();
-	    		
-	    	}
-    	} catch (BoException e) {
-			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
-		}
+	protected void cadastrarEditar(Boolean cadastrar,  String opcao) throws BoException {
+		CaminhonetaCarga caminhonetaCarga = (cadastrar)? 
+				new CaminhonetaCarga() :this.caminhonetaCarga;
+		
+		caminhonetaCarga.setAtivo(simAtivoRb.isSelected());
+		caminhonetaCarga.setLocado(simLocadoRb.isSelected());
+		caminhonetaCarga.setPlaca(placaFld.getText().trim());
+		caminhonetaCarga.setCor(corFld.getText().trim());
+		caminhonetaCarga.setModelo(modeloFld.getText().trim());
+		caminhonetaCarga.setFabricante(fabricanteFld.getText().trim());
+		caminhonetaCarga.setNumeroChassi(numChassiFld.getText().trim());
+		caminhonetaCarga.setNumeroMotor(numMotorFld.getText().trim());
+		caminhonetaCarga.setTorqueMotor(Float.parseFloat(torqueMotorFld.getText()));
+		caminhonetaCarga.setTipoCombustivel(combustivelBox.getValue());
+		caminhonetaCarga.setQuilometragem(Integer.parseInt(quilometragemFld.getText()));
+		caminhonetaCarga.setAnoFabricante(anoFabricacaoBox.getValue());
+		caminhonetaCarga.setAnoModelo(anoModeloBox.getValue());
+		caminhonetaCarga.setQuantidadePortas(portasBox.getValue());
+		caminhonetaCarga.setQuantidadePassageiro(passageirosBox.getValue());
+		caminhonetaCarga.setFilial(filial);
+		
+		caminhonetaCarga.setDesenpenho(Float.parseFloat(desempenhoFld.getText()));
+		caminhonetaCarga.setPotencia(Float.parseFloat(potenciaFld.getText()));
+		caminhonetaCarga.setDistanciaEixos(Float.parseFloat(disEixosFld.getText()));
+		caminhonetaCarga.setTipoAcionamentoEmbreagem(aciEmbreagemBox.getValue());
+		caminhonetaCarga.setCapacidadeCarga(Integer.parseInt(capCargaFld.getText()));
+		caminhonetaCarga.setCapacidadeCombustivel(Integer.parseInt(capCombustivelFld.getText()));
+		
+		fachadaModel.cadastrarEditarCaminhonetaCarga(caminhonetaCarga);
+		alerta.imprimirMsg("Sucesso ao cadastrar","Caminhoneta de Carga "+opcao+" com sucesso", AlertType.INFORMATION);
+	}
+
+	@Override
+	protected void excluir() throws BoException {
+		fachadaModel.excluirCaminhonetaCarga(this.caminhonetaCarga);
+		alerta.imprimirMsg("Sucesso ao exluir","Caminhoneta de Carga exlcuida com sucesso", 
+				AlertType.INFORMATION);
 	}
 
 	@Override
@@ -212,7 +198,7 @@ public class CaminhonetaCargaController extends CRUDController<CaminhonetaCarga>
 		try {
 			List<CaminhonetaCarga> caminhonetaCargas = fachadaModel.buscarCaminhonetasCarga(busca);
 			entidadeTabela.getItems().setAll(caminhonetaCargas);
-			alerta.imprimirMsg("Busca conclúida","Foram econtrados "+caminhonetaCargas.size()+" resultado(s)",AlertType.INFORMATION);
+			alerta.imprimirMsg("Busca concluÃ­da","Foram econtrados "+caminhonetaCargas.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
 		}
@@ -247,7 +233,7 @@ public class CaminhonetaCargaController extends CRUDController<CaminhonetaCarga>
 		
 		if(caminhonetaCarga.getFilial() != null)
 			filialFld.setText(caminhonetaCarga.getFilial().toString());
-		alerta.imprimirMsg("Categoria do veículo",caminhonetaCarga.getCategoriaVeiculo().toString(), AlertType.INFORMATION);
+		alerta.imprimirMsg("Categoria do veÃ­culo",caminhonetaCarga.getCategoriaVeiculo().toString(), AlertType.INFORMATION);
 		
 	}
 
@@ -294,6 +280,5 @@ public class CaminhonetaCargaController extends CRUDController<CaminhonetaCarga>
 			}
 		}
     }
-		
 
 }

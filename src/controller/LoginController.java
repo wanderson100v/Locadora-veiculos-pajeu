@@ -77,7 +77,7 @@ public class LoginController extends ControllerAdapter{
 							App.iniTelaMenu();
 							FuncionarioObservavel.getIntance().avisarOuvintes(funcionario, cargo);
 						}else {
-							alerta.imprimirMsg("Alerta", "USU¡RIO N√O EXISTENTE",AlertType.WARNING);
+							alerta.imprimirMsg("Alerta", "USU√ÅRIO N√ÉO EXISTENTE",AlertType.WARNING);
 						}
 					} catch (BoException e) {
 						e.printStackTrace();
@@ -106,7 +106,7 @@ public class LoginController extends ControllerAdapter{
     	try {
 			DaoConfiguracaoDefault.getInstance().salvar(configuracoesDefault);
 		} catch (DaoException e) {
-			alerta.imprimirMsg("Alerta", "N„o foi possÌvel mudar o estado de lembranÁa de login",AlertType.WARNING);
+			alerta.imprimirMsg("Alerta", "N√£o foi possÔøΩvel mudar o estado de lembran√ßa de login",AlertType.WARNING);
 		}
     }
 

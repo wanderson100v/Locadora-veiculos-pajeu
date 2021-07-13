@@ -97,7 +97,7 @@ public class FachadaModel {
 		this.iboAcessorio = new BoAcessorio();
 	}
 	
-	//--Veículo
+	//--Veï¿½culo
 	public long totalVeiculoDisponivel(Filial filial, CategoriaVeiculo categoria)throws BoException{
 		return iboVeiculo.totalVeiculoDisponivel(filial, categoria);
 	}
@@ -120,7 +120,7 @@ public class FachadaModel {
 	}
 	
 	
-	//-- Automóvel
+	//-- Automï¿½vel
 	public void cadastrarEditarAutomovel(Automovel automovel) throws BoException {
 		if(automovel.getId() == null) {
 			CategoriaVeiculo categoriaVeiculo = iboCategoriaVeiculo.categorizarAutomovel(automovel);
@@ -232,7 +232,7 @@ public class FachadaModel {
 		return iboReserva.buscarReservasImpedidas(de, ate);
 	}
 	
-	//-- Locação
+	//-- Locaï¿½ï¿½o
 	public void cadastrarEditarLocacao(Locacao locacao) throws BoException {
 		if(locacao.getId() == null) {
 			StringBuilder erroLocacao = new StringBuilder();
@@ -240,12 +240,12 @@ public class FachadaModel {
 			if(locacao.getMotorista() == null && locacao.getCliente() instanceof Fisico) {
 				locacao.setMotorista((Fisico) locacao.getCliente());
 			}else
-				erroLocacao.append("\tO cliente não é um motorista apto\n, é necessário selecioanr um motorista\n");
+				erroLocacao.append("\tO cliente nï¿½o ï¿½ um motorista apto\n, ï¿½ necessï¿½rio selecioanr um motorista\n");
 			
 			iboFisico.validarClienteMotoristaLocacao(locacao.getMotorista(),locacao.getDataDevolucao().toLocalDate(),erroLocacao);
 			
 			if(erroLocacao.length()>0)
-				throw new ValidarException("Erro(s) ao cadastrar locação : \n"+ erroLocacao.toString());
+				throw new ValidarException("Erro(s) ao cadastrar locaï¿½ï¿½o : \n"+ erroLocacao.toString());
 			
 			iboLocacao.cadastrarEditar(locacao);
 			locacao.getVeiculo().setLocado(true);
@@ -284,7 +284,7 @@ public class FachadaModel {
 	}
 	
 	
-	//-- Cliente físico
+	//-- Cliente fï¿½sico
 	public void cadastrarEditarClienteFisico(Fisico fisico) throws BoException {
 		iboFisico.cadastrarEditar(fisico);
 	}
@@ -305,7 +305,7 @@ public class FachadaModel {
 		return iboFisico.buscaPorBuscaAbrangente(busca);
 	}
 	
-	//-Cliente jurídico
+	//-Cliente jurï¿½dico
 	public void cadastrarEditarClienteJuridico(Juridico juridico) throws BoException {
 		iboJuridico.cadastrarEditar(juridico);
 	}
@@ -329,6 +329,7 @@ public class FachadaModel {
 	
 	//--Filial 
 	public void cadastrarEditarFilial(Filial filial) throws BoException {
+		iboEndereco.validarEndereco(filial.getEndereco());
 		iboFilial.cadastrarEditar(filial);
 	}
 	
@@ -340,7 +341,7 @@ public class FachadaModel {
 		return iboFilial.buscaPorBuscaAbrangente(busca);
 	}
 	
-	//--Manutenções de veículos
+	//--Manutenï¿½ï¿½es de veï¿½culos
 	public void cadastrarEditarManutencao(Manutencao manutencao) throws BoException {
 		iboManutencao.cadastrarEditar(manutencao);
 	}
@@ -357,7 +358,7 @@ public class FachadaModel {
 		return iboManutencao.checarManutencao();
 	}
 	
-	//--Funcionário
+	//--Funcionï¿½rio
 	public void cadastrarFuncionario(Funcionario funcionario ,String senha, String confirmacaoSenha, Cargo cargo) throws BoException{
 		iboFuncionario.cadastrar(funcionario, senha, confirmacaoSenha, cargo);
 	}
@@ -406,7 +407,7 @@ public class FachadaModel {
 		return iboFuncionario.buscaPorLogin(login);
 	}
 	
-	//--Acessório
+	//--Acessï¿½rio
 	
 	public void cadastrarEditarAcessorio(Acessorio acessorio) throws BoException {
 		iboAcessorio.cadastrarEditar(acessorio);

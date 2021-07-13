@@ -5,5 +5,5 @@
   <localPgDump>C:\Program Files\PostgreSQL\13\bin\pg_dump.exe</localPgDump>
   <localPgRestore>C:\Program Files\PostgreSQL\13\bin\pg_restore.exe</localPgRestore>
   <localBackup>C:\</localBackup>
-  <userNameDefault>a1234</userNameDefault>
+  <userNameDefault>e4321</userNameDefault>
 </ConfiguracoesDefault>

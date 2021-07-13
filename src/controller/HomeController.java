@@ -67,7 +67,7 @@ public class HomeController extends Controller{
 				configBtn.setVisible(true);
 			if(funcionario != null) {
 				descFunLbl.setText(cargo+" "+((funcionario.getNome().contains(" "))? funcionario.getNome().substring(0,funcionario.getNome().indexOf(" ")) : funcionario.getNome())
-						+ ((funcionario.getFilial() != null)? " Da Filial"+funcionario.getFilial().getNome() : " Sem Filial"));
+						+ ((funcionario.getFilial() != null)? " Da Filial "+funcionario.getFilial().getNome() : "Sem Filial"));
 			}
 		}
 			

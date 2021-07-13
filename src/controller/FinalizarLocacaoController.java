@@ -150,18 +150,18 @@ public class FinalizarLocacaoController extends ControllerAdapter{
 				StringBuilder errosEmTela = new StringBuilder();
 
 				if (!devuAtualCk.isSelected() && (davuDate.getValue() == null || devuHoraBox.getValue() == null))
-					errosEmTela.append("- … necess·rio informar a data e hora de devoluÁ„o do veÌculo locado\n");
+					errosEmTela.append("- √â necess√°rio informar a data e hora de devolu√ß√£o do ve√≠culo locado\n");
 				if (etCk.isSelected()
 						&& (!etAtualCk.isSelected() && (etDate.getValue() == null || etHoraBox.getValue() == null)))
 					errosEmTela.append(
-							"- Abastecimento para veÛculo selecionado, desta forma, È necess·rio definir data e hora para a execuÁ„o do abastecimento\n");
+							"- Abastecimento para ve√≠culo selecionado, desta forma, √â necess√°rio definir data e hora para a execu√ß√£o do abastecimento\n");
 				if (lpCk.isSelected()
 						&& (!lpAtualCk.isSelected() && (lpDate.getValue() == null || lpHoraBox.getValue() == null)))
 					errosEmTela.append(
-							"- Limpeza para veÌculo selecionada, … necess·rio tambÈm, definir data e hora para a execuÁaı da limpeza\n");
+							"- Limpeza para ve√≠culo selecionada, √â necess√°rio tambÔøΩm, definir data e hora para a execu√ß√£o da limpeza\n");
 				if (!revisaoPane.isDisable() && (rsDate.getValue() == null || rsHoraBox.getValue() == null
 						|| rsCustoFld.getText().trim().isEmpty()))
-					errosEmTela.append("- A nova quilometragem do veÌuclo atualizada requer o agendamento de uma revis„o\n");
+					errosEmTela.append("- A nova quilometragem do ve√≠culo atualizada requer o agendamento de uma revis√£o\n");
 
 				int quilometragem = 0;
 				float valorPago = 0f;
@@ -201,7 +201,7 @@ public class FinalizarLocacaoController extends ControllerAdapter{
 											: LocalDateTime.now(),
 									TipoManutencao.ABASTECIMENTO, EstadoManutencao.PENDENTE, 0f,
 									etCustoHoraBox.getValue(), locacao.getVeiculo()));
-					sucessoFinalizacao.append("\n- Nova manutenÁ„o de abastecimento de combistÌvel pendente");
+					sucessoFinalizacao.append("\n- Nova manuten√ß√£o de abastecimento de combist√≠vel pendente");
 				}
 				if (lpCk.isSelected()) {
 					fachadaModel.cadastrarEditarManutencao(
@@ -210,17 +210,17 @@ public class FinalizarLocacaoController extends ControllerAdapter{
 											: LocalDateTime.now(),
 									TipoManutencao.LIMPEZA, EstadoManutencao.PENDENTE, 0f, lpCustoHoraBox.getValue(),
 									locacao.getVeiculo()));
-					sucessoFinalizacao.append("\n- Nova manutenÁ„o de limpeza pendente");
+					sucessoFinalizacao.append("\n- Nova manuten√ß√£o de limpeza pendente");
 				}
 				if (!revisaoPane.isDisable()) {
 					fachadaModel.cadastrarEditarManutencao(
 							new Manutencao(Util.gerarHorario(rsDate, rsHoraBox),
 									TipoManutencao.REVISAO, EstadoManutencao.PENDENTE, custoRevisao,
 									rsCustoHoraBox.getValue(), locacao.getVeiculo()));
-					sucessoFinalizacao.append("\n- Nova manutenÁ„o de revis„o pendente");
+					sucessoFinalizacao.append("\n- Nova manuten√ß√£o de revis√£o pendente");
 				}
 				Alerta.getInstance().imprimirMsg("Sucesso",
-						"LocaÁ„o finalizada com exito" + sucessoFinalizacao.toString(), AlertType.INFORMATION);
+						"Loca√ß√£o finalizada com exito" + sucessoFinalizacao.toString(), AlertType.INFORMATION);
 				finalizarBtn.setDisable(true);
 			}
 		} catch (BoException ex) {

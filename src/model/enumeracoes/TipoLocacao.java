@@ -1,7 +1,7 @@
 package model.enumeracoes;
 
 public enum TipoLocacao {
-	KM_LIVRE("Quilômetro"),KM_CONTROLE("Quilômetro Controlado");
+	KM_LIVRE("QuilÃ´metro"),KM_CONTROLE("QuilÃ´metro Controlado");
 	
 	private String value;
 

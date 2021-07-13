@@ -48,8 +48,8 @@ public class SelecionarClienteController extends ControllerAdapter{
     	codigoCln.setCellValueFactory(new PropertyValueFactory<>("codigo"));
     	emailCln.setCellValueFactory(new PropertyValueFactory<>("email"));
     	
-    	tipoClienteBox.getItems().addAll("Físico","Jurídico");
-    	tipoClienteBox.setValue("Físico");
+    	tipoClienteBox.getItems().addAll("Fï¿½sico","Jurï¿½dico");
+    	tipoClienteBox.setValue("Fï¿½sico");
     	
     	pesquisaFld.setOnKeyTyped(new EventHandler<KeyEvent>() {
 			@Override
@@ -71,12 +71,12 @@ public class SelecionarClienteController extends ControllerAdapter{
     
     private void buscar(Boolean mostrarMsg)  {
     	try {
-			if(tipoClienteBox.getValue().equals("Físico"))
+			if(tipoClienteBox.getValue().equals("FÃ­sico"))
 				clienteTbl.getItems().setAll(fachadaModel.buscarClientesFisicos(pesquisaFld.getText()));
 			else 
 				clienteTbl.getItems().setAll(fachadaModel.buscarClientesJuridicos(pesquisaFld.getText()));
 			if(mostrarMsg)
-				 Alerta.getInstance().imprimirMsg("Busca concluída","Foram econtrados "+clienteTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
+				 Alerta.getInstance().imprimirMsg("Busca concluÃ­da","Foram econtrados "+clienteTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			 Alerta.getInstance().imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
 		}

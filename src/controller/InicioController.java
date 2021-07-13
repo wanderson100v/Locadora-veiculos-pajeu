@@ -95,8 +95,8 @@ public class InicioController extends Controller{
 	private void mostrarQuantidadeManutencoesFinalizadas() throws BoException {
 		int manutencaoFinalizada = fachadaModel.checarManutencao();
 		if(manutencaoFinalizada >0)
-			Notifications.create().title("Manutenções finalizadas finalizadas")
-			.text("Foram finalizadas "+manutencaoFinalizada+" manutenções de veículos")
+			Notifications.create().title("ManutenÃ§Ãµes finalizadas finalizadas")
+			.text("Foram finalizadas "+manutencaoFinalizada+" manutÃ§Ãµes de veÃ­culos")
 			.position(Pos.BOTTOM_RIGHT).showInformation();
 	}
 	

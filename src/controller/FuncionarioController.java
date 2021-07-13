@@ -2,7 +2,6 @@ package controller;
 
 import java.util.List;
 
-import model.FuncionarioObservavel;
 import model.enumeracoes.Cargo;
 import model.excecoes.BoException;
 import model.vo.Entidade;
@@ -77,7 +76,6 @@ public class FuncionarioController  extends CRUDController<Funcionario> {
     @FXML
     void initialize() {
     	super.initialize();
-    	FuncionarioObservavel.getIntance().addObservadorFuncionario(this);
     	ToggleGroup toggleGroup = new ToggleGroup();
     	simAtivoRb.setToggleGroup(toggleGroup);
     	naoAtivoRb.setToggleGroup(toggleGroup);
@@ -91,68 +89,50 @@ public class FuncionarioController  extends CRUDController<Funcionario> {
 		nivelAcessoBox.setVisible(false);
 		alterarNivelAcessoBtn.setVisible(false);
     }
-
-	@Override
-	void crudHandle(Button btn) {
-		if(btn == cadastrarBtn) 
-			cadastrarFuncionario();
-		else if(btn == editarBtn) 
-			editarFuncionario();
-    	else if(btn == excluirBtn)
-    		excluirFuncionario();
-    	else if(btn == limparBtn)
-    		limparCampos();
-	}
+    
+    @Override
+    protected void cadastrarEditar(Boolean cadastrar,  String opcao) throws BoException {
+    	Funcionario funcionario = null;
+    	if(cadastrar) {
+    		funcionario = new Funcionario();
+    	}else {
+    		funcionario = this.funcionarioAuxCRUD;
+    	}
+    	
+    	if(this.filial!= null)
+    		funcionario.setFilial(this.filial);
+    	
+    	funcionario.setAtivo(simAtivoRb.isSelected());
+		funcionario.setNome(nomeFld.getText().trim());
+		funcionario.setCpf(cpfFld.getText().trim());
+    	
+    	if(cadastrar)
+    		cadastrarFuncionario(funcionario);
+    	else
+    		editarFuncionario(funcionario);
+    }
     		
-    private void cadastrarFuncionario() {
-    	Funcionario funcionario = new Funcionario();
+    private void cadastrarFuncionario(Funcionario funcionario) throws BoException {
 		String senha = senhaFld.getText().trim();
 		String confirmacaoSenha = conSenhaFld.getText().trim();
-			funcionario.setAtivo(simAtivoRb.isSelected());
-			funcionario.setNome(nomeFld.getText().trim());
-			funcionario.setCpf(cpfFld.getText().trim());
-			if(filial!= null) {
-				funcionario.setFilial(filial);
-				this.filial = null;
-			}
-		try {
-			fachadaModel.cadastrarFuncionario(funcionario,senha, confirmacaoSenha, cargoBox.getValue());
-			alerta.imprimirMsg("Sucesso ao cadastrar","Funcionario cadastrado com sucesso", AlertType.INFORMATION);
-			entidadeTabela.getItems().add(funcionario);
-		} catch (BoException e) {
-			cadastrarBtn.setDisable(false);
-			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
-		}
+		fachadaModel.cadastrarFuncionario(funcionario,senha, confirmacaoSenha, cargoBox.getValue());
+		alerta.imprimirMsg("Sucesso ao cadastrar","Funcionario cadastrado com sucesso", AlertType.INFORMATION);
+		entidadeTabela.getItems().add(funcionario);
     }
     
-    private void editarFuncionario() {
-    	Funcionario novofuncionario = new Funcionario();
-    	novofuncionario.setId(this.funcionarioAuxCRUD.getId());
-		novofuncionario.setAtivo(simAtivoRb.isSelected());
-		novofuncionario.setNome(nomeFld.getText());
-		novofuncionario.setCpf(cpfFld.getText());
-		try {
-			fachadaModel.editarFuncionario(this.funcionarioAuxCRUD, novofuncionario);
-			alerta.imprimirMsg("Sucesso ao editado","Funcion·rio editado com sucesso", AlertType.INFORMATION);
-			entidadeTabela.getItems().remove(funcionarioAuxCRUD);
-			entidadeTabela.getItems().add(novofuncionario);
-			funcionarioAuxCRUD = novofuncionario;
-		} catch (BoException e) {
-			editarBtn.setDisable(false);
-			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
-		}
+    private void editarFuncionario(Funcionario novofuncionario) throws BoException{
+		fachadaModel.editarFuncionario(this.funcionarioAuxCRUD, novofuncionario);
+		alerta.imprimirMsg("Sucesso ao editado","Funcion√°rio editado com sucesso", AlertType.INFORMATION);
+		entidadeTabela.getItems().remove(funcionarioAuxCRUD);
+		entidadeTabela.getItems().add(novofuncionario);
+		funcionarioAuxCRUD = novofuncionario;
     }
     
-    private void excluirFuncionario() {
-    	try {
-			fachadaModel.excluirFuncionario(this.funcionarioAuxCRUD);
-			alerta.imprimirMsg("Sucesso ao exluir","Funcion·rio exlcuido com sucesso", AlertType.INFORMATION);
-			entidadeTabela.getItems().remove(funcionarioAuxCRUD);
-			limparCampos();
-		} catch (BoException e) {
-			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
-			excluirBtn.setDisable(false);
-		}
+    protected void excluir() throws BoException{
+		fachadaModel.excluirFuncionario(this.funcionarioAuxCRUD);
+		alerta.imprimirMsg("Sucesso ao exluir","Funcion√°rio exlcuido com sucesso", AlertType.INFORMATION);
+		entidadeTabela.getItems().remove(funcionarioAuxCRUD);
+		limparCampos();
     }
 
 	@Override
@@ -165,7 +145,7 @@ public class FuncionarioController  extends CRUDController<Funcionario> {
 					instanciaRemover = f;
 			funcionarios.remove(instanciaRemover);
 			entidadeTabela.getItems().setAll(funcionarios);
-			alerta.imprimirMsg("Busca concluÌda","Foram econtrados "+funcionarios.size()+" resultado(s)",AlertType.INFORMATION);
+			alerta.imprimirMsg("Busca conclu√≠da","Foram econtrados "+funcionarios.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
 		}
@@ -235,6 +215,7 @@ public class FuncionarioController  extends CRUDController<Funcionario> {
 	@Override
 	public void atualizar(Funcionario funcionario, Cargo cargo) {
 		try {
+			super.atualizar(funcionario, cargo);
 			cargoBox.getItems().clear();
 			if(cargo == Cargo.SU) {
 				cargoBox.getItems().addAll(Cargo.values());

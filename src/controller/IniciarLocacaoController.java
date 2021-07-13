@@ -169,7 +169,7 @@ public class IniciarLocacaoController extends Controller {
 	    				motoristaFld.setText(motorista.toString());
 	    			}
 	    		}else
-	    			Alerta.getInstance().imprimirMsg("Alerta","É necessário selecionar a data de retirada para só em seguida selecionar motoristas, que deve ter a habilitação valida até o período final de locação.", AlertType.WARNING);
+	    			Alerta.getInstance().imprimirMsg("Alerta","Ã‰ necessÃ¡rio selecionar a data de retirada para sÃ³ em seguida selecionar o motorista", AlertType.WARNING);
 	    			
     		}
     		else if(fonte == selectReservaBtn) 
@@ -186,8 +186,8 @@ public class IniciarLocacaoController extends Controller {
 		    		}
 	    		}
     			else
-	    			Alerta.getInstance().imprimirMsg("Alerta","É necessário selecionar um cliente e filial para a retirada do veículo antes de "
-	    					+ "selecionar a reserva para aproveitamento a ser aproveitada na locação", AlertType.WARNING);
+	    			Alerta.getInstance().imprimirMsg("Alerta", "Ã‰ necessÃ¡rio selecionar um cliente e filial de retirada antes de"
+	    					+ "selecionar a reserva para aproveitamento a ser aproveitada na locaÃ§Ã£o", AlertType.WARNING);
     		}
     		else if(fonte == selectVeiculoBtn) 
     		{
@@ -197,12 +197,12 @@ public class IniciarLocacaoController extends Controller {
     					veiculo = Util.selecionarVeiculoEmDialogo(locacao.getReservaOrigem().getCategoriaVeiculo(),
     							locacao.getFilialRetirada());
     				else
-    					Alerta.getInstance().imprimirMsg("Alerta", "Aproveitamento de reserva ativo. Selecione reserva antes do veículo", AlertType.WARNING);
+    					Alerta.getInstance().imprimirMsg("Alerta", "Aproveitamento de reserva ativo. Selecione reserva antes do veï¿½culo", AlertType.WARNING);
     			else 
     				if(locacao.getFilialRetirada() != null) 
 						veiculo = Util.selecionarVeiculoEmDialogo(locacao.getFilialRetirada());
     				else
-    					Alerta.getInstance().imprimirMsg("Alerta", "É necessário selecionar filial de origem de locação antes do veículo", AlertType.WARNING);
+    					Alerta.getInstance().imprimirMsg("Alerta","Ã‰ necessÃ¡rio selecionar filial de origem de locaÃ§Ã£o antes do veÃ­culo", AlertType.WARNING);
     			if(veiculo != null) {
     				locacao.setVeiculo(veiculo);
     				veiculoFld.setText(veiculo.toString());
@@ -236,7 +236,7 @@ public class IniciarLocacaoController extends Controller {
     			try{
     				pegarDadosTela();
 		    		fachadaModel.cadastrarEditarLocacao(locacao);
-		    		Alerta.getInstance().imprimirMsg("Sucesso ao cadastrar","Locação iniciada com sucesso",AlertType.INFORMATION);
+		    		Alerta.getInstance().imprimirMsg("Sucesso ao cadastrar","LocaÃ§Ã£o iniciada com sucesso",AlertType.INFORMATION);
 		    		this.locacao = new Locacao();
 		    		limparCampos();
 	    		}catch (BoException e) {
@@ -293,7 +293,7 @@ public class IniciarLocacaoController extends Controller {
     			}
     		}else {
     			outraFilialCk.setSelected(true);
-    			Alerta.getInstance().imprimirMsg("Alerta", "Filial do funcionário selecionado não pode ser utilizada. O Funcionário não está associado a nenhuma filial",AlertType.WARNING);
+    			Alerta.getInstance().imprimirMsg("Alerta", "Filial do funcionÃ¡rio selecionado nÃ£o pode ser utilizada. O FuncionÃ¡rio nï¿½o estÃ¡ associado a nenhuma filial",AlertType.WARNING);
     			
     		}
 	    }

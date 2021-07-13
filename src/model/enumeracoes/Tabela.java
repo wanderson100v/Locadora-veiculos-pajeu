@@ -1,15 +1,15 @@
 package model.enumeracoes;
 
 public enum Tabela {
-	ACESSORIO("AcessÛrio","acessorio"),AUTOMOVEL("Automovel","automovel"),
+	ACESSORIO("Acess√≥rio","acessorio"),AUTOMOVEL("Automovel","automovel"),
 	CAMINHONETA_CARGA("Caminhoneta de Carga","caminhoneta_carga"),
-	CATEGORIA_VEICULO("Categoria de veÌculo","categoria_veiculo"),
-	CLIENTE("Cliente","cliente"),ENDERECO("EndereÁo","endereco"),
-	FILIAL("Filial","filial"),FISICO("FÌsico","fisico"),
-	FUNCIONARIO("Funcion·rio","funcionario"),
-	JURIDICO("JurÌdico","juridico"),LOCACAO("LocaÁ„o","locacao"),
-	MANUTENCAO("ManutenÁ„o","manutencao"),
-	RESERVA("Reserva","reserva"),VEICULO("VeÌculo","veiculo");
+	CATEGORIA_VEICULO("Categoria de ve√≠culo","categoria_veiculo"),
+	CLIENTE("Cliente","cliente"),ENDERECO("Endere√ßo","endereco"),
+	FILIAL("Filial","filial"),FISICO("F√≠sico","fisico"),
+	FUNCIONARIO("Funcion√°rio","funcionario"),
+	JURIDICO("Jur√≠dico","juridico"),LOCACAO("Loca√ß√£o","locacao"),
+	MANUTENCAO("Manute√ß√£o","manutencao"),
+	RESERVA("Reserva","reserva"),VEICULO("Ve√≠culo","veiculo");
 	
 	private String frontEnd,backEnd;
 

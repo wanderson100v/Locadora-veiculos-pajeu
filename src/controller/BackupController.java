@@ -176,7 +176,7 @@ public class BackupController extends Controller implements Observer{
     public void restauracaoHandle(ActionEvent e) {
     	if(e.getSource() == selectArqRestauBtn) {
     		FileChooser fileChooser = new FileChooser();
-    	    fileChooser.setTitle("Seleção de arquivo para backup");
+    	    fileChooser.setTitle("SeleÃ§Ã£o de arquivo para backup");
     	    ConfiguracoesDefault configuracoesDefault;
 			try {
 				configuracoesDefault = DaoConfiguracaoDefault.getInstance().carregar();
@@ -206,10 +206,9 @@ public class BackupController extends Controller implements Observer{
 		    		backup.setEstado(EstadoBackup.REALIZADO);
 		    		backup.setDescricao(descriBackupArea.getText().trim());
 		    		this.fachadaModel.cadastrarEditarBackup(backup);
-		    		Alerta.getInstance().imprimirMsg("Sucesso", "Restauração de banco finalizada com sucesso", AlertType.INFORMATION);
+		    		Alerta.getInstance().imprimirMsg("Sucesso", "RestauraÃ§Ã£o de banco finalizada com sucesso", AlertType.INFORMATION);
 				}else
-					Alerta.getInstance().imprimirMsg("Alerta", "É necessáio selecionar arquivo antes de"
-							+ " restauração de backup", AlertType.WARNING);
+					Alerta.getInstance().imprimirMsg("Alerta", "o arquivo de backup nÃ£o foi selecionado", AlertType.WARNING);
 			} catch (DaoException | BoException e1) {
 				Alerta.getInstance().imprimirMsg("Erro", e1.getMessage(), AlertType.ERROR);
 			}
@@ -251,9 +250,9 @@ public class BackupController extends Controller implements Observer{
 		    		configuracoesDefault.setLocalPgRestore(arqPgRestoreFld.getText());
 		    		DaoConfiguracaoDefault.getInstance().salvar(configuracoesDefault);
 		    		atualizarTela();
-		    		Alerta.getInstance().imprimirMsg("Sucesso", "Novas configurações salvas com sucesso", AlertType.INFORMATION);
+		    		Alerta.getInstance().imprimirMsg("Sucesso", "Novas configuraÃ§Ãµes salvas com sucesso", AlertType.INFORMATION);
 				}else
-					Alerta.getInstance().imprimirMsg("Alerta", "Todos os campos da tela de configurações "
+					Alerta.getInstance().imprimirMsg("Alerta", "Todos os campos da tela de configuraÃ§Ãµes "
 							+ "devem estar preenchidos", AlertType.WARNING);
 			} catch (DaoException e1) {
 				Alerta.getInstance().imprimirMsg("Erro", e1.getMessage(), AlertType.ERROR);

@@ -108,9 +108,9 @@ public class DisponibilidadeReservaController extends Controller{
 	    						dataDate.getValue().getDayOfMonth(),horaBox.getValue(),0);
     				Filial filial = (minhaFilialRb.isSelected()) ? funcionario.getFilial(): outraFilial;
 	    			disponiTbl.getItems().setAll(fachadaModel.buscarReservaDisponibilidade(filial.getId(),horario));
-		    		Alerta.getInstance().imprimirMsg("Busca Concluida", disponiTbl.getItems().size()+" resultados",AlertType.INFORMATION);
+		    		Alerta.getInstance().imprimirMsg("Busca Conclu√≠da", disponiTbl.getItems().size()+" resultados",AlertType.INFORMATION);
 	    		}else
-	    			Alerta.getInstance().imprimirMsg("Alerta", "… necess·rio selecionar uma opÁ„o de busca de filial",AlertType.WARNING);
+	    			Alerta.getInstance().imprimirMsg("Alerta", "√â necess√°rio selecionar uma op√ß√£o de busca",AlertType.WARNING);
 	    	
 	    	}else if(fonte == selecionarFilialBtn) {
 	    		Filial filial  = Util.selecionarFilialEmDialogo();
@@ -135,7 +135,7 @@ public class DisponibilidadeReservaController extends Controller{
 	    		else {
 	    			dadosFilialFld.clear();
 	    			minhaFilialRb.setSelected(false);
-	    			Alerta.getInstance().imprimirMsg("Alerta", "O funcion·rio seleceionado n„o est· associado a nenhuma filial",AlertType.WARNING);
+	    			Alerta.getInstance().imprimirMsg("Alerta", "O funcion√°rio seleceionado n√£o est√° associado a nenhuma filial",AlertType.WARNING);
 	    		}
 	    	}
     	}catch (BoException e) {

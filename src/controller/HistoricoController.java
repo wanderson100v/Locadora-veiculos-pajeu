@@ -57,7 +57,7 @@ public class HistoricoController {
 	    		tablePane.getChildren().add(tv);
 	    		Alerta.getInstance().imprimirMsg("Sucesso","Foi encontrado "+dados.size()+" registros", AlertType.WARNING);
     		}else
-    			Alerta.getInstance().imprimirMsg("Alerta","Não foi encontrado nenhum registro para o período informado", AlertType.WARNING);
+    			Alerta.getInstance().imprimirMsg("Alerta","NÃ£o foi encontrado nenhum registro para o perÃ­odo informado", AlertType.WARNING);
     	}catch(DaoException e) {
     		Alerta.getInstance().imprimirMsg("Erro", e.getMessage(), AlertType.ERROR);
     	}

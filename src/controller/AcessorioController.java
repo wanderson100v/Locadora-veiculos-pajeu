@@ -4,7 +4,6 @@ import java.util.List;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
@@ -52,44 +51,29 @@ public class AcessorioController extends CRUDController<Acessorio>{
     }
 
 	@Override
-	void crudHandle(Button btn) {
-		try {	
-    		if(btn == cadastrarBtn || btn == editarBtn) {
-    			Acessorio acessorio = (btn == cadastrarBtn)? 
-    					new Acessorio() :this.acessorio;
-    			
-    			acessorio.setNome(nomeFld.getText().trim());
-    			acessorio.setValor(Float.parseFloat(valorFld.getText()));
-    			acessorio.setDepreciado(simDepreciadoRb.isSelected());
-    			
-    			fachadaModel.cadastrarEditarAcessorio(acessorio);
-				alerta.imprimirMsg("Sucesso ao cadastrar","Acessório "
-						+((acessorio.equals(this.acessorio))? "editado": "cadastrado") 
-						+" com sucesso", AlertType.INFORMATION);
-				
-	    	}else if(btn == excluirBtn){
-	    		
-	    		fachadaModel.excluirAcessorio(this.acessorio);
-	    		alerta.imprimirMsg("Sucesso ao exluir","Acessório exlcuido com sucesso", 
-	    				AlertType.INFORMATION);
-	    		limparCampos();
-	    	
-	    	}else if(btn == limparBtn){
-	    		
-	    		limparCampos();
-	    		
-	    	}
-    	} catch (BoException e) {
-			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
-		}
+	protected void cadastrarEditar(Boolean cadastrar, String opcao) throws BoException {
+		Acessorio acessorio = (cadastrar)? new Acessorio() : this.acessorio;
+		
+		acessorio.setNome(nomeFld.getText().trim());
+		acessorio.setValor(Float.parseFloat(valorFld.getText()));
+		acessorio.setDepreciado(simDepreciadoRb.isSelected());
+		
+		fachadaModel.cadastrarEditarAcessorio(acessorio);
+		alerta.imprimirMsg("Sucesso","AcessÃ³rio "+opcao+" com sucesso", AlertType.INFORMATION);
 	}
 
+	@Override
+	protected void excluir() throws BoException {
+		fachadaModel.excluirAcessorio(this.acessorio);
+		alerta.imprimirMsg("Sucesso ao exluir","AcessÃ³rio exlcuido com sucesso", AlertType.INFORMATION);
+	}
+	
 	@Override
 	void popularTabela(String busca) {
 		try {
 			List<Acessorio> acessorios = fachadaModel.buscarAcessorios(busca);
 			entidadeTabela.getItems().setAll(acessorios);
-			alerta.imprimirMsg("Busca concúida","Foram econtrados "+acessorios.size()+" resultado(s)",AlertType.INFORMATION);
+			alerta.imprimirMsg("Busca concluÃ­da","Foram econtrados "+acessorios.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
 		}
@@ -110,4 +94,5 @@ public class AcessorioController extends CRUDController<Acessorio>{
 		simDepreciadoRb.setSelected(false);
 		System.gc();
 	}
+
 }

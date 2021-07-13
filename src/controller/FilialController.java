@@ -65,65 +65,41 @@ public class FilialController extends CRUDController<Filial> {
     	nomeCln.setCellValueFactory( new PropertyValueFactory<>("nome"));
     	estadoBox.getItems().setAll(Estado.values());
     }
-    
+
 	@Override
-	void crudHandle(Button btn) {
-		try {	
-    		if(btn == cadastrarBtn) {
-	    		
-    			Filial filial = new Filial();
-	    		filial.setNome(nomeFld.getText());
-	    		if(simAtivoRb.isSelected())
-	    			filial.setAtivo(true);
-	    		else
-	    			filial.setAtivo(false);
-	    		
-	    		Endereco endereco = new Endereco();
-	    		endereco.setNumero(numFld.getText());
-	    		endereco.setCep(cepFld.getText());
-	    		endereco.setRua(ruaFld.getText());
-	    		endereco.setBairro(bairroFld.getText());
-	    		endereco.setCidade(cidadeFld.getText());
-	    		endereco.setEstado(estadoBox.getValue());
-	    		
-	    		filial.setEndereco(endereco);
-	    		
-				fachadaModel.cadastrarEditarFilial(filial);
-				alerta.imprimirMsg("Sucesso ao cadastrar","Filial cadastrada com sucesso", AlertType.INFORMATION);
-				
-	    	}else if(btn == editarBtn){
-	    		
-	    		filial.setNome(nomeFld.getText());
-	    		if(simAtivoRb.isSelected())
-	    			filial.setAtivo(true);
-	    		else
-	    			filial.setAtivo(false);
-	    		
-	    		Endereco endereco = filial.getEndereco();
-	    		endereco.setNumero(numFld.getText());
-	    		endereco.setCep(cepFld.getText());
-	    		endereco.setRua(ruaFld.getText());
-	    		endereco.setBairro(bairroFld.getText());
-	    		endereco.setCidade(cidadeFld.getText());
-	    		endereco.setEstado(estadoBox.getValue());
-	    		
-	    		fachadaModel.cadastrarEditarFilial(filial);
-	    		alerta.imprimirMsg("Sucesso ao editar","Filial editado com sucesso", AlertType.INFORMATION);
-	    		
-	    	}else if(btn == excluirBtn){
-	    		
-	    		fachadaModel.excluirFilial(filial);
-	    		alerta.imprimirMsg("Sucesso ao exluir","Filial exlcuido com sucesso", AlertType.INFORMATION);
-	    		limparCampos();
-	    	
-	    	}else if(btn == limparBtn){
-	    		
-	    		limparCampos();
-	    		
-	    	}
-    	} catch (BoException e) {
-			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+	protected void cadastrarEditar(Boolean cadastrar,  String opcao) throws BoException {
+		
+		Filial filial = null;
+		
+		if(cadastrar) {
+			filial = new Filial();
+			filial.setEndereco(new Endereco());
 		}
+		else
+			filial = this.filial;
+		
+		filial.setNome(nomeFld.getText());
+		if(simAtivoRb.isSelected())
+			filial.setAtivo(true);
+		else
+			filial.setAtivo(false);
+		
+		Endereco endereco = filial.getEndereco();
+		endereco.setNumero(numFld.getText());
+		endereco.setCep(cepFld.getText());
+		endereco.setRua(ruaFld.getText());
+		endereco.setBairro(bairroFld.getText());
+		endereco.setCidade(cidadeFld.getText());
+		endereco.setEstado(estadoBox.getValue());
+		
+		fachadaModel.cadastrarEditarFilial(filial);
+		alerta.imprimirMsg("Sucesso","Filial "+opcao+" com sucesso", AlertType.INFORMATION);
+	}
+	
+	@Override
+	protected void excluir() throws BoException {
+		fachadaModel.excluirFilial(filial);
+		alerta.imprimirMsg("Sucesso ao exluir","Filial exlcuido com sucesso", AlertType.INFORMATION);
 	}
 
 	@Override
@@ -132,7 +108,7 @@ public class FilialController extends CRUDController<Filial> {
 			List<Filial> filiais = fachadaModel.buscarFiliais(busca);
 			entidadeTabela.getItems().setAll(filiais);
 			entidadeTabela.refresh();
-			alerta.imprimirMsg("Busca concluída","Foram econtrados "+filiais.size()+" resultado(s)",AlertType.INFORMATION);
+			alerta.imprimirMsg("Busca concluï¿½da","Foram econtrados "+filiais.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
 		}

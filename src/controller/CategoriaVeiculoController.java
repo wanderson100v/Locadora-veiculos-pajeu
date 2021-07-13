@@ -5,7 +5,6 @@ import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -117,7 +116,7 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
     @FXML
     void initialize() {
     	super.initialize();
-    	tipoVeiculoBox.getItems().addAll("Caminhoneta Carga", "Caminhoneta Passageiro", "Autom髒el Comum");
+    	tipoVeiculoBox.getItems().addAll("Caminhoneta Carga", "Caminhoneta Passageiro", "Autom贸vel Comum");
     	
     	tipoCln.setCellValueFactory( new PropertyValueFactory<>("tipo"));
     	valorCln.setCellValueFactory( new PropertyValueFactory<>("valorDiaria"));
@@ -148,62 +147,54 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
     }
 
 	@Override
-	void crudHandle(Button btn) {
-		try {	
-			if(btn == cadastrarBtn ||btn == editarBtn) {
-					CategoriaVeiculo categoriaVeiculo = null;
-					if(btn == cadastrarBtn) {
-						 categoriaVeiculo = new CategoriaVeiculo();
-						 if(tipoVeiculoBox.getValue() != null) {
-							 if(tipoVeiculoBox.getValue().equals("Caminhoneta Carga")) {
-									
-									CaminhonetaCarga caminhonetaCarga = new CaminhonetaCarga(Float.parseFloat(torqueMotorFld.getText()), 
-											Float.parseFloat(desempenhoFld.getText()),Float.parseFloat(potenciaFld.getText()), 
-											Float.parseFloat(disEixosFld.getText()),aciEmbreagemBox.getValue(), 
-											Integer.parseInt(capCargaFld.getText()), Integer.parseInt(capCargaFld.getText()));
-									categoriaVeiculo.setVeiculoExemplo(caminhonetaCarga);
-							
-							 }else {
-								if(tipoVeiculoBox.getValue().equals("Caminhoneta Passageiro"))
-									categoriaVeiculo.setVeiculoExemplo(new Automovel(cambioBox.getValue(),TipoAutomovel.CAMINHONETA_PASSAGEIRO, 
-											airbagBox.getValue(),tamanhoBox.getValue()));
-								else
-									categoriaVeiculo.setVeiculoExemplo(new Automovel(cambioBox.getValue(),TipoAutomovel.CONVENCIONAL,
-											tamanhoBox.getValue()));
-								categoriaVeiculo.getVeiculoExemplo().setQuantidadePortas(portasBox.getValue());
-								categoriaVeiculo.getVeiculoExemplo().setTipoCombustivel(combustivelBox.getValue());
-								categoriaVeiculo.getVeiculoExemplo().setQuantidadePassageiro(passageirosBox.getValue());
-							}
-						 }else
-							 alerta.imprimirMsg("Alerta","脡 preciso adicionar um veiculo de exemplo", AlertType.WARNING);
-					}
-					else
-						categoriaVeiculo = this.categoriaVeiculo;
+	protected void cadastrarEditar(Boolean cadastrar, String opcao) throws BoException {
+		CategoriaVeiculo categoriaVeiculo = null;
+			if(cadastrar) {
+			categoriaVeiculo = new CategoriaVeiculo();
+			 if(tipoVeiculoBox.getValue() != null) {
+				 if(tipoVeiculoBox.getValue().equals("Caminhoneta Carga")) {
 						
-					categoriaVeiculo.setTipo(tipoFld.getText().trim());
-					categoriaVeiculo.setDescricao(descricaoFld.getText().trim());
-					categoriaVeiculo.setHorasLimpesa(Integer.parseInt(horaLimpezaFld.getText()));
-					categoriaVeiculo.setHorasRevisao(Integer.parseInt(horaRevisaoFld.getText()));;
-					categoriaVeiculo.setQuilometragemRevisao(Integer.parseInt(quilometragemRevisaoFld.getText()));
-					categoriaVeiculo.setValorDiaria(Float.parseFloat(valorDiariaFld.getText()));
-					
-					fachadaModel.cadastrarEditarCategoriaVeiculo(categoriaVeiculo);
-					
-					alerta.imprimirMsg("Sucesso ao cadastrar","Categoria de ve韈ulo"
-							+((categoriaVeiculo.equals(this.categoriaVeiculo))? "editada": "cadastrada") 
-							+" com sucesso", AlertType.INFORMATION);
-			}else if(btn == excluirBtn) {
+						CaminhonetaCarga caminhonetaCarga = new CaminhonetaCarga(Float.parseFloat(torqueMotorFld.getText()), 
+								Float.parseFloat(desempenhoFld.getText()),Float.parseFloat(potenciaFld.getText()), 
+								Float.parseFloat(disEixosFld.getText()),aciEmbreagemBox.getValue(), 
+								Integer.parseInt(capCargaFld.getText()), Integer.parseInt(capCargaFld.getText()));
+						categoriaVeiculo.setVeiculoExemplo(caminhonetaCarga);
 				
-				fachadaModel.excluirCategoriaVeiculo(this.categoriaVeiculo);
-	    		alerta.imprimirMsg("Sucesso ao exluir","Categoria de ve韈ulo excluida com sucesso", 
-	    				AlertType.INFORMATION);
-	    		limparCampos();
-			
-			}else if(btn == limparBtn)
-				limparCampos();
-		} catch (BoException e) {
-			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+				 }else {
+					if(tipoVeiculoBox.getValue().equals("Caminhoneta Passageiro"))
+						categoriaVeiculo.setVeiculoExemplo(new Automovel(cambioBox.getValue(),TipoAutomovel.CAMINHONETA_PASSAGEIRO, 
+								airbagBox.getValue(),tamanhoBox.getValue()));
+					else
+						categoriaVeiculo.setVeiculoExemplo(new Automovel(cambioBox.getValue(),TipoAutomovel.CONVENCIONAL,
+								tamanhoBox.getValue()));
+					categoriaVeiculo.getVeiculoExemplo().setQuantidadePortas(portasBox.getValue());
+					categoriaVeiculo.getVeiculoExemplo().setTipoCombustivel(combustivelBox.getValue());
+					categoriaVeiculo.getVeiculoExemplo().setQuantidadePassageiro(passageirosBox.getValue());
+				}
+			 }else
+				 alerta.imprimirMsg("Alerta","脡 preciso adicionar um veiculo de exemplo", AlertType.WARNING);
 		}
+		else
+			categoriaVeiculo = this.categoriaVeiculo;
+			
+		categoriaVeiculo.setTipo(tipoFld.getText().trim());
+		categoriaVeiculo.setDescricao(descricaoFld.getText().trim());
+		categoriaVeiculo.setHorasLimpesa(Integer.parseInt(horaLimpezaFld.getText()));
+		categoriaVeiculo.setHorasRevisao(Integer.parseInt(horaRevisaoFld.getText()));;
+		categoriaVeiculo.setQuilometragemRevisao(Integer.parseInt(quilometragemRevisaoFld.getText()));
+		categoriaVeiculo.setValorDiaria(Float.parseFloat(valorDiariaFld.getText()));
+		
+		fachadaModel.cadastrarEditarCategoriaVeiculo(categoriaVeiculo);
+		
+		alerta.imprimirMsg("Sucesso","Categoria de ve铆culo"+opcao+" com sucesso", AlertType.INFORMATION);
+		
+	}
+
+	@Override
+	protected void excluir() throws BoException {
+		fachadaModel.excluirCategoriaVeiculo(this.categoriaVeiculo);
+		alerta.imprimirMsg("Sucesso ao exluir","Categoria de ve铆culo excluida com sucesso", 
+				AlertType.INFORMATION);
 	}
 
 	@Override
@@ -211,7 +202,7 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
 		try {
 			List<CategoriaVeiculo> categoriasVeiculos = fachadaModel.buscarCategoriasVeiculo(busca);
 			entidadeTabela.getItems().setAll(categoriasVeiculos);
-			alerta.imprimirMsg("Busca conclu韉a","Foram econtrados "+categoriasVeiculos.size()+" resultado(s)",AlertType.INFORMATION);
+			alerta.imprimirMsg("Busca conclu铆da","Foram econtrados "+categoriasVeiculos.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
 		}
@@ -239,7 +230,7 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
 				airbagPane.setVisible(true);
 				airbagBox.setValue(automovel.getTipoAirBag());
 			}else {
-				tipoVeiculoBox.setValue("Autom髒el Comum");
+				tipoVeiculoBox.setValue("Autom贸vel Comum");
 				airbagPane.setVisible(false);
 			}
 			tamanhoBox.setValue(automovel.getTamanhoVeiculo());
@@ -298,7 +289,7 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
 					airbagPane.setVisible(true);
 					tipoVeiculoPane.getChildren().clear();
 					tipoVeiculoPane.getChildren().setAll(automovelPane);
-				}else if(tipoVeiculoBox.getValue().equals("Autom髒el Comum")) {
+				}else if(tipoVeiculoBox.getValue().equals("Autom贸vel Comum")) {
 					automovelLbl.setText("Autom贸vel Comum de Parametro");
 					airbagPane.setVisible(false);
 					tipoVeiculoPane.getChildren().clear();

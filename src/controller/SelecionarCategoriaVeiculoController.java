@@ -62,7 +62,7 @@ public class SelecionarCategoriaVeiculoController extends ControllerAdapter{
     	if(!buscaRapidaChk.isSelected()) {
     		try {
 				categoriaVeiculoTbl.getItems().setAll(fachadaModel.buscarCategoriasVeiculo(pesquisaFld.getText()));
-				alerta.imprimirMsg("Busca concluída","Foram econtrados "+categoriaVeiculoTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
+				alerta.imprimirMsg("Busca concluÃ­da","Foram econtrados "+categoriaVeiculoTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 			} catch (BoException e) {
 				alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
 			}

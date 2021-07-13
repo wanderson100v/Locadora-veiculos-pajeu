@@ -1,7 +1,7 @@
 package model.enumeracoes;
 
 public enum TipoCambio {
-	 MANUAL("Manual"), AUTOMATICO("Autom·tico");
+	 MANUAL("Manual"), AUTOMATICO("Autom√°tico");
 	private String value;
 	
 	private TipoCambio(String value) {

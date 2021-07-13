@@ -1,7 +1,7 @@
 package model.enumeracoes;
 
 public enum TipoManutencao {
-	LIMPEZA("Limpeza"),REVISAO("Revis„o"),ABASTECIMENTO("Abastecimento");
+	LIMPEZA("Limpeza"),REVISAO("Revis√£o"),ABASTECIMENTO("Abastecimento");
 	
 	private String value;
 

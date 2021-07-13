@@ -105,7 +105,7 @@ public class BackupDialogoController extends ControllerAdapter implements Observ
 			    		adiarConfirmarBtn.setDisable(true);
 		    			arquivarBtn.setDisable(true);
 		    		}else
-						Alerta.getInstance().imprimirMsg("Alerta", "… necess·rio selecionar pasta e informar hora do backup de amanh„ antes da realizaÁ„o de backup", AlertType.WARNING);
+						Alerta.getInstance().imprimirMsg("Alerta", " √â necess√°rio selecioanr a pata e informar a hora de backup de amanh√£ antes de realiza√ß√£o de backup", AlertType.WARNING);
 				} catch (DaoException e1) {
 					Alerta.getInstance().imprimirMsg("Erro", e1.getMessage(), AlertType.ERROR);
 				}

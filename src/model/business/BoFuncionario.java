@@ -42,7 +42,10 @@ public class BoFuncionario extends Bo<Funcionario> implements IBoFuncionario {
 		try {
 			String loginAntigo = gerarLogin(antigofuncionario);
 			String novoLogin = gerarLogin(novoFuncionario);
-			daoFuncionario.editar(novoFuncionario, loginAntigo, novoLogin);
+			if(!loginAntigo.equalsIgnoreCase(novoLogin))
+				daoFuncionario.editar(novoFuncionario, loginAntigo, novoLogin);
+			else
+				daoFuncionario.editar(novoFuncionario);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
 		}

@@ -138,7 +138,7 @@ public class SelecionarVeiculoController extends ControllerAdapter{
 				else 
 					veiculoTbl.getItems().setAll(fachadaModel.buscarVeiculos(pesquisaFld.getText().trim()));
 				
-				alerta.imprimirMsg("Busca concluída","Foram econtrados "+veiculoTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
+				alerta.imprimirMsg("Busca concluÃ­da","Foram econtrados "+veiculoTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 			} catch (BoException e) {
 				alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
 			}
@@ -158,7 +158,7 @@ public class SelecionarVeiculoController extends ControllerAdapter{
 		veiculoTbl.getItems().setAll(fachadaModel.buscarVeiculosDisponivel(filial.getId(), categoriaVeiculo.getId(),""));
     	if(veiculoTbl.getItems().size() == 0)
     		return false;
-		tituloLbl.setText("Selecione veículo para a categoria "+categoriaVeiculo.getTipo()+ "na filial "+filial.getNome());
+		tituloLbl.setText("Selecione veÃ­culo para a categoria "+categoriaVeiculo.getTipo()+ "na filial "+filial.getNome());
 		this.categoriaVeiculo = categoriaVeiculo;
     	this.filial = filial;
     	return true;
@@ -166,7 +166,7 @@ public class SelecionarVeiculoController extends ControllerAdapter{
     
     public void paremetrizadoPor(Filial filial) {
     	if(filial!= null)
-    		tituloLbl.setText("Selecione veículo na filial "+filial.getNome());
+    		tituloLbl.setText("Selecione veÃ­culo na filial "+filial.getNome());
     	else
     		tipoBox.setVisible(true);
     	this.filial = filial;

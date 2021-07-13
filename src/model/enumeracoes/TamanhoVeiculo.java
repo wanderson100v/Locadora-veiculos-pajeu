@@ -1,7 +1,7 @@
 package model.enumeracoes;
 
 public enum TamanhoVeiculo {
-	PEQUENO("Pequeno"),MEDIO("Médio"),GRANDE("Grande");
+	PEQUENO("Pequeno"),MEDIO("MÃ©dio"),GRANDE("Grande");
 	
 	private String value;
 	

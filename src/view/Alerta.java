@@ -32,7 +32,7 @@ public class Alerta extends Alert {
 	
 	public boolean imprimirMsgConfirmacao(String contentText) {
 		
-		setTitle("Confirmação");
+		setTitle("ConfirmaÃ§Ã£o");
 		setContentText(contentText);
 		setAlertType(AlertType.CONFIRMATION);
 		Optional<ButtonType> btn = showAndWait();

@@ -15,7 +15,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import model.FuncionarioObservavel;
 import model.dao.DaoRes;
 import model.enumeracoes.Cargo;
 import model.excecoes.DaoException;
@@ -130,16 +129,16 @@ public class PesquisaController extends Controller{
 	public void addControladores(Cargo cargo) {
 		Platform.runLater(()->{
 			controladores.clear();
-			controladores.put("Clientes j˙ridicos",clienteJuridicoController);
-			controladores.put("Clientes fÌsicos", clienteFisicoController);
+			controladores.put("Clientes j√∫ridicos",clienteJuridicoController);
+			controladores.put("Clientes f√≠sicos", clienteFisicoController);
 			controladores.put("Caminhoneta Carga", caminhonetaCargaController);
-			controladores.put("AutomÛvel", automovelController);
-			controladores.put("ManutenÁ„o", manutencaoController);
+			controladores.put("Autom√≥vel", automovelController);
+			controladores.put("Manuten√ß√£o", manutencaoController);
 			if(cargo != Cargo.AT) {
 				controladores.put("Filiais", filialController);
-				controladores.put("AcessÛrios", acessorioController);
-				controladores.put("CategÛria de VÈiculos", categoriaVeiculoController);
-				controladores.put("Funcion·rios", funcionrarioController);
+				controladores.put("Acess√≥rios", acessorioController);
+				controladores.put("Categ√≥ria de Ve√≠culos", categoriaVeiculoController);
+				controladores.put("Funcion√°rios", funcionrarioController);
 			}
 			filtroBox.getItems().addAll(controladores.keySet());
 		});

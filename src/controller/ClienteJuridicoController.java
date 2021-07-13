@@ -96,55 +96,46 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
     	telNumFld.setTextFormatter(Mascara.getMascaraNumericoInteiro());
     }
     
-    
-    void crudHandle(Button btn) {
-    	
-    	try {	
-    		if(btn == cadastrarBtn || btn == editarBtn) {
-    			Juridico juridico = null;
-    			if(btn == cadastrarBtn) {
-    				juridico = new Juridico();
-    				juridico.setEndereco(new Endereco());
-    			}
-    			else
-    				juridico = this.juridico;
-    			
-	    		juridico.setNome(nomeFld.getText());
-	    		juridico.setCnpj(cnpjFld.getText());
-	    		juridico.setInscricaoEstadual(inscicaoEstadualFld.getText());
-	    		juridico.setEmail(emailFld.getText());
-	    		juridico.setEmail(telPreFld.getText()+"-"+telNumFld.getText());
-	    		if(simAtivoRb.isSelected())
-	    			juridico.setAtivo(true);
-	    		else
-	    			juridico.setAtivo(false);
-	    		
-	    		Endereco endereco = juridico.getEndereco();
-	    		endereco.setNumero(numFld.getText());
-	    		endereco.setCep(cepFld.getText());
-	    		endereco.setRua(ruaFld.getText());
-	    		endereco.setBairro(bairroFld.getText());
-	    		endereco.setCidade(cidadeFld.getText());
-	    		endereco.setEstado(estadoBox.getValue());
-	    		
-				fachadaModel.cadastrarEditarClienteJuridico(juridico);
-				alerta.imprimirMsg("Sucesso ao cadastrar","Cliente jurídico "+((juridico.equals(this.juridico))? "editado": "cadastrado") +" com sucesso", AlertType.INFORMATION);
-				
-	    	}else if(btn == excluirBtn){
-	    		
-	    		fachadaModel.excluirClienteJuridico(juridico);
-	    		alerta.imprimirMsg("Sucesso ao exluir","Cliente jurídico exlcuido com sucesso", AlertType.INFORMATION);
-	    		limparCampos();
-	    	
-	    	}else if(btn == limparBtn){
-	    		
-	    		limparCampos();
-	    		
-	    	}
-    	} catch (BoException e) {
-			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
+	@Override
+	protected void cadastrarEditar(Boolean cadastrar, String opcao) throws BoException {
+		
+		Juridico juridico = null;
+		
+		if(cadastrar) {
+			juridico = new Juridico();
+			juridico.setEndereco(new Endereco());
 		}
-    }
+		else
+			juridico = this.juridico;
+		
+		juridico.setNome(nomeFld.getText());
+		juridico.setCnpj(cnpjFld.getText());
+		juridico.setInscricaoEstadual(inscicaoEstadualFld.getText());
+		juridico.setEmail(emailFld.getText());
+		juridico.setEmail(telPreFld.getText()+"-"+telNumFld.getText());
+		if(simAtivoRb.isSelected())
+			juridico.setAtivo(true);
+		else
+			juridico.setAtivo(false);
+		
+		Endereco endereco = juridico.getEndereco();
+		endereco.setNumero(numFld.getText());
+		endereco.setCep(cepFld.getText());
+		endereco.setRua(ruaFld.getText());
+		endereco.setBairro(bairroFld.getText());
+		endereco.setCidade(cidadeFld.getText());
+		endereco.setEstado(estadoBox.getValue());
+		
+		fachadaModel.cadastrarEditarClienteJuridico(juridico);
+		alerta.imprimirMsg("Sucesso","Cliente jurÃ­dico "+opcao+" com sucesso", AlertType.INFORMATION);
+		
+	}
+
+	@Override
+	protected void excluir() throws BoException {
+		fachadaModel.excluirClienteJuridico(juridico);
+		alerta.imprimirMsg("Sucesso ao exluir","Cliente jurÃ­dico exlcuido com sucesso", AlertType.INFORMATION);
+	}
     
     @Override
     void popularTabela(String busca) {
@@ -155,7 +146,7 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
 			
 			List<Juridico> juridicos = fachadaModel.buscarClientesJuridicos(busca,juridico);
 			entidadeTabela.getItems().setAll(juridicos);
-			alerta.imprimirMsg("Busca concluída","Foram econtrados "+juridicos.size()+" resultado(s)",AlertType.INFORMATION);
+			alerta.imprimirMsg("Busca concluï¿½da","Foram econtrados "+juridicos.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
 		}
@@ -216,4 +207,6 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
 			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
 		}
     }
+
+
 }

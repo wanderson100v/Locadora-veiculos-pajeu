@@ -7,4 +7,6 @@ public interface IBoEndereco extends IBussines<Endereco>{
 	  
 	public Endereco gerarEndereco(String cep) throws BoException;
 	
+	public void validarEndereco(Endereco endereco) throws BoException;
+	
 }

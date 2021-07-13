@@ -44,9 +44,9 @@ public class FinanceiroController extends ControllerAdapter{
     private ComboBox<String> groypByBox;
     
     void initialize() {
-    	financeiroBox.getItems().addAll("Locações finalizadas"
-    			,"Reservas Origens de Locações","Reservas Incompletadas");
-    	groypByBox.getItems().addAll("Dia","Mês");
+    	financeiroBox.getItems().addAll("Locaï¿½ï¿½es finalizadas"
+    			,"Reservas Origens de Locaï¿½ï¿½es","Reservas Incompletadas");
+    	groypByBox.getItems().addAll("Dia","Mï¿½s");
     	groypByBox.setValue("Dia");
     	descricaoLbl.setText("");
     }
@@ -64,8 +64,8 @@ public class FinanceiroController extends ControllerAdapter{
     			List<Map<String,Object>> registros = null;
     			TableView<Map<String,Object>> tv = null;
     			
-    			if(financeiroBox.getValue().equals("Locações finalizadas") 
-    					|| financeiroBox.getValue().equals("Reservas Origens de Locação")) {
+    			if(financeiroBox.getValue().equals("Locaï¿½ï¿½es finalizadas") 
+    					|| financeiroBox.getValue().equals("Reservas Origens de Locaï¿½ï¿½o")) {
     				if(groypByBox.getValue().equals("Dia")) 
     	    			nomesColunaOrganizado.add("devolucao");
     	    		else
@@ -88,7 +88,7 @@ public class FinanceiroController extends ControllerAdapter{
 		    		tv.getItems().setAll(registros);
 		    		Alerta.getInstance().imprimirMsg("Sucesso","Foi encontrado "+registros.size()+" registros", AlertType.WARNING);
 	    		}else
-	    			Alerta.getInstance().imprimirMsg("Alerta","Nenhum registro para o período", AlertType.WARNING);
+	    			Alerta.getInstance().imprimirMsg("Alerta","Nenhum registro para o perÃ­odo", AlertType.WARNING);
     		}
     	}catch(BoException e) {
     		Alerta.getInstance().imprimirMsg("Alerta",e.getMessage(),AlertType.ERROR);

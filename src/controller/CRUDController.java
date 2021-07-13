@@ -5,11 +5,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import model.enumeracoes.Cargo;
+import model.excecoes.BoException;
 import model.vo.Entidade;
+import model.vo.Funcionario;
 
-public abstract class CRUDController<T extends Entidade> extends ControllerAdapter {
+public abstract class CRUDController<T extends Entidade> extends Controller {
 	
 	@FXML
     protected Button editarBtn;
@@ -41,23 +45,42 @@ public abstract class CRUDController<T extends Entidade> extends ControllerAdapt
     @FXML
     void crudHandle(ActionEvent e) {
     	Button button = (Button)e.getSource();
-    	if(button == editarBtn) {
-    		cadastrarBtn.setDisable(true);
+    	String erro = null;
+    	if(button == editarBtn || button == cadastrarBtn) {
+    		boolean isOpCadastro = button == cadastrarBtn;
+    		try {
+    			cadastrarEditar(isOpCadastro, (isOpCadastro)? "cadastrado(a)": "editado(a)");
+    			cadastrarBtn.setDisable(true);
+				excluirBtn.setDisable(false);
+    		}catch (BoException boException) {
+    			cadastrarBtn.setDisable(!isOpCadastro);
+    			erro = boException.getMessage();
+			}
     	}else if(button == excluirBtn) {
     		cadastrarBtn.setDisable(false);
     		editarBtn.setDisable(true);
-    		excluirBtn.setDisable(true);
+    		try {
+    			excluir();
+	    		excluirBtn.setDisable(true);
+    		}catch (BoException boException) {
+    			excluirBtn.setDisable(false);
+    			erro = boException.getMessage();
+    		}
     	}else if(button == limparBtn) {
     		cadastrarBtn.setDisable(false);
     		excluirBtn.setDisable(true);
     		editarBtn.setDisable(true);
-		}else if(button == cadastrarBtn) {
-			cadastrarBtn.setDisable(true);
-			excluirBtn.setDisable(true);
-			editarBtn.setDisable(true);
-		}
-    	crudHandle(button);
+    		limparCampos();
+    	}
+    	if(erro != null)
+    		alerta.imprimirMsg("Erro",erro, AlertType.ERROR);
     }
+    
+    protected abstract void cadastrarEditar(Boolean cadastrar, String opcao) throws BoException;
+    
+    protected abstract void excluir() throws BoException;
+    
+    abstract void limparCampos();
 
     @FXML
     void mouseClikHandle(MouseEvent e) {
@@ -70,14 +93,16 @@ public abstract class CRUDController<T extends Entidade> extends ControllerAdapt
     	}
     }
     
-    abstract void crudHandle(Button btn);
-    
     abstract void popularDescricao(Entidade entidade);
 
     abstract void popularTabela(String busca);
     
-    abstract void limparCampos();
-    
+	@Override
+	public void atualizar(Funcionario funcionario, Cargo cargo) {
+		limparCampos();
+		entidadeTabela.getItems().clear();
+	}
+	
     public ButtonBar getAcoesBar() {
 		return acoesBar;
 	}

@@ -22,7 +22,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-import view.Alerta;
 
 public class ManutencaoController extends CRUDController<Manutencao>{
 
@@ -113,41 +112,26 @@ public class ManutencaoController extends CRUDController<Manutencao>{
      	inicioDateCln.setCellValueFactory(new PropertyValueFactory<>("dataHoraInicio"));
      	veiculoCln.setCellValueFactory(new PropertyValueFactory<>("veiculo"));
     }
-
+    
 	@Override
-	void crudHandle(Button btn) {
-		try {	
-			try {
-				if(btn == cadastrarBtn) {
-					fachadaModel.cadastrarEditarManutencao(new Manutencao(Util.gerarHorario(inicioDate, horaBox)
-							, tipoBox.getValue(), estadoManutencaoBox.getValue(), Float.parseFloat(custoFld.getText()), 
-							horaCustoBox.getValue(),veiculo));
-					alerta.imprimirMsg("Sucesso ao cadastrar","Manutenção cadastrada com sucesso", AlertType.INFORMATION);
-					
-		    	}else if(btn == editarBtn){
-		    		
-		    		manutencao.setCusto(Float.parseFloat(custoFld.getText()));
-		    		manutencao.setDataHoraInicio(Util.gerarHorario(inicioDate, horaBox));
-		    		manutencao.setEstadoManutencao(estadoManutencaoBox.getValue());
-		    		manutencao.setTipoManuntencao(tipoBox.getValue());
-		    		fachadaModel.cadastrarEditarManutencao(manutencao);
-		    		alerta.imprimirMsg("Sucesso ao editar","Manutenção editado com sucesso", AlertType.INFORMATION);
-		    	}
-		    }catch (Exception e) {
-	    		Alerta.getInstance().imprimirMsg("Alerta", "Há um ou mais campos com entradas invalidas", AlertType.WARNING);
-	    	}	
-	    	 if(btn == excluirBtn){
-	    		fachadaModel.excluirManutencao(manutencao);
-	    		alerta.imprimirMsg("Sucesso ao exluir", "Manutenção exlcuido com sucesso", AlertType.INFORMATION);
-	    		limparCampos();
-	    	}else if(btn == limparBtn){
-	    		limparCampos();
-	    	}
-    	} catch (BoException e) {
-			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
-		}
+	protected void cadastrarEditar(Boolean cadastrar, String opcao) throws BoException {
+		Manutencao manutencao = (cadastrar)? new Manutencao(): this.manutencao;
+		
+		manutencao.setCusto(Float.parseFloat(custoFld.getText()));
+		manutencao.setDataHoraInicio(Util.gerarHorario(inicioDate, horaBox));
+		manutencao.setEstadoManutencao(estadoManutencaoBox.getValue());
+		manutencao.setTipoManuntencao(tipoBox.getValue());
+		
+		fachadaModel.cadastrarEditarManutencao(manutencao);
+		alerta.imprimirMsg("Sucesso","ManutenÃ§Ã£o "+opcao+" com sucesso", AlertType.INFORMATION);
 	}
 
+	@Override
+	protected void excluir() throws BoException {
+		fachadaModel.excluirManutencao(manutencao);
+		alerta.imprimirMsg("Sucesso ao exluir", "ManutenÃ§Ã£o exlcuido com sucesso", AlertType.INFORMATION);
+	}
+	
 	@Override
 	void popularTabela(String busca) {
 		try {
@@ -155,7 +139,7 @@ public class ManutencaoController extends CRUDController<Manutencao>{
 			manutencao.setVeiculo(veiculoBusca);
 			List<Manutencao> manutencoes = fachadaModel.buscarManutencoes(busca,manutencao);
 			entidadeTabela.getItems().setAll(manutencoes);
-			alerta.imprimirMsg("Busca concluída","Foram econtrados "+manutencoes.size()+" resultado(s)",AlertType.INFORMATION);
+			alerta.imprimirMsg("Busca concluÃ­da","Foram econtrados "+manutencoes.size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
 		}

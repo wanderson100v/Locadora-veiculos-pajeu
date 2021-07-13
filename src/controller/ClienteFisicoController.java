@@ -131,87 +131,55 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
     	telPreFld.setTextFormatter(Mascara.getMascaraNumericoFlutuante());
     	telNumFld.setTextFormatter(Mascara.getMascaraNumericoInteiro());
     }
-    
+
 	@Override
-	void crudHandle(Button btn) {
-		try {	
-    		if(btn == cadastrarBtn) {
-	    		
-    			Fisico fisico = new Fisico();
-	    		fisico.setNome(nomeFld.getText());
-	    		fisico.setCpf(cpfFld.getText());
-	    		fisico.setDataNascimento(nascimentoDate.getValue());
-	    		fisico.setSexo(sexoBox.getValue());
-	    		fisico.setNumeroHabilitacao(numHFld.getText());
-	    		fisico.setIdentificacaoMotorista(numIdentFld.getText());
-	    		fisico.setDataValidadeHabilitacao(validadeDate.getValue());
-	    		fisico.setEmail(emailFld.getText());
-	    		fisico.setEmail(telPreFld.getText()+"-"+telNumFld.getText());
-	    		if(simAtivoRb.isSelected())
-	    			fisico.setAtivo(true);
-	    		else
-	    			fisico.setAtivo(false);
-	    		
-	    		Endereco endereco = new Endereco();
-	    		endereco.setNumero(numFld.getText());
-	    		endereco.setCep(cepFld.getText());
-	    		endereco.setRua(ruaFld.getText());
-	    		endereco.setBairro(bairroFld.getText());
-	    		endereco.setCidade(cidadeFld.getText());
-	    		endereco.setEstado(estadoBox.getValue());
-	    		
-	    		fisico.setEndereco(endereco);
-	    		
-				fachadaModel.cadastrarEditarClienteFisico(fisico);
-				alerta.imprimirMsg("Sucesso ao cadastrar","Cliente Fisico cadastrado com sucesso", AlertType.INFORMATION);
-				
-	    	}else if(btn == editarBtn){
-	    		
-	    		int pre = Integer.parseInt(telPreFld.getText().trim());
-	    		int num = Integer.parseInt(telNumFld.getText().trim());
-	    		fisico.setNome(nomeFld.getText());
-	    		fisico.setCpf(cpfFld.getText());
-	    		fisico.setDataNascimento(nascimentoDate.getValue());
-	    		fisico.setSexo(sexoBox.getValue());
-	    		fisico.setNumeroHabilitacao(numHFld.getText());
-	    		fisico.setIdentificacaoMotorista(numIdentFld.getText());
-	    		fisico.setDataValidadeHabilitacao(validadeDate.getValue());
-	    		fisico.setEmail(pre+"-"+num);
-	    		
-	    		fisico.setTelefone(telNumFld.getText());
-	    		if(simAtivoRb.isSelected())
-	    			fisico.setAtivo(true);
-	    		else
-	    			fisico.setAtivo(false);
-	    		
-	    		Endereco endereco = fisico.getEndereco();
-	    		endereco.setNumero(numFld.getText());
-	    		endereco.setCep(cepFld.getText());
-	    		endereco.setRua(ruaFld.getText());
-	    		endereco.setBairro(bairroFld.getText());
-	    		endereco.setCidade(cidadeFld.getText());
-	    		endereco.setEstado(estadoBox.getValue());
-	    		
-	    		fachadaModel.cadastrarEditarClienteFisico(fisico);
-	    		alerta.imprimirMsg("Sucesso ao editar","Cliente Fisico editado com sucesso", AlertType.INFORMATION);
-	    		
-	    	}else if(btn == excluirBtn){
-	    		
-	    		fachadaModel.excluirClienteFisico(fisico);
-	    		alerta.imprimirMsg("Sucesso ao exluir","Cliente Fisico exlcuido com sucesso", AlertType.INFORMATION);
-	    		limparCampos();
-	    	
-	    	}else if(btn == limparBtn){
-	    		
-	    		limparCampos();
-	    		
-	    	}
-    	} catch (BoException e) {
-			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
-		} catch (NumberFormatException e) {
-			alerta.imprimirMsg("Alerta","Um ou mais campos númericos não são números válidos", AlertType.ERROR);
-		}
+	protected void cadastrarEditar(Boolean cadastrar, String opcao) throws BoException {
 		
+		Fisico fisico = null;
+		
+		if(cadastrar) {
+			fisico = new Fisico();
+			fisico.setEndereco(new Endereco());
+		}
+		else
+			fisico = this.fisico;
+		
+		int pre = Integer.parseInt(telPreFld.getText().trim());
+		int num = Integer.parseInt(telNumFld.getText().trim());
+		fisico.setNome(nomeFld.getText());
+		fisico.setCpf(cpfFld.getText());
+		fisico.setDataNascimento(nascimentoDate.getValue());
+		fisico.setSexo(sexoBox.getValue());
+		fisico.setNumeroHabilitacao(numHFld.getText());
+		fisico.setIdentificacaoMotorista(numIdentFld.getText());
+		fisico.setDataValidadeHabilitacao(validadeDate.getValue());
+		fisico.setEmail(pre+"-"+num);
+		
+		fisico.setTelefone(telNumFld.getText());
+		if(simAtivoRb.isSelected())
+			fisico.setAtivo(true);
+		else
+			fisico.setAtivo(false);
+		
+		Endereco endereco = fisico.getEndereco();
+		endereco.setNumero(numFld.getText());
+		endereco.setCep(cepFld.getText());
+		endereco.setRua(ruaFld.getText());
+		endereco.setBairro(bairroFld.getText());
+		endereco.setCidade(cidadeFld.getText());
+		endereco.setEstado(estadoBox.getValue());
+		
+		fisico.setEndereco(endereco);
+		fachadaModel.cadastrarEditarClienteFisico(fisico);
+		
+		alerta.imprimirMsg("Sucesso","Cliente fÃ­sico "+opcao+" com sucesso", AlertType.INFORMATION);
+		
+	}
+
+	@Override
+	protected void excluir() throws BoException {
+		fachadaModel.excluirClienteFisico(fisico);
+		alerta.imprimirMsg("Sucesso ao exluir","Cliente fÃ­sico exlcuido com sucesso", AlertType.INFORMATION);
 	}
 	@Override
 	void popularTabela(String busca) {
@@ -226,7 +194,7 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
 					fisico.setSexo(Sexo.getSexo(sexoBuscaBox.getValue()));
 				entidadeTabela.getItems().setAll(fachadaModel.buscarClientesFisicos(busca,fisico));
 			}
-			alerta.imprimirMsg("Busca concluída","Foram econtrados "+entidadeTabela.getItems().size()+" resultado(s)",AlertType.INFORMATION);
+			alerta.imprimirMsg("Busca concluÃ­da","Foram econtrados "+entidadeTabela.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 		} catch (BoException e) {
 			alerta.imprimirMsg("Erro",e.getMessage(),AlertType.ERROR);
 		}
@@ -302,5 +270,4 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
 			alerta.imprimirMsg("Erro",e.getMessage(), AlertType.ERROR);
 		}
     }
-
 }
