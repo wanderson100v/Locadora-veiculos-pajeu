@@ -48,8 +48,8 @@ public class SelecionarClienteController extends ControllerAdapter{
     	codigoCln.setCellValueFactory(new PropertyValueFactory<>("codigo"));
     	emailCln.setCellValueFactory(new PropertyValueFactory<>("email"));
     	
-    	tipoClienteBox.getItems().addAll("F�sico","Jur�dico");
-    	tipoClienteBox.setValue("F�sico");
+    	tipoClienteBox.getItems().addAll("Físico","Jurídico");
+    	tipoClienteBox.setValue("Físico");
     	
     	pesquisaFld.setOnKeyTyped(new EventHandler<KeyEvent>() {
 			@Override

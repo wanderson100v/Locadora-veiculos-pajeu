@@ -215,7 +215,7 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
 		if(categoriaVeiculo.getVeiculoExemplo() instanceof CaminhonetaCarga) {
 			CaminhonetaCarga caminhonetaCarga =(CaminhonetaCarga) categoriaVeiculo.getVeiculoExemplo();
 			tipoVeiculoBox.setValue("Caminhoneta Carga");
-			descricaoFld.setText(""+caminhonetaCarga.getDesenpenho());
+			desempenhoFld.setText(""+caminhonetaCarga.getDesenpenho());
 			potenciaFld.setText(""+caminhonetaCarga.getPotencia());
 			disEixosFld.setText(""+caminhonetaCarga.getDistanciaEixos());
 			aciEmbreagemBox.setValue(caminhonetaCarga.getTipoAcionamentoEmbreagem());;
@@ -257,7 +257,6 @@ public class CategoriaVeiculoController extends CRUDController<CategoriaVeiculo>
 		horaRevisaoFld.clear();
 		quilometragemRevisaoFld.clear();
 		valorDiariaFld.clear();
-		System.out.println(tipoVeiculoBox.getItems());
 		tipoVeiculoBox.setValue(null);
 		tipoVeiculoPane.getChildren().clear();
 		desempenhoFld.clear();

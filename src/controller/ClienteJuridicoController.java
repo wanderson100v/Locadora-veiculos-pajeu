@@ -112,7 +112,7 @@ public class ClienteJuridicoController extends CRUDController<Juridico> {
 		juridico.setCnpj(cnpjFld.getText());
 		juridico.setInscricaoEstadual(inscicaoEstadualFld.getText());
 		juridico.setEmail(emailFld.getText());
-		juridico.setEmail(telPreFld.getText()+"-"+telNumFld.getText());
+		juridico.setTelefone("("+telPreFld.getText().trim()+") " + telNumFld.getText().trim());
 		if(simAtivoRb.isSelected())
 			juridico.setAtivo(true);
 		else

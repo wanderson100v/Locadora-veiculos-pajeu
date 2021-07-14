@@ -6,8 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 
 import model.enumeracoes.TipoCombustivel;
@@ -15,14 +13,6 @@ import model.enumeracoes.TipoCombustivel;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @SequenceGenerator(initialValue = 1, name = "idgen", sequenceName = "veiculo_seq", allocationSize =1)
-@NamedQueries({
-	@NamedQuery(name = "veiculo.totalDisponivel", query = "select count(*) from "
-			+ "Veiculo as veiculo inner join veiculo.filial as filial "
-			+ "left join veiculo.categoriaVeiculo as categoriaVeiculo"
-			+ " where veiculo.ativo = true and locado = false and veiculo.filial = :filial and veiculo.categoriaVeiculo = :categoria"),
-	@NamedQuery(name = "veiculo.totalManutencaoPendente", query = "select count(*) from "
-			+ "Manutencao as m inner join m.veiculo as v where v = :veiculo and m.estadoManutencao = PENDENTE")
-})
 public class Veiculo extends Entidade {
   
 	private static final long serialVersionUID = 1L;

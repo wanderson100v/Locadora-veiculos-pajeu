@@ -2,6 +2,7 @@ package model.dao;
 
 import java.util.List;
 
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import model.excecoes.DaoException;
@@ -16,14 +17,15 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 		super(CategoriaVeiculo.class);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<CategoriaVeiculo> buscarCategoriasCaminhonetaCarga(CaminhonetaCarga caminhonetaCarga) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
-			TypedQuery<CategoriaVeiculo> query= em.createQuery(SELECIONAR_CATEGORIA_CAMINHONETA_CARGA.replace('?','<'),CategoriaVeiculo.class);
+			Query query= em.createNativeQuery(SELECIONAR_CATEGORIA_CAMINHONETA_CARGA.replace('?','<'),CategoriaVeiculo.class);
 			query.setParameter("potencia",caminhonetaCarga.getPotencia());
 			query.setParameter("desenpenho",caminhonetaCarga.getDesenpenho());
 			query.setParameter("capacidadeCarga",caminhonetaCarga.getCapacidadeCarga());
-			query.setParameter("tipoAcionamentoEmbreagem",caminhonetaCarga.getTipoAcionamentoEmbreagem());
+			query.setParameter("tipoAcionamentoEmbreagem",caminhonetaCarga.getTipoAcionamentoEmbreagem().ordinal());
 			query.setParameter("distanciaEixos",caminhonetaCarga.getDistanciaEixos());
 			query.setParameter("capacidadeCombustivel",caminhonetaCarga.getCapacidadeCombustivel());
 			query.setParameter("torqueMotor",caminhonetaCarga.getTorqueMotor());
@@ -36,17 +38,17 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<CategoriaVeiculo> buscarCategoriasCaminhonetaPassageiro(Automovel automovel) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
-			TypedQuery<CategoriaVeiculo> query= em.createQuery(SELECIONAR_CAMINHONETA_PASSAGEIRO.replace('?','<'),CategoriaVeiculo.class);
-			query.setParameter("tipoAirBag",automovel.getTipoAirBag());
-			query.setParameter("tipoCambio",automovel.getTipoCambio());
-			query.setParameter("tamanhoVeiculo",automovel.getTamanhoVeiculo());
+			Query query = em.createNativeQuery(SELECIONAR_CAMINHONETA_PASSAGEIRO.replace('?','<'),CategoriaVeiculo.class);
+			query.setParameter("tipoAirBag",automovel.getTipoAirBag().ordinal());
+			query.setParameter("tipoCambio",automovel.getTipoCambio().ordinal());
+			query.setParameter("tamanhoVeiculo",automovel.getTamanhoVeiculo().ordinal());
 			query.setParameter("quantidadePortas",automovel.getQuantidadePortas());
 			query.setParameter("quantidadePassageiro",automovel.getQuantidadePassageiro());
-			query.setParameter("tipoCombustivel",automovel.getTipoCombustivel());
-			
+			query.setParameter("tipoCombustivel",automovel.getTipoCombustivel().ordinal());
 			return query.getResultList();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -56,15 +58,17 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<CategoriaVeiculo> buscarCategoriaAutomovelPequeno(Automovel automovel) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
-			TypedQuery<CategoriaVeiculo> query= em.createQuery(SELECIONAR_AUTOMOVEL_PEQUENO.replace('?','<'),CategoriaVeiculo.class);
-			query.setParameter("tipoCambio",automovel.getTipoCambio());
-			query.setParameter("tamanhoVeiculo",automovel.getTamanhoVeiculo());
+			Query query = em.createNativeQuery(SELECIONAR_AUTOMOVEL_PEQUENO.replace('?','<'),CategoriaVeiculo.class);
+			System.err.println(automovel.getTipoCambio());
+			query.setParameter("tipoCambio",automovel.getTipoCambio().ordinal());
+			query.setParameter("tamanhoVeiculo",automovel.getTamanhoVeiculo().ordinal());
 			query.setParameter("quantidadePortas",automovel.getQuantidadePortas());
 			query.setParameter("quantidadePassageiro",automovel.getQuantidadePassageiro());
-			query.setParameter("tipoCombustivel",automovel.getTipoCombustivel());
+			query.setParameter("tipoCombustivel",automovel.getTipoCombustivel().ordinal());
 			return query.getResultList();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -74,14 +78,15 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<CategoriaVeiculo> buscarCategoriasSuperiorCaminhonetaCarga(CaminhonetaCarga caminhonetaCarga) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
-			TypedQuery<CategoriaVeiculo> query= em.createQuery(SELECIONAR_CATEGORIA_CAMINHONETA_CARGA.replace('?','>'),CategoriaVeiculo.class);
+			Query query= em.createNativeQuery(SELECIONAR_CATEGORIA_CAMINHONETA_CARGA.replace('?','>'),CategoriaVeiculo.class);
 			query.setParameter("potencia",caminhonetaCarga.getPotencia());
 			query.setParameter("desenpenho",caminhonetaCarga.getDesenpenho());
 			query.setParameter("capacidadeCarga",caminhonetaCarga.getCapacidadeCarga());
-			query.setParameter("tipoAcionamentoEmbreagem",caminhonetaCarga.getTipoAcionamentoEmbreagem());
+			query.setParameter("tipoAcionamentoEmbreagem",caminhonetaCarga.getTipoAcionamentoEmbreagem().ordinal());
 			query.setParameter("distanciaEixos",caminhonetaCarga.getDistanciaEixos());
 			query.setParameter("capacidadeCombustivel",caminhonetaCarga.getCapacidadeCombustivel());
 			query.setParameter("torqueMotor",caminhonetaCarga.getTorqueMotor());
@@ -94,16 +99,17 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<CategoriaVeiculo> buscarCategoriasSuperiorCaminhonetaPassageiro(Automovel automovel) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
-			TypedQuery<CategoriaVeiculo> query= em.createQuery(SELECIONAR_CAMINHONETA_PASSAGEIRO.replace('?','>'),CategoriaVeiculo.class);
-			query.setParameter("tipoAirBag",automovel.getTipoAirBag());
-			query.setParameter("tipoCambio",automovel.getTipoCambio());
-			query.setParameter("tamanhoVeiculo",automovel.getTamanhoVeiculo());
+			Query query= em.createNativeQuery(SELECIONAR_CAMINHONETA_PASSAGEIRO.replace('?','>'),CategoriaVeiculo.class);
+			query.setParameter("tipoAirBag",automovel.getTipoAirBag().ordinal());
+			query.setParameter("tipoCambio",automovel.getTipoCambio().ordinal());
+			query.setParameter("tamanhoVeiculo",automovel.getTamanhoVeiculo().ordinal());
 			query.setParameter("quantidadePortas",automovel.getQuantidadePortas());
 			query.setParameter("quantidadePassageiro",automovel.getQuantidadePassageiro());
-			query.setParameter("tipoCombustivel",automovel.getTipoCombustivel());
+			query.setParameter("tipoCombustivel",automovel.getTipoCombustivel().ordinal());
 			return query.getResultList();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -113,15 +119,16 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<CategoriaVeiculo> buscarCategoriasSuperiorAutomovelPequeno(Automovel automovel) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
-			TypedQuery<CategoriaVeiculo> query= em.createQuery(SELECIONAR_AUTOMOVEL_PEQUENO.replace('?','>'),CategoriaVeiculo.class);
-			query.setParameter("tipoCambio",automovel.getTipoCambio());
-			query.setParameter("tamanhoVeiculo",automovel.getTamanhoVeiculo());
+			Query query= em.createNativeQuery(SELECIONAR_AUTOMOVEL_PEQUENO.replace('?','>'),CategoriaVeiculo.class);
+			query.setParameter("tipoCambio",automovel.getTipoCambio().ordinal());
+			query.setParameter("tamanhoVeiculo",automovel.getTamanhoVeiculo().ordinal());
 			query.setParameter("quantidadePortas",automovel.getQuantidadePortas());
 			query.setParameter("quantidadePassageiro",automovel.getQuantidadePassageiro());
-			query.setParameter("tipoCombustivel",automovel.getTipoCombustivel());
+			query.setParameter("tipoCombustivel",automovel.getTipoCombustivel().ordinal());
 			return query.getResultList();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -145,7 +152,7 @@ public class DaoCategoriaVeiculo extends Dao<CategoriaVeiculo> implements IDaoCa
 			return typedQuery.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DaoException("ERRO AO BUSCAR CATEGORIAS DE VEÃ?CULO POR BUSCA - CONTATE ADM");
+			throw new DaoException("ERRO AO BUSCAR CATEGORIAS DE VEï¿½?CULO POR BUSCA - CONTATE ADM");
 		}finally {
 			em.close();
 		}

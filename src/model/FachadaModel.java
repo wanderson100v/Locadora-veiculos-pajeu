@@ -13,6 +13,7 @@ import model.business.BoAutomovel;
 import model.business.BoBackup;
 import model.business.BoCaminhonetaCarga;
 import model.business.BoCategoriaVeiculo;
+import model.business.BoCliente;
 import model.business.BoEndereco;
 import model.business.BoFilial;
 import model.business.BoFisico;
@@ -27,6 +28,7 @@ import model.business.IBoAutomovel;
 import model.business.IBoBackup;
 import model.business.IBoCaminhonetaCarga;
 import model.business.IBoCategoriaVeiculo;
+import model.business.IBoCliente;
 import model.business.IBoEndereco;
 import model.business.IBoFilial;
 import model.business.IBoFisico;
@@ -62,6 +64,7 @@ public class FachadaModel {
 	IBoCaminhonetaCarga iboCaminhonetaCarga;
 	IBoLocacao iboLocacao;
 	IBoVeiculo iboVeiculo;
+	IBoCliente iboCliente;
 	IBoFisico iboFisico;
 	IBoJuridico iboJuridico;
 	IBoReserva iboReserva;
@@ -86,6 +89,7 @@ public class FachadaModel {
 		this.iboCaminhonetaCarga = new BoCaminhonetaCarga();
 		this.iboLocacao = new BoLocacao();
 		this.iboVeiculo = new BoVeiculo();
+		this.iboCliente = new BoCliente();
 		this.iboFisico = new BoFisico();
 		this.iboJuridico = new BoJuridico();
 		this.iboReserva = new BoReserva();
@@ -168,7 +172,17 @@ public class FachadaModel {
 	}
 	
 	public void excluirCategoriaVeiculo(CategoriaVeiculo categoriaVeiculo) throws BoException {
-		iboCategoriaVeiculo.excluir(categoriaVeiculo);
+		try {
+			Veiculo veiculo = categoriaVeiculo.getVeiculoExemplo();
+			categoriaVeiculo.setVeiculoExemplo(null);
+			if(veiculo!=null) {
+				iboCategoriaVeiculo.cadastrarEditar(categoriaVeiculo);
+				iboVeiculo.excluir(veiculo);
+			}
+			iboCategoriaVeiculo.excluir(categoriaVeiculo);
+		} catch (BoException e) {
+			throw new BoException("Não é possível excluir a categória, possívelmente há veículos associados a ela");
+		}
 	}
 	
 	public List<CategoriaVeiculo> buscarCategoriasVeiculo(String busca) throws BoException{
@@ -239,13 +253,12 @@ public class FachadaModel {
 			iboLocacao.validarLocacao(locacao, erroLocacao);
 			if(locacao.getMotorista() == null && locacao.getCliente() instanceof Fisico) {
 				locacao.setMotorista((Fisico) locacao.getCliente());
-			}else
-				erroLocacao.append("\tO cliente n�o � um motorista apto\n, � necess�rio selecioanr um motorista\n");
+			}
 			
 			iboFisico.validarClienteMotoristaLocacao(locacao.getMotorista(),locacao.getDataDevolucao().toLocalDate(),erroLocacao);
 			
 			if(erroLocacao.length()>0)
-				throw new ValidarException("Erro(s) ao cadastrar loca��o : \n"+ erroLocacao.toString());
+				throw new ValidarException("Erro(s) ao cadastrar lolocação : \n"+ erroLocacao.toString());
 			
 			iboLocacao.cadastrarEditar(locacao);
 			locacao.getVeiculo().setLocado(true);
@@ -286,6 +299,7 @@ public class FachadaModel {
 	
 	//-- Cliente f�sico
 	public void cadastrarEditarClienteFisico(Fisico fisico) throws BoException {
+		iboCliente.validar(fisico);
 		iboFisico.cadastrarEditar(fisico);
 	}
 	
@@ -307,6 +321,7 @@ public class FachadaModel {
 	
 	//-Cliente jur�dico
 	public void cadastrarEditarClienteJuridico(Juridico juridico) throws BoException {
+		iboCliente.validar(juridico);
 		iboJuridico.cadastrarEditar(juridico);
 	}
 	

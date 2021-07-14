@@ -121,6 +121,7 @@ public class ManutencaoController extends CRUDController<Manutencao>{
 		manutencao.setDataHoraInicio(Util.gerarHorario(inicioDate, horaBox));
 		manutencao.setEstadoManutencao(estadoManutencaoBox.getValue());
 		manutencao.setTipoManuntencao(tipoBox.getValue());
+		manutencao.setVeiculo(veiculo);
 		
 		fachadaModel.cadastrarEditarManutencao(manutencao);
 		alerta.imprimirMsg("Sucesso","Manutenção "+opcao+" com sucesso", AlertType.INFORMATION);
@@ -177,7 +178,8 @@ public class ManutencaoController extends CRUDController<Manutencao>{
     void actionHandle(ActionEvent event) {
     	if(event.getSource() == selectVeiculoBtn) {
     		veiculo = Util.selecionarVeiculoEmDialogo(null);
-    		dadosVeiculoFld.setText(veiculo.toString());
+    		if(veiculo != null)
+    			dadosVeiculoFld.setText(veiculo.toString());
     	}
     	else if(event.getSource() == selectVeiculoBuscaBtn) {
     		veiculoBusca = Util.selecionarVeiculoEmDialogo(null);

@@ -77,7 +77,7 @@ public class BoFisico extends Bo<Fisico> implements IBoFisico{
 	}
 
 	private void atribuirCodigo(Fisico entidade){
-		entidade.setCodigo("PJ"+entidade.getCpf());
+		entidade.setCodigo("PF"+entidade.getCpf());
 	}
 
 	@Override

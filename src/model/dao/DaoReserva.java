@@ -227,7 +227,7 @@ public class DaoReserva extends Dao<Reserva> implements IDaoReserva{
 	public ReservaDisponibilidade buscarReservaDisponibilidade(Long categoriaVeiculoId, Long filialId,LocalDateTime horario) throws DaoException {
 		try {
 			em = ConnectionFactory.getConnection();
-			ReservaDisponibilidade reservaDisponibilidade=(ReservaDisponibilidade) em.createNativeQuery(
+			ReservaDisponibilidade reservaDisponibilidade= (ReservaDisponibilidade) em.createNativeQuery(
 					RESERVA_DISPONIBILIDADE_PARCIAL
 					+" categoria_veiculo as cate" 
 					+" cross join filial as fili"

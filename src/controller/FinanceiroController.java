@@ -43,10 +43,11 @@ public class FinanceiroController extends ControllerAdapter{
     @FXML
     private ComboBox<String> groypByBox;
     
+    @FXML
     void initialize() {
-    	financeiroBox.getItems().addAll("Loca��es finalizadas"
-    			,"Reservas Origens de Loca��es","Reservas Incompletadas");
-    	groypByBox.getItems().addAll("Dia","M�s");
+    	financeiroBox.getItems().addAll("Locações finalizadas"
+    			,"Reservas Origens de Locações","Reservas Incompletadas");
+    	groypByBox.getItems().addAll("Dia","Mês");
     	groypByBox.setValue("Dia");
     	descricaoLbl.setText("");
     }
@@ -64,8 +65,8 @@ public class FinanceiroController extends ControllerAdapter{
     			List<Map<String,Object>> registros = null;
     			TableView<Map<String,Object>> tv = null;
     			
-    			if(financeiroBox.getValue().equals("Loca��es finalizadas") 
-    					|| financeiroBox.getValue().equals("Reservas Origens de Loca��o")) {
+    			if(financeiroBox.getValue().equals("Locações finalizadas") 
+    					|| financeiroBox.getValue().equals("Reservas Origens de Locação")) {
     				if(groypByBox.getValue().equals("Dia")) 
     	    			nomesColunaOrganizado.add("devolucao");
     	    		else

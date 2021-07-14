@@ -18,12 +18,14 @@ public class BoCategoriaVeiculo extends BoAdapter<CategoriaVeiculo> implements I
 		super(new DaoCategoriaVeiculo());
 	}
 	
+	
+	
 	@Override
 	public CategoriaVeiculo categorizarCaminhonetaCarga(CaminhonetaCarga caminhonetaCarga) throws BoException {
 		try {
 			List<CategoriaVeiculo> categoriasCandidatas = daoCategoriaVeiculo.buscarCategoriasCaminhonetaCarga(caminhonetaCarga); 
 			if(categoriasCandidatas.isEmpty())
-				throw new BoException("Não há categorias cadastradas que satisfação as especificações da camihoneta de carga informada");
+				throw new BoException("Nï¿½o hï¿½ categorias cadastradas que satisfaï¿½ï¿½o as especificaï¿½ï¿½es da camihoneta de carga informada");
 			return categoriasCandidatas.get(0);
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
@@ -34,7 +36,7 @@ public class BoCategoriaVeiculo extends BoAdapter<CategoriaVeiculo> implements I
 	public CategoriaVeiculo categorizarAutomovel(Automovel automovel) throws BoException {
 		try {
 			if(automovel.getTipoAutomovel() == null)
-				throw new BoException("Veiculo sem tipo(convencional ou caminhoneta de carga):\n impossibilidade de categorização");
+				throw new BoException("Veiculo sem tipo(convencional ou caminhoneta de carga):\n impossibilidade de categorizaï¿½ï¿½o");
 			
 			List<CategoriaVeiculo> categoriasCandidatas;
 			if(automovel.getTipoAutomovel() == TipoAutomovel.CONVENCIONAL)
@@ -43,7 +45,7 @@ public class BoCategoriaVeiculo extends BoAdapter<CategoriaVeiculo> implements I
 				categoriasCandidatas = daoCategoriaVeiculo.buscarCategoriasCaminhonetaPassageiro(automovel);
 			
 			if(categoriasCandidatas.isEmpty())
-				throw new BoException("Não há categorias cadastradas que satisfação as especificações do automovel informado");
+				throw new BoException("Nï¿½o hï¿½ categorias cadastradas que satisfaï¿½ï¿½o as especificaï¿½ï¿½es do automovel informado");
 			
 			return categoriasCandidatas.get(0);
 		}catch (DaoException e) {
@@ -56,7 +58,7 @@ public class BoCategoriaVeiculo extends BoAdapter<CategoriaVeiculo> implements I
 		try {
 			List<CategoriaVeiculo> categoriasCandidatas = daoCategoriaVeiculo.buscarCategoriasSuperiorCaminhonetaCarga(caminhonetaCarga); 
 			if(categoriasCandidatas.isEmpty())
-				throw new BoException("Não há categorias de caminhonetas de carga superiores a especificada");
+				throw new BoException("Nï¿½o hï¿½ categorias de caminhonetas de carga superiores a especificada");
 			return categoriasCandidatas;
 		}catch (DaoException e) {
 			throw new BoException(e.getMessage());
@@ -75,7 +77,7 @@ public class BoCategoriaVeiculo extends BoAdapter<CategoriaVeiculo> implements I
 				categoriasSuperiores = daoCategoriaVeiculo.buscarCategoriasSuperiorCaminhonetaPassageiro(automovel);
 			
 			if(categoriasSuperiores.isEmpty())
-				throw new BoException("Não há categorias de Automovel superiores a especificada");
+				throw new BoException("Nï¿½o hï¿½ categorias de Automovel superiores a especificada");
 			
 			return categoriasSuperiores;
 		}catch (DaoException e) {

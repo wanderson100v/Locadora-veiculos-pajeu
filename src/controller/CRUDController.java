@@ -62,6 +62,7 @@ public abstract class CRUDController<T extends Entidade> extends Controller {
     		try {
     			excluir();
 	    		excluirBtn.setDisable(true);
+	    		limparCampos();
     		}catch (BoException boException) {
     			excluirBtn.setDisable(false);
     			erro = boException.getMessage();

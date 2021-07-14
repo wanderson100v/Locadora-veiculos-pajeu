@@ -136,7 +136,10 @@ public class SelecionarVeiculoController extends ControllerAdapter{
 				else if(filial != null) 
 					veiculoTbl.getItems().setAll(fachadaModel.buscarVeiculosDisponivel(filial.getId(),pesquisaFld.getText().trim()));
 				else 
-					veiculoTbl.getItems().setAll(fachadaModel.buscarVeiculos(pesquisaFld.getText().trim()));
+					if(tipoBox.getValue().equals("Automovel/Passageiro"))
+						veiculoTbl.getItems().setAll(fachadaModel.buscarAutomoveis(pesquisaFld.getText().trim()));
+					else
+						veiculoTbl.getItems().setAll(fachadaModel.buscarCaminhonetasCarga(pesquisaFld.getText().trim()));
 				
 				alerta.imprimirMsg("Busca concluída","Foram econtrados "+veiculoTbl.getItems().size()+" resultado(s)",AlertType.INFORMATION);
 			} catch (BoException e) {

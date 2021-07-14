@@ -359,7 +359,7 @@ public class IniciarLocacaoController extends Controller {
     	veiculoFld.clear();
     	valPagoFld.clear();
     	trocoFld.clear();
-    	funcionarioFld.setText(funcionarioFld.toString());
+    	funcionarioFld.setText(funcionario.toString());
     	locacao.setFuncionario(funcionario);
     	filialRetiFld.clear();
     	filialDevuFld.clear();

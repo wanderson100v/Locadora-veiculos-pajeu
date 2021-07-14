@@ -144,8 +144,6 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
 		else
 			fisico = this.fisico;
 		
-		int pre = Integer.parseInt(telPreFld.getText().trim());
-		int num = Integer.parseInt(telNumFld.getText().trim());
 		fisico.setNome(nomeFld.getText());
 		fisico.setCpf(cpfFld.getText());
 		fisico.setDataNascimento(nascimentoDate.getValue());
@@ -153,9 +151,8 @@ public class ClienteFisicoController extends CRUDController<Fisico> {
 		fisico.setNumeroHabilitacao(numHFld.getText());
 		fisico.setIdentificacaoMotorista(numIdentFld.getText());
 		fisico.setDataValidadeHabilitacao(validadeDate.getValue());
-		fisico.setEmail(pre+"-"+num);
-		
-		fisico.setTelefone(telNumFld.getText());
+		fisico.setEmail(emailFld.getText());
+		fisico.setTelefone("("+telPreFld.getText().trim()+") " + telNumFld.getText().trim());
 		if(simAtivoRb.isSelected())
 			fisico.setAtivo(true);
 		else

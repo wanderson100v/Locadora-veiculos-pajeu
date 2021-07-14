@@ -9,4 +9,6 @@ public interface IBoCliente {
 	
 	List<Cliente> buscaPorBuscaAbrangente(String busca) throws BoException;
 	
+	public void validar(Cliente cliente) throws BoException;
+	
 }

@@ -60,7 +60,7 @@ public class PerfilController extends Controller {
 	    	try {	
 		    	if(btn == alterarSenhaBtn) {
 		    		String senha = senhaFld.getText().trim();
-		    		if(senha.equals(conSenhaFld.getText())){
+		    		if(conSenhaFld.getText().equals(conSenhaFld.getText())){
 						if(ConnectionFactory.getUser()[1].equals(senha)) {
 							fachadaModel.editaSenha(funcionario,novaSenhaFld.getText().trim());
 							novaSenhaFld.setText("");

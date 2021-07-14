@@ -23,7 +23,7 @@ public class DaoVeiculo extends Dao<Veiculo> implements IDaoVeiculo {
 		long total = 0;
 		try {
 			em = ConnectionFactory.getConnection();
-			Query query = em.createNamedQuery(TOTAL_DISPONIVEL);
+			Query query = em.createQuery(TOTAL_DISPONIVEL);
 			query.setParameter("filial",filial);
 			query.setParameter("categoria", categoria);
 			total =(Long) query.getSingleResult();

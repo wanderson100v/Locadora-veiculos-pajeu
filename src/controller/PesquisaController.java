@@ -129,6 +129,7 @@ public class PesquisaController extends Controller{
 	public void addControladores(Cargo cargo) {
 		Platform.runLater(()->{
 			controladores.clear();
+			filtroBox.getItems().clear();
 			controladores.put("Clientes júridicos",clienteJuridicoController);
 			controladores.put("Clientes físicos", clienteFisicoController);
 			controladores.put("Caminhoneta Carga", caminhonetaCargaController);

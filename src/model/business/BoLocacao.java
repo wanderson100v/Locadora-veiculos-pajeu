@@ -48,9 +48,9 @@ public class BoLocacao extends BoAdapter<Locacao> implements IBoLocacao {
 			if(locacao.getReservaOrigem()!= null) {
 				valorDiaria =  locacao.getReservaOrigem().getCategoriaVeiculo().getValorDiaria();
 				notaFiscal.append(
-						  "- LocaÁ„o feita a partir de reserva. Valor"
-						+ "\npor diaria e taxas por tipo de locaÁ„o"
-						+ "\nser„o definidos pela categoria reservada:"
+						  "- Loca√ß√£o feita a partir de reserva. Valor"
+						+ "\npor diaria e taxas por tipo de loca√ß√£o"
+						+ "\nser√£o definidos pela categoria reservada:"
 						+ "\n\t- Valor por Diaria = "+valorDiaria);
 				
 				if(locacao.getTipoLocacao() == TipoLocacao.KM_LIVRE) {
@@ -70,9 +70,9 @@ public class BoLocacao extends BoAdapter<Locacao> implements IBoLocacao {
 			}else {
 				valorDiaria =  locacao.getVeiculo().getCategoriaVeiculo().getValorDiaria();
 				notaFiscal.append(  
-						  "- LocaÁ„o n„o iniciada a partir de reserva"
-						+ "\nvalor por diaria e taxas por tipo de locaÁ„o"
-						+ "\nser„o definidos pela categoria do veÌculo locado:"
+						  "- Loca√ß√£o n√£o iniciada a partir de reserva"
+						+ "\nvalor por diaria e taxas por tipo de loca√ß√£o"
+						+ "\nserÔøΩo definidos pela categoria do ve√≠culo locado:"
 						+ "\n\t- Valor por Diaria = "+valorDiaria);
 				if(locacao.getTipoLocacao() == TipoLocacao.KM_LIVRE) {
 					valorKm = locacao.getVeiculo().getCategoriaVeiculo().getValorLivre();
@@ -94,23 +94,23 @@ public class BoLocacao extends BoAdapter<Locacao> implements IBoLocacao {
 			Long horasAposTerminoPrevistoDiaria = Duration.between(locacao.getDataRetirada(),dataDevulucaoAtt).toHours() % 24;
 			Float valorTotalDiarias = valorDiaria * dias;
 			Float valorHoras = 0f;
-			notaFiscal.append("\n- PerÌdo de locacao de "+dias+" dias e "+horasAposTerminoPrevistoDiaria+" horas"
+			notaFiscal.append("\n- Per√≠do de locacao de "+dias+" dias e "+horasAposTerminoPrevistoDiaria+" horas"
 							 +"\n\t- Valor por dias de diaria = "+valorTotalDiarias);
 			if(horasAposTerminoPrevistoDiaria >0)
 				if(horasAposTerminoPrevistoDiaria <=4) {
 					notaFiscal.append(
-							  "\n\t- Valor horas restantes È 1/4 do valor de"
+							  "\n\t- Valor horas restantes √© 1/4 do valor de"
 							+ "\n\t  diaria = "+valorDiaria/4);
 					valorHoras = valorDiaria/4; 
 				}else {
-					notaFiscal.append("\n\t- Valor horas restantes È mais uma diaria = "+valorDiaria);
+					notaFiscal.append("\n\t- Valor horas restantes ÔøΩ mais uma diaria = "+valorDiaria);
 					valorHoras = valorDiaria;
 				}
 			valorLocacao = valorHoras + valorTotalDiarias + valorKm;
 			Float taxaLimpeza = 0f;
 			Float taxaAbastecer = 0f;
 			if(limpeza || abastecer) {
-				notaFiscal.append("\n- Taxas referÍntes a manutenÁ„o de veÌculo");
+				notaFiscal.append("\n- Taxas refer√™ntes a manuten√£o de ve√≠culo");
 				if(limpeza) {
 					taxaLimpeza = valorLocacao * 0.02f;
 					notaFiscal.append("\n\t- Limpesa = "+taxaLimpeza);
@@ -121,13 +121,13 @@ public class BoLocacao extends BoAdapter<Locacao> implements IBoLocacao {
 			}
 			valorLocacao += taxaLimpeza + taxaAbastecer;
 			notaFiscal.append(
-					 "\n- Valor total de locaÁ„o ="+valorLocacao
+					 "\n- Valor total de loca√ß√£o ="+valorLocacao
 					+"\n- Valor inicial pago ="+ locacao.getValorPago()
 					+"\n- Valor Restante = "+(valorLocacao - locacao.getValorPago()));
 			return new Object[]{valorLocacao,notaFiscal.toString()};
 		}catch (NullPointerException e) {
-			throw new BoException("… necess·rio tipo, hora de retirada/devoluÁ„o da locaÁ„o "
-					+ "como tambÈm reserva ou veÌculo selecionado para calculo de valor de locaÁ„o");
+			throw new BoException("√â necess√°rio o tipo, hora de retirada/decolu√ß√£o da loca√ß√£o"
+					+ "como tamb√©m reserva ou ve√≠culo selecionado para calculo de valor de loca√ß√£o");
 		}
 	}
 	public void validarLocacao(Locacao locacao, StringBuilder erroLocacao) throws BoException{
@@ -137,10 +137,10 @@ public class BoLocacao extends BoAdapter<Locacao> implements IBoLocacao {
 			if(locacao.getFilialEntrega() == null)
 				locacao.setFilialEntrega(locacao.getFilialRetirada());
 			if(Duration.between(locacao.getDataRetirada(),locacao.getDataDevolucao()).toDays()<1)
-				erroLocacao.append("\tO perÌodo de locacao È inferior a uma diaria.\n");
+				erroLocacao.append("\tO per√≠odo de locacao √© inferior a uma diaria.\n");
 		}
 		else
-			erroLocacao.append("Um ou mais campos obrigatÛrios vazios");
+			erroLocacao.append("Um ou mais campos obrigat√≥rios vazios");
 	}
 
 	@Override
