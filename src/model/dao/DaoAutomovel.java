@@ -7,7 +7,6 @@ import java.util.Map;
 import model.dao.sql.ConnectionFactory;
 import model.excecoes.DaoException;
 import model.vo.Automovel;
-import model.vo.Fisico;
 
 public class DaoAutomovel extends Dao<Automovel> implements IDaoAutomovel {
 
